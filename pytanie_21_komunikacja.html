@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pytanie 21 — Systemy komunikacji w rozproszonych systemach sterowania</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#141C24; --mut:#5C6B77; --line:#C3CDD4;
+  --paper:#E8ECEF; --card:#FCFDFD;
+  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52;
+  --disp:"Space Grotesk",system-ui,sans-serif;
+  --body:"STIX Two Text","Source Serif 4",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+     font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:860px;margin:0 auto;padding:0 22px 100px}
+
+/* ---- nagłówek ---- */
+header{padding:64px 0 30px;border-bottom:2px solid var(--ink)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+         color:var(--mut);margin:0 0 14px}
+h1{font-family:var(--disp);font-weight:700;font-size:clamp(30px,5vw,46px);line-height:1.08;
+   letter-spacing:-.02em;margin:0 0 18px}
+.quest{font-style:italic;font-size:19px;color:var(--ink);margin:0;padding-left:16px;
+       border-left:3px solid var(--violet)}
+.src{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:18px}
+
+/* ---- sekcje ---- */
+section{margin-top:56px}
+h2{font-family:var(--disp);font-weight:700;font-size:25px;letter-spacing:-.015em;
+   margin:0 0 6px;display:flex;align-items:baseline;gap:12px}
+h2 .num{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--violet);
+        letter-spacing:.08em;flex:none}
+h3{font-family:var(--disp);font-weight:500;font-size:18.5px;margin:34px 0 8px;letter-spacing:-.01em}
+p{margin:0 0 14px}
+.rail{height:5px;background:linear-gradient(90deg,var(--teal) 0%,var(--violet) 55%,var(--amber) 100%);
+      opacity:.85;margin:0 0 22px;border-radius:2px}
+
+/* ---- figury ---- */
+figure{margin:26px 0;background:var(--card);border:1px solid var(--line);border-radius:3px;
+       padding:20px 18px 14px}
+.fig{width:100%;height:auto;display:block}
+figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:12px;
+           padding-top:10px;border-top:1px solid var(--line);line-height:1.5}
+.tick{font-family:var(--mono);font-size:10.5px;fill:#7C8A94}
+.axlab{font-family:var(--mono);font-size:11px;fill:var(--mut)}
+.cap{font-family:var(--mono);font-size:10.5px;fill:var(--mut)}
+.bx{font-family:var(--mono);font-size:10.5px;fill:var(--mut)}
+.bx-t{font-family:var(--disp);font-size:11.5px;font-weight:500;fill:var(--ink)}
+
+/* ---- bloki ---- */
+.box{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--violet);
+     padding:16px 18px;margin:22px 0;border-radius:2px}
+.box.key{border-left-color:var(--rose)}
+.box.warn{border-left-color:var(--amber)}
+.box .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+          color:var(--mut);display:block;margin-bottom:8px}
+.box p:last-child{margin-bottom:0}
+
+/* ---- wzory (TeX składany do SVG skryptem mathbuild.js) ---- */
+.eq{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--violet);
+    padding:18px 18px;margin:22px 0;border-radius:2px;overflow-x:auto;text-align:center;
+    font-size:18.5px;line-height:1.3}
+.eq svg{max-width:100%;height:auto}
+.eq.txt{font-family:var(--mono);font-size:14px;line-height:1.7;color:var(--ink);text-align:center}
+.eq b{color:var(--violet);font-weight:500}
+.eqnote{font-family:var(--mono);font-size:12.5px;color:var(--mut);text-align:center;
+        margin:-14px 0 20px;line-height:1.6}
+.m{white-space:nowrap}
+.m svg{vertical-align:-0.25ex;max-width:100%;height:auto}
+@media (max-width:640px){
+  table{display:block;overflow-x:auto;width:auto;min-width:100%;-webkit-overflow-scrolling:touch}
+  table .m svg{max-width:none}
+  .eq{padding:14px 12px;font-size:16px}
+}
+
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15px;background:var(--card)}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--disp);font-weight:500;font-size:13px;letter-spacing:.02em;
+   background:#F2F5F6;border-bottom:1.5px solid var(--line)}
+td.n{font-family:var(--mono);font-size:13.5px;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+
+ol,ul{margin:0 0 14px;padding-left:22px}
+li{margin-bottom:7px}
+ol.steps{list-style:none;padding-left:0;counter-reset:st}
+ol.steps>li{counter-increment:st;position:relative;padding-left:44px;margin-bottom:18px}
+ol.steps>li::before{content:counter(st);position:absolute;left:0;top:1px;
+  font-family:var(--mono);font-size:12px;width:28px;height:28px;border-radius:50%;
+  background:var(--violet);color:#fff;display:flex;align-items:center;justify-content:center}
+strong{font-weight:600}
+.tag{font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:2px;
+     background:rgba(14,110,120,.12);color:var(--teal);white-space:nowrap}
+.tag.a{background:rgba(179,100,26,.13);color:var(--amber)}
+.tag.v{background:rgba(91,75,138,.13);color:var(--violet)}
+footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
+       font-family:var(--mono);font-size:12px;color:var(--mut)}
+@media print{body{background:#fff}figure,.box,.eq,table{break-inside:avoid}.topnav,.backfoot{display:none}}
+@media (max-width:600px){body{font-size:16px}header{padding-top:40px}}
+
+/* ---- pasek nawigacji ---- */
+.topnav{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:22px 0 0}
+.topnav a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+          color:var(--mut);text-decoration:none;border:1px solid var(--line);background:var(--card);
+          border-radius:2px;padding:6px 11px;transition:color .12s ease,border-color .12s ease}
+.topnav a:hover,.topnav a:focus-visible{color:var(--ink);border-color:var(--ink);outline:none}
+.topnav .here{font-family:var(--mono);font-size:12px;color:var(--mut);letter-spacing:.08em}
+.backfoot{margin:18px 0 0}
+.backfoot a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+            color:var(--teal);text-decoration:none;border-bottom:1px solid var(--line)}
+.backfoot a:hover,.backfoot a:focus-visible{border-bottom-color:var(--teal);outline:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="topnav">
+  <a href="index.html">&larr; Repetytorium</a>
+  <span class="here">zagadnienie 21 z 50 &middot; komputerowe systemy sterowania</span>
+</nav>
+
+<header>
+  <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 21</p>
+  <h1>Systemy komunikacji w rozproszonych systemach sterowania</h1>
+  <p class="quest">Systemy komunikacji w rozproszonych systemach sterowania.</p>
+  <p class="src">Komputerowe systemy sterowania i wspomagania decyzji &middot; opracowanie na podstawie literatury i dokumentacji — źródła na dole strony &middot; rozwija sieci z zagadnień 22 i 32; opóźnienie w pętli jak w 18</p>
+</header>
+
+<style>
+.karty{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:22px 0}
+.karta{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--violet);border-radius:3px;padding:12px 14px}
+.karta.k .kw{color:var(--violet)} .karta.b{border-top-color:var(--teal)} .karta.s{border-top-color:var(--rose)} .karta.a{border-top-color:var(--amber)}
+.karta .kw{font-family:var(--disp);font-weight:700;font-size:17px;line-height:1.25;display:block;margin-bottom:6px;color:var(--violet)}
+.karta.b .kw{color:var(--teal)} .karta.s .kw{color:var(--rose)} .karta.a .kw{color:var(--amber)}
+.karta p{font-size:15px;margin:0;line-height:1.5}
+@media (max-width:600px){.karty{grid-template-columns:1fr}}
+.fiszka{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--violet);border-radius:2px;margin:10px 0;padding:0}
+.fiszka summary{cursor:pointer;list-style:none;padding:12px 16px;font-family:var(--disp);font-weight:500;font-size:16.5px}
+.fiszka summary::-webkit-details-marker{display:none}
+.fiszka summary::before{content:"?";display:inline-flex;width:22px;height:22px;border-radius:50%;background:var(--violet);color:#fff;
+  font-family:var(--mono);font-size:12px;align-items:center;justify-content:center;margin-right:10px;vertical-align:1px}
+.fiszka[open] summary::before{content:"✓";background:var(--teal)}
+.fiszka p,.fiszka ol,.fiszka ul{padding:0 16px 14px 48px;margin:0}
+.fiszka.op{border-left-color:var(--teal)}
+.fiszka.op summary::before{content:"▶";background:var(--teal)}
+ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{color:var(--teal)}
+.cyt{font-style:italic;color:var(--ink)}
+.check{list-style:none;padding-left:0}
+.check li{padding-left:30px;position:relative}
+.check li::before{content:"☐";position:absolute;left:4px;top:-1px;font-family:var(--mono);color:var(--teal);font-size:17px}
+.luka{display:inline-block;min-width:70px;border-bottom:1.5px solid var(--violet);text-align:center;font-family:var(--mono);font-size:14px;color:var(--violet)}
+</style>
+
+<section>
+<h2><span class="num">01</span> Rama odpowiedzi</h2>
+<div class="rail"></div>
+
+<p>W systemie rozproszonym sterowniki, moduły wejść/wyjść, napędy i stacje operatorskie stoją w różnych miejscach i muszą wymieniać dane. Pytanie dotyczy tego, <strong>jak</strong> to robią: jakie są wymagania, jakie sieci stosuje się na poszczególnych poziomach, jak sieć decyduje, kto nadaje, i jakie ma to skutki dla pętli regulacji. Sprzęt opisuje zagadnienie 22, warstwy — 32.</p>
+
+<div class="box key">
+<span class="lbl">Zdanie, od którego warto zacząć</span>
+<p><strong>Komunikacja w rozproszonym systemie sterowania ma przede wszystkim być deterministyczna — dane muszą dochodzić w znanym, ograniczonym czasie. Dlatego sieci przemysłowe tworzą piramidę: na dole krótkie cykle i mało danych (IO-Link, Profibus, CAN), wyżej Ethernet przemysłowy z mechanizmami czasu rzeczywistego (Profinet, EtherCAT), a na górze zwykły Ethernet z OPC UA. Różnią się głównie metodą dostępu do medium i topologią.</strong></p>
+</div>
+
+<figure>
+<svg viewBox="0 0 680 400" class="fig">
+<defs><marker id="arF21a0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker><marker id="arF21a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#141C24"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">PIRAMIDA KOMUNIKACYJNA: KAŻDY POZIOM MA SWOJE SIECI I WYMAGANIA</text>
+<polygon points="160.0,108.0 212.0,44.0 288.0,44.0 340.0,108.0" fill="#9C3B52" opacity="0.13" stroke="#9C3B52" stroke-width="1.2"/>
+<text x="250.0" y="68.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52;font-size:11.5px">poziom zakładowy</text>
+<text x="250.0" y="86.0" text-anchor="middle" class="cap">MES, ERP, serwery, chmura</text>
+<text x="250.0" y="101.0" text-anchor="middle" class="cap" style="fill:#9C3B52">Ethernet TCP/IP, OPC UA, MQTT</text>
+<polygon points="108.0,180.0 160.0,116.0 340.0,116.0 392.0,180.0" fill="#B3641A" opacity="0.13" stroke="#B3641A" stroke-width="1.2"/>
+<text x="250.0" y="140.0" text-anchor="middle" class="bx-t" style="fill:#B3641A;font-size:11.5px">poziom sterowania</text>
+<text x="250.0" y="158.0" text-anchor="middle" class="cap">PLC ↔ PLC, SCADA, napędy</text>
+<text x="250.0" y="173.0" text-anchor="middle" class="cap" style="fill:#B3641A">Profinet, EtherCAT, EtherNet/IP, Modbus TCP</text>
+<polygon points="56.0,252.0 108.0,188.0 392.0,188.0 444.0,252.0" fill="#5B4B8A" opacity="0.13" stroke="#5B4B8A" stroke-width="1.2"/>
+<text x="250.0" y="212.0" text-anchor="middle" class="bx-t" style="fill:#5B4B8A;font-size:11.5px">poziom polowy</text>
+<text x="250.0" y="230.0" text-anchor="middle" class="cap">PLC ↔ rozproszone we/wy, urządzenia</text>
+<text x="250.0" y="245.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">Profibus DP/PA, Modbus RTU, CANopen</text>
+<polygon points="4.0,324.0 56.0,260.0 444.0,260.0 496.0,324.0" fill="#0E6E78" opacity="0.13" stroke="#0E6E78" stroke-width="1.2"/>
+<text x="250.0" y="284.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:11.5px">poziom czujników</text>
+<text x="250.0" y="302.0" text-anchor="middle" class="cap">pojedyncze czujniki i elementy wyk.</text>
+<text x="250.0" y="317.0" text-anchor="middle" class="cap" style="fill:#0E6E78">4–20 mA + HART, IO-Link, AS-i</text>
+<line x1="556.0" y1="56.0" x2="556.0" y2="326.0" stroke="#5C6B77" stroke-width="1.6"/>
+<path d="M 556.0 70.0 L 556.0 52.0" fill="none" stroke="#5C6B77" stroke-width="1.6" marker-end="url(#arF21a0)"/>
+<path d="M 556.0 312.0 L 556.0 330.0" fill="none" stroke="#141C24" stroke-width="1.6" marker-end="url(#arF21a1)"/>
+<text x="568.0" y="64.0" text-anchor="start" class="cap">więcej danych</text>
+<text x="568.0" y="78.0" text-anchor="start" class="cap">(kB–MB),</text>
+<text x="568.0" y="92.0" text-anchor="start" class="cap">luźniejsze</text>
+<text x="568.0" y="106.0" text-anchor="start" class="cap">wymagania czasu</text>
+<text x="568.0" y="270.0" text-anchor="start" class="cap" style="fill:#141C24">krótki cykl,</text>
+<text x="568.0" y="284.0" text-anchor="start" class="cap" style="fill:#141C24">determinizm,</text>
+<text x="568.0" y="298.0" text-anchor="start" class="cap" style="fill:#141C24">mało danych</text>
+<text x="568.0" y="312.0" text-anchor="start" class="cap" style="fill:#141C24">(bity–bajty)</text>
+<rect x="14.0" y="348.0" width="652.0" height="44.0" rx="4" fill="#EEF1F3" stroke="none" stroke-width="1"/>
+<text x="340.0" y="367.0" text-anchor="middle" class="bx" style="fill:#141C24">trend: Ethernet schodzi coraz niżej — ta sama fizyka na wszystkich poziomach,</text>
+<text x="340.0" y="383.0" text-anchor="middle" class="bx" style="fill:#141C24">a czas rzeczywisty zapewniają dodatki (RT, IRT, EtherCAT, TSN)</text>
+</svg>
+<figcaption>Cztery poziomy sieci i przykładowe standardy. Im niżej, tym krótszy cykl i mniej danych w jednej ramce; im wyżej, tym więcej danych i luźniejsze wymagania czasowe. Opracowanie własne na podstawie Wikipedii (Fieldbus, Profibus, Profinet, EtherCAT).</figcaption>
+</figure>
+</section>
+
+<section>
+<h2><span class="num">02</span> Wymagania wobec komunikacji</h2>
+<div class="rail"></div>
+
+<p>Sieć polowa to według Wikipedii <span class="cyt">„a member of a family of industrial digital communication networks used for real-time distributed control”</span>. Zastępuje ona połączenia punkt–punkt (pętle 4–20 mA, sygnały binarne), co <span class="cyt">„reduces both the length of and total number of cables required”</span>. W zamian musi spełnić wymagania, których sieć biurowa nie ma:</p>
+
+<ul>
+<li><strong>Determinizm</strong> — znany, ograniczony czas dostarczenia danych; ważniejszy niż przepustowość.</li>
+<li><strong>Krótki i stały cykl</strong> — mały <em>jitter</em>, czyli rozrzut odstępów między kolejnymi pakietami, bo regulator dyskretny zakłada stały okres próbkowania.</li>
+<li><strong>Niezawodność</strong> — redundantne łącza, szybka rekonfiguracja, diagnostyka przerw.</li>
+<li><strong>Odporność na zakłócenia</strong> — falowniki i silniki tuż obok przewodów.</li>
+<li><strong>Specyfika miejsca</strong> — zasilanie po kablu sieci, iskrobezpieczność w strefach wybuchowych.</li>
+<li><strong>Bezpieczeństwo IT</strong> — oddzielenie od sieci biurowej (zapora, strefy).</li>
+</ul>
+</section>
+
+<section>
+<h2><span class="num">03</span> Model ISO/OSI w sieciach przemysłowych</h2>
+<div class="rail"></div>
+
+<figure>
+<svg viewBox="0 0 680 330" class="fig">
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">MODEL ISO/OSI I CO Z NIEGO ZOSTAJE W SIECIACH PRZEMYSŁOWYCH</text>
+<text x="90.0" y="50.0" text-anchor="middle" class="bx-t" style="fill:#5C6B77;font-size:11px">ISO/OSI</text>
+<text x="90.0" y="64.0" text-anchor="middle" class="cap">pełny model</text>
+<rect x="20.0" y="74.0" width="140.0" height="26.0" rx="3" fill="#5C6B77" stroke="none" stroke-width="1" opacity="0.1"/>
+<text x="90.0" y="91.0" text-anchor="middle" class="cap" style="fill:#5C6B77">7 aplikacji</text>
+<rect x="20.0" y="104.0" width="140.0" height="26.0" rx="3" fill="#5C6B77" stroke="none" stroke-width="1" opacity="0.1"/>
+<text x="90.0" y="121.0" text-anchor="middle" class="cap" style="fill:#5C6B77">6 prezentacji</text>
+<rect x="20.0" y="134.0" width="140.0" height="26.0" rx="3" fill="#5C6B77" stroke="none" stroke-width="1" opacity="0.1"/>
+<text x="90.0" y="151.0" text-anchor="middle" class="cap" style="fill:#5C6B77">5 sesji</text>
+<rect x="20.0" y="164.0" width="140.0" height="26.0" rx="3" fill="#5C6B77" stroke="none" stroke-width="1" opacity="0.1"/>
+<text x="90.0" y="181.0" text-anchor="middle" class="cap" style="fill:#5C6B77">4 transportowa</text>
+<rect x="20.0" y="194.0" width="140.0" height="26.0" rx="3" fill="#5C6B77" stroke="none" stroke-width="1" opacity="0.1"/>
+<text x="90.0" y="211.0" text-anchor="middle" class="cap" style="fill:#5C6B77">3 sieciowa</text>
+<rect x="20.0" y="224.0" width="140.0" height="26.0" rx="3" fill="#5C6B77" stroke="none" stroke-width="1" opacity="0.1"/>
+<text x="90.0" y="241.0" text-anchor="middle" class="cap" style="fill:#5C6B77">2 łącza danych</text>
+<rect x="20.0" y="254.0" width="140.0" height="26.0" rx="3" fill="#5C6B77" stroke="none" stroke-width="1" opacity="0.1"/>
+<text x="90.0" y="271.0" text-anchor="middle" class="cap" style="fill:#5C6B77">1 fizyczna</text>
+<text x="254.0" y="50.0" text-anchor="middle" class="bx-t" style="fill:#5B4B8A;font-size:11px">sieć polowa</text>
+<text x="254.0" y="64.0" text-anchor="middle" class="cap">np. Profibus, Modbus RTU</text>
+<rect x="184.0" y="74.0" width="140.0" height="26.0" rx="3" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.18"/>
+<text x="254.0" y="91.0" text-anchor="middle" class="cap" style="fill:#141C24">7 aplikacji</text>
+<rect x="184.0" y="104.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="184.0" y="134.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="184.0" y="164.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="184.0" y="194.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="184.0" y="224.0" width="140.0" height="26.0" rx="3" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.18"/>
+<text x="254.0" y="241.0" text-anchor="middle" class="cap" style="fill:#141C24">2 łącza danych</text>
+<rect x="184.0" y="254.0" width="140.0" height="26.0" rx="3" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.18"/>
+<text x="254.0" y="271.0" text-anchor="middle" class="cap" style="fill:#141C24">1 fizyczna</text>
+<text x="418.0" y="50.0" text-anchor="middle" class="bx-t" style="fill:#B3641A;font-size:11px">Profinet RT</text>
+<text x="418.0" y="64.0" text-anchor="middle" class="cap">dane cykliczne</text>
+<rect x="348.0" y="74.0" width="140.0" height="26.0" rx="3" fill="#B3641A" stroke="none" stroke-width="1" opacity="0.18"/>
+<text x="418.0" y="91.0" text-anchor="middle" class="cap" style="fill:#141C24">7 aplikacji</text>
+<rect x="348.0" y="104.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="348.0" y="134.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="348.0" y="164.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="348.0" y="194.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="348.0" y="224.0" width="140.0" height="26.0" rx="3" fill="#B3641A" stroke="none" stroke-width="1" opacity="0.18"/>
+<text x="418.0" y="241.0" text-anchor="middle" class="cap" style="fill:#141C24">2 łącza danych</text>
+<rect x="348.0" y="254.0" width="140.0" height="26.0" rx="3" fill="#B3641A" stroke="none" stroke-width="1" opacity="0.18"/>
+<text x="418.0" y="271.0" text-anchor="middle" class="cap" style="fill:#141C24">1 fizyczna</text>
+<text x="582.0" y="50.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52;font-size:11px">Profinet / OPC UA</text>
+<text x="582.0" y="64.0" text-anchor="middle" class="cap">dane acykliczne</text>
+<rect x="512.0" y="74.0" width="140.0" height="26.0" rx="3" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.18"/>
+<text x="582.0" y="91.0" text-anchor="middle" class="cap" style="fill:#141C24">7 aplikacji</text>
+<rect x="512.0" y="104.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="512.0" y="134.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="512.0" y="164.0" width="140.0" height="26.0" rx="3" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.18"/>
+<text x="582.0" y="181.0" text-anchor="middle" class="cap" style="fill:#141C24">4 transportowa</text>
+<rect x="512.0" y="194.0" width="140.0" height="26.0" rx="3" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.18"/>
+<text x="582.0" y="211.0" text-anchor="middle" class="cap" style="fill:#141C24">3 sieciowa</text>
+<rect x="512.0" y="224.0" width="140.0" height="26.0" rx="3" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.18"/>
+<text x="582.0" y="241.0" text-anchor="middle" class="cap" style="fill:#141C24">2 łącza danych</text>
+<rect x="512.0" y="254.0" width="140.0" height="26.0" rx="3" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.18"/>
+<text x="582.0" y="271.0" text-anchor="middle" class="cap" style="fill:#141C24">1 fizyczna</text>
+<text x="254.0" y="151.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">pominięte</text>
+<text x="418.0" y="151.0" text-anchor="middle" class="cap" style="fill:#B3641A">pominięte:</text>
+<text x="418.0" y="181.0" text-anchor="middle" class="cap" style="fill:#B3641A">bez TCP/IP</text>
+<text x="418.0" y="211.0" text-anchor="middle" class="cap" style="fill:#B3641A">= szybciej</text>
+<rect x="14.0" y="290.0" width="652.0" height="32.0" rx="4" fill="#EEF1F3" stroke="none" stroke-width="1"/>
+<text x="340.0" y="310.0" text-anchor="middle" class="bx" style="fill:#141C24">mniej warstw = krótsze ramki i krótszy czas przetwarzania, kosztem routingu między sieciami</text>
+</svg>
+<figcaption>Sieci polowe używają tylko warstw 1, 2 i 7 — w standardach sieci polowych <span class="cyt">„layers three to six are not described”</span> (Wikipedia, <em>Fieldbus</em>). Profinet przesyła dane cykliczne bezpośrednio w ramce Ethernet, bez TCP/IP, a przez UDP/IP tylko dane acykliczne (parametry, diagnostyka).</figcaption>
+</figure>
+
+<p>Warstwa fizyczna określa medium i sygnał (RS-485, światłowód, skrętka Ethernet), warstwa łącza — ramkę i <strong>dostęp do medium</strong>, a warstwa aplikacji — znaczenie danych (rejestry, obiekty, profile urządzeń). Sieci polowe są znormalizowane jako IEC 61158 i IEC 61784.</p>
+</section>
+
+<section>
+<h2><span class="num">04</span> Metody dostępu do medium: kto ma prawo nadawać</h2>
+<div class="rail"></div>
+
+<p>To serce pytania, bo od metody dostępu zależy determinizm. Deterministyczna (przewidywalna) jest taka metoda, dla której da się policzyć najgorszy czas dostarczenia danych.</p>
+
+<figure>
+<svg viewBox="0 0 680 470" class="fig">
+<defs><marker id="arF21c0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B3641A"/></marker><marker id="arF21c1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">KTO MA PRAWO NADAWAĆ? SZEŚĆ METOD DOSTĘPU DO MEDIUM</text>
+<rect x="14.0" y="40.0" width="212.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<text x="26.0" y="60.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:11px">MASTER–SLAVE</text>
+<text x="26.0" y="218.0" text-anchor="start" class="cap" style="fill:#141C24">nadaje tylko zapytany</text>
+<text x="26.0" y="233.0" text-anchor="start" class="cap">Modbus RTU, Profibus DP</text>
+<rect x="140.0" y="48.0" width="78.0" height="18.0" rx="9" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.14"/>
+<text x="179.0" y="61.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:8.5px">przewidywalna</text>
+<rect x="90.0" y="74.0" width="60.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<text x="120.0" y="89.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">master</text>
+<line x1="34.0" y1="120.0" x2="206.0" y2="120.0" stroke="#5C6B77" stroke-width="2"/>
+<line x1="120.0" y1="96.0" x2="120.0" y2="120.0" stroke="#5C6B77" stroke-width="1.4"/>
+<line x1="54.0" y1="120.0" x2="54.0" y2="132.0" stroke="#5C6B77" stroke-width="1.4"/>
+<rect x="32.0" y="132.0" width="44.0" height="20.0" rx="3" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<text x="54.0" y="146.0" text-anchor="middle" class="cap">S1</text>
+<line x1="120.0" y1="120.0" x2="120.0" y2="132.0" stroke="#5C6B77" stroke-width="1.4"/>
+<rect x="98.0" y="132.0" width="44.0" height="20.0" rx="3" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<text x="120.0" y="146.0" text-anchor="middle" class="cap">S2</text>
+<line x1="186.0" y1="120.0" x2="186.0" y2="132.0" stroke="#5C6B77" stroke-width="1.4"/>
+<rect x="164.0" y="132.0" width="44.0" height="20.0" rx="3" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<text x="186.0" y="146.0" text-anchor="middle" class="cap">S3</text>
+<rect x="28.0" y="168.0" width="29.0" height="18.0" rx="2" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.3"/>
+<text x="42.5" y="181.0" text-anchor="middle" class="cap" style="font-size:8px">M→S1</text>
+<rect x="59.0" y="168.0" width="29.0" height="18.0" rx="2" fill="#5C6B77" stroke="none" stroke-width="1" opacity="0.3"/>
+<text x="73.5" y="181.0" text-anchor="middle" class="cap" style="font-size:8px">S1→M</text>
+<rect x="90.0" y="168.0" width="29.0" height="18.0" rx="2" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.3"/>
+<text x="104.5" y="181.0" text-anchor="middle" class="cap" style="font-size:8px">M→S2</text>
+<rect x="121.0" y="168.0" width="29.0" height="18.0" rx="2" fill="#5C6B77" stroke="none" stroke-width="1" opacity="0.3"/>
+<text x="135.5" y="181.0" text-anchor="middle" class="cap" style="font-size:8px">S2→M</text>
+<rect x="152.0" y="168.0" width="29.0" height="18.0" rx="2" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.3"/>
+<text x="166.5" y="181.0" text-anchor="middle" class="cap" style="font-size:8px">M→S3</text>
+<rect x="183.0" y="168.0" width="29.0" height="18.0" rx="2" fill="#5C6B77" stroke="none" stroke-width="1" opacity="0.3"/>
+<text x="197.5" y="181.0" text-anchor="middle" class="cap" style="font-size:8px">S3→M</text>
+<text x="26.0" y="202.0" text-anchor="start" class="cap">pytanie → odpowiedź, po kolei</text>
+<rect x="236.0" y="40.0" width="212.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<text x="248.0" y="60.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:11px">ZNACZNIK (token)</text>
+<text x="248.0" y="218.0" text-anchor="start" class="cap" style="fill:#141C24">nadaje ten, kto ma znacznik</text>
+<text x="248.0" y="233.0" text-anchor="start" class="cap">Profibus — między masterami</text>
+<rect x="362.0" y="48.0" width="78.0" height="18.0" rx="9" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.14"/>
+<text x="401.0" y="61.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:8.5px">przewidywalna</text>
+<circle cx="342.0" cy="140.0" r="56" fill="none" stroke="#C3CDD4" stroke-width="1.4" stroke-dasharray="4 3"/>
+<rect x="322.0" y="75.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<text x="342.0" y="90.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">M1</text>
+<rect x="378.0" y="129.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<text x="398.0" y="144.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">M2</text>
+<rect x="322.0" y="179.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<text x="342.0" y="194.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">M3</text>
+<rect x="266.0" y="129.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<text x="286.0" y="144.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">M4</text>
+<circle cx="382.0" cy="100.0" r="7" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="394.0" y="96.0" text-anchor="start" class="cap" style="fill:#B3641A;font-size:9px">znacznik</text>
+<path d="M 386.0 106.0 L 392.0 116.0" fill="none" stroke="#B3641A" stroke-width="1.4" marker-end="url(#arF21c0)"/>
+<rect x="458.0" y="40.0" width="212.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<text x="470.0" y="60.0" text-anchor="start" class="bx-t" style="fill:#9C3B52;font-size:11px">CSMA/CD</text>
+<text x="470.0" y="218.0" text-anchor="start" class="cap" style="fill:#141C24">kolizja → losowe czekanie</text>
+<text x="470.0" y="233.0" text-anchor="start" class="cap">klasyczny Ethernet z hubem</text>
+<rect x="584.0" y="48.0" width="78.0" height="18.0" rx="9" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.14"/>
+<text x="623.0" y="61.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:8.5px">losowa</text>
+<line x1="478.0" y1="130.0" x2="650.0" y2="130.0" stroke="#5C6B77" stroke-width="2"/>
+<rect x="486.0" y="86.0" width="44.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<text x="508.0" y="101.0" text-anchor="middle" class="cap">A</text>
+<line x1="508.0" y1="108.0" x2="508.0" y2="130.0" stroke="#5C6B77" stroke-width="1.4"/>
+<rect x="598.0" y="86.0" width="44.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<text x="620.0" y="101.0" text-anchor="middle" class="cap">B</text>
+<line x1="620.0" y1="108.0" x2="620.0" y2="130.0" stroke="#5C6B77" stroke-width="1.4"/>
+<polygon points="564.0,114.0 570.0,114.0 566.0,122.0 572.0,122.0 562.0,136.0 565.0,125.0 559.0,125.0" fill="#9C3B52"/>
+<text x="564.0" y="154.0" text-anchor="middle" class="cap" style="fill:#9C3B52">A i B nadają naraz → kolizja</text>
+<text x="564.0" y="170.0" text-anchor="middle" class="cap">obaj czekają losowo i ponawiają</text>
+<text x="564.0" y="190.0" text-anchor="middle" class="cap" style="fill:#9C3B52">czas dostarczenia nieznany</text>
+<rect x="14.0" y="254.0" width="212.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<text x="26.0" y="274.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:11px">ARBITRAŻ BITOWY</text>
+<text x="26.0" y="432.0" text-anchor="start" class="cap" style="fill:#141C24">niższy identyfikator wygrywa</text>
+<text x="26.0" y="447.0" text-anchor="start" class="cap">CAN, CANopen</text>
+<rect x="140.0" y="262.0" width="78.0" height="18.0" rx="9" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.14"/>
+<text x="179.0" y="275.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:8.5px">przewidywalna</text>
+<text x="26.0" y="308.0" text-anchor="start" class="cap" style="fill:#5B4B8A;font-size:9.5px">węzeł A, ID 0110…</text>
+<rect x="138.0" y="296.0" width="18.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1"/>
+<text x="147.0" y="309.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">0</text>
+<rect x="158.0" y="296.0" width="18.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1"/>
+<text x="167.0" y="309.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">1</text>
+<rect x="178.0" y="296.0" width="18.0" height="18.0" rx="2" fill="#F3E4E8" stroke="#5B4B8A" stroke-width="1"/>
+<text x="187.0" y="309.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">1</text>
+<rect x="198.0" y="296.0" width="18.0" height="18.0" rx="2" fill="#F3E4E8" stroke="#5B4B8A" stroke-width="1"/>
+<text x="207.0" y="309.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">0</text>
+<text x="26.0" y="344.0" text-anchor="start" class="cap" style="fill:#B3641A;font-size:9.5px">węzeł B, ID 0101…</text>
+<rect x="138.0" y="332.0" width="18.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#B3641A" stroke-width="1"/>
+<text x="147.0" y="345.0" text-anchor="middle" class="cap" style="fill:#B3641A">0</text>
+<rect x="158.0" y="332.0" width="18.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#B3641A" stroke-width="1"/>
+<text x="167.0" y="345.0" text-anchor="middle" class="cap" style="fill:#B3641A">1</text>
+<rect x="178.0" y="332.0" width="18.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#B3641A" stroke-width="1"/>
+<text x="187.0" y="345.0" text-anchor="middle" class="cap" style="fill:#B3641A">0</text>
+<rect x="198.0" y="332.0" width="18.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#B3641A" stroke-width="1"/>
+<text x="207.0" y="345.0" text-anchor="middle" class="cap" style="fill:#B3641A">1</text>
+<text x="26.0" y="380.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9.5px">na magistrali</text>
+<rect x="138.0" y="368.0" width="18.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#141C24" stroke-width="1"/>
+<text x="147.0" y="381.0" text-anchor="middle" class="cap" style="fill:#141C24">0</text>
+<rect x="158.0" y="368.0" width="18.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#141C24" stroke-width="1"/>
+<text x="167.0" y="381.0" text-anchor="middle" class="cap" style="fill:#141C24">1</text>
+<rect x="178.0" y="368.0" width="18.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#141C24" stroke-width="1"/>
+<text x="187.0" y="381.0" text-anchor="middle" class="cap" style="fill:#141C24">0</text>
+<rect x="198.0" y="368.0" width="18.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#141C24" stroke-width="1"/>
+<text x="207.0" y="381.0" text-anchor="middle" class="cap" style="fill:#141C24">1</text>
+<text x="26.0" y="414.0" text-anchor="start" class="cap" style="fill:#9C3B52;font-size:9px">bit 3: B daje 0 → A milknie</text>
+<rect x="236.0" y="254.0" width="212.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<text x="248.0" y="274.0" text-anchor="start" class="bx-t" style="fill:#B3641A;font-size:11px">OKNA CZASOWE</text>
+<text x="248.0" y="432.0" text-anchor="start" class="cap" style="fill:#141C24">każdy ma zarezerwowane okno</text>
+<text x="248.0" y="447.0" text-anchor="start" class="cap">Profinet IRT, TSN</text>
+<rect x="362.0" y="262.0" width="78.0" height="18.0" rx="9" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.14"/>
+<text x="401.0" y="275.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:8.5px">przewidywalna</text>
+<rect x="250.0" y="324.0" width="24.0" height="30.0" rx="2" fill="#B3641A" stroke="none" stroke-width="1" opacity="0.75"/>
+<rect x="274.0" y="324.0" width="34.0" height="30.0" rx="2" fill="#5C6B77" stroke="none" stroke-width="1" opacity="0.22"/>
+<rect x="312.0" y="324.0" width="24.0" height="30.0" rx="2" fill="#B3641A" stroke="none" stroke-width="1" opacity="0.75"/>
+<rect x="336.0" y="324.0" width="34.0" height="30.0" rx="2" fill="#5C6B77" stroke="none" stroke-width="1" opacity="0.22"/>
+<rect x="374.0" y="324.0" width="24.0" height="30.0" rx="2" fill="#B3641A" stroke="none" stroke-width="1" opacity="0.75"/>
+<rect x="398.0" y="324.0" width="34.0" height="30.0" rx="2" fill="#5C6B77" stroke="none" stroke-width="1" opacity="0.22"/>
+<text x="262.0" y="316.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9px">IRT</text>
+<text x="291.0" y="316.0" text-anchor="middle" class="cap" style="font-size:9px">reszta</text>
+<path d="M 250.0 370.0 L 434.0 370.0" fill="none" stroke="#5C6B77" stroke-width="1.2" marker-end="url(#arF21c1)"/>
+<text x="432.0" y="384.0" text-anchor="end" class="cap">czas</text>
+<text x="248.0" y="404.0" text-anchor="start" class="cap" style="font-size:9px">pomarańczowe: zarezerwowane dla</text>
+<text x="248.0" y="416.0" text-anchor="start" class="cap" style="font-size:9px">danych krytycznych; szare: TCP/IP</text>
+<rect x="458.0" y="254.0" width="212.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<text x="470.0" y="274.0" text-anchor="start" class="bx-t" style="fill:#B3641A;font-size:11px">RAMKA W LOCIE</text>
+<text x="470.0" y="432.0" text-anchor="start" class="cap" style="fill:#141C24">jedna ramka przez wszystkich</text>
+<text x="470.0" y="447.0" text-anchor="start" class="cap">EtherCAT</text>
+<rect x="584.0" y="262.0" width="78.0" height="18.0" rx="9" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.14"/>
+<text x="623.0" y="275.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:8.5px">przewidywalna</text>
+<rect x="472.0" y="302.0" width="50.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.2"/>
+<text x="497.0" y="317.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9.5px">master</text>
+<rect x="538.0" y="302.0" width="26.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<text x="551.0" y="317.0" text-anchor="middle" class="cap" style="font-size:9px">S1</text>
+<rect x="570.0" y="302.0" width="26.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<text x="583.0" y="317.0" text-anchor="middle" class="cap" style="font-size:9px">S2</text>
+<rect x="602.0" y="302.0" width="26.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<text x="615.0" y="317.0" text-anchor="middle" class="cap" style="font-size:9px">S3</text>
+<rect x="634.0" y="302.0" width="26.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<text x="647.0" y="317.0" text-anchor="middle" class="cap" style="font-size:9px">S4</text>
+<path d="M 522.0 334.0 L 658.0 334.0" fill="none" stroke="#B3641A" stroke-width="1.6" marker-end="url(#arF21c0)"/>
+<path d="M 658.0 348.0 L 522.0 348.0" fill="none" stroke="#B3641A" stroke-width="1.6" marker-end="url(#arF21c0)"/>
+<text x="470.0" y="374.0" text-anchor="start" class="cap" style="font-size:9.5px">każde urządzenie czyta swoje</text>
+<text x="470.0" y="388.0" text-anchor="start" class="cap" style="font-size:9.5px">dane i dopisuje swoje, gdy</text>
+<text x="470.0" y="402.0" text-anchor="start" class="cap" style="font-size:9.5px">ramka przez nie przechodzi</text>
+</svg>
+<figcaption>Sześć metod. Tylko CSMA/CD daje czas losowy: po kolizji stacje odczekują przypadkowy czas i ponawiają. Pozostałe pozwalają policzyć najgorszy przypadek. Źródła: Wikipedia (Modbus, Profibus, CSMA/CD, CAN bus, Profinet, EtherCAT).</figcaption>
+</figure>
+
+<ul>
+<li><strong>Master–slave</strong>: master pyta po kolei, slave odpowiada tylko zapytany. Proste i przewidywalne, ale cykl rośnie z liczbą urządzeń (przykład w sekcji 07).</li>
+<li><strong>Znacznik</strong>: prawo nadawania krąży między masterami. Profibus łączy oba sposoby — <span class="cyt">„hybrid access method that combines token passing with a master/slave method”</span>.</li>
+<li><strong>CAN</strong>: wszyscy mogą nadawać naraz, ale bit 0 dominuje nad 1, więc <span class="cyt">„the node with the lowest identifier transmits more zeros at the start of the frame, and that is the node that wins the arbitration”</span>. Przegrany nie traci ramki, tylko nadaje później — identyfikator jest priorytetem.</li>
+<li><strong>EtherCAT</strong>: urządzenia <span class="cyt">„read the data addressed to them while the telegram passes through the device”</span> — jedna ramka obsługuje wszystkich.</li>
+</ul>
+
+<p>Drugie rozróżnienie to model wymiany: <strong>klient–serwer</strong> (pytanie–odpowiedź, np. Modbus) i <strong>producent–konsument</strong> (urządzenie samo wysyła dane w swoim cyklu, a odbierają je wszyscy zainteresowani — np. Profinet, EtherNet/IP, OPC UA PubSub).</p>
+</section>
+
+<section>
+<h2><span class="num">05</span> Topologie</h2>
+<div class="rail"></div>
+
+<figure>
+<svg viewBox="0 0 680 260" class="fig">
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">TOPOLOGIE SIECI</text>
+<rect x="14.0" y="40.0" width="154.0" height="210.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<text x="91.0" y="60.0" text-anchor="middle" class="bx-t" style="fill:#B3641A;font-size:11.5px">magistrala</text>
+<line x1="28.0" y1="124.0" x2="154.0" y2="124.0" stroke="#5C6B77" stroke-width="2.2"/>
+<line x1="42.0" y1="124.0" x2="42.0" y2="102.0" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="32.0" y="86.0" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<line x1="75.0" y1="124.0" x2="75.0" y2="146.0" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="65.0" y="146.0" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<line x1="108.0" y1="124.0" x2="108.0" y2="102.0" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="98.0" y="86.0" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<line x1="141.0" y1="124.0" x2="141.0" y2="146.0" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="131.0" y="146.0" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<text x="91.0" y="190.0" text-anchor="middle" class="cap" style="fill:#141C24">prosta, tania; przerwa</text>
+<text x="91.0" y="204.0" text-anchor="middle" class="cap" style="fill:#141C24">kabla dzieli sieć</text>
+<text x="91.0" y="230.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9.5px">Profibus, CAN, Modbus RTU</text>
+<rect x="180.0" y="40.0" width="154.0" height="210.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<text x="257.0" y="60.0" text-anchor="middle" class="bx-t" style="fill:#B3641A;font-size:11.5px">gwiazda</text>
+<line x1="257.0" y1="124.0" x2="305.0" y2="124.0" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="295.0" y="116.0" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<line x1="257.0" y1="124.0" x2="281.0" y2="160.4" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="271.0" y="152.4" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<line x1="257.0" y1="124.0" x2="233.0" y2="160.4" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="223.0" y="152.4" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<line x1="257.0" y1="124.0" x2="209.0" y2="124.0" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="199.0" y="116.0" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<line x1="257.0" y1="124.0" x2="233.0" y2="87.6" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="223.0" y="79.6" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<line x1="257.0" y1="124.0" x2="281.0" y2="87.6" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="271.0" y="79.6" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="243.0" y="114.0" width="28.0" height="20.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.4"/>
+<text x="257.0" y="128.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9px">sw</text>
+<text x="257.0" y="190.0" text-anchor="middle" class="cap" style="fill:#141C24">awaria łącza odcina</text>
+<text x="257.0" y="204.0" text-anchor="middle" class="cap" style="fill:#141C24">jedno urządzenie</text>
+<text x="257.0" y="230.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9.5px">Ethernet ze switchem</text>
+<rect x="346.0" y="40.0" width="154.0" height="210.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<text x="423.0" y="60.0" text-anchor="middle" class="bx-t" style="fill:#B3641A;font-size:11.5px">pierścień</text>
+<ellipse cx="423.0" cy="124.0" rx="50" ry="40" fill="none" stroke="#5C6B77" stroke-width="2"/>
+<rect x="413.0" y="76.0" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="460.6" y="103.6" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="442.4" y="148.4" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="383.6" y="148.4" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="365.4" y="103.6" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<text x="423.0" y="190.0" text-anchor="middle" class="cap" style="fill:#141C24">jedna przerwa nie</text>
+<text x="423.0" y="204.0" text-anchor="middle" class="cap" style="fill:#141C24">przerywa komunikacji</text>
+<text x="423.0" y="230.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9.5px">Profinet MRP, EtherCAT</text>
+<rect x="512.0" y="40.0" width="154.0" height="210.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<text x="589.0" y="60.0" text-anchor="middle" class="bx-t" style="fill:#B3641A;font-size:11.5px">linia</text>
+<line x1="530.0" y1="124.0" x2="648.0" y2="124.0" stroke="#5C6B77" stroke-width="2"/>
+<rect x="524.0" y="116.0" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="551.5" y="116.0" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="579.0" y="116.0" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="606.5" y="116.0" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="634.0" y="116.0" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<text x="589.0" y="190.0" text-anchor="middle" class="cap" style="fill:#141C24">mało kabla; przerwa</text>
+<text x="589.0" y="204.0" text-anchor="middle" class="cap" style="fill:#141C24">odcina resztę linii</text>
+<text x="589.0" y="230.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9.5px">EtherCAT, Profinet</text>
+</svg>
+<figcaption>Magistrala i linia zużywają najmniej kabla, gwiazda izoluje awarie pojedynczych łączy, pierścień przeżywa jedną przerwę. Ethernet przemysłowy łączy je: linie i pierścienie z przełącznikami (switchami) wbudowanymi w urządzenia. Opracowanie własne.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2><span class="num">06</span> Przegląd sieci i Ethernet przemysłowy</h2>
+<div class="rail"></div>
+
+<table>
+<thead><tr><th>Sieć</th><th>Medium, szybkość</th><th>Dostęp</th><th>Typowe zastosowanie</th></tr></thead>
+<tbody>
+<tr><td><strong>Modbus RTU</strong></td><td>RS-485, do 115,2 kbit/s</td><td>master–slave, do 247 urządzeń</td><td>proste urządzenia, liczniki, falowniki</td></tr>
+<tr><td><strong>Profibus DP</strong></td><td>RS-485, do 12 Mbit/s</td><td>master–slave + znacznik</td><td>rozproszone we/wy w fabryce</td></tr>
+<tr><td><strong>Profibus PA</strong></td><td>MBP, 31,25 kbit/s, zasilanie po kablu</td><td>jak DP</td><td>przetworniki w strefach wybuchowych</td></tr>
+<tr><td><strong>CAN / CANopen</strong></td><td>skrętka, do 1 Mbit/s</td><td>arbitraż bitowy</td><td>maszyny, pojazdy, napędy</td></tr>
+<tr><td><strong>Profinet</strong></td><td>Ethernet 100 Mbit/s</td><td>producent–konsument; RT 1–10 ms, IRT &lt; 1 ms</td><td>fabryki, standard Siemensa</td></tr>
+<tr><td><strong>EtherCAT</strong></td><td>Ethernet 100 Mbit/s</td><td>ramka w locie; cykl ≤ 100 µs</td><td>sterowanie ruchem, serwonapędy</td></tr>
+<tr><td><strong>Modbus TCP, OPC UA, MQTT</strong></td><td>Ethernet TCP/IP</td><td>klient–serwer, publikuj–subskrybuj</td><td>SCADA, MES, chmura</td></tr>
+</tbody>
+</table>
+
+<p><strong>Dlaczego Ethernet schodzi coraz niżej</strong>: jest szybki, tani i ten sam od czujnika po serwer. Jego klasyczna wada — losowy dostęp CSMA/CD — znika w sieciach z przełącznikami: <span class="cyt">„Modern Ethernet networks, built with switches and full-duplex connections, no longer need to use CSMA/CD”</span>. Resztę determinizmu zapewniają dodatki: priorytety ramek, pomijanie TCP/IP dla danych cyklicznych (Profinet RT), zarezerwowane okna czasowe (Profinet IRT — <span class="cyt">„cycle times below 1 ms”</span>), ramka w locie (EtherCAT) i standardy TSN z grupy IEEE 802.1.</p>
+</section>
+
+<section>
+<h2><span class="num">07</span> Przykład na kartce: ile trwa cykl i co to robi z pętlą</h2>
+<div class="rail"></div>
+
+<p>Modbus RTU, 19 200 bit/s, jeden znak = 11 bitów, master odpytuje 10 urządzeń o 2 rejestry każde. Między ramkami obowiązuje przerwa <span class="cyt">„at least the transmission time of 3.5 characters”</span>.</p>
+
+<figure>
+<svg viewBox="0 0 680 500" class="fig">
+<defs><marker id="arF21e0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">PRZYKŁAD: CYKL ODPYTYWANIA MODBUS RTU I CO ROBI OPÓŹNIENIE Z PĘTLĄ</text>
+<text x="40.0" y="52.0" text-anchor="start" class="bx-t" style="font-size:11px">jeden cykl odpytania 10 urządzeń (19 200 bit/s, po 2 rejestry)</text>
+<rect x="41.0" y="60.0" width="58.0" height="24.0" rx="2" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.55"/>
+<text x="70.0" y="76.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">S1</text>
+<rect x="101.0" y="60.0" width="58.0" height="24.0" rx="2" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.25"/>
+<text x="130.0" y="76.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">S2</text>
+<rect x="161.0" y="60.0" width="58.0" height="24.0" rx="2" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.25"/>
+<text x="190.0" y="76.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">S3</text>
+<rect x="221.0" y="60.0" width="58.0" height="24.0" rx="2" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.25"/>
+<text x="250.0" y="76.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">S4</text>
+<rect x="281.0" y="60.0" width="58.0" height="24.0" rx="2" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.25"/>
+<text x="310.0" y="76.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">S5</text>
+<rect x="341.0" y="60.0" width="58.0" height="24.0" rx="2" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.25"/>
+<text x="370.0" y="76.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">S6</text>
+<rect x="401.0" y="60.0" width="58.0" height="24.0" rx="2" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.25"/>
+<text x="430.0" y="76.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">S7</text>
+<rect x="461.0" y="60.0" width="58.0" height="24.0" rx="2" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.25"/>
+<text x="490.0" y="76.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">S8</text>
+<rect x="521.0" y="60.0" width="58.0" height="24.0" rx="2" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.25"/>
+<text x="550.0" y="76.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">S9</text>
+<rect x="581.0" y="60.0" width="58.0" height="24.0" rx="2" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.25"/>
+<text x="610.0" y="76.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">S10</text>
+<path d="M 40.0 96.0 L 640.0 96.0" fill="none" stroke="#5C6B77" stroke-width="1.2" marker-end="url(#arF21e0)"/>
+<text x="640.0" y="110.0" text-anchor="end" class="cap" style="fill:#5B4B8A">10 × 15,75 = 157,5 ms</text>
+<path d="M 41.0 84.0 L 40.0 134.0" fill="none" stroke="#5B4B8A" stroke-width="1" stroke-dasharray="3 2"/>
+<path d="M 99.0 84.0 L 640.0 134.0" fill="none" stroke="#5B4B8A" stroke-width="1" stroke-dasharray="3 2"/>
+<rect x="41.0" y="136.0" width="172.5" height="28.0" rx="2" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.3"/>
+<text x="127.2" y="154.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">pytanie 8 B</text>
+<text x="127.2" y="180.0" text-anchor="middle" class="cap" style="font-size:9.5px">4,58 ms</text>
+<rect x="215.5" y="136.0" width="74.2" height="28.0" rx="2" fill="#5C6B77" stroke="none" stroke-width="1" opacity="0.3"/>
+<text x="252.6" y="154.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">cisza 3,5 zn.</text>
+<text x="252.6" y="180.0" text-anchor="middle" class="cap" style="font-size:9.5px">2,00 ms</text>
+<rect x="291.7" y="136.0" width="74.2" height="28.0" rx="2" fill="#C3CDD4" stroke="none" stroke-width="1" opacity="0.3"/>
+<text x="328.8" y="154.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">urządzenie</text>
+<text x="328.8" y="180.0" text-anchor="middle" class="cap" style="font-size:9.5px">2,00 ms</text>
+<rect x="367.9" y="136.0" width="194.6" height="28.0" rx="2" fill="#B3641A" stroke="none" stroke-width="1" opacity="0.3"/>
+<text x="465.1" y="154.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">odpowiedź 9 B</text>
+<text x="465.1" y="180.0" text-anchor="middle" class="cap" style="font-size:9.5px">5,16 ms</text>
+<rect x="564.4" y="136.0" width="74.2" height="28.0" rx="2" fill="#5C6B77" stroke="none" stroke-width="1" opacity="0.3"/>
+<text x="601.5" y="154.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">cisza</text>
+<text x="601.5" y="180.0" text-anchor="middle" class="cap" style="font-size:9.5px">2,00 ms</text>
+<text x="24.0" y="222.0" text-anchor="start" class="bx-t" style="font-size:11px">UTRATA FAZY PRZEZ OPÓŹNIENIE: Δφ = ωc · τ (oś logarytmiczna)</text>
+<clipPath id="cF21e42"><rect x="250" y="236" width="400" height="210"/></clipPath>
+<line x1="250.0" y1="236.0" x2="250.0" y2="446.0" stroke="#E3E8EB" stroke-width="0.8"/>
+<line x1="358.1" y1="236.0" x2="358.1" y2="446.0" stroke="#E3E8EB" stroke-width="0.8"/>
+<line x1="466.3" y1="236.0" x2="466.3" y2="446.0" stroke="#E3E8EB" stroke-width="0.8"/>
+<line x1="574.4" y1="236.0" x2="574.4" y2="446.0" stroke="#E3E8EB" stroke-width="0.8"/>
+<line x1="250.0" y1="446.0" x2="650.0" y2="446.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="250.0" y1="236.0" x2="250.0" y2="446.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="250.0" y1="446.0" x2="250.0" y2="450.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="250.0" y="462.0" text-anchor="middle" class="tick">1°</text>
+<line x1="358.1" y1="446.0" x2="358.1" y2="450.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="358.1" y="462.0" text-anchor="middle" class="tick">10°</text>
+<line x1="466.3" y1="446.0" x2="466.3" y2="450.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="466.3" y="462.0" text-anchor="middle" class="tick">100°</text>
+<line x1="574.4" y1="446.0" x2="574.4" y2="450.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="574.4" y="462.0" text-anchor="middle" class="tick">1000°</text>
+<text x="450.0" y="480.0" text-anchor="middle" class="axlab">utracona faza przy częstotliwości odcięcia</text>
+<text x="242.0" y="264.0" text-anchor="end" class="cap" style="fill:#141C24">zbiorniki (ωc = 0,38) + Modbus RTU</text>
+<rect x="250.0" y="250.0" width="58.8" height="20.0" rx="2" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.7"/>
+<text x="314.8" y="264.0" text-anchor="start" class="cap" style="fill:#0E6E78">3,5°</text>
+<text x="242.0" y="302.0" text-anchor="end" class="cap" style="fill:#141C24">serwo (ωc = 300) + Modbus RTU</text>
+<rect x="250.0" y="288.0" width="371.2" height="20.0" rx="2" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.7"/>
+<text x="615.2" y="302.0" text-anchor="end" class="cap" style="fill:#FFFFFF">2709° — pętla niestabilna</text>
+<text x="242.0" y="340.0" text-anchor="end" class="cap" style="fill:#141C24">serwo + Profinet RT, τ = 2 ms</text>
+<rect x="250.0" y="326.0" width="166.2" height="20.0" rx="2" fill="#B3641A" stroke="none" stroke-width="1" opacity="0.7"/>
+<text x="422.2" y="340.0" text-anchor="start" class="cap" style="fill:#B3641A">34,4°</text>
+<text x="242.0" y="378.0" text-anchor="end" class="cap" style="fill:#141C24">serwo + Profinet IRT, τ = 0,5 ms</text>
+<rect x="250.0" y="364.0" width="101.1" height="20.0" rx="2" fill="#B3641A" stroke="none" stroke-width="1" opacity="0.7"/>
+<text x="357.1" y="378.0" text-anchor="start" class="cap" style="fill:#B3641A">8,6°</text>
+<text x="242.0" y="416.0" text-anchor="end" class="cap" style="fill:#141C24">serwo + EtherCAT, τ = 0,2 ms</text>
+<rect x="250.0" y="402.0" width="57.5" height="20.0" rx="2" fill="#B3641A" stroke="none" stroke-width="1" opacity="0.7"/>
+<text x="313.5" y="416.0" text-anchor="start" class="cap" style="fill:#B3641A">3,4°</text>
+<line x1="442.3" y1="236.0" x2="442.3" y2="446.0" stroke="#9C3B52" stroke-width="1.4" stroke-dasharray="5 3"/>
+<text x="446.3" y="246.0" text-anchor="start" class="cap" style="fill:#9C3B52">typowy zapas fazy 45–60°</text>
+</svg>
+<figcaption>Górna część: cykl odpytania 10 urządzeń i rozwinięcie jednego pytania. Dolna: faza tracona przez opóźnienie przy częstotliwości odcięcia pętli. Ta sama sieć, która w zupełności wystarcza dla zbiorników, uniemożliwia regulację serwonapędu. Czas odpowiedzi urządzenia (2 ms) i opóźnienia τ ≈ 2 cykle są przykładowe; rachunek własny.</figcaption>
+</figure>
+
+<ol class="steps">
+<li><strong>Znak</strong>: <span class="m" data-tex="11 / 19200 = 0{,}573\ \mathrm{ms}"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="20.562ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 9088.6 1000" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-1-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-1-TEX-N-2F" d="M423 750Q432 750 438 744T444 730Q444 725 271 248T92 -240Q85 -250 75 -250Q68 -250 62 -245T56 -231Q56 -221 230 257T407 740Q411 750 423 750Z"></path><path id="MJX-1-TEX-N-39" d="M352 287Q304 211 232 211Q154 211 104 270T44 396Q42 412 42 436V444Q42 537 111 606Q171 666 243 666Q245 666 249 666T257 665H261Q273 665 286 663T323 651T370 619T413 560Q456 472 456 334Q456 194 396 97Q361 41 312 10T208 -22Q147 -22 108 7T68 93T121 149Q143 149 158 135T173 96Q173 78 164 65T148 49T135 44L131 43Q131 41 138 37T164 27T206 22H212Q272 22 313 86Q352 142 352 280V287ZM244 248Q292 248 321 297T351 430Q351 508 343 542Q341 552 337 562T323 588T293 615T246 625Q208 625 181 598Q160 576 154 546T147 441Q147 358 152 329T172 282Q197 248 244 248Z"></path><path id="MJX-1-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-1-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJX-1-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-1-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-1-TEX-N-35" d="M164 157Q164 133 148 117T109 101H102Q148 22 224 22Q294 22 326 82Q345 115 345 210Q345 313 318 349Q292 382 260 382H254Q176 382 136 314Q132 307 129 306T114 304Q97 304 95 310Q93 314 93 485V614Q93 664 98 664Q100 666 102 666Q103 666 123 658T178 642T253 634Q324 634 389 662Q397 666 402 666Q410 666 410 648V635Q328 538 205 538Q174 538 149 544L139 546V374Q158 388 169 396T205 412T256 420Q337 420 393 355T449 201Q449 109 385 44T229 -22Q148 -22 99 32T50 154Q50 178 61 192T84 210T107 214Q132 214 148 197T164 157Z"></path><path id="MJX-1-TEX-N-37" d="M55 458Q56 460 72 567L88 674Q88 676 108 676H128V672Q128 662 143 655T195 646T364 644H485V605L417 512Q408 500 387 472T360 435T339 403T319 367T305 330T292 284T284 230T278 162T275 80Q275 66 275 52T274 28V19Q270 2 255 -10T221 -22Q210 -22 200 -19T179 0T168 40Q168 198 265 368Q285 400 349 489L395 552H302Q128 552 119 546Q113 543 108 522T98 479L95 458V455H55V458Z"></path><path id="MJX-1-TEX-N-33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path><path id="MJX-1-TEX-N-A0" d=""></path><path id="MJX-1-TEX-N-6D" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q351 442 364 440T387 434T406 426T421 417T432 406T441 395T448 384T452 374T455 366L457 361L460 365Q463 369 466 373T475 384T488 397T503 410T523 422T546 432T572 439T603 442Q729 442 740 329Q741 322 741 190V104Q741 66 743 59T754 49Q775 46 803 46H819V0H811L788 1Q764 2 737 2T699 3Q596 3 587 0H579V46H595Q656 46 656 62Q657 64 657 200Q656 335 655 343Q649 371 635 385T611 402T585 404Q540 404 506 370Q479 343 472 315T464 232V168V108Q464 78 465 68T468 55T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z"></path><path id="MJX-1-TEX-N-73" d="M295 316Q295 356 268 385T190 414Q154 414 128 401Q98 382 98 349Q97 344 98 336T114 312T157 287Q175 282 201 278T245 269T277 256Q294 248 310 236T342 195T359 133Q359 71 321 31T198 -10H190Q138 -10 94 26L86 19L77 10Q71 4 65 -1L54 -11H46H42Q39 -11 33 -5V74V132Q33 153 35 157T45 162H54Q66 162 70 158T75 146T82 119T101 77Q136 26 198 26Q295 26 295 104Q295 133 277 151Q257 175 194 187T111 210Q75 227 54 256T33 318Q33 357 50 384T93 424T143 442T187 447H198Q238 447 268 432L283 424L292 431Q302 440 314 448H322H326Q329 448 335 442V310L329 304H301Q295 310 295 316Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mn"><use data-c="31" xlink:href="#MJX-1-TEX-N-31"></use><use data-c="31" xlink:href="#MJX-1-TEX-N-31" transform="translate(500,0)"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(1000,0)"><g data-mml-node="mo"><use data-c="2F" xlink:href="#MJX-1-TEX-N-2F"></use></g></g><g data-mml-node="mn" transform="translate(1500,0)"><use data-c="31" xlink:href="#MJX-1-TEX-N-31"></use><use data-c="39" xlink:href="#MJX-1-TEX-N-39" transform="translate(500,0)"></use><use data-c="32" xlink:href="#MJX-1-TEX-N-32" transform="translate(1000,0)"></use><use data-c="30" xlink:href="#MJX-1-TEX-N-30" transform="translate(1500,0)"></use><use data-c="30" xlink:href="#MJX-1-TEX-N-30" transform="translate(2000,0)"></use></g><g data-mml-node="mo" transform="translate(4277.8,0)"><use data-c="3D" xlink:href="#MJX-1-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(5333.6,0)"><use data-c="30" xlink:href="#MJX-1-TEX-N-30"></use><use data-c="2C" xlink:href="#MJX-1-TEX-N-2C" transform="translate(500,0)"></use><use data-c="35" xlink:href="#MJX-1-TEX-N-35" transform="translate(778,0)"></use><use data-c="37" xlink:href="#MJX-1-TEX-N-37" transform="translate(1278,0)"></use><use data-c="33" xlink:href="#MJX-1-TEX-N-33" transform="translate(1778,0)"></use></g><g data-mml-node="mtext" transform="translate(7611.6,0)"><use data-c="A0" xlink:href="#MJX-1-TEX-N-A0"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(7861.6,0)"><g data-mml-node="mi"><use data-c="6D" xlink:href="#MJX-1-TEX-N-6D"></use><use data-c="73" xlink:href="#MJX-1-TEX-N-73" transform="translate(833,0)"></use></g></g></g></g></svg></span>.</li>
+<li><strong>Jedno urządzenie</strong>: pytanie 8 B (4,58 ms) + odpowiedź 9 B (5,16 ms) + dwie przerwy po 3,5 znaku (4,01 ms) + czas odpowiedzi urządzenia 2 ms = <span class="m" data-tex="15{,}75\ \mathrm{ms}"><svg style="vertical-align: -0.439ex;" xmlns="http://www.w3.org/2000/svg" width="8.495ex" height="1.968ex" role="img" focusable="false" viewBox="0 -676 3755 870" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-2-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-2-TEX-N-35" d="M164 157Q164 133 148 117T109 101H102Q148 22 224 22Q294 22 326 82Q345 115 345 210Q345 313 318 349Q292 382 260 382H254Q176 382 136 314Q132 307 129 306T114 304Q97 304 95 310Q93 314 93 485V614Q93 664 98 664Q100 666 102 666Q103 666 123 658T178 642T253 634Q324 634 389 662Q397 666 402 666Q410 666 410 648V635Q328 538 205 538Q174 538 149 544L139 546V374Q158 388 169 396T205 412T256 420Q337 420 393 355T449 201Q449 109 385 44T229 -22Q148 -22 99 32T50 154Q50 178 61 192T84 210T107 214Q132 214 148 197T164 157Z"></path><path id="MJX-2-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-2-TEX-N-37" d="M55 458Q56 460 72 567L88 674Q88 676 108 676H128V672Q128 662 143 655T195 646T364 644H485V605L417 512Q408 500 387 472T360 435T339 403T319 367T305 330T292 284T284 230T278 162T275 80Q275 66 275 52T274 28V19Q270 2 255 -10T221 -22Q210 -22 200 -19T179 0T168 40Q168 198 265 368Q285 400 349 489L395 552H302Q128 552 119 546Q113 543 108 522T98 479L95 458V455H55V458Z"></path><path id="MJX-2-TEX-N-A0" d=""></path><path id="MJX-2-TEX-N-6D" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q351 442 364 440T387 434T406 426T421 417T432 406T441 395T448 384T452 374T455 366L457 361L460 365Q463 369 466 373T475 384T488 397T503 410T523 422T546 432T572 439T603 442Q729 442 740 329Q741 322 741 190V104Q741 66 743 59T754 49Q775 46 803 46H819V0H811L788 1Q764 2 737 2T699 3Q596 3 587 0H579V46H595Q656 46 656 62Q657 64 657 200Q656 335 655 343Q649 371 635 385T611 402T585 404Q540 404 506 370Q479 343 472 315T464 232V168V108Q464 78 465 68T468 55T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z"></path><path id="MJX-2-TEX-N-73" d="M295 316Q295 356 268 385T190 414Q154 414 128 401Q98 382 98 349Q97 344 98 336T114 312T157 287Q175 282 201 278T245 269T277 256Q294 248 310 236T342 195T359 133Q359 71 321 31T198 -10H190Q138 -10 94 26L86 19L77 10Q71 4 65 -1L54 -11H46H42Q39 -11 33 -5V74V132Q33 153 35 157T45 162H54Q66 162 70 158T75 146T82 119T101 77Q136 26 198 26Q295 26 295 104Q295 133 277 151Q257 175 194 187T111 210Q75 227 54 256T33 318Q33 357 50 384T93 424T143 442T187 447H198Q238 447 268 432L283 424L292 431Q302 440 314 448H322H326Q329 448 335 442V310L329 304H301Q295 310 295 316Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mn"><use data-c="31" xlink:href="#MJX-2-TEX-N-31"></use><use data-c="35" xlink:href="#MJX-2-TEX-N-35" transform="translate(500,0)"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(1000,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-2-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(1278,0)"><use data-c="37" xlink:href="#MJX-2-TEX-N-37"></use><use data-c="35" xlink:href="#MJX-2-TEX-N-35" transform="translate(500,0)"></use></g><g data-mml-node="mtext" transform="translate(2278,0)"><use data-c="A0" xlink:href="#MJX-2-TEX-N-A0"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(2528,0)"><g data-mml-node="mi"><use data-c="6D" xlink:href="#MJX-2-TEX-N-6D"></use><use data-c="73" xlink:href="#MJX-2-TEX-N-73" transform="translate(833,0)"></use></g></g></g></g></svg></span>.</li>
+<li><strong>Cykl 10 urządzeń</strong>: <span class="m" data-tex="157{,}5\ \mathrm{ms}"><svg style="vertical-align: -0.439ex;" xmlns="http://www.w3.org/2000/svg" width="8.495ex" height="1.968ex" role="img" focusable="false" viewBox="0 -676 3755 870" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-3-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-3-TEX-N-35" d="M164 157Q164 133 148 117T109 101H102Q148 22 224 22Q294 22 326 82Q345 115 345 210Q345 313 318 349Q292 382 260 382H254Q176 382 136 314Q132 307 129 306T114 304Q97 304 95 310Q93 314 93 485V614Q93 664 98 664Q100 666 102 666Q103 666 123 658T178 642T253 634Q324 634 389 662Q397 666 402 666Q410 666 410 648V635Q328 538 205 538Q174 538 149 544L139 546V374Q158 388 169 396T205 412T256 420Q337 420 393 355T449 201Q449 109 385 44T229 -22Q148 -22 99 32T50 154Q50 178 61 192T84 210T107 214Q132 214 148 197T164 157Z"></path><path id="MJX-3-TEX-N-37" d="M55 458Q56 460 72 567L88 674Q88 676 108 676H128V672Q128 662 143 655T195 646T364 644H485V605L417 512Q408 500 387 472T360 435T339 403T319 367T305 330T292 284T284 230T278 162T275 80Q275 66 275 52T274 28V19Q270 2 255 -10T221 -22Q210 -22 200 -19T179 0T168 40Q168 198 265 368Q285 400 349 489L395 552H302Q128 552 119 546Q113 543 108 522T98 479L95 458V455H55V458Z"></path><path id="MJX-3-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-3-TEX-N-A0" d=""></path><path id="MJX-3-TEX-N-6D" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q351 442 364 440T387 434T406 426T421 417T432 406T441 395T448 384T452 374T455 366L457 361L460 365Q463 369 466 373T475 384T488 397T503 410T523 422T546 432T572 439T603 442Q729 442 740 329Q741 322 741 190V104Q741 66 743 59T754 49Q775 46 803 46H819V0H811L788 1Q764 2 737 2T699 3Q596 3 587 0H579V46H595Q656 46 656 62Q657 64 657 200Q656 335 655 343Q649 371 635 385T611 402T585 404Q540 404 506 370Q479 343 472 315T464 232V168V108Q464 78 465 68T468 55T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z"></path><path id="MJX-3-TEX-N-73" d="M295 316Q295 356 268 385T190 414Q154 414 128 401Q98 382 98 349Q97 344 98 336T114 312T157 287Q175 282 201 278T245 269T277 256Q294 248 310 236T342 195T359 133Q359 71 321 31T198 -10H190Q138 -10 94 26L86 19L77 10Q71 4 65 -1L54 -11H46H42Q39 -11 33 -5V74V132Q33 153 35 157T45 162H54Q66 162 70 158T75 146T82 119T101 77Q136 26 198 26Q295 26 295 104Q295 133 277 151Q257 175 194 187T111 210Q75 227 54 256T33 318Q33 357 50 384T93 424T143 442T187 447H198Q238 447 268 432L283 424L292 431Q302 440 314 448H322H326Q329 448 335 442V310L329 304H301Q295 310 295 316Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mn"><use data-c="31" xlink:href="#MJX-3-TEX-N-31"></use><use data-c="35" xlink:href="#MJX-3-TEX-N-35" transform="translate(500,0)"></use><use data-c="37" xlink:href="#MJX-3-TEX-N-37" transform="translate(1000,0)"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(1500,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-3-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(1778,0)"><use data-c="35" xlink:href="#MJX-3-TEX-N-35"></use></g><g data-mml-node="mtext" transform="translate(2278,0)"><use data-c="A0" xlink:href="#MJX-3-TEX-N-A0"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(2528,0)"><g data-mml-node="mi"><use data-c="6D" xlink:href="#MJX-3-TEX-N-6D"></use><use data-c="73" xlink:href="#MJX-3-TEX-N-73" transform="translate(833,0)"></use></g></g></g></g></svg></span> — każda wartość jest odświeżana raz na 0,16 s.</li>
+<li><strong>Opóźnienie w pętli</strong> <span class="m" data-tex="\tau"><svg style="vertical-align: -0.029ex;" xmlns="http://www.w3.org/2000/svg" width="1.17ex" height="1.005ex" role="img" focusable="false" viewBox="0 -431 517 444" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-4-TEX-I-1D70F" d="M39 284Q18 284 18 294Q18 301 45 338T99 398Q134 425 164 429Q170 431 332 431Q492 431 497 429Q517 424 517 402Q517 388 508 376T485 360Q479 358 389 358T299 356Q298 355 283 274T251 109T233 20Q228 5 215 -4T186 -13Q153 -13 153 20V30L203 192Q214 228 227 272T248 336L254 357Q254 358 208 358Q206 358 197 358T183 359Q105 359 61 295Q56 287 53 286T39 284Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D70F" xlink:href="#MJX-4-TEX-I-1D70F"></use></g></g></g></svg></span> daje utratę fazy <span class="m" data-tex="\Delta\varphi = \omega_c \tau"><svg style="vertical-align: -0.493ex;" xmlns="http://www.w3.org/2000/svg" width="9.839ex" height="2.113ex" role="img" focusable="false" viewBox="0 -716 4348.7 934" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-5-TEX-N-394" d="M51 0Q46 4 46 7Q46 9 215 357T388 709Q391 716 416 716Q439 716 444 709Q447 705 616 357T786 7Q786 4 781 0H51ZM507 344L384 596L137 92L383 91H630Q630 93 507 344Z"></path><path id="MJX-5-TEX-I-1D711" d="M92 210Q92 176 106 149T142 108T185 85T220 72L235 70L237 71L250 112Q268 170 283 211T322 299T370 375T429 423T502 442Q547 442 582 410T618 302Q618 224 575 152T457 35T299 -10Q273 -10 273 -12L266 -48Q260 -83 252 -125T241 -179Q236 -203 215 -212Q204 -218 190 -218Q159 -215 159 -185Q159 -175 214 -2L209 0Q204 2 195 5T173 14T147 28T120 46T94 71T71 103T56 142T50 190Q50 238 76 311T149 431H162Q183 431 183 423Q183 417 175 409Q134 361 114 300T92 210ZM574 278Q574 320 550 344T486 369Q437 369 394 329T323 218Q309 184 295 109L286 64Q304 62 306 62Q423 62 498 131T574 278Z"></path><path id="MJX-5-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-5-TEX-I-1D714" d="M495 384Q495 406 514 424T555 443Q574 443 589 425T604 364Q604 334 592 278T555 155T483 38T377 -11Q297 -11 267 66Q266 68 260 61Q201 -11 125 -11Q15 -11 15 139Q15 230 56 325T123 434Q135 441 147 436Q160 429 160 418Q160 406 140 379T94 306T62 208Q61 202 61 187Q61 124 85 100T143 76Q201 76 245 129L253 137V156Q258 297 317 297Q348 297 348 261Q348 243 338 213T318 158L308 135Q309 133 310 129T318 115T334 97T358 83T393 76Q456 76 501 148T546 274Q546 305 533 325T508 357T495 384Z"></path><path id="MJX-5-TEX-I-1D450" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path><path id="MJX-5-TEX-I-1D70F" d="M39 284Q18 284 18 294Q18 301 45 338T99 398Q134 425 164 429Q170 431 332 431Q492 431 497 429Q517 424 517 402Q517 388 508 376T485 360Q479 358 389 358T299 356Q298 355 283 274T251 109T233 20Q228 5 215 -4T186 -13Q153 -13 153 20V30L203 192Q214 228 227 272T248 336L254 357Q254 358 208 358Q206 358 197 358T183 359Q105 359 61 295Q56 287 53 286T39 284Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="394" xlink:href="#MJX-5-TEX-N-394"></use></g><g data-mml-node="mi" transform="translate(833,0)"><use data-c="1D711" xlink:href="#MJX-5-TEX-I-1D711"></use></g><g data-mml-node="mo" transform="translate(1764.8,0)"><use data-c="3D" xlink:href="#MJX-5-TEX-N-3D"></use></g><g data-mml-node="msub" transform="translate(2820.6,0)"><g data-mml-node="mi"><use data-c="1D714" xlink:href="#MJX-5-TEX-I-1D714"></use></g><g data-mml-node="mi" transform="translate(655,-150) scale(0.707)"><use data-c="1D450" xlink:href="#MJX-5-TEX-I-1D450"></use></g></g><g data-mml-node="mi" transform="translate(3831.7,0)"><use data-c="1D70F" xlink:href="#MJX-5-TEX-I-1D70F"></use></g></g></g></svg></span> (jak w zagadnieniu 18). Dla zbiorników (<span class="m" data-tex="\omega_c = 0{,}38\ \mathrm{rad/s}"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="15.192ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 6714.7 1000" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-6-TEX-I-1D714" d="M495 384Q495 406 514 424T555 443Q574 443 589 425T604 364Q604 334 592 278T555 155T483 38T377 -11Q297 -11 267 66Q266 68 260 61Q201 -11 125 -11Q15 -11 15 139Q15 230 56 325T123 434Q135 441 147 436Q160 429 160 418Q160 406 140 379T94 306T62 208Q61 202 61 187Q61 124 85 100T143 76Q201 76 245 129L253 137V156Q258 297 317 297Q348 297 348 261Q348 243 338 213T318 158L308 135Q309 133 310 129T318 115T334 97T358 83T393 76Q456 76 501 148T546 274Q546 305 533 325T508 357T495 384Z"></path><path id="MJX-6-TEX-I-1D450" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path><path id="MJX-6-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-6-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJX-6-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-6-TEX-N-33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path><path id="MJX-6-TEX-N-38" d="M70 417T70 494T124 618T248 666Q319 666 374 624T429 515Q429 485 418 459T392 417T361 389T335 371T324 363L338 354Q352 344 366 334T382 323Q457 264 457 174Q457 95 399 37T249 -22Q159 -22 101 29T43 155Q43 263 172 335L154 348Q133 361 127 368Q70 417 70 494ZM286 386L292 390Q298 394 301 396T311 403T323 413T334 425T345 438T355 454T364 471T369 491T371 513Q371 556 342 586T275 624Q268 625 242 625Q201 625 165 599T128 534Q128 511 141 492T167 463T217 431Q224 426 228 424L286 386ZM250 21Q308 21 350 55T392 137Q392 154 387 169T375 194T353 216T330 234T301 253T274 270Q260 279 244 289T218 306L210 311Q204 311 181 294T133 239T107 157Q107 98 150 60T250 21Z"></path><path id="MJX-6-TEX-N-A0" d=""></path><path id="MJX-6-TEX-N-72" d="M36 46H50Q89 46 97 60V68Q97 77 97 91T98 122T98 161T98 203Q98 234 98 269T98 328L97 351Q94 370 83 376T38 385H20V408Q20 431 22 431L32 432Q42 433 60 434T96 436Q112 437 131 438T160 441T171 442H174V373Q213 441 271 441H277Q322 441 343 419T364 373Q364 352 351 337T313 322Q288 322 276 338T263 372Q263 381 265 388T270 400T273 405Q271 407 250 401Q234 393 226 386Q179 341 179 207V154Q179 141 179 127T179 101T180 81T180 66V61Q181 59 183 57T188 54T193 51T200 49T207 48T216 47T225 47T235 46T245 46H276V0H267Q249 3 140 3Q37 3 28 0H20V46H36Z"></path><path id="MJX-6-TEX-N-61" d="M137 305T115 305T78 320T63 359Q63 394 97 421T218 448Q291 448 336 416T396 340Q401 326 401 309T402 194V124Q402 76 407 58T428 40Q443 40 448 56T453 109V145H493V106Q492 66 490 59Q481 29 455 12T400 -6T353 12T329 54V58L327 55Q325 52 322 49T314 40T302 29T287 17T269 6T247 -2T221 -8T190 -11Q130 -11 82 20T34 107Q34 128 41 147T68 188T116 225T194 253T304 268H318V290Q318 324 312 340Q290 411 215 411Q197 411 181 410T156 406T148 403Q170 388 170 359Q170 334 154 320ZM126 106Q126 75 150 51T209 26Q247 26 276 49T315 109Q317 116 318 175Q318 233 317 233Q309 233 296 232T251 223T193 203T147 166T126 106Z"></path><path id="MJX-6-TEX-N-64" d="M376 495Q376 511 376 535T377 568Q377 613 367 624T316 637H298V660Q298 683 300 683L310 684Q320 685 339 686T376 688Q393 689 413 690T443 693T454 694H457V390Q457 84 458 81Q461 61 472 55T517 46H535V0Q533 0 459 -5T380 -11H373V44L365 37Q307 -11 235 -11Q158 -11 96 50T34 215Q34 315 97 378T244 442Q319 442 376 393V495ZM373 342Q328 405 260 405Q211 405 173 369Q146 341 139 305T131 211Q131 155 138 120T173 59Q203 26 251 26Q322 26 373 103V342Z"></path><path id="MJX-6-TEX-N-2F" d="M423 750Q432 750 438 744T444 730Q444 725 271 248T92 -240Q85 -250 75 -250Q68 -250 62 -245T56 -231Q56 -221 230 257T407 740Q411 750 423 750Z"></path><path id="MJX-6-TEX-N-73" d="M295 316Q295 356 268 385T190 414Q154 414 128 401Q98 382 98 349Q97 344 98 336T114 312T157 287Q175 282 201 278T245 269T277 256Q294 248 310 236T342 195T359 133Q359 71 321 31T198 -10H190Q138 -10 94 26L86 19L77 10Q71 4 65 -1L54 -11H46H42Q39 -11 33 -5V74V132Q33 153 35 157T45 162H54Q66 162 70 158T75 146T82 119T101 77Q136 26 198 26Q295 26 295 104Q295 133 277 151Q257 175 194 187T111 210Q75 227 54 256T33 318Q33 357 50 384T93 424T143 442T187 447H198Q238 447 268 432L283 424L292 431Q302 440 314 448H322H326Q329 448 335 442V310L329 304H301Q295 310 295 316Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D714" xlink:href="#MJX-6-TEX-I-1D714"></use></g><g data-mml-node="mi" transform="translate(655,-150) scale(0.707)"><use data-c="1D450" xlink:href="#MJX-6-TEX-I-1D450"></use></g></g><g data-mml-node="mo" transform="translate(1289,0)"><use data-c="3D" xlink:href="#MJX-6-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(2344.7,0)"><use data-c="30" xlink:href="#MJX-6-TEX-N-30"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(2844.7,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-6-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(3122.7,0)"><use data-c="33" xlink:href="#MJX-6-TEX-N-33"></use><use data-c="38" xlink:href="#MJX-6-TEX-N-38" transform="translate(500,0)"></use></g><g data-mml-node="mtext" transform="translate(4122.7,0)"><use data-c="A0" xlink:href="#MJX-6-TEX-N-A0"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(4372.7,0)"><g data-mml-node="mi"><use data-c="72" xlink:href="#MJX-6-TEX-N-72"></use><use data-c="61" xlink:href="#MJX-6-TEX-N-61" transform="translate(392,0)"></use><use data-c="64" xlink:href="#MJX-6-TEX-N-64" transform="translate(892,0)"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(1448,0)"><g data-mml-node="mo"><use data-c="2F" xlink:href="#MJX-6-TEX-N-2F"></use></g></g><g data-mml-node="mi" transform="translate(1948,0)"><use data-c="73" xlink:href="#MJX-6-TEX-N-73"></use></g></g></g></g></svg></span>): <span class="m" data-tex="0{,}38\cdot 0{,}158 = 0{,}06\ \mathrm{rad} = 3{,}5^\circ"><svg style="vertical-align: -0.439ex;" xmlns="http://www.w3.org/2000/svg" width="28.588ex" height="2.009ex" role="img" focusable="false" viewBox="0 -694 12636.1 888" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-7-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJX-7-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-7-TEX-N-33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path><path id="MJX-7-TEX-N-38" d="M70 417T70 494T124 618T248 666Q319 666 374 624T429 515Q429 485 418 459T392 417T361 389T335 371T324 363L338 354Q352 344 366 334T382 323Q457 264 457 174Q457 95 399 37T249 -22Q159 -22 101 29T43 155Q43 263 172 335L154 348Q133 361 127 368Q70 417 70 494ZM286 386L292 390Q298 394 301 396T311 403T323 413T334 425T345 438T355 454T364 471T369 491T371 513Q371 556 342 586T275 624Q268 625 242 625Q201 625 165 599T128 534Q128 511 141 492T167 463T217 431Q224 426 228 424L286 386ZM250 21Q308 21 350 55T392 137Q392 154 387 169T375 194T353 216T330 234T301 253T274 270Q260 279 244 289T218 306L210 311Q204 311 181 294T133 239T107 157Q107 98 150 60T250 21Z"></path><path id="MJX-7-TEX-N-22C5" d="M78 250Q78 274 95 292T138 310Q162 310 180 294T199 251Q199 226 182 208T139 190T96 207T78 250Z"></path><path id="MJX-7-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-7-TEX-N-35" d="M164 157Q164 133 148 117T109 101H102Q148 22 224 22Q294 22 326 82Q345 115 345 210Q345 313 318 349Q292 382 260 382H254Q176 382 136 314Q132 307 129 306T114 304Q97 304 95 310Q93 314 93 485V614Q93 664 98 664Q100 666 102 666Q103 666 123 658T178 642T253 634Q324 634 389 662Q397 666 402 666Q410 666 410 648V635Q328 538 205 538Q174 538 149 544L139 546V374Q158 388 169 396T205 412T256 420Q337 420 393 355T449 201Q449 109 385 44T229 -22Q148 -22 99 32T50 154Q50 178 61 192T84 210T107 214Q132 214 148 197T164 157Z"></path><path id="MJX-7-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-7-TEX-N-36" d="M42 313Q42 476 123 571T303 666Q372 666 402 630T432 550Q432 525 418 510T379 495Q356 495 341 509T326 548Q326 592 373 601Q351 623 311 626Q240 626 194 566Q147 500 147 364L148 360Q153 366 156 373Q197 433 263 433H267Q313 433 348 414Q372 400 396 374T435 317Q456 268 456 210V192Q456 169 451 149Q440 90 387 34T253 -22Q225 -22 199 -14T143 16T92 75T56 172T42 313ZM257 397Q227 397 205 380T171 335T154 278T148 216Q148 133 160 97T198 39Q222 21 251 21Q302 21 329 59Q342 77 347 104T352 209Q352 289 347 316T329 361Q302 397 257 397Z"></path><path id="MJX-7-TEX-N-A0" d=""></path><path id="MJX-7-TEX-N-72" d="M36 46H50Q89 46 97 60V68Q97 77 97 91T98 122T98 161T98 203Q98 234 98 269T98 328L97 351Q94 370 83 376T38 385H20V408Q20 431 22 431L32 432Q42 433 60 434T96 436Q112 437 131 438T160 441T171 442H174V373Q213 441 271 441H277Q322 441 343 419T364 373Q364 352 351 337T313 322Q288 322 276 338T263 372Q263 381 265 388T270 400T273 405Q271 407 250 401Q234 393 226 386Q179 341 179 207V154Q179 141 179 127T179 101T180 81T180 66V61Q181 59 183 57T188 54T193 51T200 49T207 48T216 47T225 47T235 46T245 46H276V0H267Q249 3 140 3Q37 3 28 0H20V46H36Z"></path><path id="MJX-7-TEX-N-61" d="M137 305T115 305T78 320T63 359Q63 394 97 421T218 448Q291 448 336 416T396 340Q401 326 401 309T402 194V124Q402 76 407 58T428 40Q443 40 448 56T453 109V145H493V106Q492 66 490 59Q481 29 455 12T400 -6T353 12T329 54V58L327 55Q325 52 322 49T314 40T302 29T287 17T269 6T247 -2T221 -8T190 -11Q130 -11 82 20T34 107Q34 128 41 147T68 188T116 225T194 253T304 268H318V290Q318 324 312 340Q290 411 215 411Q197 411 181 410T156 406T148 403Q170 388 170 359Q170 334 154 320ZM126 106Q126 75 150 51T209 26Q247 26 276 49T315 109Q317 116 318 175Q318 233 317 233Q309 233 296 232T251 223T193 203T147 166T126 106Z"></path><path id="MJX-7-TEX-N-64" d="M376 495Q376 511 376 535T377 568Q377 613 367 624T316 637H298V660Q298 683 300 683L310 684Q320 685 339 686T376 688Q393 689 413 690T443 693T454 694H457V390Q457 84 458 81Q461 61 472 55T517 46H535V0Q533 0 459 -5T380 -11H373V44L365 37Q307 -11 235 -11Q158 -11 96 50T34 215Q34 315 97 378T244 442Q319 442 376 393V495ZM373 342Q328 405 260 405Q211 405 173 369Q146 341 139 305T131 211Q131 155 138 120T173 59Q203 26 251 26Q322 26 373 103V342Z"></path><path id="MJX-7-TEX-N-2218" d="M55 251Q55 328 112 386T249 444T386 388T444 249Q444 171 388 113T250 55Q170 55 113 112T55 251ZM245 403Q188 403 142 361T96 250Q96 183 141 140T250 96Q284 96 313 109T354 135T375 160Q403 197 403 250Q403 313 360 358T245 403Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mn"><use data-c="30" xlink:href="#MJX-7-TEX-N-30"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(500,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-7-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(778,0)"><use data-c="33" xlink:href="#MJX-7-TEX-N-33"></use><use data-c="38" xlink:href="#MJX-7-TEX-N-38" transform="translate(500,0)"></use></g><g data-mml-node="mo" transform="translate(2000.2,0)"><use data-c="22C5" xlink:href="#MJX-7-TEX-N-22C5"></use></g><g data-mml-node="mn" transform="translate(2500.4,0)"><use data-c="30" xlink:href="#MJX-7-TEX-N-30"></use><use data-c="2C" xlink:href="#MJX-7-TEX-N-2C" transform="translate(500,0)"></use><use data-c="31" xlink:href="#MJX-7-TEX-N-31" transform="translate(778,0)"></use><use data-c="35" xlink:href="#MJX-7-TEX-N-35" transform="translate(1278,0)"></use><use data-c="38" xlink:href="#MJX-7-TEX-N-38" transform="translate(1778,0)"></use></g><g data-mml-node="mo" transform="translate(5056.2,0)"><use data-c="3D" xlink:href="#MJX-7-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(6112,0)"><use data-c="30" xlink:href="#MJX-7-TEX-N-30"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(6612,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-7-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(6890,0)"><use data-c="30" xlink:href="#MJX-7-TEX-N-30"></use><use data-c="36" xlink:href="#MJX-7-TEX-N-36" transform="translate(500,0)"></use></g><g data-mml-node="mtext" transform="translate(7890,0)"><use data-c="A0" xlink:href="#MJX-7-TEX-N-A0"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(8140,0)"><g data-mml-node="mi"><use data-c="72" xlink:href="#MJX-7-TEX-N-72"></use><use data-c="61" xlink:href="#MJX-7-TEX-N-61" transform="translate(392,0)"></use><use data-c="64" xlink:href="#MJX-7-TEX-N-64" transform="translate(892,0)"></use></g></g><g data-mml-node="mo" transform="translate(9865.8,0)"><use data-c="3D" xlink:href="#MJX-7-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(10921.6,0)"><use data-c="33" xlink:href="#MJX-7-TEX-N-33"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(11421.6,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-7-TEX-N-2C"></use></g></g><g data-mml-node="msup" transform="translate(11699.6,0)"><g data-mml-node="mn"><use data-c="35" xlink:href="#MJX-7-TEX-N-35"></use></g><g data-mml-node="mo" transform="translate(533,363) scale(0.707)"><use data-c="2218" xlink:href="#MJX-7-TEX-N-2218"></use></g></g></g></g></svg></span> — bez znaczenia.</li>
+<li><strong>Dla serwonapędu</strong> (<span class="m" data-tex="\omega_c = 300\ \mathrm{rad/s}"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="14.563ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 6436.7 1000" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-8-TEX-I-1D714" d="M495 384Q495 406 514 424T555 443Q574 443 589 425T604 364Q604 334 592 278T555 155T483 38T377 -11Q297 -11 267 66Q266 68 260 61Q201 -11 125 -11Q15 -11 15 139Q15 230 56 325T123 434Q135 441 147 436Q160 429 160 418Q160 406 140 379T94 306T62 208Q61 202 61 187Q61 124 85 100T143 76Q201 76 245 129L253 137V156Q258 297 317 297Q348 297 348 261Q348 243 338 213T318 158L308 135Q309 133 310 129T318 115T334 97T358 83T393 76Q456 76 501 148T546 274Q546 305 533 325T508 357T495 384Z"></path><path id="MJX-8-TEX-I-1D450" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path><path id="MJX-8-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-8-TEX-N-33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path><path id="MJX-8-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJX-8-TEX-N-A0" d=""></path><path id="MJX-8-TEX-N-72" d="M36 46H50Q89 46 97 60V68Q97 77 97 91T98 122T98 161T98 203Q98 234 98 269T98 328L97 351Q94 370 83 376T38 385H20V408Q20 431 22 431L32 432Q42 433 60 434T96 436Q112 437 131 438T160 441T171 442H174V373Q213 441 271 441H277Q322 441 343 419T364 373Q364 352 351 337T313 322Q288 322 276 338T263 372Q263 381 265 388T270 400T273 405Q271 407 250 401Q234 393 226 386Q179 341 179 207V154Q179 141 179 127T179 101T180 81T180 66V61Q181 59 183 57T188 54T193 51T200 49T207 48T216 47T225 47T235 46T245 46H276V0H267Q249 3 140 3Q37 3 28 0H20V46H36Z"></path><path id="MJX-8-TEX-N-61" d="M137 305T115 305T78 320T63 359Q63 394 97 421T218 448Q291 448 336 416T396 340Q401 326 401 309T402 194V124Q402 76 407 58T428 40Q443 40 448 56T453 109V145H493V106Q492 66 490 59Q481 29 455 12T400 -6T353 12T329 54V58L327 55Q325 52 322 49T314 40T302 29T287 17T269 6T247 -2T221 -8T190 -11Q130 -11 82 20T34 107Q34 128 41 147T68 188T116 225T194 253T304 268H318V290Q318 324 312 340Q290 411 215 411Q197 411 181 410T156 406T148 403Q170 388 170 359Q170 334 154 320ZM126 106Q126 75 150 51T209 26Q247 26 276 49T315 109Q317 116 318 175Q318 233 317 233Q309 233 296 232T251 223T193 203T147 166T126 106Z"></path><path id="MJX-8-TEX-N-64" d="M376 495Q376 511 376 535T377 568Q377 613 367 624T316 637H298V660Q298 683 300 683L310 684Q320 685 339 686T376 688Q393 689 413 690T443 693T454 694H457V390Q457 84 458 81Q461 61 472 55T517 46H535V0Q533 0 459 -5T380 -11H373V44L365 37Q307 -11 235 -11Q158 -11 96 50T34 215Q34 315 97 378T244 442Q319 442 376 393V495ZM373 342Q328 405 260 405Q211 405 173 369Q146 341 139 305T131 211Q131 155 138 120T173 59Q203 26 251 26Q322 26 373 103V342Z"></path><path id="MJX-8-TEX-N-2F" d="M423 750Q432 750 438 744T444 730Q444 725 271 248T92 -240Q85 -250 75 -250Q68 -250 62 -245T56 -231Q56 -221 230 257T407 740Q411 750 423 750Z"></path><path id="MJX-8-TEX-N-73" d="M295 316Q295 356 268 385T190 414Q154 414 128 401Q98 382 98 349Q97 344 98 336T114 312T157 287Q175 282 201 278T245 269T277 256Q294 248 310 236T342 195T359 133Q359 71 321 31T198 -10H190Q138 -10 94 26L86 19L77 10Q71 4 65 -1L54 -11H46H42Q39 -11 33 -5V74V132Q33 153 35 157T45 162H54Q66 162 70 158T75 146T82 119T101 77Q136 26 198 26Q295 26 295 104Q295 133 277 151Q257 175 194 187T111 210Q75 227 54 256T33 318Q33 357 50 384T93 424T143 442T187 447H198Q238 447 268 432L283 424L292 431Q302 440 314 448H322H326Q329 448 335 442V310L329 304H301Q295 310 295 316Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D714" xlink:href="#MJX-8-TEX-I-1D714"></use></g><g data-mml-node="mi" transform="translate(655,-150) scale(0.707)"><use data-c="1D450" xlink:href="#MJX-8-TEX-I-1D450"></use></g></g><g data-mml-node="mo" transform="translate(1289,0)"><use data-c="3D" xlink:href="#MJX-8-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(2344.7,0)"><use data-c="33" xlink:href="#MJX-8-TEX-N-33"></use><use data-c="30" xlink:href="#MJX-8-TEX-N-30" transform="translate(500,0)"></use><use data-c="30" xlink:href="#MJX-8-TEX-N-30" transform="translate(1000,0)"></use></g><g data-mml-node="mtext" transform="translate(3844.7,0)"><use data-c="A0" xlink:href="#MJX-8-TEX-N-A0"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(4094.7,0)"><g data-mml-node="mi"><use data-c="72" xlink:href="#MJX-8-TEX-N-72"></use><use data-c="61" xlink:href="#MJX-8-TEX-N-61" transform="translate(392,0)"></use><use data-c="64" xlink:href="#MJX-8-TEX-N-64" transform="translate(892,0)"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(1448,0)"><g data-mml-node="mo"><use data-c="2F" xlink:href="#MJX-8-TEX-N-2F"></use></g></g><g data-mml-node="mi" transform="translate(1948,0)"><use data-c="73" xlink:href="#MJX-8-TEX-N-73"></use></g></g></g></g></svg></span>) ta sama sieć zabiera ponad 2700° — pętli nie da się zamknąć. Profinet RT (τ = 2 ms) zabiera 34°, IRT 8,6°, a EtherCAT 3,4°.</li>
+</ol>
+
+<div class="box key">
+<span class="lbl">Zapamiętaj</span>
+<p><strong>Sieć dobiera się do dynamiki pętli, którą obsługuje: opóźnienie τ kosztuje fazę <span class="m" data-tex="\omega_c\tau"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="3.457ex" height="1.359ex" role="img" focusable="false" viewBox="0 -443 1528.2 600.8" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-9-TEX-I-1D714" d="M495 384Q495 406 514 424T555 443Q574 443 589 425T604 364Q604 334 592 278T555 155T483 38T377 -11Q297 -11 267 66Q266 68 260 61Q201 -11 125 -11Q15 -11 15 139Q15 230 56 325T123 434Q135 441 147 436Q160 429 160 418Q160 406 140 379T94 306T62 208Q61 202 61 187Q61 124 85 100T143 76Q201 76 245 129L253 137V156Q258 297 317 297Q348 297 348 261Q348 243 338 213T318 158L308 135Q309 133 310 129T318 115T334 97T358 83T393 76Q456 76 501 148T546 274Q546 305 533 325T508 357T495 384Z"></path><path id="MJX-9-TEX-I-1D450" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path><path id="MJX-9-TEX-I-1D70F" d="M39 284Q18 284 18 294Q18 301 45 338T99 398Q134 425 164 429Q170 431 332 431Q492 431 497 429Q517 424 517 402Q517 388 508 376T485 360Q479 358 389 358T299 356Q298 355 283 274T251 109T233 20Q228 5 215 -4T186 -13Q153 -13 153 20V30L203 192Q214 228 227 272T248 336L254 357Q254 358 208 358Q206 358 197 358T183 359Q105 359 61 295Q56 287 53 286T39 284Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D714" xlink:href="#MJX-9-TEX-I-1D714"></use></g><g data-mml-node="mi" transform="translate(655,-150) scale(0.707)"><use data-c="1D450" xlink:href="#MJX-9-TEX-I-1D450"></use></g></g><g data-mml-node="mi" transform="translate(1011.2,0)"><use data-c="1D70F" xlink:href="#MJX-9-TEX-I-1D70F"></use></g></g></g></svg></span>.</strong> Wolny proces zniesie nawet prosty Modbus, szybki napęd wymaga sieci z cyklem rzędu 100 µs.</p>
+</div>
+</section>
+
+<section>
+<h2><span class="num">08</span> Narysuj na tablicy</h2>
+<div class="rail"></div>
+
+<figure>
+<svg viewBox="0 0 680 470" class="fig">
+<defs><marker id="arF21f0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#141C24"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">NARYSUJ NA TABLICY W 6 RUCHACH</text>
+<rect x="14.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="32.0" cy="58.0" r="10" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="32.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">1</text>
+<text x="48.0" y="56.0" text-anchor="start" class="bx-t">piramida:</text>
+<text x="48.0" y="70.0" text-anchor="start" class="bx">4 poziomy sieci</text>
+<polygon points="66.0,120.0 82.0,90.0 126.0,90.0 142.0,120.0" fill="#9C3B52" opacity="0.18" stroke="#9C3B52"/>
+<polygon points="50.0,154.0 66.0,124.0 142.0,124.0 158.0,154.0" fill="#B3641A" opacity="0.18" stroke="#B3641A"/>
+<polygon points="34.0,188.0 50.0,158.0 158.0,158.0 174.0,188.0" fill="#5B4B8A" opacity="0.18" stroke="#5B4B8A"/>
+<polygon points="18.0,222.0 34.0,192.0 174.0,192.0 190.0,222.0" fill="#0E6E78" opacity="0.18" stroke="#0E6E78"/>
+<rect x="236.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="254.0" cy="58.0" r="10" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="254.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">2</text>
+<text x="270.0" y="56.0" text-anchor="start" class="bx-t">przy poziomach:</text>
+<text x="270.0" y="70.0" text-anchor="start" class="bx">nazwy sieci</text>
+<polygon points="288.0,120.0 304.0,90.0 348.0,90.0 364.0,120.0" fill="#9C3B52" opacity="0.18" stroke="#9C3B52"/>
+<text x="326.0" y="110.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:9px">OPC UA</text>
+<polygon points="272.0,154.0 288.0,124.0 364.0,124.0 380.0,154.0" fill="#B3641A" opacity="0.18" stroke="#B3641A"/>
+<text x="326.0" y="144.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9px">Profinet</text>
+<polygon points="256.0,188.0 272.0,158.0 380.0,158.0 396.0,188.0" fill="#5B4B8A" opacity="0.18" stroke="#5B4B8A"/>
+<text x="326.0" y="178.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9px">Profibus</text>
+<polygon points="240.0,222.0 256.0,192.0 396.0,192.0 412.0,222.0" fill="#0E6E78" opacity="0.18" stroke="#0E6E78"/>
+<text x="326.0" y="212.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9px">IO-Link</text>
+<rect x="458.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="476.0" cy="58.0" r="10" fill="#141C24" stroke="none" stroke-width="1"/>
+<text x="476.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">3</text>
+<text x="492.0" y="56.0" text-anchor="start" class="bx-t">obok strzałka:</text>
+<text x="492.0" y="70.0" text-anchor="start" class="bx">cykl ↓, dane ↑</text>
+<polygon points="510.0,120.0 526.0,90.0 570.0,90.0 586.0,120.0" fill="#9C3B52" opacity="0.18" stroke="#9C3B52"/>
+<text x="548.0" y="110.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:9px">OPC UA</text>
+<polygon points="494.0,154.0 510.0,124.0 586.0,124.0 602.0,154.0" fill="#B3641A" opacity="0.18" stroke="#B3641A"/>
+<text x="548.0" y="144.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9px">Profinet</text>
+<polygon points="478.0,188.0 494.0,158.0 602.0,158.0 618.0,188.0" fill="#5B4B8A" opacity="0.18" stroke="#5B4B8A"/>
+<text x="548.0" y="178.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9px">Profibus</text>
+<polygon points="462.0,222.0 478.0,192.0 618.0,192.0 634.0,222.0" fill="#0E6E78" opacity="0.18" stroke="#0E6E78"/>
+<text x="548.0" y="212.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9px">IO-Link</text>
+<path d="M 644.0 96.0 L 644.0 224.0" fill="none" stroke="#141C24" stroke-width="1.3" marker-end="url(#arF21f0)"/>
+<text x="638.0" y="160.0" text-anchor="end" class="cap" style="font-size:9px">cykl</text>
+<rect x="14.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="32.0" cy="272.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="32.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">4</text>
+<text x="48.0" y="270.0" text-anchor="start" class="bx-t">magistrala:</text>
+<text x="48.0" y="284.0" text-anchor="start" class="bx">master + 3 slave</text>
+<rect x="88.0" y="306.0" width="60.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<text x="118.0" y="321.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">master</text>
+<line x1="34.0" y1="354.0" x2="202.0" y2="354.0" stroke="#5C6B77" stroke-width="2"/>
+<line x1="118.0" y1="328.0" x2="118.0" y2="354.0" stroke="#5C6B77" stroke-width="1.3"/>
+<line x1="58.0" y1="354.0" x2="58.0" y2="366.0" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="40.0" y="366.0" width="36.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<text x="58.0" y="379.0" text-anchor="middle" class="cap" style="font-size:9px">S1</text>
+<line x1="118.0" y1="354.0" x2="118.0" y2="366.0" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="100.0" y="366.0" width="36.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<text x="118.0" y="379.0" text-anchor="middle" class="cap" style="font-size:9px">S2</text>
+<line x1="178.0" y1="354.0" x2="178.0" y2="366.0" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="160.0" y="366.0" width="36.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<text x="178.0" y="379.0" text-anchor="middle" class="cap" style="font-size:9px">S3</text>
+<rect x="236.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="254.0" cy="272.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="254.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">5</text>
+<text x="270.0" y="270.0" text-anchor="start" class="bx-t">dostęp:</text>
+<text x="270.0" y="284.0" text-anchor="start" class="bx">kto nadaje, kiedy</text>
+<rect x="310.0" y="306.0" width="60.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<text x="340.0" y="321.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">master</text>
+<line x1="256.0" y1="354.0" x2="424.0" y2="354.0" stroke="#5C6B77" stroke-width="2"/>
+<line x1="340.0" y1="328.0" x2="340.0" y2="354.0" stroke="#5C6B77" stroke-width="1.3"/>
+<line x1="280.0" y1="354.0" x2="280.0" y2="366.0" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="262.0" y="366.0" width="36.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<text x="280.0" y="379.0" text-anchor="middle" class="cap" style="font-size:9px">S1</text>
+<line x1="340.0" y1="354.0" x2="340.0" y2="366.0" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="322.0" y="366.0" width="36.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<text x="340.0" y="379.0" text-anchor="middle" class="cap" style="font-size:9px">S2</text>
+<line x1="400.0" y1="354.0" x2="400.0" y2="366.0" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="382.0" y="366.0" width="36.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<text x="400.0" y="379.0" text-anchor="middle" class="cap" style="font-size:9px">S3</text>
+<rect x="256.0" y="404.0" width="26.0" height="16.0" rx="2" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.3"/>
+<rect x="284.0" y="404.0" width="26.0" height="16.0" rx="2" fill="#5C6B77" stroke="none" stroke-width="1" opacity="0.3"/>
+<rect x="312.0" y="404.0" width="26.0" height="16.0" rx="2" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.3"/>
+<rect x="340.0" y="404.0" width="26.0" height="16.0" rx="2" fill="#5C6B77" stroke="none" stroke-width="1" opacity="0.3"/>
+<rect x="368.0" y="404.0" width="26.0" height="16.0" rx="2" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.3"/>
+<rect x="396.0" y="404.0" width="26.0" height="16.0" rx="2" fill="#5C6B77" stroke="none" stroke-width="1" opacity="0.3"/>
+<text x="340.0" y="440.0" text-anchor="middle" class="cap" style="font-size:9px">pytanie, odpowiedź, …</text>
+<rect x="458.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="476.0" cy="272.0" r="10" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="476.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">6</text>
+<text x="492.0" y="270.0" text-anchor="start" class="bx-t">opóźnienie</text>
+<text x="492.0" y="284.0" text-anchor="start" class="bx">w pętli: Δφ = ωτ</text>
+<clipPath id="cF21f86"><rect x="482" y="310" width="166" height="114"/></clipPath>
+<line x1="482.0" y1="424.0" x2="648.0" y2="424.0" stroke="#C3CDD4" stroke-width="1"/>
+<line x1="482.0" y1="310.0" x2="482.0" y2="424.0" stroke="#C3CDD4" stroke-width="1"/>
+<g clip-path="url(#cF21f86)"><polyline points="482.0,367.0 484.8,359.8 487.6,352.9 490.4,346.6 493.3,341.3 496.1,337.1 498.9,334.3 501.7,332.9 504.5,333.1 507.3,334.8 510.1,338.0 512.9,342.5 515.8,348.1 518.6,354.5 521.4,361.6 524.2,368.8 527.0,376.0 529.8,382.8 532.6,388.8 535.5,393.9 538.3,397.8 541.1,400.2 543.9,401.2 546.7,400.6 549.5,398.5 552.3,395.0 555.2,390.2 558.0,384.4 560.8,377.7 563.6,370.6 566.4,363.4 569.2,356.3 572.0,349.6 574.8,343.8 577.7,339.0 580.5,335.5 583.3,333.4 586.1,332.8 588.9,333.8 591.7,336.2 594.5,340.1 597.4,345.2 600.2,351.2 603.0,358.0 605.8,365.2 608.6,372.4 611.4,379.5 614.2,385.9 617.1,391.5 619.9,396.0 622.7,399.2 625.5,400.9 628.3,401.1 631.1,399.7 633.9,396.9 636.7,392.7 639.6,387.4 642.4,381.1 645.2,374.2 648.0,367.0" fill="none" stroke="#141C24" stroke-width="1.6" stroke-linejoin="round"/></g>
+<g clip-path="url(#cF21f86)"><polyline points="501.9,367.0 504.7,359.8 507.5,352.9 510.4,346.6 513.2,341.3 516.0,337.1 518.8,334.3 521.6,332.9 524.4,333.1 527.2,334.8 530.1,338.0 532.9,342.5 535.7,348.1 538.5,354.5 541.3,361.6 544.1,368.8 546.9,376.0 549.8,382.8 552.6,388.8 555.4,393.9 558.2,397.8 561.0,400.2 563.8,401.2 566.6,400.6 569.4,398.5 572.3,395.0 575.1,390.2 577.9,384.4 580.7,377.7 583.5,370.6 586.3,363.4 589.1,356.3 592.0,349.6 594.8,343.8 597.6,339.0 600.4,335.5 603.2,333.4 606.0,332.8 608.8,333.8 611.6,336.2 614.5,340.1 617.3,345.2 620.1,351.2 622.9,358.0 625.7,365.2 628.5,372.4 631.3,379.5 634.2,385.9 637.0,391.5 639.8,396.0 642.6,399.2 645.4,400.9 648.2,401.1 651.0,399.7 653.9,396.9 656.7,392.7 659.5,387.4 662.3,381.1 665.1,374.2 667.9,367.0" fill="none" stroke="#9C3B52" stroke-width="1.6" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
+<text x="565.0" y="444.0" text-anchor="middle" class="cap" style="font-size:9px">sygnał i ten sam po τ</text>
+</svg>
+<figcaption>(1) Piramida z czterema poziomami. (2) Przy każdym poziomie nazwa sieci. (3) Obok strzałka: w dół krótszy cykl, w górę więcej danych. (4) Magistrala: master i trzy urządzenia. (5) Pod nią sekwencja pytanie–odpowiedź, czyli metoda dostępu. (6) Sygnał i ten sam sygnał opóźniony o τ — skąd bierze się utrata fazy.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2><span class="num">09</span> Opowiedz własnymi słowami</h2>
+<div class="rail"></div>
+
+<details class="fiszka op"><summary>Wersja 30 sekund (dla kogoś spoza automatyki)</summary>
+<p>„W zakładzie urządzenia rozmawiają ze sobą przez sieci. Nie chodzi o to, żeby było szybko jak w internecie, tylko żeby wiadomość zawsze doszła na czas — jak w orkiestrze, gdzie spóźniony dźwięk jest gorszy niż cichy. Dlatego sieć ustala, kto i kiedy mówi: albo dyrygent pyta po kolei, albo wygrywa ważniejszy, albo każdy ma swoje okienko czasu. Im szybsza maszyna, tym krótsze muszą być te okienka.”</p></details>
+
+<details class="fiszka op"><summary>Wersja 2 minuty (egzaminacyjna, siedem zdań-kotwic)</summary>
+<ol>
+<li><strong>Cel:</strong> „Sieć w systemie rozproszonym zastępuje przewody punkt–punkt i musi być przede wszystkim deterministyczna — dane mają dochodzić w znanym czasie.”</li>
+<li><strong>Piramida:</strong> „Na dole IO-Link i AS-i, na poziomie polowym Profibus, Modbus RTU, CAN, na poziomie sterowania Profinet i EtherCAT, na górze Ethernet z OPC UA i MQTT.”</li>
+<li><strong>OSI:</strong> „Sieci polowe używają tylko warstw 1, 2 i 7 — krótsze ramki, szybsze przetwarzanie.”</li>
+<li><strong>Dostęp:</strong> „Master–slave, znacznik, arbitraż bitowy w CAN, okna czasowe w Profinet IRT i ramka w locie w EtherCAT są deterministyczne; CSMA/CD klasycznego Ethernetu nie.”</li>
+<li><strong>Topologia:</strong> „Magistrala i linia — mało kabla; gwiazda — izoluje awarie; pierścień — przeżywa jedną przerwę.”</li>
+<li><strong>Ethernet:</strong> „Przełączniki i full duplex usuwają kolizje, a determinizm dają RT, IRT, EtherCAT i TSN.”</li>
+<li><strong>Skutek dla regulacji:</strong> „Opóźnienie τ zabiera fazę <span class="m" data-tex="\omega_c\tau"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="3.457ex" height="1.359ex" role="img" focusable="false" viewBox="0 -443 1528.2 600.8" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-10-TEX-I-1D714" d="M495 384Q495 406 514 424T555 443Q574 443 589 425T604 364Q604 334 592 278T555 155T483 38T377 -11Q297 -11 267 66Q266 68 260 61Q201 -11 125 -11Q15 -11 15 139Q15 230 56 325T123 434Q135 441 147 436Q160 429 160 418Q160 406 140 379T94 306T62 208Q61 202 61 187Q61 124 85 100T143 76Q201 76 245 129L253 137V156Q258 297 317 297Q348 297 348 261Q348 243 338 213T318 158L308 135Q309 133 310 129T318 115T334 97T358 83T393 76Q456 76 501 148T546 274Q546 305 533 325T508 357T495 384Z"></path><path id="MJX-10-TEX-I-1D450" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path><path id="MJX-10-TEX-I-1D70F" d="M39 284Q18 284 18 294Q18 301 45 338T99 398Q134 425 164 429Q170 431 332 431Q492 431 497 429Q517 424 517 402Q517 388 508 376T485 360Q479 358 389 358T299 356Q298 355 283 274T251 109T233 20Q228 5 215 -4T186 -13Q153 -13 153 20V30L203 192Q214 228 227 272T248 336L254 357Q254 358 208 358Q206 358 197 358T183 359Q105 359 61 295Q56 287 53 286T39 284Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D714" xlink:href="#MJX-10-TEX-I-1D714"></use></g><g data-mml-node="mi" transform="translate(655,-150) scale(0.707)"><use data-c="1D450" xlink:href="#MJX-10-TEX-I-1D450"></use></g></g><g data-mml-node="mi" transform="translate(1011.2,0)"><use data-c="1D70F" xlink:href="#MJX-10-TEX-I-1D70F"></use></g></g></g></svg></span>: Modbus z cyklem 0,16 s wystarczy dla zbiorników, ale serwonapęd potrzebuje EtherCAT z cyklem 100 µs.”</li>
+</ol></details>
+
+<h3>Lista kontrolna przed egzaminem</h3>
+<ul class="check">
+<li>Wymieniam wymagania: determinizm, jitter, niezawodność, odporność, bezpieczeństwo.</li>
+<li>Rysuję piramidę z sieciami na każdym poziomie.</li>
+<li>Omawiam co najmniej cztery metody dostępu i mówię, która nie jest deterministyczna.</li>
+<li>Porównuję topologie.</li>
+<li>Liczę cykl Modbus RTU i utratę fazy.</li>
+</ul>
+</section>
+
+<section>
+<h2><span class="num">10</span> Ściąga</h2>
+<div class="rail"></div>
+
+<div class="karty">
+<div class="karta b"><span class="kw">Najważniejsze wymaganie</span><p>Determinizm: znany, ograniczony czas dostarczenia; mały jitter.</p></div>
+<div class="karta"><span class="kw">Piramida</span><p>Czujniki (IO-Link, AS-i) · polowy (Profibus, Modbus, CAN) · sterowania (Profinet, EtherCAT) · zakładowy (OPC UA, MQTT).</p></div>
+<div class="karta s"><span class="kw">OSI</span><p>Sieci polowe: warstwy 1, 2, 7. Profinet RT: bez TCP/IP.</p></div>
+<div class="karta a"><span class="kw">Dostęp — przewidywalny</span><p>Master–slave, znacznik, arbitraż CAN, okna czasowe, ramka w locie.</p></div>
+<div class="karta"><span class="kw">Dostęp — losowy</span><p>CSMA/CD: kolizja → losowe czekanie; znika przy switchach i full duplex.</p></div>
+<div class="karta b"><span class="kw">CAN</span><p>Bit 0 dominuje → najniższy identyfikator wygrywa bez straty czasu.</p></div>
+<div class="karta"><span class="kw">Topologie</span><p>Magistrala, gwiazda, pierścień (redundancja), linia.</p></div>
+<div class="karta s"><span class="kw">Modele wymiany</span><p>Klient–serwer (Modbus) · producent–konsument (Profinet, OPC UA PubSub).</p></div>
+<div class="karta a"><span class="kw">Przykład</span><p>Modbus RTU 19,2 kbit/s: 15,75 ms na urządzenie, 157,5 ms na 10.</p></div>
+<div class="karta"><span class="kw">Opóźnienie w pętli</span><p>Δφ = ωc·τ: zbiorniki 3,5°, serwo z Modbusem &gt; 2700°, z EtherCAT 3,4°.</p></div>
+</div>
+</section>
+
+<section>
+<h2><span class="num">11</span> Pytania dodatkowe — fiszki</h2>
+<div class="rail"></div>
+
+<details class="fiszka"><summary>Dlaczego determinizm jest ważniejszy niż przepustowość?</summary>
+<p>Bo regulator dyskretny zakłada, że próbka przychodzi co stały czas. Pakiet, który zwykle dochodzi w 1 ms, ale czasem w 50 ms, psuje pętlę bardziej niż pakiet, który zawsze dochodzi w 10 ms. Sieć przemysłowa przesyła mało danych, ale musi to robić na czas.</p></details>
+
+<details class="fiszka"><summary>Czym różni się klient–serwer od producenta–konsumenta?</summary>
+<p>W klient–serwer każda wartość wymaga pytania i odpowiedzi, więc cykl rośnie z liczbą urządzeń. W producent–konsument urządzenie samo wysyła dane w swoim cyklu, a może je odebrać wielu odbiorców naraz — mniej ruchu i krótszy cykl.</p></details>
+
+<details class="fiszka"><summary>Po co OPC UA, skoro jest Profinet?</summary>
+<p>Profinet wymienia dane cykliczne między sterownikiem a urządzeniami w czasie rzeczywistym. OPC UA służy do wymiany danych z opisem ich znaczenia między systemami różnych producentów — do SCADA, MES i chmury — gdzie liczy się interoperacyjność i bezpieczeństwo, a nie mikrosekundy.</p></details>
+
+<details class="fiszka"><summary>Jak zapewnia się redundancję sieci?</summary>
+<p>Topologią pierścienia z protokołem redundancji (np. MRP w Profinecie): gdy łącze się przerwie, ruch w ciągu milisekund idzie drugą stroną pierścienia. W systemach krytycznych stosuje się też dwie niezależne sieci równolegle.</p></details>
+
+<details class="fiszka"><summary>Co to jest TSN?</summary>
+<p>Time-Sensitive Networking — zestaw standardów IEEE 802.1, które dodają do zwykłego Ethernetu synchronizację czasu, zarezerwowane okna i priorytety. Cel: jedna sieć dla danych czasu rzeczywistego i zwykłego ruchu IT, niezależnie od producenta.</p></details>
+</section>
+
+
+
+<footer>
+  <p><strong style="color:var(--ink)">Źródła</strong></p>
+  <ol class="zr">
+<li>Wikipedia: <a href="https://en.wikipedia.org/wiki/Fieldbus">Fieldbus</a> (definicja, redukcja okablowania, warstwy OSI, IEC 61158/61784); <a href="https://en.wikipedia.org/wiki/Profibus">Profibus</a>; <a href="https://en.wikipedia.org/wiki/Modbus">Modbus</a>; <a href="https://en.wikipedia.org/wiki/CAN_bus">CAN bus</a> (arbitraż); <a href="https://en.wikipedia.org/wiki/Profinet">Profinet</a> (RT, IRT, producent–konsument); <a href="https://en.wikipedia.org/wiki/EtherCAT">EtherCAT</a>; <a href="https://en.wikipedia.org/wiki/Carrier-sense_multiple_access_with_collision_detection">CSMA/CD</a>; <a href="https://en.wikipedia.org/wiki/Time-Sensitive_Networking">Time-Sensitive Networking</a>.</li>
+<li>Normy: IEC 61158 i IEC 61784 (profile sieci polowych), IEEE 802.1 (TSN), IEC 62541 (OPC UA).</li>
+<li>Wpływ opóźnienia na zapas fazy — zagadnienie 18 repetytorium (sterowanie obiektami z opóźnieniem).</li>
+</ol>
+
+  <p>Repetytorium do egzaminu dyplomowego &middot; ARiSS II stopień &middot; specjalność Systemy sterowania i wspomagania decyzji. Brak slajdów wykładowych do tego zagadnienia w projekcie — strona powstała z literatury wymienionej wyżej. Liczby w przykładzie są przykładowe, a rachunek własny.</p>
+  <p class="backfoot"><a href="index.html">&larr; Wróć do listy zagadnień</a></p>
+</footer>
+
+</div>
+</body>
+</html>

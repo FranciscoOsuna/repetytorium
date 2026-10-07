@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pytanie 24 — Rozproszone i wieloagentowe struktury sterowania</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#141C24; --mut:#5C6B77; --line:#C3CDD4;
+  --paper:#E8ECEF; --card:#FCFDFD;
+  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52;
+  --disp:"Space Grotesk",system-ui,sans-serif;
+  --body:"STIX Two Text","Source Serif 4",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+     font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:860px;margin:0 auto;padding:0 22px 100px}
+
+/* ---- nagłówek ---- */
+header{padding:64px 0 30px;border-bottom:2px solid var(--ink)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+         color:var(--mut);margin:0 0 14px}
+h1{font-family:var(--disp);font-weight:700;font-size:clamp(30px,5vw,46px);line-height:1.08;
+   letter-spacing:-.02em;margin:0 0 18px}
+.quest{font-style:italic;font-size:19px;color:var(--ink);margin:0;padding-left:16px;
+       border-left:3px solid var(--violet)}
+.src{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:18px}
+
+/* ---- sekcje ---- */
+section{margin-top:56px}
+h2{font-family:var(--disp);font-weight:700;font-size:25px;letter-spacing:-.015em;
+   margin:0 0 6px;display:flex;align-items:baseline;gap:12px}
+h2 .num{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--violet);
+        letter-spacing:.08em;flex:none}
+h3{font-family:var(--disp);font-weight:500;font-size:18.5px;margin:34px 0 8px;letter-spacing:-.01em}
+p{margin:0 0 14px}
+.rail{height:5px;background:linear-gradient(90deg,var(--teal) 0%,var(--violet) 55%,var(--amber) 100%);
+      opacity:.85;margin:0 0 22px;border-radius:2px}
+
+/* ---- figury ---- */
+figure{margin:26px 0;background:var(--card);border:1px solid var(--line);border-radius:3px;
+       padding:20px 18px 14px}
+.fig{width:100%;height:auto;display:block}
+figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:12px;
+           padding-top:10px;border-top:1px solid var(--line);line-height:1.5}
+.tick{font-family:var(--mono);font-size:10.5px;fill:#7C8A94}
+.axlab{font-family:var(--mono);font-size:11px;fill:var(--mut)}
+.cap{font-family:var(--mono);font-size:10.5px;fill:var(--mut)}
+.bx{font-family:var(--mono);font-size:10.5px;fill:var(--mut)}
+.bx-t{font-family:var(--disp);font-size:11.5px;font-weight:500;fill:var(--ink)}
+
+/* ---- bloki ---- */
+.box{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--violet);
+     padding:16px 18px;margin:22px 0;border-radius:2px}
+.box.key{border-left-color:var(--rose)}
+.box.warn{border-left-color:var(--amber)}
+.box .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+          color:var(--mut);display:block;margin-bottom:8px}
+.box p:last-child{margin-bottom:0}
+
+/* ---- wzory (TeX składany do SVG skryptem mathbuild.js) ---- */
+.eq{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--violet);
+    padding:18px 18px;margin:22px 0;border-radius:2px;overflow-x:auto;text-align:center;
+    font-size:18.5px;line-height:1.3}
+.eq svg{max-width:100%;height:auto}
+.eq.txt{font-family:var(--mono);font-size:14px;line-height:1.7;color:var(--ink);text-align:center}
+.eq b{color:var(--violet);font-weight:500}
+.eqnote{font-family:var(--mono);font-size:12.5px;color:var(--mut);text-align:center;
+        margin:-14px 0 20px;line-height:1.6}
+.m{white-space:nowrap}
+.m svg{vertical-align:-0.25ex;max-width:100%;height:auto}
+@media (max-width:640px){
+  table{display:block;overflow-x:auto;width:auto;min-width:100%;-webkit-overflow-scrolling:touch}
+  table .m svg{max-width:none}
+  .eq{padding:14px 12px;font-size:16px}
+}
+
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15px;background:var(--card)}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--disp);font-weight:500;font-size:13px;letter-spacing:.02em;
+   background:#F2F5F6;border-bottom:1.5px solid var(--line)}
+td.n{font-family:var(--mono);font-size:13.5px;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+
+ol,ul{margin:0 0 14px;padding-left:22px}
+li{margin-bottom:7px}
+ol.steps{list-style:none;padding-left:0;counter-reset:st}
+ol.steps>li{counter-increment:st;position:relative;padding-left:44px;margin-bottom:18px}
+ol.steps>li::before{content:counter(st);position:absolute;left:0;top:1px;
+  font-family:var(--mono);font-size:12px;width:28px;height:28px;border-radius:50%;
+  background:var(--violet);color:#fff;display:flex;align-items:center;justify-content:center}
+strong{font-weight:600}
+.tag{font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:2px;
+     background:rgba(14,110,120,.12);color:var(--teal);white-space:nowrap}
+.tag.a{background:rgba(179,100,26,.13);color:var(--amber)}
+.tag.v{background:rgba(91,75,138,.13);color:var(--violet)}
+footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
+       font-family:var(--mono);font-size:12px;color:var(--mut)}
+@media print{body{background:#fff}figure,.box,.eq,table{break-inside:avoid}.topnav,.backfoot{display:none}}
+@media (max-width:600px){body{font-size:16px}header{padding-top:40px}}
+
+/* ---- pasek nawigacji ---- */
+.topnav{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:22px 0 0}
+.topnav a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+          color:var(--mut);text-decoration:none;border:1px solid var(--line);background:var(--card);
+          border-radius:2px;padding:6px 11px;transition:color .12s ease,border-color .12s ease}
+.topnav a:hover,.topnav a:focus-visible{color:var(--ink);border-color:var(--ink);outline:none}
+.topnav .here{font-family:var(--mono);font-size:12px;color:var(--mut);letter-spacing:.08em}
+.backfoot{margin:18px 0 0}
+.backfoot a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+            color:var(--teal);text-decoration:none;border-bottom:1px solid var(--line)}
+.backfoot a:hover,.backfoot a:focus-visible{border-bottom-color:var(--teal);outline:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="topnav">
+  <a href="index.html">&larr; Repetytorium</a>
+  <span class="here">zagadnienie 24 z 50 &middot; komputerowe systemy sterowania</span>
+</nav>
+
+<header>
+  <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 24</p>
+  <h1>Rozproszone i wieloagentowe struktury sterowania</h1>
+  <p class="quest">Przedstaw rozproszone i wieloagentowe struktury sterowania.</p>
+  <p class="src">Komputerowe systemy sterowania i wspomagania decyzji &middot; opracowanie na podstawie literatury i dokumentacji — źródła na dole strony &middot; uogólnia 21 i 22; prowadzi do 33 (budowa systemu zdecentralizowanego)</p>
+</header>
+
+<style>
+.karty{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:22px 0}
+.karta{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--violet);border-radius:3px;padding:12px 14px}
+.karta.k .kw{color:var(--violet)} .karta.b{border-top-color:var(--teal)} .karta.s{border-top-color:var(--rose)} .karta.a{border-top-color:var(--amber)}
+.karta .kw{font-family:var(--disp);font-weight:700;font-size:17px;line-height:1.25;display:block;margin-bottom:6px;color:var(--violet)}
+.karta.b .kw{color:var(--teal)} .karta.s .kw{color:var(--rose)} .karta.a .kw{color:var(--amber)}
+.karta p{font-size:15px;margin:0;line-height:1.5}
+@media (max-width:600px){.karty{grid-template-columns:1fr}}
+.fiszka{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--violet);border-radius:2px;margin:10px 0;padding:0}
+.fiszka summary{cursor:pointer;list-style:none;padding:12px 16px;font-family:var(--disp);font-weight:500;font-size:16.5px}
+.fiszka summary::-webkit-details-marker{display:none}
+.fiszka summary::before{content:"?";display:inline-flex;width:22px;height:22px;border-radius:50%;background:var(--violet);color:#fff;
+  font-family:var(--mono);font-size:12px;align-items:center;justify-content:center;margin-right:10px;vertical-align:1px}
+.fiszka[open] summary::before{content:"✓";background:var(--teal)}
+.fiszka p,.fiszka ol,.fiszka ul{padding:0 16px 14px 48px;margin:0}
+.fiszka.op{border-left-color:var(--teal)}
+.fiszka.op summary::before{content:"▶";background:var(--teal)}
+ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{color:var(--teal)}
+.cyt{font-style:italic;color:var(--ink)}
+.check{list-style:none;padding-left:0}
+.check li{padding-left:30px;position:relative}
+.check li::before{content:"☐";position:absolute;left:4px;top:-1px;font-family:var(--mono);color:var(--teal);font-size:17px}
+.luka{display:inline-block;min-width:70px;border-bottom:1.5px solid var(--violet);text-align:center;font-family:var(--mono);font-size:14px;color:var(--violet)}
+</style>
+
+<section>
+<h2><span class="num">01</span> Rama odpowiedzi</h2>
+<div class="rail"></div>
+
+<p>Pytanie ma dwie części. <strong>Struktury rozproszone</strong> to sposoby podziału sterowania dużym obiektem między wiele regulatorów: zdecentralizowana, rozproszona i hierarchiczna, w odróżnieniu od scentralizowanej. <strong>Struktury wieloagentowe</strong> idą dalej: regulatory stają się autonomicznymi agentami, które same decydują, porozumiewają się i negocjują. Warstwy opisuje zagadnienie 32, sieci — 21, a budowę całego systemu — 33.</p>
+
+<div class="box key">
+<span class="lbl">Zdanie, od którego warto zacząć</span>
+<p><strong>Duży obiekt dzieli się na podsystemy, a każdy dostaje własny regulator. Struktury różnią się tym, ile regulatory wiedzą o sobie nawzajem: zdecentralizowane nic, rozproszone wymieniają dane, hierarchiczne mają koordynatora, a w systemie wieloagentowym autonomiczni agenci sami negocjują podział zadań. Cała trudność bierze się ze sprzężeń między podsystemami.</strong></p>
+</div>
+
+<figure>
+<svg viewBox="0 0 680 360" class="fig">
+<defs><marker id="arF24a0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker><marker id="arF24a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B3641A"/></marker><marker id="arF24a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">OD JEDNEGO REGULATORA DO WIELU AGENTÓW: PIĘĆ STRUKTUR</text>
+<rect x="14.0" y="40.0" width="124.0" height="250.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="40.0" width="124.0" height="4.0" rx="0" fill="#5C6B77" stroke="none" stroke-width="1"/>
+<text x="76.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#5C6B77;font-size:10.5px">scentralizowana</text>
+<rect x="24.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="46.0" y="234.0" text-anchor="middle" class="cap" style="font-size:9.5px">P1</text>
+<rect x="84.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="106.0" y="234.0" text-anchor="middle" class="cap" style="font-size:9.5px">P2</text>
+<line x1="68.0" y1="230.0" x2="84.0" y2="230.0" stroke="#9C3B52" stroke-width="1.2" stroke-dasharray="3 2"/>
+<rect x="48.0" y="139.0" width="56.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.3"/>
+<text x="76.0" y="154.0" text-anchor="middle" class="cap" style="fill:#5C6B77;font-size:9.5px">R</text>
+<line x1="76.0" y1="161.0" x2="46.0" y2="219.0" stroke="#5C6B77" stroke-width="1.2"/>
+<line x1="76.0" y1="161.0" x2="106.0" y2="219.0" stroke="#5C6B77" stroke-width="1.2"/>
+<text x="76.0" y="266.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">jeden regulator,</text>
+<text x="76.0" y="280.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">pełny model</text>
+<rect x="146.0" y="40.0" width="124.0" height="250.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="146.0" y="40.0" width="124.0" height="4.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="208.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:10.5px">zdecentralizowana</text>
+<rect x="156.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="178.0" y="234.0" text-anchor="middle" class="cap" style="font-size:9.5px">P1</text>
+<rect x="216.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="238.0" y="234.0" text-anchor="middle" class="cap" style="font-size:9.5px">P2</text>
+<line x1="200.0" y1="230.0" x2="216.0" y2="230.0" stroke="#9C3B52" stroke-width="1.2" stroke-dasharray="3 2"/>
+<rect x="158.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<text x="178.0" y="154.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9.5px">R1</text>
+<rect x="218.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<text x="238.0" y="154.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9.5px">R2</text>
+<line x1="178.0" y1="161.0" x2="178.0" y2="219.0" stroke="#0E6E78" stroke-width="1.2"/>
+<line x1="238.0" y1="161.0" x2="238.0" y2="219.0" stroke="#0E6E78" stroke-width="1.2"/>
+<text x="208.0" y="266.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">lokalne regulatory,</text>
+<text x="208.0" y="280.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">bez wymiany danych</text>
+<rect x="278.0" y="40.0" width="124.0" height="250.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="278.0" y="40.0" width="124.0" height="4.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="340.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">rozproszona</text>
+<rect x="288.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="310.0" y="234.0" text-anchor="middle" class="cap" style="font-size:9.5px">P1</text>
+<rect x="348.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="370.0" y="234.0" text-anchor="middle" class="cap" style="font-size:9.5px">P2</text>
+<line x1="332.0" y1="230.0" x2="348.0" y2="230.0" stroke="#9C3B52" stroke-width="1.2" stroke-dasharray="3 2"/>
+<rect x="290.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<text x="310.0" y="154.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9.5px">R1</text>
+<rect x="350.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<text x="370.0" y="154.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9.5px">R2</text>
+<line x1="310.0" y1="161.0" x2="310.0" y2="219.0" stroke="#5B4B8A" stroke-width="1.2"/>
+<line x1="370.0" y1="161.0" x2="370.0" y2="219.0" stroke="#5B4B8A" stroke-width="1.2"/>
+<path d="M 331.0 146.0 L 349.0 146.0" fill="none" stroke="#5B4B8A" stroke-width="1.2" marker-end="url(#arF24a0)"/>
+<path d="M 349.0 155.0 L 331.0 155.0" fill="none" stroke="#5B4B8A" stroke-width="1.2" marker-end="url(#arF24a0)"/>
+<text x="340.0" y="266.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">lokalne regulatory</text>
+<text x="340.0" y="280.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">wymieniają dane</text>
+<rect x="410.0" y="40.0" width="124.0" height="250.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="410.0" y="40.0" width="124.0" height="4.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="472.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#B3641A;font-size:10.5px">hierarchiczna</text>
+<rect x="420.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="442.0" y="234.0" text-anchor="middle" class="cap" style="font-size:9.5px">P1</text>
+<rect x="480.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="502.0" y="234.0" text-anchor="middle" class="cap" style="font-size:9.5px">P2</text>
+<line x1="464.0" y1="230.0" x2="480.0" y2="230.0" stroke="#9C3B52" stroke-width="1.2" stroke-dasharray="3 2"/>
+<rect x="422.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.3"/>
+<text x="442.0" y="154.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9.5px">R1</text>
+<rect x="482.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.3"/>
+<text x="502.0" y="154.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9.5px">R2</text>
+<line x1="442.0" y1="161.0" x2="442.0" y2="219.0" stroke="#B3641A" stroke-width="1.2"/>
+<line x1="502.0" y1="161.0" x2="502.0" y2="219.0" stroke="#B3641A" stroke-width="1.2"/>
+<rect x="448.0" y="89.0" width="48.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.3"/>
+<text x="472.0" y="104.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9.5px">K</text>
+<path d="M 472.0 111.0 L 442.0 138.0" fill="none" stroke="#B3641A" stroke-width="1.1" marker-end="url(#arF24a1)"/>
+<path d="M 472.0 111.0 L 502.0 138.0" fill="none" stroke="#B3641A" stroke-width="1.1" marker-end="url(#arF24a1)"/>
+<text x="472.0" y="266.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">koordynator nad</text>
+<text x="472.0" y="280.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">regulatorami</text>
+<rect x="542.0" y="40.0" width="124.0" height="250.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="542.0" y="40.0" width="124.0" height="4.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="604.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52;font-size:10.5px">wieloagentowa</text>
+<rect x="552.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="574.0" y="234.0" text-anchor="middle" class="cap" style="font-size:9.5px">P1</text>
+<rect x="612.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="634.0" y="234.0" text-anchor="middle" class="cap" style="font-size:9.5px">P2</text>
+<line x1="596.0" y1="230.0" x2="612.0" y2="230.0" stroke="#9C3B52" stroke-width="1.2" stroke-dasharray="3 2"/>
+<circle cx="574.0" cy="150.0" r="16" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.4"/>
+<text x="574.0" y="154.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52;font-size:11px">A</text>
+<line x1="574.0" y1="166.0" x2="574.0" y2="219.0" stroke="#9C3B52" stroke-width="1.2"/>
+<circle cx="634.0" cy="150.0" r="16" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.4"/>
+<text x="634.0" y="154.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52;font-size:11px">A</text>
+<line x1="634.0" y1="166.0" x2="634.0" y2="219.0" stroke="#9C3B52" stroke-width="1.2"/>
+<circle cx="604.0" cy="102.0" r="14" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.4"/>
+<text x="604.0" y="106.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52;font-size:10px">A</text>
+<line x1="590.0" y1="150.0" x2="618.0" y2="150.0" stroke="#9C3B52" stroke-width="1.1" stroke-dasharray="2 2"/>
+<line x1="594.0" y1="112.0" x2="584.0" y2="138.0" stroke="#9C3B52" stroke-width="1.1" stroke-dasharray="2 2"/>
+<line x1="614.0" y1="112.0" x2="624.0" y2="138.0" stroke="#9C3B52" stroke-width="1.1" stroke-dasharray="2 2"/>
+<text x="604.0" y="266.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">autonomiczni agenci</text>
+<text x="604.0" y="280.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">negocjują, uczą się</text>
+<text x="340.0" y="314.0" text-anchor="middle" class="cap" style="fill:#9C3B52">czerwona przerywana: sprzężenie między podsystemami P1 i P2 — źródło wszystkich trudności</text>
+<path d="M 30.0 336.0 L 650.0 336.0" fill="none" stroke="#5C6B77" stroke-width="1.3" marker-end="url(#arF24a2)"/>
+<text x="30.0" y="352.0" text-anchor="start" class="cap">jeden, pełny model i pełna wiedza</text>
+<text x="650.0" y="352.0" text-anchor="end" class="cap">lokalna wiedza, autonomia, skalowalność</text>
+</svg>
+<figcaption>Pięć struktur na tym samym obiekcie z dwoma sprzężonymi podsystemami P1 i P2. Od lewej: coraz mniej centralnej wiedzy, coraz więcej autonomii i skalowalności. Na podstawie klasyfikacji Scattoliniego (2009) i literatury o systemach wieloagentowych.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2><span class="num">02</span> Po co odchodzić od sterowania scentralizowanego</h2>
+<div class="rail"></div>
+
+<p>Regulator scentralizowany daje w teorii najlepszy wynik, bo zna cały model i wszystkie pomiary. W dużych obiektach — sieć wodociągowa, sieć energetyczna, linia produkcyjna — napotyka jednak cztery bariery:</p>
+<ul>
+<li><strong>Obliczenia</strong> — jedno zadanie optymalizacji dla tysięcy zmiennych jest za duże na czas rzeczywisty.</li>
+<li><strong>Niezawodność</strong> — awaria jednego komputera zatrzymuje wszystko.</li>
+<li><strong>Komunikacja</strong> — wszystkie pomiary muszą trafić w jedno miejsce (zagadnienie 21).</li>
+<li><strong>Modyfikowalność</strong> — dołożenie nowego podsystemu wymaga przeprojektowania całości.</li>
+</ul>
+<p>Scattolini (2009) przegląda rozwiązania tego problemu; jego praca proponuje <span class="cyt">„a classification of a number of decentralized, distributed and hierarchical control architectures for large scale systems”</span>.</p>
+</section>
+
+<section>
+<h2><span class="num">03</span> Struktury rozproszone</h2>
+<div class="rail"></div>
+
+<table>
+<thead><tr><th>Struktura</th><th>Co wiedzą regulatory</th><th>Zaleta</th><th>Wada</th></tr></thead>
+<tbody>
+<tr><td><strong>zdecentralizowana</strong></td><td>tylko własne wejścia i wyjścia; bez wymiany danych</td><td>prosta, odporna na awarię sieci</td><td>ignoruje sprzężenia — przy silnych sprzężeniach traci jakość, a nawet stabilność</td></tr>
+<tr><td><strong>rozproszona</strong></td><td>wymieniają dane (pomiary, plany sterowań) z sąsiadami</td><td>uwzględnia sprzężenia bez centralnego komputera</td><td>zależność od komunikacji; iteracje kosztują czas</td></tr>
+<tr><td><strong>hierarchiczna</strong></td><td>lokalne regulatory + koordynator, który ustala im cele albo „ceny”</td><td>spójność całości przy lokalnym działaniu</td><td>koordynator jest wąskim gardłem i słabym punktem</td></tr>
+</tbody>
+</table>
+
+<p>Struktury rozproszone dzieli się dalej na <strong>nieiteracyjne</strong> (jedna wymiana danych na krok) i <strong>iteracyjne</strong> (wymiana powtarzana, aż decyzje się ustalą), a także na <strong>niekooperacyjne</strong> (każdy minimalizuje własny wskaźnik jakości) i <strong>kooperacyjne</strong> (każdy minimalizuje wskaźnik wspólny — wtedy wynik zbliża się do scentralizowanego). W praktyce lokalnymi regulatorami są najczęściej regulatory predykcyjne (MPC, zagadnienie 23), bo naturalnie wymieniają przewidywane trajektorie sterowań.</p>
+</section>
+
+<section>
+<h2><span class="num">04</span> Przykład na kartce: co daje wymiana danych</h2>
+<div class="rail"></div>
+
+<p>Dwie sąsiednie strefy grzewcze. Moc grzania <span class="m" data-tex="u_1"><svg style="vertical-align: -0.339ex;" xmlns="http://www.w3.org/2000/svg" width="2.282ex" height="1.339ex" role="img" focusable="false" viewBox="0 -442 1008.6 592" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-1-TEX-I-1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-1-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D462" xlink:href="#MJX-1-TEX-I-1D462"></use></g><g data-mml-node="mn" transform="translate(605,-150) scale(0.707)"><use data-c="31" xlink:href="#MJX-1-TEX-N-31"></use></g></g></g></g></svg></span> podnosi temperaturę w strefie 1 dwa razy mocniej niż w strefie 2, bo część ciepła przechodzi przez ścianę: <span class="m" data-tex="y_1 = 2u_1 + u_2"><svg style="vertical-align: -0.464ex;" xmlns="http://www.w3.org/2000/svg" width="13.574ex" height="1.971ex" role="img" focusable="false" viewBox="0 -666 5999.7 871" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-2-TEX-I-1D466" d="M21 287Q21 301 36 335T84 406T158 442Q199 442 224 419T250 355Q248 336 247 334Q247 331 231 288T198 191T182 105Q182 62 196 45T238 27Q261 27 281 38T312 61T339 94Q339 95 344 114T358 173T377 247Q415 397 419 404Q432 431 462 431Q475 431 483 424T494 412T496 403Q496 390 447 193T391 -23Q363 -106 294 -155T156 -205Q111 -205 77 -183T43 -117Q43 -95 50 -80T69 -58T89 -48T106 -45Q150 -45 150 -87Q150 -107 138 -122T115 -142T102 -147L99 -148Q101 -153 118 -160T152 -167H160Q177 -167 186 -165Q219 -156 247 -127T290 -65T313 -9T321 21L315 17Q309 13 296 6T270 -6Q250 -11 231 -11Q185 -11 150 11T104 82Q103 89 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-2-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-2-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-2-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-2-TEX-I-1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-2-TEX-N-2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D466" xlink:href="#MJX-2-TEX-I-1D466"></use></g><g data-mml-node="mn" transform="translate(523,-150) scale(0.707)"><use data-c="31" xlink:href="#MJX-2-TEX-N-31"></use></g></g><g data-mml-node="mo" transform="translate(1204.3,0)"><use data-c="3D" xlink:href="#MJX-2-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(2260.1,0)"><use data-c="32" xlink:href="#MJX-2-TEX-N-32"></use></g><g data-mml-node="msub" transform="translate(2760.1,0)"><g data-mml-node="mi"><use data-c="1D462" xlink:href="#MJX-2-TEX-I-1D462"></use></g><g data-mml-node="mn" transform="translate(605,-150) scale(0.707)"><use data-c="31" xlink:href="#MJX-2-TEX-N-31"></use></g></g><g data-mml-node="mo" transform="translate(3990.9,0)"><use data-c="2B" xlink:href="#MJX-2-TEX-N-2B"></use></g><g data-mml-node="msub" transform="translate(4991.1,0)"><g data-mml-node="mi"><use data-c="1D462" xlink:href="#MJX-2-TEX-I-1D462"></use></g><g data-mml-node="mn" transform="translate(605,-150) scale(0.707)"><use data-c="32" xlink:href="#MJX-2-TEX-N-32"></use></g></g></g></g></svg></span>, <span class="m" data-tex="y_2 = u_1 + 2u_2"><svg style="vertical-align: -0.464ex;" xmlns="http://www.w3.org/2000/svg" width="13.574ex" height="1.971ex" role="img" focusable="false" viewBox="0 -666 5999.7 871" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-3-TEX-I-1D466" d="M21 287Q21 301 36 335T84 406T158 442Q199 442 224 419T250 355Q248 336 247 334Q247 331 231 288T198 191T182 105Q182 62 196 45T238 27Q261 27 281 38T312 61T339 94Q339 95 344 114T358 173T377 247Q415 397 419 404Q432 431 462 431Q475 431 483 424T494 412T496 403Q496 390 447 193T391 -23Q363 -106 294 -155T156 -205Q111 -205 77 -183T43 -117Q43 -95 50 -80T69 -58T89 -48T106 -45Q150 -45 150 -87Q150 -107 138 -122T115 -142T102 -147L99 -148Q101 -153 118 -160T152 -167H160Q177 -167 186 -165Q219 -156 247 -127T290 -65T313 -9T321 21L315 17Q309 13 296 6T270 -6Q250 -11 231 -11Q185 -11 150 11T104 82Q103 89 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-3-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-3-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-3-TEX-I-1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-3-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-3-TEX-N-2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D466" xlink:href="#MJX-3-TEX-I-1D466"></use></g><g data-mml-node="mn" transform="translate(523,-150) scale(0.707)"><use data-c="32" xlink:href="#MJX-3-TEX-N-32"></use></g></g><g data-mml-node="mo" transform="translate(1204.3,0)"><use data-c="3D" xlink:href="#MJX-3-TEX-N-3D"></use></g><g data-mml-node="msub" transform="translate(2260.1,0)"><g data-mml-node="mi"><use data-c="1D462" xlink:href="#MJX-3-TEX-I-1D462"></use></g><g data-mml-node="mn" transform="translate(605,-150) scale(0.707)"><use data-c="31" xlink:href="#MJX-3-TEX-N-31"></use></g></g><g data-mml-node="mo" transform="translate(3490.9,0)"><use data-c="2B" xlink:href="#MJX-3-TEX-N-2B"></use></g><g data-mml-node="mn" transform="translate(4491.1,0)"><use data-c="32" xlink:href="#MJX-3-TEX-N-32"></use></g><g data-mml-node="msub" transform="translate(4991.1,0)"><g data-mml-node="mi"><use data-c="1D462" xlink:href="#MJX-3-TEX-I-1D462"></use></g><g data-mml-node="mn" transform="translate(605,-150) scale(0.707)"><use data-c="32" xlink:href="#MJX-3-TEX-N-32"></use></g></g></g></g></svg></span>. Cel: <span class="m" data-tex="y_1 = y_2 = 3"><svg style="vertical-align: -0.464ex;" xmlns="http://www.w3.org/2000/svg" width="11.358ex" height="1.968ex" role="img" focusable="false" viewBox="0 -665 5020.2 870" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-4-TEX-I-1D466" d="M21 287Q21 301 36 335T84 406T158 442Q199 442 224 419T250 355Q248 336 247 334Q247 331 231 288T198 191T182 105Q182 62 196 45T238 27Q261 27 281 38T312 61T339 94Q339 95 344 114T358 173T377 247Q415 397 419 404Q432 431 462 431Q475 431 483 424T494 412T496 403Q496 390 447 193T391 -23Q363 -106 294 -155T156 -205Q111 -205 77 -183T43 -117Q43 -95 50 -80T69 -58T89 -48T106 -45Q150 -45 150 -87Q150 -107 138 -122T115 -142T102 -147L99 -148Q101 -153 118 -160T152 -167H160Q177 -167 186 -165Q219 -156 247 -127T290 -65T313 -9T321 21L315 17Q309 13 296 6T270 -6Q250 -11 231 -11Q185 -11 150 11T104 82Q103 89 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-4-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-4-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-4-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-4-TEX-N-33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D466" xlink:href="#MJX-4-TEX-I-1D466"></use></g><g data-mml-node="mn" transform="translate(523,-150) scale(0.707)"><use data-c="31" xlink:href="#MJX-4-TEX-N-31"></use></g></g><g data-mml-node="mo" transform="translate(1204.3,0)"><use data-c="3D" xlink:href="#MJX-4-TEX-N-3D"></use></g><g data-mml-node="msub" transform="translate(2260.1,0)"><g data-mml-node="mi"><use data-c="1D466" xlink:href="#MJX-4-TEX-I-1D466"></use></g><g data-mml-node="mn" transform="translate(523,-150) scale(0.707)"><use data-c="32" xlink:href="#MJX-4-TEX-N-32"></use></g></g><g data-mml-node="mo" transform="translate(3464.4,0)"><use data-c="3D" xlink:href="#MJX-4-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(4520.2,0)"><use data-c="33" xlink:href="#MJX-4-TEX-N-33"></use></g></g></g></svg></span>.</p>
+
+<figure>
+<svg viewBox="0 0 680 296" class="fig">
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">PRZYKŁAD: DWIE SPRZĘŻONE STREFY — TRZY SPOSOBY WYBORU MOCY</text>
+<rect x="20.0" y="60.0" width="90.0" height="70.0" rx="4" fill="#F8EFEA" stroke="#C3CDD4" stroke-width="1"/>
+<text x="65.0" y="90.0" text-anchor="middle" class="bx-t" style="font-size:11px">strefa 1</text>
+<text x="65.0" y="108.0" text-anchor="middle" class="cap">u₁ → y₁</text>
+<rect x="130.0" y="60.0" width="90.0" height="70.0" rx="4" fill="#F8EFEA" stroke="#C3CDD4" stroke-width="1"/>
+<text x="175.0" y="90.0" text-anchor="middle" class="bx-t" style="font-size:11px">strefa 2</text>
+<text x="175.0" y="108.0" text-anchor="middle" class="cap">u₂ → y₂</text>
+<rect x="110.0" y="60.0" width="20.0" height="70.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.25"/>
+<text x="120.0" y="146.0" text-anchor="middle" class="cap" style="fill:#9C3B52">ściana: ciepło</text>
+<text x="120.0" y="160.0" text-anchor="middle" class="cap" style="fill:#9C3B52">płynie do sąsiada</text>
+<text x="120.0" y="190.0" text-anchor="middle" class="bx-t" style="font-size:11px">y₁ = 2u₁ + u₂</text>
+<text x="120.0" y="208.0" text-anchor="middle" class="bx-t" style="font-size:11px">y₂ = u₁ + 2u₂</text>
+<text x="120.0" y="230.0" text-anchor="middle" class="cap" style="fill:#141C24">cel: y₁ = y₂ = 3</text>
+<clipPath id="cF24b13"><rect x="290" y="50" width="360" height="200"/></clipPath>
+<line x1="290.0" y1="250.0" x2="650.0" y2="250.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="290.0" y1="50.0" x2="290.0" y2="250.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="290.0" y1="250.0" x2="290.0" y2="254.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="290.0" y="266.0" text-anchor="middle" class="tick">0</text>
+<line x1="350.0" y1="250.0" x2="350.0" y2="254.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="350.0" y="266.0" text-anchor="middle" class="tick">1</text>
+<line x1="410.0" y1="250.0" x2="410.0" y2="254.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="410.0" y="266.0" text-anchor="middle" class="tick">2</text>
+<line x1="470.0" y1="250.0" x2="470.0" y2="254.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="470.0" y="266.0" text-anchor="middle" class="tick">3</text>
+<line x1="530.0" y1="250.0" x2="530.0" y2="254.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="530.0" y="266.0" text-anchor="middle" class="tick">4</text>
+<line x1="590.0" y1="250.0" x2="590.0" y2="254.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="590.0" y="266.0" text-anchor="middle" class="tick">5</text>
+<line x1="650.0" y1="250.0" x2="650.0" y2="254.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="650.0" y="266.0" text-anchor="middle" class="tick">6</text>
+<line x1="286.0" y1="221.4" x2="290.0" y2="221.4" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="290.0" y1="221.4" x2="650.0" y2="221.4" stroke="#E3E8EB" stroke-width="0.8"/>
+<text x="282.0" y="225.4" text-anchor="end" class="tick">2</text>
+<line x1="286.0" y1="164.3" x2="290.0" y2="164.3" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="290.0" y1="164.3" x2="650.0" y2="164.3" stroke="#E3E8EB" stroke-width="0.8"/>
+<text x="282.0" y="168.3" text-anchor="end" class="tick">3</text>
+<line x1="286.0" y1="107.1" x2="290.0" y2="107.1" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="290.0" y1="107.1" x2="650.0" y2="107.1" stroke="#E3E8EB" stroke-width="0.8"/>
+<text x="282.0" y="111.1" text-anchor="end" class="tick">4</text>
+<line x1="286.0" y1="50.0" x2="290.0" y2="50.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="290.0" y1="50.0" x2="650.0" y2="50.0" stroke="#E3E8EB" stroke-width="0.8"/>
+<text x="282.0" y="54.0" text-anchor="end" class="tick">5</text>
+<text x="470.0" y="284.0" text-anchor="middle" class="axlab">iteracja wymiany danych</text>
+<text x="290.0" y="40.0" text-anchor="start" class="axlab">osiągnięte y₁</text>
+<line x1="290.0" y1="164.3" x2="650.0" y2="164.3" stroke="#141C24" stroke-width="1.2" stroke-dasharray="4 3"/>
+<g clip-path="url(#cF24b13)"><polyline points="290.0,78.6 650.0,78.6" fill="none" stroke="#0E6E78" stroke-width="2.2" stroke-linejoin="round"/></g>
+<g clip-path="url(#cF24b13)"><polyline points="290.0,78.6 350.0,207.1 410.0,142.9 470.0,175.0 530.0,158.9 590.0,167.0 650.0,162.9" fill="none" stroke="#5B4B8A" stroke-width="2.0" stroke-linejoin="round"/></g>
+<circle cx="290.0" cy="78.6" r="3.5" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<circle cx="350.0" cy="207.1" r="3.5" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<circle cx="410.0" cy="142.9" r="3.5" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<circle cx="470.0" cy="175.0" r="3.5" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<circle cx="530.0" cy="158.9" r="3.5" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<circle cx="590.0" cy="167.0" r="3.5" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<circle cx="650.0" cy="162.9" r="3.5" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<circle cx="290.0" cy="164.3" r="5" fill="#5C6B77" stroke="none" stroke-width="1"/>
+<text x="646.0" y="70.6" text-anchor="end" class="cap" style="fill:#0E6E78">zdecentralizowane: 4,5 (+50 %)</text>
+<text x="300.0" y="186.0" text-anchor="start" class="cap" style="fill:#5C6B77">scentralizowane: od razu 3</text>
+<text x="422.0" y="214.0" text-anchor="start" class="cap" style="fill:#5B4B8A">rozproszone: błąd maleje o połowę</text>
+<text x="422.0" y="228.0" text-anchor="start" class="cap" style="fill:#5B4B8A">w każdej wymianie</text>
+</svg>
+<figcaption>Osiągnięta wartość <span class="m" data-tex="y_1"><svg style="vertical-align: -0.464ex;" xmlns="http://www.w3.org/2000/svg" width="2.096ex" height="1.464ex" role="img" focusable="false" viewBox="0 -442 926.6 647" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-5-TEX-I-1D466" d="M21 287Q21 301 36 335T84 406T158 442Q199 442 224 419T250 355Q248 336 247 334Q247 331 231 288T198 191T182 105Q182 62 196 45T238 27Q261 27 281 38T312 61T339 94Q339 95 344 114T358 173T377 247Q415 397 419 404Q432 431 462 431Q475 431 483 424T494 412T496 403Q496 390 447 193T391 -23Q363 -106 294 -155T156 -205Q111 -205 77 -183T43 -117Q43 -95 50 -80T69 -58T89 -48T106 -45Q150 -45 150 -87Q150 -107 138 -122T115 -142T102 -147L99 -148Q101 -153 118 -160T152 -167H160Q177 -167 186 -165Q219 -156 247 -127T290 -65T313 -9T321 21L315 17Q309 13 296 6T270 -6Q250 -11 231 -11Q185 -11 150 11T104 82Q103 89 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-5-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D466" xlink:href="#MJX-5-TEX-I-1D466"></use></g><g data-mml-node="mn" transform="translate(523,-150) scale(0.707)"><use data-c="31" xlink:href="#MJX-5-TEX-N-31"></use></g></g></g></g></svg></span> dla trzech struktur. Regulator zdecentralizowany nie wie o sąsiedzie i przegrzewa o 50%. Regulatory rozproszone wymieniają swoje moce i po kilku wymianach dochodzą do rozwiązania scentralizowanego. Przykład statyczny, rachunek własny.</figcaption>
+</figure>
+
+<ol class="steps">
+<li><strong>Scentralizowanie</strong>: rozwiązujemy oba równania naraz: <span class="m" data-tex="u_1 = u_2 = 1"><svg style="vertical-align: -0.339ex;" xmlns="http://www.w3.org/2000/svg" width="11.729ex" height="1.846ex" role="img" focusable="false" viewBox="0 -666 5184.2 816" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-6-TEX-I-1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-6-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-6-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-6-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D462" xlink:href="#MJX-6-TEX-I-1D462"></use></g><g data-mml-node="mn" transform="translate(605,-150) scale(0.707)"><use data-c="31" xlink:href="#MJX-6-TEX-N-31"></use></g></g><g data-mml-node="mo" transform="translate(1286.3,0)"><use data-c="3D" xlink:href="#MJX-6-TEX-N-3D"></use></g><g data-mml-node="msub" transform="translate(2342.1,0)"><g data-mml-node="mi"><use data-c="1D462" xlink:href="#MJX-6-TEX-I-1D462"></use></g><g data-mml-node="mn" transform="translate(605,-150) scale(0.707)"><use data-c="32" xlink:href="#MJX-6-TEX-N-32"></use></g></g><g data-mml-node="mo" transform="translate(3628.4,0)"><use data-c="3D" xlink:href="#MJX-6-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(4684.2,0)"><use data-c="31" xlink:href="#MJX-6-TEX-N-31"></use></g></g></g></svg></span>, więc <span class="m" data-tex="y_1 = y_2 = 3"><svg style="vertical-align: -0.464ex;" xmlns="http://www.w3.org/2000/svg" width="11.358ex" height="1.968ex" role="img" focusable="false" viewBox="0 -665 5020.2 870" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-7-TEX-I-1D466" d="M21 287Q21 301 36 335T84 406T158 442Q199 442 224 419T250 355Q248 336 247 334Q247 331 231 288T198 191T182 105Q182 62 196 45T238 27Q261 27 281 38T312 61T339 94Q339 95 344 114T358 173T377 247Q415 397 419 404Q432 431 462 431Q475 431 483 424T494 412T496 403Q496 390 447 193T391 -23Q363 -106 294 -155T156 -205Q111 -205 77 -183T43 -117Q43 -95 50 -80T69 -58T89 -48T106 -45Q150 -45 150 -87Q150 -107 138 -122T115 -142T102 -147L99 -148Q101 -153 118 -160T152 -167H160Q177 -167 186 -165Q219 -156 247 -127T290 -65T313 -9T321 21L315 17Q309 13 296 6T270 -6Q250 -11 231 -11Q185 -11 150 11T104 82Q103 89 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-7-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-7-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-7-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-7-TEX-N-33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D466" xlink:href="#MJX-7-TEX-I-1D466"></use></g><g data-mml-node="mn" transform="translate(523,-150) scale(0.707)"><use data-c="31" xlink:href="#MJX-7-TEX-N-31"></use></g></g><g data-mml-node="mo" transform="translate(1204.3,0)"><use data-c="3D" xlink:href="#MJX-7-TEX-N-3D"></use></g><g data-mml-node="msub" transform="translate(2260.1,0)"><g data-mml-node="mi"><use data-c="1D466" xlink:href="#MJX-7-TEX-I-1D466"></use></g><g data-mml-node="mn" transform="translate(523,-150) scale(0.707)"><use data-c="32" xlink:href="#MJX-7-TEX-N-32"></use></g></g><g data-mml-node="mo" transform="translate(3464.4,0)"><use data-c="3D" xlink:href="#MJX-7-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(4520.2,0)"><use data-c="33" xlink:href="#MJX-7-TEX-N-33"></use></g></g></g></svg></span>.</li>
+<li><strong>Zdecentralizowanie</strong>: każdy regulator zna tylko swój wpływ, <span class="m" data-tex="y_i = 2u_i"><svg style="vertical-align: -0.464ex;" xmlns="http://www.w3.org/2000/svg" width="8.03ex" height="1.971ex" role="img" focusable="false" viewBox="0 -666 3549.5 871" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-8-TEX-I-1D466" d="M21 287Q21 301 36 335T84 406T158 442Q199 442 224 419T250 355Q248 336 247 334Q247 331 231 288T198 191T182 105Q182 62 196 45T238 27Q261 27 281 38T312 61T339 94Q339 95 344 114T358 173T377 247Q415 397 419 404Q432 431 462 431Q475 431 483 424T494 412T496 403Q496 390 447 193T391 -23Q363 -106 294 -155T156 -205Q111 -205 77 -183T43 -117Q43 -95 50 -80T69 -58T89 -48T106 -45Q150 -45 150 -87Q150 -107 138 -122T115 -142T102 -147L99 -148Q101 -153 118 -160T152 -167H160Q177 -167 186 -165Q219 -156 247 -127T290 -65T313 -9T321 21L315 17Q309 13 296 6T270 -6Q250 -11 231 -11Q185 -11 150 11T104 82Q103 89 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-8-TEX-I-1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path><path id="MJX-8-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-8-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-8-TEX-I-1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D466" xlink:href="#MJX-8-TEX-I-1D466"></use></g><g data-mml-node="mi" transform="translate(523,-150) scale(0.707)"><use data-c="1D456" xlink:href="#MJX-8-TEX-I-1D456"></use></g></g><g data-mml-node="mo" transform="translate(1094.7,0)"><use data-c="3D" xlink:href="#MJX-8-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(2150.5,0)"><use data-c="32" xlink:href="#MJX-8-TEX-N-32"></use></g><g data-mml-node="msub" transform="translate(2650.5,0)"><g data-mml-node="mi"><use data-c="1D462" xlink:href="#MJX-8-TEX-I-1D462"></use></g><g data-mml-node="mi" transform="translate(605,-150) scale(0.707)"><use data-c="1D456" xlink:href="#MJX-8-TEX-I-1D456"></use></g></g></g></g></svg></span>, więc <span class="m" data-tex="u_i = 1{,}5"><svg style="vertical-align: -0.439ex;" xmlns="http://www.w3.org/2000/svg" width="7.942ex" height="1.946ex" role="img" focusable="false" viewBox="0 -666 3510.5 860" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-9-TEX-I-1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-9-TEX-I-1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path><path id="MJX-9-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-9-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-9-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-9-TEX-N-35" d="M164 157Q164 133 148 117T109 101H102Q148 22 224 22Q294 22 326 82Q345 115 345 210Q345 313 318 349Q292 382 260 382H254Q176 382 136 314Q132 307 129 306T114 304Q97 304 95 310Q93 314 93 485V614Q93 664 98 664Q100 666 102 666Q103 666 123 658T178 642T253 634Q324 634 389 662Q397 666 402 666Q410 666 410 648V635Q328 538 205 538Q174 538 149 544L139 546V374Q158 388 169 396T205 412T256 420Q337 420 393 355T449 201Q449 109 385 44T229 -22Q148 -22 99 32T50 154Q50 178 61 192T84 210T107 214Q132 214 148 197T164 157Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D462" xlink:href="#MJX-9-TEX-I-1D462"></use></g><g data-mml-node="mi" transform="translate(605,-150) scale(0.707)"><use data-c="1D456" xlink:href="#MJX-9-TEX-I-1D456"></use></g></g><g data-mml-node="mo" transform="translate(1176.7,0)"><use data-c="3D" xlink:href="#MJX-9-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(2232.5,0)"><use data-c="31" xlink:href="#MJX-9-TEX-N-31"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(2732.5,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-9-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(3010.5,0)"><use data-c="35" xlink:href="#MJX-9-TEX-N-35"></use></g></g></g></svg></span>. Naprawdę: <span class="m" data-tex="y_1 = 2\cdot 1{,}5 + 1{,}5 = 4{,}5"><svg style="vertical-align: -0.464ex;" xmlns="http://www.w3.org/2000/svg" width="22.336ex" height="1.995ex" role="img" focusable="false" viewBox="0 -677 9872.6 882" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-10-TEX-I-1D466" d="M21 287Q21 301 36 335T84 406T158 442Q199 442 224 419T250 355Q248 336 247 334Q247 331 231 288T198 191T182 105Q182 62 196 45T238 27Q261 27 281 38T312 61T339 94Q339 95 344 114T358 173T377 247Q415 397 419 404Q432 431 462 431Q475 431 483 424T494 412T496 403Q496 390 447 193T391 -23Q363 -106 294 -155T156 -205Q111 -205 77 -183T43 -117Q43 -95 50 -80T69 -58T89 -48T106 -45Q150 -45 150 -87Q150 -107 138 -122T115 -142T102 -147L99 -148Q101 -153 118 -160T152 -167H160Q177 -167 186 -165Q219 -156 247 -127T290 -65T313 -9T321 21L315 17Q309 13 296 6T270 -6Q250 -11 231 -11Q185 -11 150 11T104 82Q103 89 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-10-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-10-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-10-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-10-TEX-N-22C5" d="M78 250Q78 274 95 292T138 310Q162 310 180 294T199 251Q199 226 182 208T139 190T96 207T78 250Z"></path><path id="MJX-10-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-10-TEX-N-35" d="M164 157Q164 133 148 117T109 101H102Q148 22 224 22Q294 22 326 82Q345 115 345 210Q345 313 318 349Q292 382 260 382H254Q176 382 136 314Q132 307 129 306T114 304Q97 304 95 310Q93 314 93 485V614Q93 664 98 664Q100 666 102 666Q103 666 123 658T178 642T253 634Q324 634 389 662Q397 666 402 666Q410 666 410 648V635Q328 538 205 538Q174 538 149 544L139 546V374Q158 388 169 396T205 412T256 420Q337 420 393 355T449 201Q449 109 385 44T229 -22Q148 -22 99 32T50 154Q50 178 61 192T84 210T107 214Q132 214 148 197T164 157Z"></path><path id="MJX-10-TEX-N-2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path><path id="MJX-10-TEX-N-34" d="M462 0Q444 3 333 3Q217 3 199 0H190V46H221Q241 46 248 46T265 48T279 53T286 61Q287 63 287 115V165H28V211L179 442Q332 674 334 675Q336 677 355 677H373L379 671V211H471V165H379V114Q379 73 379 66T385 54Q393 47 442 46H471V0H462ZM293 211V545L74 212L183 211H293Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D466" xlink:href="#MJX-10-TEX-I-1D466"></use></g><g data-mml-node="mn" transform="translate(523,-150) scale(0.707)"><use data-c="31" xlink:href="#MJX-10-TEX-N-31"></use></g></g><g data-mml-node="mo" transform="translate(1204.3,0)"><use data-c="3D" xlink:href="#MJX-10-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(2260.1,0)"><use data-c="32" xlink:href="#MJX-10-TEX-N-32"></use></g><g data-mml-node="mo" transform="translate(2982.3,0)"><use data-c="22C5" xlink:href="#MJX-10-TEX-N-22C5"></use></g><g data-mml-node="mn" transform="translate(3482.6,0)"><use data-c="31" xlink:href="#MJX-10-TEX-N-31"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(3982.6,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-10-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(4260.6,0)"><use data-c="35" xlink:href="#MJX-10-TEX-N-35"></use></g><g data-mml-node="mo" transform="translate(4982.8,0)"><use data-c="2B" xlink:href="#MJX-10-TEX-N-2B"></use></g><g data-mml-node="mn" transform="translate(5983,0)"><use data-c="31" xlink:href="#MJX-10-TEX-N-31"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(6483,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-10-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(6761,0)"><use data-c="35" xlink:href="#MJX-10-TEX-N-35"></use></g><g data-mml-node="mo" transform="translate(7538.8,0)"><use data-c="3D" xlink:href="#MJX-10-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(8594.6,0)"><use data-c="34" xlink:href="#MJX-10-TEX-N-34"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(9094.6,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-10-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(9372.6,0)"><use data-c="35" xlink:href="#MJX-10-TEX-N-35"></use></g></g></g></svg></span> — o 50% za dużo.</li>
+<li><strong>Rozproszenie</strong>: regulator 1 dostaje od sąsiada jego aktualną moc i liczy <span class="m" data-tex="u_1 \leftarrow (3 - u_2)/2"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="16.003ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 7073.1 1000" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-11-TEX-I-1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-11-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-11-TEX-N-2190" d="M944 261T944 250T929 230H165Q167 228 182 216T211 189T244 152T277 96T303 25Q308 7 308 0Q308 -11 288 -11Q281 -11 278 -11T272 -7T267 2T263 21Q245 94 195 151T73 236Q58 242 55 247Q55 254 59 257T73 264Q121 283 158 314T215 375T247 434T264 480L267 497Q269 503 270 505T275 509T288 511Q308 511 308 500Q308 493 303 475Q293 438 278 406T246 352T215 315T185 287T165 270H929Q944 261 944 250Z"></path><path id="MJX-11-TEX-N-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path id="MJX-11-TEX-N-33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path><path id="MJX-11-TEX-N-2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path><path id="MJX-11-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-11-TEX-N-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path><path id="MJX-11-TEX-N-2F" d="M423 750Q432 750 438 744T444 730Q444 725 271 248T92 -240Q85 -250 75 -250Q68 -250 62 -245T56 -231Q56 -221 230 257T407 740Q411 750 423 750Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D462" xlink:href="#MJX-11-TEX-I-1D462"></use></g><g data-mml-node="mn" transform="translate(605,-150) scale(0.707)"><use data-c="31" xlink:href="#MJX-11-TEX-N-31"></use></g></g><g data-mml-node="mo" transform="translate(1286.3,0)"><use data-c="2190" xlink:href="#MJX-11-TEX-N-2190"></use></g><g data-mml-node="mo" transform="translate(2564.1,0)"><use data-c="28" xlink:href="#MJX-11-TEX-N-28"></use></g><g data-mml-node="mn" transform="translate(2953.1,0)"><use data-c="33" xlink:href="#MJX-11-TEX-N-33"></use></g><g data-mml-node="mo" transform="translate(3675.3,0)"><use data-c="2212" xlink:href="#MJX-11-TEX-N-2212"></use></g><g data-mml-node="msub" transform="translate(4675.6,0)"><g data-mml-node="mi"><use data-c="1D462" xlink:href="#MJX-11-TEX-I-1D462"></use></g><g data-mml-node="mn" transform="translate(605,-150) scale(0.707)"><use data-c="32" xlink:href="#MJX-11-TEX-N-32"></use></g></g><g data-mml-node="mo" transform="translate(5684.1,0)"><use data-c="29" xlink:href="#MJX-11-TEX-N-29"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(6073.1,0)"><g data-mml-node="mo"><use data-c="2F" xlink:href="#MJX-11-TEX-N-2F"></use></g></g><g data-mml-node="mn" transform="translate(6573.1,0)"><use data-c="32" xlink:href="#MJX-11-TEX-N-32"></use></g></g></g></svg></span>; regulator 2 symetrycznie. Kolejne wartości: <span class="m" data-tex="1{,}5 \to 0{,}75 \to 1{,}125 \to 0{,}94 \to 1{,}03 \to \dots \to 1"><svg style="vertical-align: -0.439ex;" xmlns="http://www.w3.org/2000/svg" width="45.012ex" height="1.971ex" role="img" focusable="false" viewBox="0 -677 19895.3 871" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-12-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-12-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-12-TEX-N-35" d="M164 157Q164 133 148 117T109 101H102Q148 22 224 22Q294 22 326 82Q345 115 345 210Q345 313 318 349Q292 382 260 382H254Q176 382 136 314Q132 307 129 306T114 304Q97 304 95 310Q93 314 93 485V614Q93 664 98 664Q100 666 102 666Q103 666 123 658T178 642T253 634Q324 634 389 662Q397 666 402 666Q410 666 410 648V635Q328 538 205 538Q174 538 149 544L139 546V374Q158 388 169 396T205 412T256 420Q337 420 393 355T449 201Q449 109 385 44T229 -22Q148 -22 99 32T50 154Q50 178 61 192T84 210T107 214Q132 214 148 197T164 157Z"></path><path id="MJX-12-TEX-N-2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path><path id="MJX-12-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJX-12-TEX-N-37" d="M55 458Q56 460 72 567L88 674Q88 676 108 676H128V672Q128 662 143 655T195 646T364 644H485V605L417 512Q408 500 387 472T360 435T339 403T319 367T305 330T292 284T284 230T278 162T275 80Q275 66 275 52T274 28V19Q270 2 255 -10T221 -22Q210 -22 200 -19T179 0T168 40Q168 198 265 368Q285 400 349 489L395 552H302Q128 552 119 546Q113 543 108 522T98 479L95 458V455H55V458Z"></path><path id="MJX-12-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-12-TEX-N-39" d="M352 287Q304 211 232 211Q154 211 104 270T44 396Q42 412 42 436V444Q42 537 111 606Q171 666 243 666Q245 666 249 666T257 665H261Q273 665 286 663T323 651T370 619T413 560Q456 472 456 334Q456 194 396 97Q361 41 312 10T208 -22Q147 -22 108 7T68 93T121 149Q143 149 158 135T173 96Q173 78 164 65T148 49T135 44L131 43Q131 41 138 37T164 27T206 22H212Q272 22 313 86Q352 142 352 280V287ZM244 248Q292 248 321 297T351 430Q351 508 343 542Q341 552 337 562T323 588T293 615T246 625Q208 625 181 598Q160 576 154 546T147 441Q147 358 152 329T172 282Q197 248 244 248Z"></path><path id="MJX-12-TEX-N-34" d="M462 0Q444 3 333 3Q217 3 199 0H190V46H221Q241 46 248 46T265 48T279 53T286 61Q287 63 287 115V165H28V211L179 442Q332 674 334 675Q336 677 355 677H373L379 671V211H471V165H379V114Q379 73 379 66T385 54Q393 47 442 46H471V0H462ZM293 211V545L74 212L183 211H293Z"></path><path id="MJX-12-TEX-N-33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path><path id="MJX-12-TEX-N-22EF" d="M78 250Q78 274 95 292T138 310Q162 310 180 294T199 251Q199 226 182 208T139 190T96 207T78 250ZM525 250Q525 274 542 292T585 310Q609 310 627 294T646 251Q646 226 629 208T586 190T543 207T525 250ZM972 250Q972 274 989 292T1032 310Q1056 310 1074 294T1093 251Q1093 226 1076 208T1033 190T990 207T972 250Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mn"><use data-c="31" xlink:href="#MJX-12-TEX-N-31"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(500,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-12-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(778,0)"><use data-c="35" xlink:href="#MJX-12-TEX-N-35"></use></g><g data-mml-node="mo" transform="translate(1555.8,0)"><use data-c="2192" xlink:href="#MJX-12-TEX-N-2192"></use></g><g data-mml-node="mn" transform="translate(2833.6,0)"><use data-c="30" xlink:href="#MJX-12-TEX-N-30"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(3333.6,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-12-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(3611.6,0)"><use data-c="37" xlink:href="#MJX-12-TEX-N-37"></use><use data-c="35" xlink:href="#MJX-12-TEX-N-35" transform="translate(500,0)"></use></g><g data-mml-node="mo" transform="translate(4889.3,0)"><use data-c="2192" xlink:href="#MJX-12-TEX-N-2192"></use></g><g data-mml-node="mn" transform="translate(6167.1,0)"><use data-c="31" xlink:href="#MJX-12-TEX-N-31"></use><use data-c="2C" xlink:href="#MJX-12-TEX-N-2C" transform="translate(500,0)"></use><use data-c="31" xlink:href="#MJX-12-TEX-N-31" transform="translate(778,0)"></use><use data-c="32" xlink:href="#MJX-12-TEX-N-32" transform="translate(1278,0)"></use><use data-c="35" xlink:href="#MJX-12-TEX-N-35" transform="translate(1778,0)"></use></g><g data-mml-node="mo" transform="translate(8722.9,0)"><use data-c="2192" xlink:href="#MJX-12-TEX-N-2192"></use></g><g data-mml-node="mn" transform="translate(10000.7,0)"><use data-c="30" xlink:href="#MJX-12-TEX-N-30"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(10500.7,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-12-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(10778.7,0)"><use data-c="39" xlink:href="#MJX-12-TEX-N-39"></use><use data-c="34" xlink:href="#MJX-12-TEX-N-34" transform="translate(500,0)"></use></g><g data-mml-node="mo" transform="translate(12056.4,0)"><use data-c="2192" xlink:href="#MJX-12-TEX-N-2192"></use></g><g data-mml-node="mn" transform="translate(13334.2,0)"><use data-c="31" xlink:href="#MJX-12-TEX-N-31"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(13834.2,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-12-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(14112.2,0)"><use data-c="30" xlink:href="#MJX-12-TEX-N-30"></use><use data-c="33" xlink:href="#MJX-12-TEX-N-33" transform="translate(500,0)"></use></g><g data-mml-node="mo" transform="translate(15390,0)"><use data-c="2192" xlink:href="#MJX-12-TEX-N-2192"></use></g><g data-mml-node="mo" transform="translate(16667.8,0)"><use data-c="22EF" xlink:href="#MJX-12-TEX-N-22EF"></use></g><g data-mml-node="mo" transform="translate(18117.6,0)"><use data-c="2192" xlink:href="#MJX-12-TEX-N-2192"></use></g><g data-mml-node="mn" transform="translate(19395.3,0)"><use data-c="31" xlink:href="#MJX-12-TEX-N-31"></use></g></g></g></svg></span>.</li>
+<li><strong>Błąd maleje o połowę w każdej wymianie</strong>, bo wpływ sąsiada (1) jest dwa razy mniejszy od własnego (2). Gdyby sprzężenie było silniejsze od wpływu własnego, iteracje by się rozbiegały — wtedy potrzebny jest koordynator albo wspólny wskaźnik (wariant kooperacyjny).</li>
+</ol>
+
+<div class="box key">
+<span class="lbl">Zapamiętaj</span>
+<p><strong>Zdecentralizowane = ignoruję sąsiada (błąd przy sprzężeniach). Rozproszone = wymieniam się z sąsiadem i dochodzę do wyniku scentralizowanego, jeśli sprzężenie nie jest zbyt silne.</strong></p>
+</div>
+</section>
+
+<section>
+<h2><span class="num">05</span> Struktury wieloagentowe: czym jest agent</h2>
+<div class="rail"></div>
+
+<p>System wieloagentowy to według Wikipedii <span class="cyt">„a computational system composed of multiple interacting intelligent agents”</span>. Agent to coś więcej niż regulator: sam postrzega otoczenie, ma własne cele i wiedzę, sam podejmuje decyzje i porozumiewa się z innymi agentami.</p>
+
+<figure>
+<svg viewBox="0 0 680 390" class="fig">
+<defs><marker id="arF24c0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#141C24"/></marker><marker id="arF24c1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0E6E78"/></marker><marker id="arF24c2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B3641A"/></marker><marker id="arF24c3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9C3B52"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">AGENT: POSTRZEGA, DECYDUJE, DZIAŁA I ROZMAWIA Z INNYMI</text>
+<rect x="180.0" y="50.0" width="320.0" height="200.0" rx="8" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.5"/>
+<text x="340.0" y="72.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52">AGENT</text>
+<rect x="200.0" y="90.0" width="90.0" height="50.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="200.0" y="90.0" width="90.0" height="3.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="245.0" y="113.0" text-anchor="middle" class="bx-t">percepcja</text>
+<text x="245.0" y="128.0" text-anchor="middle" class="bx">pomiary</text>
+<rect x="300.0" y="90.0" width="80.0" height="50.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="300.0" y="90.0" width="80.0" height="3.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="340.0" y="113.0" text-anchor="middle" class="bx-t" style="font-size:11px">wiedza</text>
+<text x="340.0" y="128.0" text-anchor="middle" class="bx">model, cele</text>
+<rect x="390.0" y="90.0" width="90.0" height="50.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="390.0" y="90.0" width="90.0" height="3.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="435.0" y="113.0" text-anchor="middle" class="bx-t">decyzja</text>
+<text x="435.0" y="128.0" text-anchor="middle" class="bx">plan, reguły</text>
+<path d="M 290.0 115.0 L 298.0 115.0" fill="none" stroke="#141C24" stroke-width="1.2" marker-end="url(#arF24c0)"/>
+<path d="M 380.0 115.0 L 388.0 115.0" fill="none" stroke="#141C24" stroke-width="1.2" marker-end="url(#arF24c0)"/>
+<rect x="270.0" y="170.0" width="140.0" height="50.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="270.0" y="170.0" width="140.0" height="3.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="340.0" y="193.0" text-anchor="middle" class="bx-t">komunikacja</text>
+<text x="340.0" y="208.0" text-anchor="middle" class="bx">wiadomości do agentów</text>
+<path d="M 435.0 140.0 L 435.0 195.0 L 412.0 195.0" fill="none" stroke="#9C3B52" stroke-width="1.2" stroke-dasharray="3 2"/>
+<rect x="180.0" y="290.0" width="320.0" height="50.0" rx="6" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="340.0" y="312.0" text-anchor="middle" class="bx-t" style="font-size:11px">OTOCZENIE</text>
+<text x="340.0" y="328.0" text-anchor="middle" class="cap">proces, maszyny, ludzie</text>
+<path d="M 245.0 288.0 L 245.0 142.0" fill="none" stroke="#0E6E78" stroke-width="1.5" marker-end="url(#arF24c1)"/>
+<text x="238.0" y="270.0" text-anchor="end" class="cap" style="fill:#0E6E78">czujniki</text>
+<path d="M 435.0 142.0 L 435.0 288.0" fill="none" stroke="#B3641A" stroke-width="1.5" marker-end="url(#arF24c2)"/>
+<text x="442.0" y="270.0" text-anchor="start" class="cap" style="fill:#B3641A">działanie</text>
+<circle cx="610.0" cy="120.0" r="20" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.4"/>
+<text x="610.0" y="125.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52">A</text>
+<circle cx="610.0" cy="200.0" r="20" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.4"/>
+<text x="610.0" y="205.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52">A</text>
+<path d="M 412.0 190.0 L 588.0 125.0" fill="none" stroke="#9C3B52" stroke-width="1.1" stroke-dasharray="3 2" marker-end="url(#arF24c3)"/>
+<path d="M 588.0 200.0 L 412.0 200.0" fill="none" stroke="#9C3B52" stroke-width="1.1" stroke-dasharray="3 2" marker-end="url(#arF24c3)"/>
+<text x="610.0" y="244.0" text-anchor="middle" class="cap" style="fill:#9C3B52">inni agenci</text>
+<rect x="14.0" y="60.0" width="150.0" height="42.0" rx="4" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.1"/>
+<text x="24.0" y="77.0" text-anchor="start" class="bx-t" style="fill:#9C3B52;font-size:10.5px">autonomia</text>
+<text x="24.0" y="93.0" text-anchor="start" class="cap" style="font-size:9.5px">działa bez człowieka</text>
+<rect x="14.0" y="112.0" width="150.0" height="42.0" rx="4" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.1"/>
+<text x="24.0" y="129.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:10.5px">reaktywność</text>
+<text x="24.0" y="145.0" text-anchor="start" class="cap" style="font-size:9.5px">odpowiada na zmiany</text>
+<rect x="14.0" y="164.0" width="150.0" height="42.0" rx="4" fill="#B3641A" stroke="none" stroke-width="1" opacity="0.1"/>
+<text x="24.0" y="181.0" text-anchor="start" class="bx-t" style="fill:#B3641A;font-size:10.5px">proaktywność</text>
+<text x="24.0" y="197.0" text-anchor="start" class="cap" style="font-size:9.5px">sam dąży do celu</text>
+<rect x="14.0" y="216.0" width="150.0" height="42.0" rx="4" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.1"/>
+<text x="24.0" y="233.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">zdolność społeczna</text>
+<text x="24.0" y="249.0" text-anchor="start" class="cap" style="font-size:9.5px">współpracuje, negocjuje</text>
+<text x="89.0" y="290.0" text-anchor="middle" class="cap" style="fill:#141C24">cztery cechy</text>
+<text x="89.0" y="304.0" text-anchor="middle" class="cap">(Wooldridge, Jennings)</text>
+</svg>
+<figcaption>Budowa agenta i cztery cechy tzw. słabej definicji agenta według Wooldridge’a i Jenningsa (1995). Regulator z poprzednich sekcji ma tylko percepcję i działanie; agent dokłada wiedzę, cele, decyzję i komunikację.</figcaption>
+</figure>
+
+<p>Wooldridge i Jennings wymieniają cztery cechy. <strong>Autonomia</strong>: agenci <span class="cyt">„operate without the direct intervention of humans or others”</span>. <strong>Reaktywność</strong>: odpowiadają na zmiany otoczenia na czas. <strong>Proaktywność</strong>: <span class="cyt">„they are able to exhibit goal-directed behaviour by taking the initiative”</span>. <strong>Zdolność społeczna</strong>: rozmawiają z innymi agentami wspólnym językiem.</p>
+
+<p>Dla całego systemu ważne są trzy własności z Wikipedii: autonomia agentów, <strong>lokalny widok</strong> (<span class="cyt">„no agent has a full global view”</span>) i <strong>decentralizacja</strong> — żaden agent nie steruje całością.</p>
+</section>
+
+<section>
+<h2><span class="num">06</span> Jak agenci współpracują</h2>
+<div class="rail"></div>
+
+<figure>
+<svg viewBox="0 0 680 340" class="fig">
+<defs><marker id="arF24d0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9C3B52"/></marker><marker id="arF24d1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker><marker id="arF24d2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">JAK AGENCI SIĘ DOGADUJĄ: PRZETARG (CONTRACT NET) I KONSENSUS</text>
+<text x="170.0" y="52.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52;font-size:11px">CONTRACT NET — przetarg na zadanie</text>
+<rect x="32.0" y="64.0" width="56.0" height="24.0" rx="3" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.2"/>
+<text x="60.0" y="80.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:9px">zlecający</text>
+<line x1="60.0" y1="88.0" x2="60.0" y2="300.0" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="122.0" y="64.0" width="56.0" height="24.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<text x="150.0" y="80.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9px">K1</text>
+<line x1="150.0" y1="88.0" x2="150.0" y2="300.0" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="192.0" y="64.0" width="56.0" height="24.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<text x="220.0" y="80.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9px">K2</text>
+<line x1="220.0" y1="88.0" x2="220.0" y2="300.0" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="262.0" y="64.0" width="56.0" height="24.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<text x="290.0" y="80.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9px">K3</text>
+<line x1="290.0" y1="88.0" x2="290.0" y2="300.0" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<path d="M 60.0 110.0 L 150.0 110.0" fill="none" stroke="#9C3B52" stroke-width="1.3" marker-end="url(#arF24d0)"/>
+<text x="70.0" y="105.0" text-anchor="start" class="cap" style="fill:#9C3B52;font-size:9px">ogłoszenie</text>
+<path d="M 60.0 118.0 L 220.0 118.0" fill="none" stroke="#9C3B52" stroke-width="1.3" marker-end="url(#arF24d0)"/>
+<path d="M 60.0 126.0 L 290.0 126.0" fill="none" stroke="#9C3B52" stroke-width="1.3" marker-end="url(#arF24d0)"/>
+<path d="M 150.0 170.0 L 60.0 170.0" fill="none" stroke="#5B4B8A" stroke-width="1.3" marker-end="url(#arF24d1)"/>
+<text x="105.0" y="165.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9px">oferta: 12 min</text>
+<path d="M 220.0 190.0 L 60.0 190.0" fill="none" stroke="#5B4B8A" stroke-width="1.3" marker-end="url(#arF24d1)"/>
+<text x="140.0" y="185.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9px">oferta: 8 min</text>
+<path d="M 290.0 210.0 L 60.0 210.0" fill="none" stroke="#5C6B77" stroke-width="1.3" marker-end="url(#arF24d2)"/>
+<text x="175.0" y="205.0" text-anchor="middle" class="cap" style="fill:#5C6B77;font-size:9px">odmowa</text>
+<path d="M 60.0 256.0 L 220.0 256.0" fill="none" stroke="#9C3B52" stroke-width="1.3" marker-end="url(#arF24d0)"/>
+<text x="70.0" y="251.0" text-anchor="start" class="cap" style="fill:#9C3B52;font-size:9px">przydział → K2</text>
+<text x="170.0" y="316.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9px">zadanie dostaje najlepsza oferta;</text>
+<text x="170.0" y="330.0" text-anchor="middle" class="cap" style="font-size:9px">zlecający nie musi znać agentów z góry</text>
+<text x="515.0" y="52.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:11px">KONSENSUS — uzgodnienie wartości</text>
+<clipPath id="cF24d29"><rect x="420" y="80" width="230" height="180"/></clipPath>
+<line x1="420.0" y1="260.0" x2="650.0" y2="260.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="420.0" y1="80.0" x2="420.0" y2="260.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="420.0" y1="260.0" x2="420.0" y2="264.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="420.0" y="276.0" text-anchor="middle" class="tick">0</text>
+<line x1="477.5" y1="260.0" x2="477.5" y2="264.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="477.5" y="276.0" text-anchor="middle" class="tick">2</text>
+<line x1="535.0" y1="260.0" x2="535.0" y2="264.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="535.0" y="276.0" text-anchor="middle" class="tick">4</text>
+<line x1="592.5" y1="260.0" x2="592.5" y2="264.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="592.5" y="276.0" text-anchor="middle" class="tick">6</text>
+<line x1="650.0" y1="260.0" x2="650.0" y2="264.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="650.0" y="276.0" text-anchor="middle" class="tick">8</text>
+<text x="535.0" y="294.0" text-anchor="middle" class="axlab">iteracja</text>
+<g clip-path="url(#cF24d29)"><polyline points="420.0,247.1 448.8,227.9 477.5,213.4 506.2,202.5 535.0,194.4 563.8,188.3 592.5,183.7 621.2,180.3 650.0,177.7" fill="none" stroke="#0E6E78" stroke-width="1.8" stroke-linejoin="round"/></g>
+<text x="414.0" y="251.1" text-anchor="end" class="cap" style="fill:#0E6E78;font-size:9px">A1 = 1</text>
+<g clip-path="url(#cF24d29)"><polyline points="420.0,170.0 448.8,170.0 477.5,170.0 506.2,170.0 535.0,170.0 563.8,170.0 592.5,170.0 621.2,170.0 650.0,170.0" fill="none" stroke="#5B4B8A" stroke-width="1.8" stroke-linejoin="round"/></g>
+<text x="414.0" y="174.0" text-anchor="end" class="cap" style="fill:#5B4B8A;font-size:9px">A2 = 4</text>
+<g clip-path="url(#cF24d29)"><polyline points="420.0,92.9 448.8,112.1 477.5,126.6 506.2,137.5 535.0,145.6 563.8,151.7 592.5,156.3 621.2,159.7 650.0,162.3" fill="none" stroke="#B3641A" stroke-width="1.8" stroke-linejoin="round"/></g>
+<text x="414.0" y="96.9" text-anchor="end" class="cap" style="fill:#B3641A;font-size:9px">A3 = 7</text>
+<text x="431.5" y="164.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9px">średnia 4</text>
+<text x="520.0" y="316.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9px">każdy agent zna tylko sąsiada: x ← x + 0,25·Σ(sąsiad − x)</text>
+<text x="520.0" y="330.0" text-anchor="middle" class="cap" style="font-size:9px">A1 – A2 – A3 w linii; wszyscy zbiegają do średniej</text>
+</svg>
+<figcaption>Dwa podstawowe mechanizmy. Po lewej przetarg (Contract Net, Smith 1980): zlecający ogłasza zadanie, wykonawcy składają oferty, najlepsza dostaje przydział. Po prawej konsensus: każdy agent przesuwa swoją wartość w stronę sąsiadów i wszyscy dochodzą do wspólnej wartości, choć nikt nie zna całości. Źródła: Wikipedia, <em>Contract Net Protocol</em>; Olfati-Saber, Fax, Murray 2007; rachunek własny.</figcaption>
+</figure>
+
+<ul>
+<li><strong>Negocjacje i przetargi</strong> — przydział zadań i zasobów (który robot weźmie detal, która elektrownia dostarczy moc).</li>
+<li><strong>Konsensus</strong> — <span class="cyt">„to reach an agreement regarding a certain quantity of interest that depends on the state of all agents”</span> (Olfati-Saber i in. 2007); np. wspólna prędkość pojazdów w kolumnie albo wspólna częstotliwość w mikrosieci.</li>
+<li><strong>Mechanizmy rynkowe</strong> — agenci kupują i sprzedają zasób po cenie, która równoważy popyt i podaż; to ten sam pomysł co koordynacja cenowa w strukturach hierarchicznych (zagadnienia 33 i 36).</li>
+</ul>
+</section>
+
+<section>
+<h2><span class="num">07</span> Zastosowania i realizacja</h2>
+<div class="rail"></div>
+
+<table>
+<thead><tr><th>Dziedzina</th><th>Agenci</th><th>Co uzgadniają</th></tr></thead>
+<tbody>
+<tr><td>produkcja elastyczna</td><td>maszyny, detale, zlecenia</td><td>kolejność i przydział operacji; reakcja na awarię maszyny</td></tr>
+<tr><td>sieci energetyczne, mikrosieci</td><td>źródła, magazyny, odbiorcy</td><td>bilans mocy, częstotliwość, ceny energii</td></tr>
+<tr><td>sieci wodociągowe i kanalizacyjne</td><td>strefy, pompownie, zbiorniki</td><td>ciśnienia, przepływy między strefami</td></tr>
+<tr><td>roboty mobilne, drony, pojazdy</td><td>pojazdy</td><td>formacja, trasy, unikanie kolizji</td></tr>
+</tbody>
+</table>
+
+<p>W produkcji popularne jest podejście <strong>holoniczne</strong>: holon to <span class="cyt">„something that is simultaneously a whole in and of itself, as well as a part of a larger whole”</span> — np. maszyna jest autonomiczna, ale jednocześnie należy do gniazda, a gniazdo do linii. Łączy to autonomię agentów z hierarchią.</p>
+
+<p><strong>Realizacja sprzętowo-programowa.</strong> Agenci działają na sterownikach, komputerach przemysłowych albo w chmurze i porozumiewają się przez sieć (OPC UA, MQTT — zagadnienie 21). Do rozproszonej logiki sterowania przygotowano normę IEC 61499: w niej <span class="cyt">„the cyclic execution model of IEC 61131 is replaced by an event driven execution model”</span>, a jedną aplikację można rozłożyć na wiele urządzeń.</p>
+</section>
+
+<section>
+<h2><span class="num">08</span> Narysuj na tablicy</h2>
+<div class="rail"></div>
+
+<figure>
+<svg viewBox="0 0 680 470" class="fig">
+<defs><marker id="arF24e0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker><marker id="arF24e1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B3641A"/></marker><marker id="arF24e2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0E6E78"/></marker><marker id="arF24e3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9C3B52"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">NARYSUJ NA TABLICY W 6 RUCHACH</text>
+<rect x="14.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="32.0" cy="58.0" r="10" fill="#5C6B77" stroke="none" stroke-width="1"/>
+<text x="32.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">1</text>
+<text x="48.0" y="56.0" text-anchor="start" class="bx-t">obiekt:</text>
+<text x="48.0" y="70.0" text-anchor="start" class="bx" style="font-size:9.5px">P1, P2 i sprzężenie</text>
+<rect x="48.0" y="199.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="70.0" y="214.0" text-anchor="middle" class="cap" style="font-size:9.5px">P1</text>
+<rect x="144.0" y="199.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="166.0" y="214.0" text-anchor="middle" class="cap" style="font-size:9.5px">P2</text>
+<line x1="92.0" y1="210.0" x2="144.0" y2="210.0" stroke="#9C3B52" stroke-width="1.2" stroke-dasharray="3 2"/>
+<rect x="236.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="254.0" cy="58.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="254.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">2</text>
+<text x="270.0" y="56.0" text-anchor="start" class="bx-t">zdecentralizowana:</text>
+<text x="270.0" y="70.0" text-anchor="start" class="bx" style="font-size:9.5px">R1, R2, bez łącza</text>
+<rect x="270.0" y="199.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="292.0" y="214.0" text-anchor="middle" class="cap" style="font-size:9.5px">P1</text>
+<rect x="366.0" y="199.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="388.0" y="214.0" text-anchor="middle" class="cap" style="font-size:9.5px">P2</text>
+<line x1="314.0" y1="210.0" x2="366.0" y2="210.0" stroke="#9C3B52" stroke-width="1.2" stroke-dasharray="3 2"/>
+<rect x="272.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<text x="292.0" y="154.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9.5px">R1</text>
+<rect x="368.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<text x="388.0" y="154.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9.5px">R2</text>
+<line x1="292.0" y1="161.0" x2="292.0" y2="199.0" stroke="#0E6E78" stroke-width="1.2"/>
+<line x1="388.0" y1="161.0" x2="388.0" y2="199.0" stroke="#0E6E78" stroke-width="1.2"/>
+<rect x="458.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="476.0" cy="58.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="476.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">3</text>
+<text x="492.0" y="56.0" text-anchor="start" class="bx-t">rozproszona:</text>
+<text x="492.0" y="70.0" text-anchor="start" class="bx" style="font-size:9.5px">strzałki R1 ↔ R2</text>
+<rect x="492.0" y="199.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="514.0" y="214.0" text-anchor="middle" class="cap" style="font-size:9.5px">P1</text>
+<rect x="588.0" y="199.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="610.0" y="214.0" text-anchor="middle" class="cap" style="font-size:9.5px">P2</text>
+<line x1="536.0" y1="210.0" x2="588.0" y2="210.0" stroke="#9C3B52" stroke-width="1.2" stroke-dasharray="3 2"/>
+<rect x="494.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<text x="514.0" y="154.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9.5px">R1</text>
+<rect x="590.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<text x="610.0" y="154.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9.5px">R2</text>
+<line x1="514.0" y1="161.0" x2="514.0" y2="199.0" stroke="#5B4B8A" stroke-width="1.2"/>
+<line x1="610.0" y1="161.0" x2="610.0" y2="199.0" stroke="#5B4B8A" stroke-width="1.2"/>
+<path d="M 535.0 146.0 L 589.0 146.0" fill="none" stroke="#5B4B8A" stroke-width="1.1" marker-end="url(#arF24e0)"/>
+<path d="M 589.0 154.0 L 535.0 154.0" fill="none" stroke="#5B4B8A" stroke-width="1.1" marker-end="url(#arF24e0)"/>
+<rect x="14.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="32.0" cy="272.0" r="10" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="32.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">4</text>
+<text x="48.0" y="270.0" text-anchor="start" class="bx-t">hierarchiczna:</text>
+<text x="48.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">koordynator K</text>
+<rect x="48.0" y="413.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="70.0" y="428.0" text-anchor="middle" class="cap" style="font-size:9.5px">P1</text>
+<rect x="144.0" y="413.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="166.0" y="428.0" text-anchor="middle" class="cap" style="font-size:9.5px">P2</text>
+<line x1="92.0" y1="424.0" x2="144.0" y2="424.0" stroke="#9C3B52" stroke-width="1.2" stroke-dasharray="3 2"/>
+<rect x="50.0" y="353.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.3"/>
+<text x="70.0" y="368.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9.5px">R1</text>
+<rect x="146.0" y="353.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.3"/>
+<text x="166.0" y="368.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9.5px">R2</text>
+<line x1="70.0" y1="375.0" x2="70.0" y2="413.0" stroke="#B3641A" stroke-width="1.2"/>
+<line x1="166.0" y1="375.0" x2="166.0" y2="413.0" stroke="#B3641A" stroke-width="1.2"/>
+<path d="M 91.0 360.0 L 145.0 360.0" fill="none" stroke="#5B4B8A" stroke-width="1.1" marker-end="url(#arF24e0)"/>
+<path d="M 145.0 368.0 L 91.0 368.0" fill="none" stroke="#5B4B8A" stroke-width="1.1" marker-end="url(#arF24e0)"/>
+<rect x="96.0" y="305.0" width="44.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.3"/>
+<text x="118.0" y="320.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9.5px">K</text>
+<path d="M 118.0 327.0 L 70.0 352.0" fill="none" stroke="#B3641A" stroke-width="1.1" marker-end="url(#arF24e1)"/>
+<path d="M 118.0 327.0 L 166.0 352.0" fill="none" stroke="#B3641A" stroke-width="1.1" marker-end="url(#arF24e1)"/>
+<rect x="236.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="254.0" cy="272.0" r="10" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="254.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">5</text>
+<text x="270.0" y="270.0" text-anchor="start" class="bx-t">agent:</text>
+<text x="270.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">percepcja → decyzja → działanie</text>
+<rect x="250.0" y="334.0" width="56.0" height="26.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.2"/>
+<text x="278.0" y="351.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9px">perc.</text>
+<rect x="314.0" y="334.0" width="56.0" height="26.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.2"/>
+<text x="342.0" y="351.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9px">decyzja</text>
+<rect x="378.0" y="334.0" width="56.0" height="26.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.2"/>
+<text x="406.0" y="351.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9px">dział.</text>
+<rect x="266.0" y="404.0" width="150.0" height="26.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="341.0" y="421.0" text-anchor="middle" class="cap" style="font-size:9.5px">otoczenie</text>
+<path d="M 278.0 404.0 L 278.0 362.0" fill="none" stroke="#0E6E78" stroke-width="1.1" marker-end="url(#arF24e2)"/>
+<path d="M 406.0 362.0 L 406.0 404.0" fill="none" stroke="#B3641A" stroke-width="1.1" marker-end="url(#arF24e1)"/>
+<rect x="458.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="476.0" cy="272.0" r="10" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="476.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">6</text>
+<text x="492.0" y="270.0" text-anchor="start" class="bx-t">przetarg:</text>
+<text x="492.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">ogłoszenie, oferty, przydział</text>
+<rect x="478.0" y="310.0" width="50.0" height="20.0" rx="3" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1"/>
+<text x="503.0" y="324.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:9px">zlec.</text>
+<rect x="542.0" y="310.0" width="32.0" height="20.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1"/>
+<text x="558.0" y="324.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9px">K1</text>
+<rect x="578.0" y="310.0" width="32.0" height="20.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1"/>
+<text x="594.0" y="324.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9px">K2</text>
+<rect x="614.0" y="310.0" width="32.0" height="20.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1"/>
+<text x="630.0" y="324.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9px">K3</text>
+<path d="M 503.0 354.0 L 630.0 354.0" fill="none" stroke="#9C3B52" stroke-width="1.2" marker-end="url(#arF24e3)"/>
+<path d="M 594.0 384.0 L 503.0 384.0" fill="none" stroke="#5B4B8A" stroke-width="1.2" marker-end="url(#arF24e0)"/>
+<path d="M 503.0 414.0 L 594.0 414.0" fill="none" stroke="#9C3B52" stroke-width="1.4" marker-end="url(#arF24e3)"/>
+<text x="568.0" y="349.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:8.5px">ogłoszenie</text>
+<text x="548.0" y="379.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:8.5px">oferty</text>
+<text x="548.0" y="409.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:8.5px">przydział</text>
+</svg>
+<figcaption>(1) Dwa podsystemy i sprzężenie między nimi. (2) Dwa regulatory bez połączenia — zdecentralizowana. (3) Strzałki między regulatorami — rozproszona. (4) Koordynator nad nimi — hierarchiczna. (5) Agent: percepcja, decyzja, działanie, otoczenie. (6) Przetarg: ogłoszenie, oferty, przydział.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2><span class="num">09</span> Opowiedz własnymi słowami</h2>
+<div class="rail"></div>
+
+<details class="fiszka op"><summary>Wersja 30 sekund (dla kogoś spoza automatyki)</summary>
+<p>„Dużym zakładem nie da się sterować z jednego komputera — to za dużo obliczeń i za duże ryzyko. Dzieli się go więc na części, a każda ma własny »mózg«. Te mózgi mogą działać każdy osobno, mogą się ze sobą naradzać albo mieć szefa, który je koordynuje. W systemie wieloagentowym każdy jest jak samodzielny pracownik: sam patrzy, sam decyduje, a z innymi się dogaduje — na przykład jak na przetargu, kto zrobi dane zadanie najszybciej.”</p></details>
+
+<details class="fiszka op"><summary>Wersja 2 minuty (egzaminacyjna, siedem zdań-kotwic)</summary>
+<ol>
+<li><strong>Po co:</strong> „Regulator scentralizowany ma problem z obliczeniami, niezawodnością, komunikacją i rozbudową, więc duży obiekt dzieli się na podsystemy z własnymi regulatorami.”</li>
+<li><strong>Zdecentralizowana:</strong> „Regulatory nie wymieniają danych — prosto, ale sprzężenia są ignorowane.”</li>
+<li><strong>Rozproszona:</strong> „Regulatory wymieniają dane z sąsiadami, iteracyjnie albo nie, kooperacyjnie albo nie; najczęściej to rozproszone MPC.”</li>
+<li><strong>Hierarchiczna:</strong> „Koordynator ustala regulatorom lokalnym cele albo ceny, żeby całość była spójna.”</li>
+<li><strong>Przykład:</strong> „Dwie sprzężone strefy: zdecentralizowanie daje 50% błędu, a wymiana mocy między regulatorami po kilku krokach daje wynik scentralizowany.”</li>
+<li><strong>Agenci:</strong> „Agent jest autonomiczny, reaktywny, proaktywny i społeczny; system wieloagentowy nie ma centralnego sterownika, a agenci mają tylko lokalny widok.”</li>
+<li><strong>Współpraca i zastosowania:</strong> „Agenci uzgadniają przez przetarg (Contract Net), konsensus albo mechanizm rynkowy — w produkcji elastycznej, energetyce, wodociągach i robotyce; realizacja na sterownikach i w sieci, np. według IEC 61499.”</li>
+</ol></details>
+
+<h3>Lista kontrolna przed egzaminem</h3>
+<ul class="check">
+<li>Rysuję pięć struktur na dwóch sprzężonych podsystemach.</li>
+<li>Mówię, dlaczego odchodzi się od sterowania scentralizowanego.</li>
+<li>Liczę przykład dwóch stref (4,5 kontra 3).</li>
+<li>Wymieniam cztery cechy agenta.</li>
+<li>Opisuję przetarg i konsensus.</li>
+<li>Podaję trzy zastosowania.</li>
+</ul>
+</section>
+
+<section>
+<h2><span class="num">10</span> Ściąga</h2>
+<div class="rail"></div>
+
+<div class="karty">
+<div class="karta b"><span class="kw">Problem</span><p>Duży obiekt, sprzężone podsystemy; scentralizowane: obliczenia, niezawodność, komunikacja, rozbudowa.</p></div>
+<div class="karta"><span class="kw">Zdecentralizowana</span><p>Lokalne regulatory, bez wymiany danych; ignoruje sprzężenia.</p></div>
+<div class="karta s"><span class="kw">Rozproszona</span><p>Wymiana danych z sąsiadami; iteracyjna / nie; kooperacyjna / nie; rozproszone MPC.</p></div>
+<div class="karta a"><span class="kw">Hierarchiczna</span><p>Koordynator ustala cele albo ceny regulatorom lokalnym.</p></div>
+<div class="karta"><span class="kw">Przykład</span><p>y₁ = 2u₁ + u₂: zdecentralizowane 4,5 zamiast 3; rozproszone → 3 po kilku wymianach.</p></div>
+<div class="karta b"><span class="kw">Agent</span><p>Percepcja, wiedza, decyzja, działanie, komunikacja.</p></div>
+<div class="karta s"><span class="kw">4 cechy agenta</span><p>Autonomia, reaktywność, proaktywność, zdolność społeczna.</p></div>
+<div class="karta"><span class="kw">System wieloagentowy</span><p>Autonomia, lokalny widok, decentralizacja.</p></div>
+<div class="karta a"><span class="kw">Współpraca</span><p>Przetarg (Contract Net), konsensus, rynek.</p></div>
+<div class="karta"><span class="kw">Zastosowania</span><p>Produkcja (holony), energetyka, wodociągi, roboty; IEC 61499.</p></div>
+</div>
+</section>
+
+<section>
+<h2><span class="num">11</span> Pytania dodatkowe — fiszki</h2>
+<div class="rail"></div>
+
+<details class="fiszka"><summary>Czym różni się struktura rozproszona od wieloagentowej?</summary>
+<p>W strukturze rozproszonej regulatory wykonują z góry zaprojektowany algorytm i wymieniają dane według ustalonego schematu. Agenci mają własne cele i wiedzę, sami decydują, z kim i jak negocjować, a skład systemu może się zmieniać w trakcie pracy. Rozproszone MPC to struktura rozproszona; zespół robotów przydzielających sobie zadania przetargiem to system wieloagentowy.</p></details>
+
+<details class="fiszka"><summary>Kiedy wystarczy sterowanie zdecentralizowane?</summary>
+<p>Gdy sprzężenia między podsystemami są słabe w porównaniu z wpływem własnych wejść. Wtedy każda pętla może traktować wpływ sąsiadów jak zakłócenie, które usunie działanie całkujące. Przy silnych sprzężeniach trzeba wymieniać dane albo użyć koordynatora.</p></details>
+
+<details class="fiszka"><summary>Czym kooperacyjne rozproszone MPC różni się od niekooperacyjnego?</summary>
+<p>W niekooperacyjnym każdy regulator minimalizuje własny wskaźnik jakości — wynik to równowaga, która może być gorsza od scentralizowanej. W kooperacyjnym każdy minimalizuje wspólny wskaźnik całego obiektu, więc po iteracjach dochodzi do rozwiązania scentralizowanego.</p></details>
+
+<details class="fiszka"><summary>Jakie są wady systemów wieloagentowych?</summary>
+<p>Trudno zagwarantować stabilność i optymalność całości, bo zachowanie wynika z interakcji. Negocjacje kosztują czas i komunikację. Testowanie i weryfikacja są trudniejsze niż dla jednego regulatora. Dlatego w automatyce agentów stosuje się zwykle na wyższych warstwach (planowanie, przydział zadań), a pętle regulacji zostają klasyczne.</p></details>
+
+<details class="fiszka"><summary>Co to jest holon?</summary>
+<p>Jednostka, która jest jednocześnie samodzielną całością i częścią większej całości — np. maszyna w gnieździe produkcyjnym. Systemy holoniczne łączą autonomię agentów z hierarchią: holony współpracują, ale mogą też tworzyć tymczasowe hierarchie.</p></details>
+</section>
+
+
+
+<footer>
+  <p><strong style="color:var(--ink)">Źródła</strong></p>
+  <ol class="zr">
+<li>R. Scattolini, <a href="https://www.sciencedirect.com/science/article/abs/pii/S0959152409000353">Architectures for distributed and hierarchical Model Predictive Control – A review</a>, Journal of Process Control 19(5), 2009, 723–731 — klasyfikacja struktur zdecentralizowanych, rozproszonych i hierarchicznych.</li>
+<li>M. Wooldridge, N. R. Jennings, <a href="https://www.cs.cmu.edu/~motionplanning/papers/sbp_papers/integrated1/woodridge_intelligent_agents.pdf">Intelligent agents: theory and practice</a>, The Knowledge Engineering Review 10(2), 1995 — cztery cechy agenta.</li>
+<li>R. Olfati-Saber, J. A. Fax, R. M. Murray, <a href="https://mcrotk.github.io/courses/references/olfati-saber-pieee.pdf">Consensus and cooperation in networked multi-agent systems</a>, Proceedings of the IEEE 95(1), 2007.</li>
+<li>Wikipedia: <a href="https://en.wikipedia.org/wiki/Multi-agent_system">Multi-agent system</a>; <a href="https://en.wikipedia.org/wiki/Contract_Net_Protocol">Contract Net Protocol</a>; <a href="https://en.wikipedia.org/wiki/Holon_(philosophy)">Holon</a>; <a href="https://en.wikipedia.org/wiki/IEC_61499">IEC 61499</a>.</li>
+</ol>
+
+  <p>Repetytorium do egzaminu dyplomowego &middot; ARiSS II stopień &middot; specjalność Systemy sterowania i wspomagania decyzji. Brak slajdów wykładowych do tego zagadnienia w projekcie — strona powstała z literatury wymienionej wyżej. Liczby w przykładzie są przykładowe, a rachunek własny.</p>
+  <p class="backfoot"><a href="index.html">&larr; Wróć do listy zagadnień</a></p>
+</footer>
+
+</div>
+</body>
+</html>

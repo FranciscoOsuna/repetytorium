@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pytanie 32 — Hierarchiczny warstwowy model systemu sterowania</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#141C24; --mut:#5C6B77; --line:#C3CDD4;
+  --paper:#E8ECEF; --card:#FCFDFD;
+  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52;
+  --disp:"Space Grotesk",system-ui,sans-serif;
+  --body:"STIX Two Text","Source Serif 4",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+     font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:860px;margin:0 auto;padding:0 22px 100px}
+
+/* ---- nagłówek ---- */
+header{padding:64px 0 30px;border-bottom:2px solid var(--ink)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+         color:var(--mut);margin:0 0 14px}
+h1{font-family:var(--disp);font-weight:700;font-size:clamp(30px,5vw,46px);line-height:1.08;
+   letter-spacing:-.02em;margin:0 0 18px}
+.quest{font-style:italic;font-size:19px;color:var(--ink);margin:0;padding-left:16px;
+       border-left:3px solid var(--violet)}
+.src{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:18px}
+
+/* ---- sekcje ---- */
+section{margin-top:56px}
+h2{font-family:var(--disp);font-weight:700;font-size:25px;letter-spacing:-.015em;
+   margin:0 0 6px;display:flex;align-items:baseline;gap:12px}
+h2 .num{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--violet);
+        letter-spacing:.08em;flex:none}
+h3{font-family:var(--disp);font-weight:500;font-size:18.5px;margin:34px 0 8px;letter-spacing:-.01em}
+p{margin:0 0 14px}
+.rail{height:5px;background:linear-gradient(90deg,var(--teal) 0%,var(--violet) 55%,var(--amber) 100%);
+      opacity:.85;margin:0 0 22px;border-radius:2px}
+
+/* ---- figury ---- */
+figure{margin:26px 0;background:var(--card);border:1px solid var(--line);border-radius:3px;
+       padding:20px 18px 14px}
+.fig{width:100%;height:auto;display:block}
+figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:12px;
+           padding-top:10px;border-top:1px solid var(--line);line-height:1.5}
+.tick{font-family:var(--mono);font-size:10.5px;fill:#7C8A94}
+.axlab{font-family:var(--mono);font-size:11px;fill:var(--mut)}
+.cap{font-family:var(--mono);font-size:10.5px;fill:var(--mut)}
+.bx{font-family:var(--mono);font-size:10.5px;fill:var(--mut)}
+.bx-t{font-family:var(--disp);font-size:11.5px;font-weight:500;fill:var(--ink)}
+
+/* ---- bloki ---- */
+.box{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--violet);
+     padding:16px 18px;margin:22px 0;border-radius:2px}
+.box.key{border-left-color:var(--rose)}
+.box.warn{border-left-color:var(--amber)}
+.box .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+          color:var(--mut);display:block;margin-bottom:8px}
+.box p:last-child{margin-bottom:0}
+
+/* ---- wzory (TeX składany do SVG skryptem mathbuild.js) ---- */
+.eq{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--violet);
+    padding:18px 18px;margin:22px 0;border-radius:2px;overflow-x:auto;text-align:center;
+    font-size:18.5px;line-height:1.3}
+.eq svg{max-width:100%;height:auto}
+.eq.txt{font-family:var(--mono);font-size:14px;line-height:1.7;color:var(--ink);text-align:center}
+.eq b{color:var(--violet);font-weight:500}
+.eqnote{font-family:var(--mono);font-size:12.5px;color:var(--mut);text-align:center;
+        margin:-14px 0 20px;line-height:1.6}
+.m{white-space:nowrap}
+.m svg{vertical-align:-0.25ex;max-width:100%;height:auto}
+@media (max-width:640px){
+  table{display:block;overflow-x:auto;width:auto;min-width:100%;-webkit-overflow-scrolling:touch}
+  table .m svg{max-width:none}
+  .eq{padding:14px 12px;font-size:16px}
+}
+
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15px;background:var(--card)}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--disp);font-weight:500;font-size:13px;letter-spacing:.02em;
+   background:#F2F5F6;border-bottom:1.5px solid var(--line)}
+td.n{font-family:var(--mono);font-size:13.5px;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+
+ol,ul{margin:0 0 14px;padding-left:22px}
+li{margin-bottom:7px}
+ol.steps{list-style:none;padding-left:0;counter-reset:st}
+ol.steps>li{counter-increment:st;position:relative;padding-left:44px;margin-bottom:18px}
+ol.steps>li::before{content:counter(st);position:absolute;left:0;top:1px;
+  font-family:var(--mono);font-size:12px;width:28px;height:28px;border-radius:50%;
+  background:var(--violet);color:#fff;display:flex;align-items:center;justify-content:center}
+strong{font-weight:600}
+.tag{font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:2px;
+     background:rgba(14,110,120,.12);color:var(--teal);white-space:nowrap}
+.tag.a{background:rgba(179,100,26,.13);color:var(--amber)}
+.tag.v{background:rgba(91,75,138,.13);color:var(--violet)}
+footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
+       font-family:var(--mono);font-size:12px;color:var(--mut)}
+@media print{body{background:#fff}figure,.box,.eq,table{break-inside:avoid}.topnav,.backfoot{display:none}}
+@media (max-width:600px){body{font-size:16px}header{padding-top:40px}}
+
+/* ---- pasek nawigacji ---- */
+.topnav{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:22px 0 0}
+.topnav a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+          color:var(--mut);text-decoration:none;border:1px solid var(--line);background:var(--card);
+          border-radius:2px;padding:6px 11px;transition:color .12s ease,border-color .12s ease}
+.topnav a:hover,.topnav a:focus-visible{color:var(--ink);border-color:var(--ink);outline:none}
+.topnav .here{font-family:var(--mono);font-size:12px;color:var(--mut);letter-spacing:.08em}
+.backfoot{margin:18px 0 0}
+.backfoot a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+            color:var(--teal);text-decoration:none;border-bottom:1px solid var(--line)}
+.backfoot a:hover,.backfoot a:focus-visible{border-bottom-color:var(--teal);outline:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="topnav">
+  <a href="index.html">&larr; Repetytorium</a>
+  <span class="here">zagadnienie 32 z 50 &middot; komputerowe systemy sterowania</span>
+</nav>
+
+<header>
+  <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 32</p>
+  <h1>Hierarchiczny warstwowy model komputerowego systemu sterowania</h1>
+  <p class="quest">Przedstaw hierarchiczny warstwowy model komputerowego systemu sterowania, scharakteryzuj poszczególne warstwy tego modelu i zaproponuj jego realizację sprzętowo-programową.</p>
+  <p class="src">Komputerowe systemy sterowania i wspomagania decyzji &middot; opracowanie na podstawie literatury (Tatjewski, Findeisen i in., Skogestad, ISA-95) — źródła na dole strony &middot; rama dla zagadnień 21, 22, 24, 33–36</p>
+</header>
+
+<style>
+.karty{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:22px 0}
+.karta{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--violet);border-radius:3px;padding:12px 14px}
+.karta.k .kw{color:var(--violet)} .karta.b{border-top-color:var(--teal)} .karta.s{border-top-color:var(--rose)} .karta.a{border-top-color:var(--amber)}
+.karta .kw{font-family:var(--disp);font-weight:700;font-size:17px;line-height:1.25;display:block;margin-bottom:6px;color:var(--violet)}
+.karta.b .kw{color:var(--teal)} .karta.s .kw{color:var(--rose)} .karta.a .kw{color:var(--amber)}
+.karta p{font-size:15px;margin:0;line-height:1.5}
+@media (max-width:600px){.karty{grid-template-columns:1fr}}
+.fiszka{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--violet);border-radius:2px;margin:10px 0;padding:0}
+.fiszka summary{cursor:pointer;list-style:none;padding:12px 16px;font-family:var(--disp);font-weight:500;font-size:16.5px}
+.fiszka summary::-webkit-details-marker{display:none}
+.fiszka summary::before{content:"?";display:inline-flex;width:22px;height:22px;border-radius:50%;background:var(--violet);color:#fff;
+  font-family:var(--mono);font-size:12px;align-items:center;justify-content:center;margin-right:10px;vertical-align:1px}
+.fiszka[open] summary::before{content:"✓";background:var(--teal)}
+.fiszka p,.fiszka ol,.fiszka ul{padding:0 16px 14px 48px;margin:0}
+.fiszka.op{border-left-color:var(--teal)}
+.fiszka.op summary::before{content:"▶";background:var(--teal)}
+ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{color:var(--teal)}
+.cyt{font-style:italic;color:var(--ink)}
+.check{list-style:none;padding-left:0}
+.check li{padding-left:30px;position:relative}
+.check li::before{content:"☐";position:absolute;left:4px;top:-1px;font-family:var(--mono);color:var(--teal);font-size:17px}
+.luka{display:inline-block;min-width:70px;border-bottom:1.5px solid var(--violet);text-align:center;font-family:var(--mono);font-size:14px;color:var(--violet)}
+</style>
+
+<section>
+<h2><span class="num">01</span> Rama odpowiedzi</h2>
+<div class="rail"></div>
+
+<p>Pytanie ma trzy człony: <strong>przedstaw model</strong>, <strong>scharakteryzuj warstwy</strong> i <strong>zaproponuj realizację sprzętowo-programową</strong>. Trzeci człon często jest pomijany, a komisja zwykle o niego dopyta.</p>
+
+<div class="box key">
+<span class="lbl">Zdanie, od którego warto zacząć</span>
+<p><strong>Model warstwowy dzieli jedno trudne zadanie — „prowadź proces bezpiecznie i jak najbardziej opłacalnie” — na prostsze zadania wykonywane przez warstwy ułożone jedna nad drugą: sterowanie bezpośrednie, sterowanie nadrzędne, optymalizację punktu pracy i planowanie. Każda pracuje we własnym tempie, wyższa ustawia cele niższej, a niższa odsyła jej pomiary i stan.</strong></p>
+</div>
+
+<figure>
+<svg viewBox="0 0 680 440" class="fig">
+<defs><marker id="arF32a0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9C3B52"/></marker><marker id="arF32a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B3641A"/></marker><marker id="arF32a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker><marker id="arF32a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0E6E78"/></marker><marker id="arF32a4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">MAPA ZAGADNIENIA: MODEL — WARSTWY — REALIZACJA</text>
+<rect x="14.0" y="38.0" width="652.0" height="54.0" rx="6" fill="#B3641A" stroke="none" stroke-width="1" opacity="0.1"/>
+<text x="340.0" y="59.0" text-anchor="middle" class="bx-t" style="fill:#B3641A">jedno trudne zadanie sterowania dzielimy na warstwy — każda robi swoje, we własnym tempie,</text>
+<text x="340.0" y="77.0" text-anchor="middle" class="bx">wyższa wysyła niższej wartości zadane, niższa odsyła wyższej pomiary i stan</text>
+<text x="186.0" y="114.0" text-anchor="middle" class="bx-t" style="fill:#141C24">① MODEL I ② WARSTWY</text>
+<text x="556.0" y="114.0" text-anchor="middle" class="bx-t" style="fill:#141C24">③ REALIZACJA</text>
+<rect x="14.0" y="126.0" width="348.0" height="58.0" rx="4" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.3"/>
+<rect x="14.0" y="126.0" width="6.0" height="58.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<circle cx="38.0" cy="146.0" r="10" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="38.0" y="150.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">4</text>
+<text x="54.0" y="150.0" text-anchor="start" class="bx-t" style="fill:#9C3B52;font-size:11.5px">PLANOWANIE I ZARZĄDZANIE</text>
+<text x="54.0" y="170.0" text-anchor="start" class="bx">co, ile i kiedy produkować</text>
+<text x="352.0" y="150.0" text-anchor="end" class="cap" style="fill:#9C3B52">dni – tygodnie</text>
+<rect x="448.0" y="126.0" width="218.0" height="58.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="448.0" y="126.0" width="218.0" height="3.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="557.0" y="152.0" text-anchor="middle" class="bx-t" style="font-size:11px">ERP</text>
+<text x="557.0" y="170.0" text-anchor="middle" class="bx">serwer biznesowy</text>
+<path d="M 366.0 155.0 L 444.0 155.0" fill="none" stroke="#9C3B52" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arF32a0)"/>
+<rect x="14.0" y="192.0" width="348.0" height="58.0" rx="4" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.3"/>
+<rect x="14.0" y="192.0" width="6.0" height="58.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
+<circle cx="38.0" cy="212.0" r="10" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="38.0" y="216.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">3</text>
+<text x="54.0" y="216.0" text-anchor="start" class="bx-t" style="fill:#B3641A;font-size:11.5px">OPTYMALIZACJA PUNKTU PRACY</text>
+<text x="54.0" y="236.0" text-anchor="start" class="bx">najlepsze ekonomicznie wartości zadane</text>
+<text x="352.0" y="216.0" text-anchor="end" class="cap" style="fill:#B3641A">godziny</text>
+<rect x="448.0" y="192.0" width="218.0" height="58.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="448.0" y="192.0" width="218.0" height="3.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="557.0" y="218.0" text-anchor="middle" class="bx-t" style="font-size:11px">serwer optymalizacji</text>
+<text x="557.0" y="236.0" text-anchor="middle" class="bx">MES, archiwum (historian)</text>
+<path d="M 366.0 221.0 L 444.0 221.0" fill="none" stroke="#B3641A" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arF32a1)"/>
+<rect x="14.0" y="258.0" width="348.0" height="58.0" rx="4" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<rect x="14.0" y="258.0" width="6.0" height="58.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<circle cx="38.0" cy="278.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="38.0" y="282.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">2</text>
+<text x="54.0" y="282.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:11.5px">STEROWANIE NADRZĘDNE</text>
+<text x="54.0" y="302.0" text-anchor="start" class="bx">ograniczenia, sprzężenia (np. MPC)</text>
+<text x="352.0" y="282.0" text-anchor="end" class="cap" style="fill:#5B4B8A">sekundy – minuty</text>
+<rect x="448.0" y="258.0" width="218.0" height="58.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="448.0" y="258.0" width="218.0" height="3.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="557.0" y="284.0" text-anchor="middle" class="bx-t" style="font-size:11px">stacja MPC + SCADA/HMI</text>
+<text x="557.0" y="302.0" text-anchor="middle" class="bx">PC przemysłowy, OPC UA</text>
+<path d="M 366.0 287.0 L 444.0 287.0" fill="none" stroke="#5B4B8A" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arF32a2)"/>
+<rect x="14.0" y="324.0" width="348.0" height="58.0" rx="4" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="14.0" y="324.0" width="6.0" height="58.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="38.0" cy="344.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="38.0" y="348.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">1</text>
+<text x="54.0" y="348.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:11.5px">STEROWANIE BEZPOŚREDNIE</text>
+<text x="54.0" y="368.0" text-anchor="start" class="bx">regulacja PID, logika, blokady</text>
+<text x="352.0" y="348.0" text-anchor="end" class="cap" style="fill:#0E6E78">10 ms – 1 s</text>
+<rect x="448.0" y="324.0" width="218.0" height="58.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="448.0" y="324.0" width="218.0" height="3.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="557.0" y="350.0" text-anchor="middle" class="bx-t" style="font-size:11px">sterownik PLC / DCS</text>
+<text x="557.0" y="368.0" text-anchor="middle" class="bx">cykl 10–100 ms, IEC 61131-3</text>
+<path d="M 366.0 353.0 L 444.0 353.0" fill="none" stroke="#0E6E78" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arF32a3)"/>
+<rect x="14.0" y="390.0" width="348.0" height="44.0" rx="4" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="188.0" y="409.0" text-anchor="middle" class="bx-t" style="font-size:11px">OBIEKT: proces + czujniki + elementy wykonawcze</text>
+<text x="188.0" y="425.0" text-anchor="middle" class="bx">np. dwa zbiorniki: poziomomierze, zawór, pompa</text>
+<rect x="448.0" y="390.0" width="218.0" height="44.0" rx="4" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="557.0" y="409.0" text-anchor="middle" class="bx-t" style="font-size:11px">urządzenia polowe</text>
+<text x="557.0" y="425.0" text-anchor="middle" class="bx">4–20 mA, HART, Profinet, IO-Link</text>
+<path d="M 366.0 412.0 L 444.0 412.0" fill="none" stroke="#5C6B77" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arF32a4)"/>
+</svg>
+<figcaption>Po lewej model: cztery warstwy nad obiektem z okresem pracy każdej z nich. Po prawej realizacja: sprzęt, który wykonuje daną warstwę. Źródła: Tatjewski 2007; Findeisen i in. 1980; model referencyjny ISA-95 / Purdue.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2><span class="num">02</span> Idea: po co dzielić sterowanie na warstwy</h2>
+<div class="rail"></div>
+
+<p>Jeden algorytm, który co 10 ms trzyma przepływ przez zawór, pilnuje przelewu, wybiera najtańszy punkt pracy przy dzisiejszych cenach i realizuje tygodniowy plan, potrzebowałby modelu wszystkiego — od dynamiki zaworu po ceny. Jest to niewykonalne, a awaria takiego „mózgu” zatrzymałaby cały zakład. Tatjewski (2008): <span class="cyt">„The main idea is to decompose the original control task into a sequence of simpler and hierarchically structured subtasks, handled by dedicated control layers”</span>.</p>
+
+<figure>
+<svg viewBox="0 0 680 430" class="fig">
+<defs><marker id="arF32c0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9C3B52"/></marker><marker id="arF32c1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B3641A"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">TEN SAM PODZIAŁ ZNASZ Z JAZDY SAMOCHODEM</text>
+<text x="170.0" y="52.0" text-anchor="middle" class="bx-t" style="fill:#5C6B77">SAMOCHÓD</text>
+<text x="520.0" y="52.0" text-anchor="middle" class="bx-t" style="fill:#5C6B77">INSTALACJA PRZEMYSŁOWA</text>
+<rect x="14.0" y="66.0" width="312.0" height="80.0" rx="4" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.2"/>
+<rect x="14.0" y="66.0" width="6.0" height="80.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="34.0" y="90.0" text-anchor="start" class="bx-t" style="fill:#9C3B52">nawigacja</text>
+<text x="34.0" y="110.0" text-anchor="start" class="bx">wybiera trasę</text>
+<text x="34.0" y="130.0" text-anchor="start" class="cap" style="font-style:italic">nie wie, jak trzymać kierownicę</text>
+<rect x="192.0" y="76.0" width="124.0" height="24.0" rx="12" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.12"/>
+<text x="254.0" y="92.0" text-anchor="middle" class="cap" style="fill:#9C3B52">raz na podróż</text>
+<rect x="354.0" y="66.0" width="312.0" height="80.0" rx="4" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.2"/>
+<rect x="354.0" y="66.0" width="6.0" height="80.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="374.0" y="90.0" text-anchor="start" class="bx-t" style="fill:#9C3B52">planowanie</text>
+<text x="374.0" y="110.0" text-anchor="start" class="bx">plan produkcji: co i ile</text>
+<text x="374.0" y="130.0" text-anchor="start" class="cap" style="font-style:italic">nie wie nic o zaworach</text>
+<text x="340.0" y="111.0" text-anchor="middle" class="bx-t" style="fill:#5C6B77;font-size:16px">=</text>
+<path d="M 120.0 148.0 L 120.0 174.0" fill="none" stroke="#9C3B52" stroke-width="1.6" marker-end="url(#arF32c0)"/>
+<path d="M 460.0 148.0 L 460.0 174.0" fill="none" stroke="#9C3B52" stroke-width="1.6" marker-end="url(#arF32c0)"/>
+<rect x="14.0" y="176.0" width="312.0" height="80.0" rx="4" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.2"/>
+<rect x="14.0" y="176.0" width="6.0" height="80.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="34.0" y="200.0" text-anchor="start" class="bx-t" style="fill:#B3641A">kierowca</text>
+<text x="34.0" y="220.0" text-anchor="start" class="bx">wybiera pas i prędkość</text>
+<text x="34.0" y="240.0" text-anchor="start" class="cap" style="font-style:italic">nie liczy trasy od nowa</text>
+<rect x="192.0" y="186.0" width="124.0" height="24.0" rx="12" fill="#B3641A" stroke="none" stroke-width="1" opacity="0.12"/>
+<text x="254.0" y="202.0" text-anchor="middle" class="cap" style="fill:#B3641A">co kilka sekund</text>
+<rect x="354.0" y="176.0" width="312.0" height="80.0" rx="4" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.2"/>
+<rect x="354.0" y="176.0" width="6.0" height="80.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="374.0" y="200.0" text-anchor="start" class="bx-t" style="fill:#B3641A">optymalizacja + nadrzędne</text>
+<text x="374.0" y="220.0" text-anchor="start" class="bx">najlepsze wartości zadane</text>
+<text x="374.0" y="240.0" text-anchor="start" class="cap" style="font-style:italic">nie układa planu produkcji</text>
+<text x="340.0" y="221.0" text-anchor="middle" class="bx-t" style="fill:#5C6B77;font-size:16px">=</text>
+<path d="M 120.0 258.0 L 120.0 284.0" fill="none" stroke="#B3641A" stroke-width="1.6" marker-end="url(#arF32c1)"/>
+<path d="M 460.0 258.0 L 460.0 284.0" fill="none" stroke="#B3641A" stroke-width="1.6" marker-end="url(#arF32c1)"/>
+<rect x="14.0" y="286.0" width="312.0" height="80.0" rx="4" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.2"/>
+<rect x="14.0" y="286.0" width="6.0" height="80.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="34.0" y="310.0" text-anchor="start" class="bx-t" style="fill:#0E6E78">tempomat, ABS</text>
+<text x="34.0" y="330.0" text-anchor="start" class="bx">trzyma zadaną prędkość</text>
+<text x="34.0" y="350.0" text-anchor="start" class="cap" style="font-style:italic">nie wie, dokąd jedziemy</text>
+<rect x="192.0" y="296.0" width="124.0" height="24.0" rx="12" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.12"/>
+<text x="254.0" y="312.0" text-anchor="middle" class="cap" style="fill:#0E6E78">co ułamek sekundy</text>
+<rect x="354.0" y="286.0" width="312.0" height="80.0" rx="4" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.2"/>
+<rect x="354.0" y="286.0" width="6.0" height="80.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="374.0" y="310.0" text-anchor="start" class="bx-t" style="fill:#0E6E78">sterowanie bezpośrednie</text>
+<text x="374.0" y="330.0" text-anchor="start" class="bx">regulator PID trzyma przepływ</text>
+<text x="374.0" y="350.0" text-anchor="start" class="cap" style="font-style:italic">nie wie, po co ten przepływ</text>
+<text x="340.0" y="331.0" text-anchor="middle" class="bx-t" style="fill:#5C6B77;font-size:16px">=</text>
+<text x="128.0" y="165.0" text-anchor="start" class="cap" style="fill:#9C3B52">cel</text>
+<text x="128.0" y="275.0" text-anchor="start" class="cap" style="fill:#B3641A">prędkość zadana</text>
+<text x="468.0" y="165.0" text-anchor="start" class="cap" style="fill:#9C3B52">plan</text>
+<text x="468.0" y="275.0" text-anchor="start" class="cap" style="fill:#B3641A">wartość zadana</text>
+<rect x="14.0" y="384.0" width="652.0" height="34.0" rx="4" fill="#EEF1F3" stroke="none" stroke-width="1"/>
+<text x="340.0" y="406.0" text-anchor="middle" class="bx-t" style="font-size:11px">im wyżej, tym rzadziej i dalej w przyszłość; im niżej, tym szybciej i bliżej sprzętu</text>
+</svg>
+<figcaption>Ten sam podział zna każdy kierowca: nawigacja wybiera trasę raz na podróż, kierowca wybiera pas i prędkość co kilka sekund, tempomat reaguje w ułamku sekundy. Każdy poziom przekazuje niższemu tylko cel. Opracowanie własne.</figcaption>
+</figure>
+
+<p>Podział może być <strong>funkcjonalny</strong> (co trzeba zrobić), <strong>czasowy</strong> (jak szybko) albo <strong>przestrzenny</strong> (której części instalacji dotyczy). Dwa pierwsze dają strukturę wielowarstwową — temat tego pytania; trzeci daje strukturę wielopoziomową (sekcja 06).</p>
+</section>
+
+<section>
+<h2><span class="num">03</span> Model warstwowy i jego reguły</h2>
+<div class="rail"></div>
+
+<figure>
+<svg viewBox="0 0 680 560" class="fig">
+<defs><marker id="arF32d0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9C3B52"/></marker><marker id="arF32d1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker><marker id="arF32d2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B3641A"/></marker><marker id="arF32d3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker><marker id="arF32d4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0E6E78"/></marker><marker id="arF32d5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#141C24"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">HIERARCHICZNY WARSTWOWY MODEL SYSTEMU STEROWANIA</text>
+<rect x="92.0" y="42.0" width="496.0" height="70.0" rx="4" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.4"/>
+<rect x="92.0" y="42.0" width="496.0" height="4.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<circle cx="112.0" cy="66.0" r="10" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="112.0" y="70.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">4</text>
+<text x="130.0" y="70.0" text-anchor="start" class="bx-t" style="fill:#9C3B52">PLANOWANIE I ZARZĄDZANIE</text>
+<text x="130.0" y="89.0" text-anchor="start" class="bx">co, ile i kiedy produkować</text>
+<text x="130.0" y="104.0" text-anchor="start" class="cap">model: bilans produkcji i zasobów</text>
+<rect x="456.0" y="56.0" width="120.0" height="22.0" rx="11" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.12"/>
+<text x="516.0" y="71.0" text-anchor="middle" class="cap" style="fill:#9C3B52">dni – tygodnie</text>
+<path d="M 112.0 114.0 L 112.0 140.0" fill="none" stroke="#9C3B52" stroke-width="1.8" marker-end="url(#arF32d0)"/>
+<text x="122.0" y="131.0" text-anchor="start" class="cap" style="fill:#9C3B52">plan produkcji</text>
+<path d="M 568.0 140.0 L 568.0 114.0" fill="none" stroke="#5C6B77" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arF32d1)"/>
+<text x="558.0" y="131.0" text-anchor="end" class="cap">raporty, realizacja planu</text>
+<rect x="92.0" y="142.0" width="496.0" height="70.0" rx="4" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.4"/>
+<rect x="92.0" y="142.0" width="496.0" height="4.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
+<circle cx="112.0" cy="166.0" r="10" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="112.0" y="170.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">3</text>
+<text x="130.0" y="170.0" text-anchor="start" class="bx-t" style="fill:#B3641A">OPTYMALIZACJA PUNKTU PRACY</text>
+<text x="130.0" y="189.0" text-anchor="start" class="bx">najlepsze ekonomicznie wartości zadane</text>
+<text x="130.0" y="204.0" text-anchor="start" class="cap">model: statyczny (bilanse, koszty)</text>
+<rect x="456.0" y="156.0" width="120.0" height="22.0" rx="11" fill="#B3641A" stroke="none" stroke-width="1" opacity="0.12"/>
+<text x="516.0" y="171.0" text-anchor="middle" class="cap" style="fill:#B3641A">godziny</text>
+<path d="M 112.0 214.0 L 112.0 240.0" fill="none" stroke="#B3641A" stroke-width="1.8" marker-end="url(#arF32d2)"/>
+<text x="122.0" y="231.0" text-anchor="start" class="cap" style="fill:#B3641A">wartości zadane (ekonomiczne)</text>
+<path d="M 568.0 240.0 L 568.0 214.0" fill="none" stroke="#5C6B77" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arF32d1)"/>
+<text x="558.0" y="231.0" text-anchor="end" class="cap">stan, aktywne ograniczenia</text>
+<rect x="92.0" y="242.0" width="496.0" height="70.0" rx="4" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.4"/>
+<rect x="92.0" y="242.0" width="496.0" height="4.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<circle cx="112.0" cy="266.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="112.0" y="270.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">2</text>
+<text x="130.0" y="270.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A">STEROWANIE NADRZĘDNE</text>
+<text x="130.0" y="289.0" text-anchor="start" class="bx">ograniczenia, sprzężenia (np. MPC)</text>
+<text x="130.0" y="304.0" text-anchor="start" class="cap">model: dynamiczny obiektu</text>
+<rect x="456.0" y="256.0" width="120.0" height="22.0" rx="11" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.12"/>
+<text x="516.0" y="271.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">sekundy – minuty</text>
+<path d="M 112.0 314.0 L 112.0 340.0" fill="none" stroke="#5B4B8A" stroke-width="1.8" marker-end="url(#arF32d3)"/>
+<text x="122.0" y="331.0" text-anchor="start" class="cap" style="fill:#5B4B8A">wartości zadane regulatorów</text>
+<path d="M 568.0 340.0 L 568.0 314.0" fill="none" stroke="#5C6B77" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arF32d1)"/>
+<text x="558.0" y="331.0" text-anchor="end" class="cap">pomiary, stan pętli</text>
+<rect x="92.0" y="342.0" width="496.0" height="70.0" rx="4" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.4"/>
+<rect x="92.0" y="342.0" width="496.0" height="4.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="112.0" cy="366.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="112.0" y="370.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">1</text>
+<text x="130.0" y="370.0" text-anchor="start" class="bx-t" style="fill:#0E6E78">STEROWANIE BEZPOŚREDNIE</text>
+<text x="130.0" y="389.0" text-anchor="start" class="bx">regulacja PID, logika, blokady</text>
+<text x="130.0" y="404.0" text-anchor="start" class="cap">model: zwykle żaden — nastawy PID</text>
+<rect x="456.0" y="356.0" width="120.0" height="22.0" rx="11" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.12"/>
+<text x="516.0" y="371.0" text-anchor="middle" class="cap" style="fill:#0E6E78">10 ms – 1 s</text>
+<path d="M 112.0 414.0 L 112.0 440.0" fill="none" stroke="#0E6E78" stroke-width="1.8" marker-end="url(#arF32d4)"/>
+<text x="122.0" y="431.0" text-anchor="start" class="cap" style="fill:#0E6E78">sygnały sterujące u</text>
+<path d="M 568.0 440.0 L 568.0 414.0" fill="none" stroke="#5C6B77" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arF32d1)"/>
+<text x="558.0" y="431.0" text-anchor="end" class="cap">pomiary y</text>
+<rect x="92.0" y="442.0" width="496.0" height="64.0" rx="4" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="108.0" y="468.0" text-anchor="start" class="bx-t">OBIEKT</text>
+<text x="108.0" y="486.0" text-anchor="start" class="bx">proces, czujniki, elementy wykonawcze</text>
+<path d="M 358.0 443.0 L 379.1 443.0" fill="none" stroke="#0E6E78" stroke-width="1.6"/>
+<polygon points="364.2,439.9 364.2,446.1 370.4,443.0 364.2,439.9" fill="#0E6E78"/>
+<polygon points="376.6,439.9 376.6,446.1 370.4,443.0" fill="#0E6E78"/>
+<rect x="376.6" y="446.7" width="21.1" height="23.6" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="377.2" y="456.6" width="19.8" height="13.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 397.7 467.8 L 407.6 467.8 L 407.6 472.7" fill="none" stroke="#0E6E78" stroke-width="1.4"/>
+<rect x="401.4" y="472.7" width="21.1" height="21.1" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="402.0" y="482.6" width="19.8" height="10.5" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 422.5 491.3 L 434.9 491.3" fill="none" stroke="#0E6E78" stroke-width="1.4" marker-end="url(#arF32d4)"/>
+<path d="M 40.0 492.0 L 40.0 48.0" fill="none" stroke="#141C24" stroke-width="1.4" marker-end="url(#arF32d5)"/>
+<text x="30" y="272.0" transform="rotate(-90 30 272.0)" text-anchor="middle" class="cap" style="fill:#141C24">rzadziej, wolniej, dalej w przyszłość</text>
+<text x="56" y="272.0" transform="rotate(-90 56 272.0)" text-anchor="middle" class="cap">częściej, szybciej, bliżej sprzętu</text>
+<path d="M 640.0 48.0 L 640.0 492.0" fill="none" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arF32d1)"/>
+<text x="630" y="272.0" transform="rotate(-90 630 272.0)" text-anchor="middle" class="cap">cel coraz bardziej ekonomiczny</text>
+<text x="656" y="272.0" transform="rotate(-90 656 272.0)" text-anchor="middle" class="cap">cel coraz bardziej techniczny</text>
+<text x="340.0" y="548.0" text-anchor="middle" class="cap" style="fill:#141C24">zasada: wyższa warstwa nie steruje obiektem bezpośrednio — tylko ustawia cele warstwie pod sobą</text>
+</svg>
+<figcaption>W dół (strzałki ciągłe) płyną decyzje: plan, wartości zadane, sygnały sterujące. W górę (przerywane) — pomiary, stan i informacja o aktywnych ograniczeniach. Źródła: Tatjewski 2007; Findeisen i in. 1980; Skogestad 2004.</figcaption>
+</figure>
+
+<ol class="steps">
+<li><strong>Warstwy łączą się przez wartości zadane.</strong> Skogestad: <span class="cyt">„the setpoints are computed by the upper layer and implemented by the lower layer”</span>. Wyższa warstwa nigdy nie rusza zaworem sama.</li>
+<li><strong>Im wyżej, tym rzadziej</strong> — kolejne warstwy różnią się tempem 10–100 razy.</li>
+<li><strong>Im wyżej, tym prostszy model dynamiki, a bogatszy model ekonomii</strong>: PID bez modelu, MPC z modelem dynamicznym, optymalizacja z modelem statycznym i kosztami.</li>
+<li><strong>Informacja płynie w obie strony</strong> — wyższa warstwa musi wiedzieć np. że zawór jest już otwarty na 100%, żeby nie zadawać celów niemożliwych.</li>
+<li><strong>Każda warstwa działa bez wyższej, żadna bez niższej.</strong> Gdy optymalizacja przestanie działać, regulacja trzyma ostatnie wartości zadane.</li>
+</ol>
+
+<div class="box key">
+<span class="lbl">Zapamiętaj</span>
+<p><strong>Cztery warstwy: bezpośrednia (ms–s), nadrzędna (s–min), optymalizacja (godziny), planowanie (dni). W dół wartości zadane, w górę pomiary i stan. Obiektu dotyka tylko najniższa.</strong></p>
+</div>
+</section>
+
+<section>
+<h2><span class="num">04</span> Warstwy po kolei</h2>
+<div class="rail"></div>
+
+<table>
+<thead><tr><th>Warstwa</th><th>Zadanie</th><th>Model i algorytm</th><th>Okres</th><th>Na dwóch zbiornikach</th></tr></thead>
+<tbody>
+<tr><td><strong>1 · sterowanie bezpośrednie</strong></td><td>trzymać wartości zadane, sekwencje, blokady</td><td>PID, logika; zwykle bez modelu</td><td class="n">10 ms – 1 s</td><td>PI przepływu przez zawór, blokada pompy przy przelewie</td></tr>
+<tr><td><strong>2 · sterowanie nadrzędne</strong></td><td>ograniczenia, sprzężenia między pętlami</td><td>MPC z modelem dynamicznym</td><td class="n">1 s – min</td><td>MPC poziomu h₂ zadaje przepływ pętli PI</td></tr>
+<tr><td><strong>3 · optymalizacja punktu pracy</strong></td><td>najlepsze ekonomicznie wartości zadane</td><td>model statyczny + koszt (LP, QP, NLP)</td><td class="n">godziny</td><td>wybiera h₂* = 3,91 m zamiast 3,70 m (sekcja 05)</td></tr>
+<tr><td><strong>4 · planowanie i zarządzanie</strong></td><td>co, ile i kiedy produkować</td><td>bilans produkcji, harmonogram</td><td class="n">dni – tygodnie</td><td>„w tym tygodniu maksimum produkcji”</td></tr>
+</tbody>
+</table>
+
+<p><strong>Warstwa 1</strong> jako jedyna dotyka obiektu i musi być deterministyczna — cykl zawsze tej samej długości. Zabezpieczenia ludzi realizuje dodatkowo osobny system bezpieczeństwa (SIS).</p>
+<p><strong>Warstwa 2</strong> to według Tatjewskiego (2010) <span class="cyt">„model-based predictive control (MPC) in a supervisory (advanced) control layer”</span>. MPC nie steruje zaworem, tylko zadaje wartość regulatorowi przepływu — jak w zagadnieniu 34.</p>
+<p><strong>Warstwa 3</strong> (<em>real-time optimization</em>, RTO) może używać modelu statycznego, bo między jej decyzjami obiekt zdąży się ustalić. Ten model trzeba co jakiś czas dopasowywać do pomiarów — bywa to wyodrębniane jako <strong>warstwa adaptacji</strong> (Findeisen i in.).</p>
+<p><strong>Warstwa 4</strong> to styk automatyki z zarządzaniem i systemami wspomagania decyzji (zagadnienia 35, 42).</p>
+<p><strong>W poprzek warstw</strong> działają operator (SCADA/HMI) oraz nadzór i diagnostyka (27–29). W pracach zespołu KISSiWD PG działania sterujące są <span class="cyt">„hierarchically structured into a multilevel-multilayer form”</span>, a warstwa nadzorcza ocenia stan pracy (normalny, zakłócony, awaryjny).</p>
+</section>
+
+<section>
+<h2><span class="num">05</span> Przykład na kartce: po co lepsza regulacja, skoro poziom i tak jest trzymany?</h2>
+<div class="rail"></div>
+
+<p>Obiekt z zagadnienia 39: dwa zbiorniki z wypływem grawitacyjnym, produkt to odpływ <span class="m" data-tex="q = 0{,}3\sqrt{h_2}"><svg style="vertical-align: -0.439ex;" xmlns="http://www.w3.org/2000/svg" width="11.17ex" height="2.474ex" role="img" focusable="false" viewBox="0 -899.5 4937.1 1093.5" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-1-TEX-I-1D45E" d="M33 157Q33 258 109 349T280 441Q340 441 372 389Q373 390 377 395T388 406T404 418Q438 442 450 442Q454 442 457 439T460 434Q460 425 391 149Q320 -135 320 -139Q320 -147 365 -148H390Q396 -156 396 -157T393 -175Q389 -188 383 -194H370Q339 -192 262 -192Q234 -192 211 -192T174 -192T157 -193Q143 -193 143 -185Q143 -182 145 -170Q149 -154 152 -151T172 -148Q220 -148 230 -141Q238 -136 258 -53T279 32Q279 33 272 29Q224 -10 172 -10Q117 -10 75 30T33 157ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path><path id="MJX-1-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-1-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJX-1-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-1-TEX-N-33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path><path id="MJX-1-TEX-N-221A" d="M95 178Q89 178 81 186T72 200T103 230T169 280T207 309Q209 311 212 311H213Q219 311 227 294T281 177Q300 134 312 108L397 -77Q398 -77 501 136T707 565T814 786Q820 800 834 800Q841 800 846 794T853 782V776L620 293L385 -193Q381 -200 366 -200Q357 -200 354 -197Q352 -195 256 15L160 225L144 214Q129 202 113 190T95 178Z"></path><path id="MJX-1-TEX-I-210E" d="M137 683Q138 683 209 688T282 694Q294 694 294 685Q294 674 258 534Q220 386 220 383Q220 381 227 388Q288 442 357 442Q411 442 444 415T478 336Q478 285 440 178T402 50Q403 36 407 31T422 26Q450 26 474 56T513 138Q516 149 519 151T535 153Q555 153 555 145Q555 144 551 130Q535 71 500 33Q466 -10 419 -10H414Q367 -10 346 17T325 74Q325 90 361 192T398 345Q398 404 354 404H349Q266 404 205 306L198 293L164 158Q132 28 127 16Q114 -11 83 -11Q69 -11 59 -2T48 16Q48 30 121 320L195 616Q195 629 188 632T149 637H128Q122 643 122 645T124 664Q129 683 137 683Z"></path><path id="MJX-1-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D45E" xlink:href="#MJX-1-TEX-I-1D45E"></use></g><g data-mml-node="mo" transform="translate(737.8,0)"><use data-c="3D" xlink:href="#MJX-1-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(1793.6,0)"><use data-c="30" xlink:href="#MJX-1-TEX-N-30"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(2293.6,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-1-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(2571.6,0)"><use data-c="33" xlink:href="#MJX-1-TEX-N-33"></use></g><g data-mml-node="msqrt" transform="translate(3071.6,0)"><g transform="translate(853,0)"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="210E" xlink:href="#MJX-1-TEX-I-210E"></use></g><g data-mml-node="mn" transform="translate(609,-150) scale(0.707)"><use data-c="32" xlink:href="#MJX-1-TEX-N-32"></use></g></g></g><g data-mml-node="mo" transform="translate(0,39.5)"><use data-c="221A" xlink:href="#MJX-1-TEX-N-221A"></use></g><rect width="1012.6" height="60" x="853" y="779.5"></rect></g></g></g></svg></span>, a poziom nie może przekroczyć <span class="m" data-tex="h_{max} = 4{,}0\ \mathrm{m}"><svg style="vertical-align: -0.439ex;" xmlns="http://www.w3.org/2000/svg" width="13.016ex" height="2.009ex" role="img" focusable="false" viewBox="0 -694 5752.9 888" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-2-TEX-I-210E" d="M137 683Q138 683 209 688T282 694Q294 694 294 685Q294 674 258 534Q220 386 220 383Q220 381 227 388Q288 442 357 442Q411 442 444 415T478 336Q478 285 440 178T402 50Q403 36 407 31T422 26Q450 26 474 56T513 138Q516 149 519 151T535 153Q555 153 555 145Q555 144 551 130Q535 71 500 33Q466 -10 419 -10H414Q367 -10 346 17T325 74Q325 90 361 192T398 345Q398 404 354 404H349Q266 404 205 306L198 293L164 158Q132 28 127 16Q114 -11 83 -11Q69 -11 59 -2T48 16Q48 30 121 320L195 616Q195 629 188 632T149 637H128Q122 643 122 645T124 664Q129 683 137 683Z"></path><path id="MJX-2-TEX-I-1D45A" d="M21 287Q22 293 24 303T36 341T56 388T88 425T132 442T175 435T205 417T221 395T229 376L231 369Q231 367 232 367L243 378Q303 442 384 442Q401 442 415 440T441 433T460 423T475 411T485 398T493 385T497 373T500 364T502 357L510 367Q573 442 659 442Q713 442 746 415T780 336Q780 285 742 178T704 50Q705 36 709 31T724 26Q752 26 776 56T815 138Q818 149 821 151T837 153Q857 153 857 145Q857 144 853 130Q845 101 831 73T785 17T716 -10Q669 -10 648 17T627 73Q627 92 663 193T700 345Q700 404 656 404H651Q565 404 506 303L499 291L466 157Q433 26 428 16Q415 -11 385 -11Q372 -11 364 -4T353 8T350 18Q350 29 384 161L420 307Q423 322 423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 181Q151 335 151 342Q154 357 154 369Q154 405 129 405Q107 405 92 377T69 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-2-TEX-I-1D44E" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path><path id="MJX-2-TEX-I-1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path><path id="MJX-2-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-2-TEX-N-34" d="M462 0Q444 3 333 3Q217 3 199 0H190V46H221Q241 46 248 46T265 48T279 53T286 61Q287 63 287 115V165H28V211L179 442Q332 674 334 675Q336 677 355 677H373L379 671V211H471V165H379V114Q379 73 379 66T385 54Q393 47 442 46H471V0H462ZM293 211V545L74 212L183 211H293Z"></path><path id="MJX-2-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-2-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJX-2-TEX-N-A0" d=""></path><path id="MJX-2-TEX-N-6D" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q351 442 364 440T387 434T406 426T421 417T432 406T441 395T448 384T452 374T455 366L457 361L460 365Q463 369 466 373T475 384T488 397T503 410T523 422T546 432T572 439T603 442Q729 442 740 329Q741 322 741 190V104Q741 66 743 59T754 49Q775 46 803 46H819V0H811L788 1Q764 2 737 2T699 3Q596 3 587 0H579V46H595Q656 46 656 62Q657 64 657 200Q656 335 655 343Q649 371 635 385T611 402T585 404Q540 404 506 370Q479 343 472 315T464 232V168V108Q464 78 465 68T468 55T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="210E" xlink:href="#MJX-2-TEX-I-210E"></use></g><g data-mml-node="TeXAtom" transform="translate(609,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><use data-c="1D45A" xlink:href="#MJX-2-TEX-I-1D45A"></use></g><g data-mml-node="mi" transform="translate(878,0)"><use data-c="1D44E" xlink:href="#MJX-2-TEX-I-1D44E"></use></g><g data-mml-node="mi" transform="translate(1407,0)"><use data-c="1D465" xlink:href="#MJX-2-TEX-I-1D465"></use></g></g></g><g data-mml-node="mo" transform="translate(2336.1,0)"><use data-c="3D" xlink:href="#MJX-2-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(3391.9,0)"><use data-c="34" xlink:href="#MJX-2-TEX-N-34"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(3891.9,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-2-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(4169.9,0)"><use data-c="30" xlink:href="#MJX-2-TEX-N-30"></use></g><g data-mml-node="mtext" transform="translate(4669.9,0)"><use data-c="A0" xlink:href="#MJX-2-TEX-N-A0"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(4919.9,0)"><g data-mml-node="mi"><use data-c="6D" xlink:href="#MJX-2-TEX-N-6D"></use></g></g></g></g></svg></span>.</p>
+
+<figure>
+<svg viewBox="0 0 680 450" class="fig">
+<defs><marker id="arF32e0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0E6E78"/></marker><marker id="arF32e1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">DLACZEGO LEPSZA REGULACJA DAJE WIĘCEJ PRODUKTU: ODSUNIĘCIE OD OGRANICZENIA</text>
+<clipPath id="cF32e1"><rect x="76" y="60" width="574" height="150"/></clipPath>
+<line x1="76.0" y1="210.0" x2="650.0" y2="210.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="76.0" y1="60.0" x2="76.0" y2="210.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="72.0" y1="189.2" x2="76.0" y2="189.2" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="76.0" y1="189.2" x2="650.0" y2="189.2" stroke="#E3E8EB" stroke-width="0.8"/>
+<text x="68.0" y="193.2" text-anchor="end" class="tick">0,55</text>
+<line x1="72.0" y1="147.5" x2="76.0" y2="147.5" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="76.0" y1="147.5" x2="650.0" y2="147.5" stroke="#E3E8EB" stroke-width="0.8"/>
+<text x="68.0" y="151.5" text-anchor="end" class="tick">0,57</text>
+<line x1="72.0" y1="105.8" x2="76.0" y2="105.8" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="76.0" y1="105.8" x2="650.0" y2="105.8" stroke="#E3E8EB" stroke-width="0.8"/>
+<text x="68.0" y="109.8" text-anchor="end" class="tick">0,59</text>
+<line x1="72.0" y1="64.2" x2="76.0" y2="64.2" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="76.0" y1="64.2" x2="650.0" y2="64.2" stroke="#E3E8EB" stroke-width="0.8"/>
+<text x="68.0" y="68.2" text-anchor="end" class="tick">0,61</text>
+<text x="76.0" y="50.0" text-anchor="start" class="axlab">produkcja q = 0,3·√h₂</text>
+<g clip-path="url(#cF32e1)"><polyline points="76.0,199.6 78.9,198.9 81.8,198.2 84.7,197.5 87.5,196.8 90.4,196.1 93.3,195.4 96.2,194.7 99.1,194.0 102.0,193.3 104.8,192.6 107.7,191.9 110.6,191.2 113.5,190.5 116.4,189.8 119.3,189.0 122.2,188.3 125.0,187.6 127.9,186.9 130.8,186.2 133.7,185.5 136.6,184.8 139.5,184.1 142.3,183.4 145.2,182.7 148.1,182.0 151.0,181.3 153.9,180.7 156.8,180.0 159.6,179.3 162.5,178.6 165.4,177.9 168.3,177.2 171.2,176.5 174.1,175.8 177.0,175.1 179.8,174.4 182.7,173.7 185.6,173.0 188.5,172.3 191.4,171.6 194.3,170.9 197.1,170.2 200.0,169.5 202.9,168.9 205.8,168.2 208.7,167.5 211.6,166.8 214.5,166.1 217.3,165.4 220.2,164.7 223.1,164.0 226.0,163.4 228.9,162.7 231.8,162.0 234.6,161.3 237.5,160.6 240.4,159.9 243.3,159.2 246.2,158.6 249.1,157.9 251.9,157.2 254.8,156.5 257.7,155.8 260.6,155.1 263.5,154.5 266.4,153.8 269.3,153.1 272.1,152.4 275.0,151.7 277.9,151.1 280.8,150.4 283.7,149.7 286.6,149.0 289.4,148.3 292.3,147.7 295.2,147.0 298.1,146.3 301.0,145.6 303.9,144.9 306.8,144.3 309.6,143.6 312.5,142.9 315.4,142.2 318.3,141.6 321.2,140.9 324.1,140.2 326.9,139.6 329.8,138.9 332.7,138.2 335.6,137.5 338.5,136.9 341.4,136.2 344.3,135.5 347.1,134.8 350.0,134.2 352.9,133.5 355.8,132.8 358.7,132.2 361.6,131.5 364.4,130.8 367.3,130.2 370.2,129.5 373.1,128.8 376.0,128.2 378.9,127.5 381.7,126.8 384.6,126.2 387.5,125.5 390.4,124.8 393.3,124.2 396.2,123.5 399.1,122.8 401.9,122.2 404.8,121.5 407.7,120.8 410.6,120.2 413.5,119.5 416.4,118.9 419.2,118.2 422.1,117.5 425.0,116.9 427.9,116.2 430.8,115.6 433.7,114.9 436.6,114.2 439.4,113.6 442.3,112.9 445.2,112.3 448.1,111.6 451.0,110.9 453.9,110.3 456.7,109.6 459.6,109.0 462.5,108.3 465.4,107.7 468.3,107.0 471.2,106.4 474.1,105.7 476.9,105.0 479.8,104.4 482.7,103.7 485.6,103.1 488.5,102.4 491.4,101.8 494.2,101.1 497.1,100.5 500.0,99.8 502.9,99.2 505.8,98.5 508.7,97.9 511.5,97.2 514.4,96.6 517.3,95.9 520.2,95.3 523.1,94.6 526.0,94.0 528.9,93.3 531.7,92.7 534.6,92.0 537.5,91.4 540.4,90.7 543.3,90.1 546.2,89.4 549.0,88.8 551.9,88.1 554.8,87.5 557.7,86.9 560.6,86.2 563.5,85.6 566.4,84.9 569.2,84.3 572.1,83.6 575.0,83.0 577.9,82.3 580.8,81.7 583.7,81.1 586.5,80.4 589.4,79.8 592.3,79.1 595.2,78.5 598.1,77.9 601.0,77.2 603.8,76.6 606.7,75.9 609.6,75.3 612.5,74.7 615.4,74.0 618.3,73.4 621.2,72.7 624.0,72.1 626.9,71.5 629.8,70.8 632.7,70.2 635.6,69.6 638.5,68.9 641.3,68.3 644.2,67.7 647.1,67.0 650.0,66.4" fill="none" stroke="#141C24" stroke-width="2.0" stroke-linejoin="round"/></g>
+<rect x="566.0" y="60.0" width="84.0" height="150.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.1"/>
+<rect x="566.0" y="250.0" width="84.0" height="150.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.1"/>
+<line x1="566.0" y1="60.0" x2="566.0" y2="210.0" stroke="#9C3B52" stroke-width="1.5" stroke-dasharray="5 3"/>
+<text x="572.0" y="186.0" text-anchor="start" class="cap" style="fill:#9C3B52">zabronione</text>
+<text x="572.0" y="200.0" text-anchor="start" class="cap" style="fill:#9C3B52">h₂ &gt; 4,0 m</text>
+<line x1="356.0" y1="132.8" x2="356.0" y2="400.0" stroke="#0E6E78" stroke-width="1.2" stroke-dasharray="3 3"/>
+<line x1="76.0" y1="132.8" x2="356.0" y2="132.8" stroke="#0E6E78" stroke-width="1.0" stroke-dasharray="3 3"/>
+<circle cx="356.0" cy="132.8" r="5" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="348.0" y="123.8" text-anchor="end" class="cap" style="fill:#0E6E78">PID: q = 0,577</text>
+<line x1="503.0" y1="99.1" x2="503.0" y2="400.0" stroke="#5B4B8A" stroke-width="1.2" stroke-dasharray="3 3"/>
+<line x1="76.0" y1="99.1" x2="503.0" y2="99.1" stroke="#5B4B8A" stroke-width="1.0" stroke-dasharray="3 3"/>
+<circle cx="503.0" cy="99.1" r="5" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="495.0" y="90.1" text-anchor="end" class="cap" style="fill:#5B4B8A">MPC: q = 0,593</text>
+<clipPath id="cF32e31"><rect x="76" y="250" width="574" height="150"/></clipPath>
+<line x1="76.0" y1="400.0" x2="650.0" y2="400.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="76.0" y1="250.0" x2="76.0" y2="400.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="146.0" y1="400.0" x2="146.0" y2="404.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="146.0" y="416.0" text-anchor="middle" class="tick">3,4</text>
+<line x1="216.0" y1="400.0" x2="216.0" y2="404.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="216.0" y="416.0" text-anchor="middle" class="tick">3,5</text>
+<line x1="286.0" y1="400.0" x2="286.0" y2="404.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="286.0" y="416.0" text-anchor="middle" class="tick">3,6</text>
+<line x1="356.0" y1="400.0" x2="356.0" y2="404.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="356.0" y="416.0" text-anchor="middle" class="tick">3,7</text>
+<line x1="426.0" y1="400.0" x2="426.0" y2="404.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="426.0" y="416.0" text-anchor="middle" class="tick">3,8</text>
+<line x1="496.0" y1="400.0" x2="496.0" y2="404.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="496.0" y="416.0" text-anchor="middle" class="tick">3,9</text>
+<line x1="566.0" y1="400.0" x2="566.0" y2="404.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="566.0" y="416.0" text-anchor="middle" class="tick">4,0</text>
+<line x1="636.0" y1="400.0" x2="636.0" y2="404.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="636.0" y="416.0" text-anchor="middle" class="tick">4,1</text>
+<text x="363.0" y="434.0" text-anchor="middle" class="axlab">poziom h₂ [m]</text>
+<text x="76.0" y="240.0" text-anchor="start" class="axlab">jak często poziom ma daną wartość</text>
+<line x1="566.0" y1="250.0" x2="566.0" y2="400.0" stroke="#9C3B52" stroke-width="1.5" stroke-dasharray="5 3"/>
+<g clip-path="url(#cF32e31)"><polygon points="76.0,400 76.0,400.0 78.9,399.9 81.8,399.9 84.7,399.9 87.5,399.9 90.4,399.9 93.3,399.9 96.2,399.9 99.1,399.8 102.0,399.8 104.8,399.8 107.7,399.7 110.6,399.7 113.5,399.7 116.4,399.6 119.3,399.5 122.2,399.5 125.0,399.4 127.9,399.3 130.8,399.2 133.7,399.1 136.6,399.0 139.5,398.8 142.3,398.7 145.2,398.5 148.1,398.3 151.0,398.1 153.9,397.9 156.8,397.6 159.6,397.3 162.5,397.0 165.4,396.6 168.3,396.2 171.2,395.7 174.1,395.3 177.0,394.7 179.8,394.1 182.7,393.5 185.6,392.8 188.5,392.1 191.4,391.3 194.3,390.4 197.1,389.4 200.0,388.4 202.9,387.3 205.8,386.1 208.7,384.8 211.6,383.5 214.5,382.0 217.3,380.5 220.2,378.8 223.1,377.1 226.0,375.2 228.9,373.3 231.8,371.3 234.6,369.1 237.5,366.8 240.4,364.5 243.3,362.0 246.2,359.4 249.1,356.8 251.9,354.0 254.8,351.1 257.7,348.2 260.6,345.1 263.5,342.0 266.4,338.8 269.3,335.6 272.1,332.2 275.0,328.9 277.9,325.5 280.8,322.0 283.7,318.6 286.6,315.1 289.4,311.6 292.3,308.2 295.2,304.7 298.1,301.3 301.0,298.0 303.9,294.7 306.8,291.6 309.6,288.5 312.5,285.5 315.4,282.6 318.3,279.9 321.2,277.3 324.1,274.8 326.9,272.6 329.8,270.5 332.7,268.6 335.6,266.9 338.5,265.4 341.4,264.1 344.3,263.1 347.1,262.2 350.0,261.6 352.9,261.2 355.8,261.1 358.7,261.2 361.6,261.5 364.4,262.1 367.3,262.9 370.2,263.9 373.1,265.2 376.0,266.7 378.9,268.3 381.7,270.2 384.6,272.3 387.5,274.5 390.4,276.9 393.3,279.5 396.2,282.2 399.1,285.0 401.9,288.0 404.8,291.1 407.7,294.3 410.6,297.5 413.5,300.9 416.4,304.2 419.2,307.7 422.1,311.1 425.0,314.6 427.9,318.0 430.8,321.5 433.7,325.0 436.6,328.4 439.4,331.7 442.3,335.1 445.2,338.3 448.1,341.5 451.0,344.7 453.9,347.7 456.7,350.7 459.6,353.6 462.5,356.4 465.4,359.0 468.3,361.6 471.2,364.1 474.1,366.5 476.9,368.8 479.8,370.9 482.7,373.0 485.6,375.0 488.5,376.8 491.4,378.6 494.2,380.2 497.1,381.8 500.0,383.3 502.9,384.6 505.8,385.9 508.7,387.1 511.5,388.2 514.4,389.3 517.3,390.2 520.2,391.1 523.1,392.0 526.0,392.7 528.9,393.4 531.7,394.1 534.6,394.6 537.5,395.2 540.4,395.7 543.3,396.1 546.2,396.5 549.0,396.9 551.9,397.2 554.8,397.5 557.7,397.8 560.6,398.1 563.5,398.3 566.4,398.5 569.2,398.7 572.1,398.8 575.0,399.0 577.9,399.1 580.8,399.2 583.7,399.3 586.5,399.4 589.4,399.5 592.3,399.5 595.2,399.6 598.1,399.6 601.0,399.7 603.8,399.7 606.7,399.8 609.6,399.8 612.5,399.8 615.4,399.9 618.3,399.9 621.2,399.9 624.0,399.9 626.9,399.9 629.8,399.9 632.7,399.9 635.6,400.0 638.5,400.0 641.3,400.0 644.2,400.0 647.1,400.0 650.0,400.0 650.0,400" fill="#0E6E78" opacity="0.16"/></g>
+<g clip-path="url(#cF32e31)"><polyline points="76.0,400.0 78.9,399.9 81.8,399.9 84.7,399.9 87.5,399.9 90.4,399.9 93.3,399.9 96.2,399.9 99.1,399.8 102.0,399.8 104.8,399.8 107.7,399.7 110.6,399.7 113.5,399.7 116.4,399.6 119.3,399.5 122.2,399.5 125.0,399.4 127.9,399.3 130.8,399.2 133.7,399.1 136.6,399.0 139.5,398.8 142.3,398.7 145.2,398.5 148.1,398.3 151.0,398.1 153.9,397.9 156.8,397.6 159.6,397.3 162.5,397.0 165.4,396.6 168.3,396.2 171.2,395.7 174.1,395.3 177.0,394.7 179.8,394.1 182.7,393.5 185.6,392.8 188.5,392.1 191.4,391.3 194.3,390.4 197.1,389.4 200.0,388.4 202.9,387.3 205.8,386.1 208.7,384.8 211.6,383.5 214.5,382.0 217.3,380.5 220.2,378.8 223.1,377.1 226.0,375.2 228.9,373.3 231.8,371.3 234.6,369.1 237.5,366.8 240.4,364.5 243.3,362.0 246.2,359.4 249.1,356.8 251.9,354.0 254.8,351.1 257.7,348.2 260.6,345.1 263.5,342.0 266.4,338.8 269.3,335.6 272.1,332.2 275.0,328.9 277.9,325.5 280.8,322.0 283.7,318.6 286.6,315.1 289.4,311.6 292.3,308.2 295.2,304.7 298.1,301.3 301.0,298.0 303.9,294.7 306.8,291.6 309.6,288.5 312.5,285.5 315.4,282.6 318.3,279.9 321.2,277.3 324.1,274.8 326.9,272.6 329.8,270.5 332.7,268.6 335.6,266.9 338.5,265.4 341.4,264.1 344.3,263.1 347.1,262.2 350.0,261.6 352.9,261.2 355.8,261.1 358.7,261.2 361.6,261.5 364.4,262.1 367.3,262.9 370.2,263.9 373.1,265.2 376.0,266.7 378.9,268.3 381.7,270.2 384.6,272.3 387.5,274.5 390.4,276.9 393.3,279.5 396.2,282.2 399.1,285.0 401.9,288.0 404.8,291.1 407.7,294.3 410.6,297.5 413.5,300.9 416.4,304.2 419.2,307.7 422.1,311.1 425.0,314.6 427.9,318.0 430.8,321.5 433.7,325.0 436.6,328.4 439.4,331.7 442.3,335.1 445.2,338.3 448.1,341.5 451.0,344.7 453.9,347.7 456.7,350.7 459.6,353.6 462.5,356.4 465.4,359.0 468.3,361.6 471.2,364.1 474.1,366.5 476.9,368.8 479.8,370.9 482.7,373.0 485.6,375.0 488.5,376.8 491.4,378.6 494.2,380.2 497.1,381.8 500.0,383.3 502.9,384.6 505.8,385.9 508.7,387.1 511.5,388.2 514.4,389.3 517.3,390.2 520.2,391.1 523.1,392.0 526.0,392.7 528.9,393.4 531.7,394.1 534.6,394.6 537.5,395.2 540.4,395.7 543.3,396.1 546.2,396.5 549.0,396.9 551.9,397.2 554.8,397.5 557.7,397.8 560.6,398.1 563.5,398.3 566.4,398.5 569.2,398.7 572.1,398.8 575.0,399.0 577.9,399.1 580.8,399.2 583.7,399.3 586.5,399.4 589.4,399.5 592.3,399.5 595.2,399.6 598.1,399.6 601.0,399.7 603.8,399.7 606.7,399.8 609.6,399.8 612.5,399.8 615.4,399.9 618.3,399.9 621.2,399.9 624.0,399.9 626.9,399.9 629.8,399.9 632.7,399.9 635.6,400.0 638.5,400.0 641.3,400.0 644.2,400.0 647.1,400.0 650.0,400.0" fill="none" stroke="#0E6E78" stroke-width="1.8" stroke-linejoin="round"/></g>
+<line x1="356.0" y1="375.0" x2="566.0" y2="375.0" stroke="#0E6E78" stroke-width="1.2" marker-end="url(#arF32e0)"/>
+<text x="351.0" y="379.0" text-anchor="end" class="cap" style="fill:#0E6E78">3σ = 0,30</text>
+<g clip-path="url(#cF32e31)"><polygon points="76.0,400 76.0,400.0 78.9,400.0 81.8,400.0 84.7,400.0 87.5,400.0 90.4,400.0 93.3,400.0 96.2,400.0 99.1,400.0 102.0,400.0 104.8,400.0 107.7,400.0 110.6,400.0 113.5,400.0 116.4,400.0 119.3,400.0 122.2,400.0 125.0,400.0 127.9,400.0 130.8,400.0 133.7,400.0 136.6,400.0 139.5,400.0 142.3,400.0 145.2,400.0 148.1,400.0 151.0,400.0 153.9,400.0 156.8,400.0 159.6,400.0 162.5,400.0 165.4,400.0 168.3,400.0 171.2,400.0 174.1,400.0 177.0,400.0 179.8,400.0 182.7,400.0 185.6,400.0 188.5,400.0 191.4,400.0 194.3,400.0 197.1,400.0 200.0,400.0 202.9,400.0 205.8,400.0 208.7,400.0 211.6,400.0 214.5,400.0 217.3,400.0 220.2,400.0 223.1,400.0 226.0,400.0 228.9,400.0 231.8,400.0 234.6,400.0 237.5,400.0 240.4,400.0 243.3,400.0 246.2,400.0 249.1,400.0 251.9,400.0 254.8,400.0 257.7,400.0 260.6,400.0 263.5,400.0 266.4,400.0 269.3,400.0 272.1,400.0 275.0,400.0 277.9,400.0 280.8,400.0 283.7,400.0 286.6,400.0 289.4,400.0 292.3,400.0 295.2,400.0 298.1,400.0 301.0,400.0 303.9,400.0 306.8,400.0 309.6,400.0 312.5,400.0 315.4,400.0 318.3,400.0 321.2,400.0 324.1,400.0 326.9,400.0 329.8,400.0 332.7,400.0 335.6,400.0 338.5,400.0 341.4,400.0 344.3,400.0 347.1,400.0 350.0,400.0 352.9,400.0 355.8,400.0 358.7,400.0 361.6,400.0 364.4,400.0 367.3,400.0 370.2,400.0 373.1,400.0 376.0,400.0 378.9,400.0 381.7,400.0 384.6,400.0 387.5,400.0 390.4,400.0 393.3,400.0 396.2,400.0 399.1,400.0 401.9,400.0 404.8,400.0 407.7,400.0 410.6,400.0 413.5,400.0 416.4,400.0 419.2,400.0 422.1,399.9 425.0,399.9 427.9,399.8 430.8,399.6 433.7,399.4 436.6,399.1 439.4,398.6 442.3,397.9 445.2,396.9 448.1,395.4 451.0,393.5 453.9,391.0 456.7,387.7 459.6,383.5 462.5,378.3 465.4,372.0 468.3,364.6 471.2,356.0 474.1,346.3 476.9,335.7 479.8,324.5 482.7,312.9 485.6,301.5 488.5,290.7 491.4,280.9 494.2,272.7 497.1,266.4 500.0,262.5 502.9,261.1 505.8,262.3 508.7,266.1 511.5,272.2 514.4,280.2 517.3,289.9 520.2,300.7 523.1,312.1 526.0,323.6 528.9,334.9 531.7,345.6 534.6,355.3 537.5,364.0 540.4,371.5 543.3,377.9 546.2,383.2 549.0,387.4 551.9,390.8 554.8,393.4 557.7,395.3 560.6,396.8 563.5,397.8 566.4,398.5 569.2,399.0 572.1,399.4 575.0,399.6 577.9,399.8 580.8,399.9 583.7,399.9 586.5,399.9 589.4,400.0 592.3,400.0 595.2,400.0 598.1,400.0 601.0,400.0 603.8,400.0 606.7,400.0 609.6,400.0 612.5,400.0 615.4,400.0 618.3,400.0 621.2,400.0 624.0,400.0 626.9,400.0 629.8,400.0 632.7,400.0 635.6,400.0 638.5,400.0 641.3,400.0 644.2,400.0 647.1,400.0 650.0,400.0 650.0,400" fill="#5B4B8A" opacity="0.16"/></g>
+<g clip-path="url(#cF32e31)"><polyline points="76.0,400.0 78.9,400.0 81.8,400.0 84.7,400.0 87.5,400.0 90.4,400.0 93.3,400.0 96.2,400.0 99.1,400.0 102.0,400.0 104.8,400.0 107.7,400.0 110.6,400.0 113.5,400.0 116.4,400.0 119.3,400.0 122.2,400.0 125.0,400.0 127.9,400.0 130.8,400.0 133.7,400.0 136.6,400.0 139.5,400.0 142.3,400.0 145.2,400.0 148.1,400.0 151.0,400.0 153.9,400.0 156.8,400.0 159.6,400.0 162.5,400.0 165.4,400.0 168.3,400.0 171.2,400.0 174.1,400.0 177.0,400.0 179.8,400.0 182.7,400.0 185.6,400.0 188.5,400.0 191.4,400.0 194.3,400.0 197.1,400.0 200.0,400.0 202.9,400.0 205.8,400.0 208.7,400.0 211.6,400.0 214.5,400.0 217.3,400.0 220.2,400.0 223.1,400.0 226.0,400.0 228.9,400.0 231.8,400.0 234.6,400.0 237.5,400.0 240.4,400.0 243.3,400.0 246.2,400.0 249.1,400.0 251.9,400.0 254.8,400.0 257.7,400.0 260.6,400.0 263.5,400.0 266.4,400.0 269.3,400.0 272.1,400.0 275.0,400.0 277.9,400.0 280.8,400.0 283.7,400.0 286.6,400.0 289.4,400.0 292.3,400.0 295.2,400.0 298.1,400.0 301.0,400.0 303.9,400.0 306.8,400.0 309.6,400.0 312.5,400.0 315.4,400.0 318.3,400.0 321.2,400.0 324.1,400.0 326.9,400.0 329.8,400.0 332.7,400.0 335.6,400.0 338.5,400.0 341.4,400.0 344.3,400.0 347.1,400.0 350.0,400.0 352.9,400.0 355.8,400.0 358.7,400.0 361.6,400.0 364.4,400.0 367.3,400.0 370.2,400.0 373.1,400.0 376.0,400.0 378.9,400.0 381.7,400.0 384.6,400.0 387.5,400.0 390.4,400.0 393.3,400.0 396.2,400.0 399.1,400.0 401.9,400.0 404.8,400.0 407.7,400.0 410.6,400.0 413.5,400.0 416.4,400.0 419.2,400.0 422.1,399.9 425.0,399.9 427.9,399.8 430.8,399.6 433.7,399.4 436.6,399.1 439.4,398.6 442.3,397.9 445.2,396.9 448.1,395.4 451.0,393.5 453.9,391.0 456.7,387.7 459.6,383.5 462.5,378.3 465.4,372.0 468.3,364.6 471.2,356.0 474.1,346.3 476.9,335.7 479.8,324.5 482.7,312.9 485.6,301.5 488.5,290.7 491.4,280.9 494.2,272.7 497.1,266.4 500.0,262.5 502.9,261.1 505.8,262.3 508.7,266.1 511.5,272.2 514.4,280.2 517.3,289.9 520.2,300.7 523.1,312.1 526.0,323.6 528.9,334.9 531.7,345.6 534.6,355.3 537.5,364.0 540.4,371.5 543.3,377.9 546.2,383.2 549.0,387.4 551.9,390.8 554.8,393.4 557.7,395.3 560.6,396.8 563.5,397.8 566.4,398.5 569.2,399.0 572.1,399.4 575.0,399.6 577.9,399.8 580.8,399.9 583.7,399.9 586.5,399.9 589.4,400.0 592.3,400.0 595.2,400.0 598.1,400.0 601.0,400.0 603.8,400.0 606.7,400.0 609.6,400.0 612.5,400.0 615.4,400.0 618.3,400.0 621.2,400.0 624.0,400.0 626.9,400.0 629.8,400.0 632.7,400.0 635.6,400.0 638.5,400.0 641.3,400.0 644.2,400.0 647.1,400.0 650.0,400.0" fill="none" stroke="#5B4B8A" stroke-width="1.8" stroke-linejoin="round"/></g>
+<line x1="503.0" y1="323.6" x2="566.0" y2="323.6" stroke="#5B4B8A" stroke-width="1.2" marker-end="url(#arF32e1)"/>
+<text x="534.5" y="318.6" text-anchor="middle" class="cap" style="fill:#5B4B8A">3σ</text>
+<line x1="84.0" y1="272.0" x2="102.0" y2="272.0" stroke="#0E6E78" stroke-width="2"/>
+<text x="108.0" y="276.0" text-anchor="start" class="cap">PID: σ = 0,10 m</text>
+<line x1="84.0" y1="287.0" x2="102.0" y2="287.0" stroke="#5B4B8A" stroke-width="2"/>
+<text x="108.0" y="291.0" text-anchor="start" class="cap">MPC: σ = 0,03 m</text>
+</svg>
+<figcaption>Optimum leży na ograniczeniu 4,0 m, ale poziom faluje, więc wartość zadaną trzeba odsunąć o 3σ. PID (σ = 0,10 m) pozwala na 3,70 m, MPC (σ = 0,03 m) na 3,91 m. Liczby przykładowe, rachunek własny.</figcaption>
+</figure>
+
+<ol class="steps">
+<li><strong>Planowanie</strong>: „produkujemy tyle, ile się da”.</li>
+<li><strong>Optymalizacja</strong>: <span class="m" data-tex="q"><svg style="vertical-align: -0.439ex;" xmlns="http://www.w3.org/2000/svg" width="1.041ex" height="1.439ex" role="img" focusable="false" viewBox="0 -442 460 636" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-3-TEX-I-1D45E" d="M33 157Q33 258 109 349T280 441Q340 441 372 389Q373 390 377 395T388 406T404 418Q438 442 450 442Q454 442 457 439T460 434Q460 425 391 149Q320 -135 320 -139Q320 -147 365 -148H390Q396 -156 396 -157T393 -175Q389 -188 383 -194H370Q339 -192 262 -192Q234 -192 211 -192T174 -192T157 -193Q143 -193 143 -185Q143 -182 145 -170Q149 -154 152 -151T172 -148Q220 -148 230 -141Q238 -136 258 -53T279 32Q279 33 272 29Q224 -10 172 -10Q117 -10 75 30T33 157ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D45E" xlink:href="#MJX-3-TEX-I-1D45E"></use></g></g></g></svg></span> rośnie z poziomem, więc optimum to <span class="m" data-tex="h_2 = 4{,}0\ \mathrm{m}"><svg style="vertical-align: -0.439ex;" xmlns="http://www.w3.org/2000/svg" width="10.65ex" height="2.009ex" role="img" focusable="false" viewBox="0 -694 4707.1 888" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-4-TEX-I-210E" d="M137 683Q138 683 209 688T282 694Q294 694 294 685Q294 674 258 534Q220 386 220 383Q220 381 227 388Q288 442 357 442Q411 442 444 415T478 336Q478 285 440 178T402 50Q403 36 407 31T422 26Q450 26 474 56T513 138Q516 149 519 151T535 153Q555 153 555 145Q555 144 551 130Q535 71 500 33Q466 -10 419 -10H414Q367 -10 346 17T325 74Q325 90 361 192T398 345Q398 404 354 404H349Q266 404 205 306L198 293L164 158Q132 28 127 16Q114 -11 83 -11Q69 -11 59 -2T48 16Q48 30 121 320L195 616Q195 629 188 632T149 637H128Q122 643 122 645T124 664Q129 683 137 683Z"></path><path id="MJX-4-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-4-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-4-TEX-N-34" d="M462 0Q444 3 333 3Q217 3 199 0H190V46H221Q241 46 248 46T265 48T279 53T286 61Q287 63 287 115V165H28V211L179 442Q332 674 334 675Q336 677 355 677H373L379 671V211H471V165H379V114Q379 73 379 66T385 54Q393 47 442 46H471V0H462ZM293 211V545L74 212L183 211H293Z"></path><path id="MJX-4-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-4-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJX-4-TEX-N-A0" d=""></path><path id="MJX-4-TEX-N-6D" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q351 442 364 440T387 434T406 426T421 417T432 406T441 395T448 384T452 374T455 366L457 361L460 365Q463 369 466 373T475 384T488 397T503 410T523 422T546 432T572 439T603 442Q729 442 740 329Q741 322 741 190V104Q741 66 743 59T754 49Q775 46 803 46H819V0H811L788 1Q764 2 737 2T699 3Q596 3 587 0H579V46H595Q656 46 656 62Q657 64 657 200Q656 335 655 343Q649 371 635 385T611 402T585 404Q540 404 506 370Q479 343 472 315T464 232V168V108Q464 78 465 68T468 55T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="210E" xlink:href="#MJX-4-TEX-I-210E"></use></g><g data-mml-node="mn" transform="translate(609,-150) scale(0.707)"><use data-c="32" xlink:href="#MJX-4-TEX-N-32"></use></g></g><g data-mml-node="mo" transform="translate(1290.3,0)"><use data-c="3D" xlink:href="#MJX-4-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(2346.1,0)"><use data-c="34" xlink:href="#MJX-4-TEX-N-34"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(2846.1,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-4-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(3124.1,0)"><use data-c="30" xlink:href="#MJX-4-TEX-N-30"></use></g><g data-mml-node="mtext" transform="translate(3624.1,0)"><use data-c="A0" xlink:href="#MJX-4-TEX-N-A0"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(3874.1,0)"><g data-mml-node="mi"><use data-c="6D" xlink:href="#MJX-4-TEX-N-6D"></use></g></g></g></g></svg></span> — leży <em>na</em> ograniczeniu.</li>
+<li><strong>Poziom faluje</strong> z odchyleniem <span class="m" data-tex="\sigma"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="1.292ex" height="1ex" role="img" focusable="false" viewBox="0 -431 571 442" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-5-TEX-I-1D70E" d="M184 -11Q116 -11 74 34T31 147Q31 247 104 333T274 430Q275 431 414 431H552Q553 430 555 429T559 427T562 425T565 422T567 420T569 416T570 412T571 407T572 401Q572 357 507 357Q500 357 490 357T476 358H416L421 348Q439 310 439 263Q439 153 359 71T184 -11ZM361 278Q361 358 276 358Q152 358 115 184Q114 180 114 178Q106 141 106 117Q106 67 131 47T188 26Q242 26 287 73Q316 103 334 153T356 233T361 278Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D70E" xlink:href="#MJX-5-TEX-I-1D70E"></use></g></g></g></svg></span>, więc wartość zadaną ustawiamy z zapasem: <span class="m" data-tex="h_2^{*} = h_{max} - 3\sigma"><svg style="vertical-align: -0.595ex;" xmlns="http://www.w3.org/2000/svg" width="15.154ex" height="2.166ex" role="img" focusable="false" viewBox="0 -694 6697.9 957.2" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-6-TEX-I-210E" d="M137 683Q138 683 209 688T282 694Q294 694 294 685Q294 674 258 534Q220 386 220 383Q220 381 227 388Q288 442 357 442Q411 442 444 415T478 336Q478 285 440 178T402 50Q403 36 407 31T422 26Q450 26 474 56T513 138Q516 149 519 151T535 153Q555 153 555 145Q555 144 551 130Q535 71 500 33Q466 -10 419 -10H414Q367 -10 346 17T325 74Q325 90 361 192T398 345Q398 404 354 404H349Q266 404 205 306L198 293L164 158Q132 28 127 16Q114 -11 83 -11Q69 -11 59 -2T48 16Q48 30 121 320L195 616Q195 629 188 632T149 637H128Q122 643 122 645T124 664Q129 683 137 683Z"></path><path id="MJX-6-TEX-N-2217" d="M229 286Q216 420 216 436Q216 454 240 464Q241 464 245 464T251 465Q263 464 273 456T283 436Q283 419 277 356T270 286L328 328Q384 369 389 372T399 375Q412 375 423 365T435 338Q435 325 425 315Q420 312 357 282T289 250L355 219L425 184Q434 175 434 161Q434 146 425 136T401 125Q393 125 383 131T328 171L270 213Q283 79 283 63Q283 53 276 44T250 35Q231 35 224 44T216 63Q216 80 222 143T229 213L171 171Q115 130 110 127Q106 124 100 124Q87 124 76 134T64 161Q64 166 64 169T67 175T72 181T81 188T94 195T113 204T138 215T170 230T210 250L74 315Q65 324 65 338Q65 353 74 363T98 374Q106 374 116 368T171 328L229 286Z"></path><path id="MJX-6-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-6-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-6-TEX-I-1D45A" d="M21 287Q22 293 24 303T36 341T56 388T88 425T132 442T175 435T205 417T221 395T229 376L231 369Q231 367 232 367L243 378Q303 442 384 442Q401 442 415 440T441 433T460 423T475 411T485 398T493 385T497 373T500 364T502 357L510 367Q573 442 659 442Q713 442 746 415T780 336Q780 285 742 178T704 50Q705 36 709 31T724 26Q752 26 776 56T815 138Q818 149 821 151T837 153Q857 153 857 145Q857 144 853 130Q845 101 831 73T785 17T716 -10Q669 -10 648 17T627 73Q627 92 663 193T700 345Q700 404 656 404H651Q565 404 506 303L499 291L466 157Q433 26 428 16Q415 -11 385 -11Q372 -11 364 -4T353 8T350 18Q350 29 384 161L420 307Q423 322 423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 181Q151 335 151 342Q154 357 154 369Q154 405 129 405Q107 405 92 377T69 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-6-TEX-I-1D44E" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path><path id="MJX-6-TEX-I-1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path><path id="MJX-6-TEX-N-2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path><path id="MJX-6-TEX-N-33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path><path id="MJX-6-TEX-I-1D70E" d="M184 -11Q116 -11 74 34T31 147Q31 247 104 333T274 430Q275 431 414 431H552Q553 430 555 429T559 427T562 425T565 422T567 420T569 416T570 412T571 407T572 401Q572 357 507 357Q500 357 490 357T476 358H416L421 348Q439 310 439 263Q439 153 359 71T184 -11ZM361 278Q361 358 276 358Q152 358 115 184Q114 180 114 178Q106 141 106 117Q106 67 131 47T188 26Q242 26 287 73Q316 103 334 153T356 233T361 278Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msubsup"><g data-mml-node="mi"><use data-c="210E" xlink:href="#MJX-6-TEX-I-210E"></use></g><g data-mml-node="TeXAtom" transform="translate(609,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mo"><use data-c="2217" xlink:href="#MJX-6-TEX-N-2217"></use></g></g><g data-mml-node="mn" transform="translate(609,-263.2) scale(0.707)"><use data-c="32" xlink:href="#MJX-6-TEX-N-32"></use></g></g><g data-mml-node="mo" transform="translate(1290.3,0)"><use data-c="3D" xlink:href="#MJX-6-TEX-N-3D"></use></g><g data-mml-node="msub" transform="translate(2346.1,0)"><g data-mml-node="mi"><use data-c="210E" xlink:href="#MJX-6-TEX-I-210E"></use></g><g data-mml-node="TeXAtom" transform="translate(609,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><use data-c="1D45A" xlink:href="#MJX-6-TEX-I-1D45A"></use></g><g data-mml-node="mi" transform="translate(878,0)"><use data-c="1D44E" xlink:href="#MJX-6-TEX-I-1D44E"></use></g><g data-mml-node="mi" transform="translate(1407,0)"><use data-c="1D465" xlink:href="#MJX-6-TEX-I-1D465"></use></g></g></g><g data-mml-node="mo" transform="translate(4626.7,0)"><use data-c="2212" xlink:href="#MJX-6-TEX-N-2212"></use></g><g data-mml-node="mn" transform="translate(5626.9,0)"><use data-c="33" xlink:href="#MJX-6-TEX-N-33"></use></g><g data-mml-node="mi" transform="translate(6126.9,0)"><use data-c="1D70E" xlink:href="#MJX-6-TEX-I-1D70E"></use></g></g></g></svg></span>.</li>
+<li><strong>PID</strong> (<span class="m" data-tex="\sigma = 0{,}10"><svg style="vertical-align: -0.439ex;" xmlns="http://www.w3.org/2000/svg" width="8.332ex" height="1.946ex" role="img" focusable="false" viewBox="0 -666 3682.6 860" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-7-TEX-I-1D70E" d="M184 -11Q116 -11 74 34T31 147Q31 247 104 333T274 430Q275 431 414 431H552Q553 430 555 429T559 427T562 425T565 422T567 420T569 416T570 412T571 407T572 401Q572 357 507 357Q500 357 490 357T476 358H416L421 348Q439 310 439 263Q439 153 359 71T184 -11ZM361 278Q361 358 276 358Q152 358 115 184Q114 180 114 178Q106 141 106 117Q106 67 131 47T188 26Q242 26 287 73Q316 103 334 153T356 233T361 278Z"></path><path id="MJX-7-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-7-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJX-7-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-7-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D70E" xlink:href="#MJX-7-TEX-I-1D70E"></use></g><g data-mml-node="mo" transform="translate(848.8,0)"><use data-c="3D" xlink:href="#MJX-7-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(1904.6,0)"><use data-c="30" xlink:href="#MJX-7-TEX-N-30"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(2404.6,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-7-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(2682.6,0)"><use data-c="31" xlink:href="#MJX-7-TEX-N-31"></use><use data-c="30" xlink:href="#MJX-7-TEX-N-30" transform="translate(500,0)"></use></g></g></g></svg></span>): <span class="m" data-tex="h_2^{*} = 3{,}70\ \mathrm{m}"><svg style="vertical-align: -0.595ex;" xmlns="http://www.w3.org/2000/svg" width="11.781ex" height="2.166ex" role="img" focusable="false" viewBox="0 -694 5207.1 957.2" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-8-TEX-I-210E" d="M137 683Q138 683 209 688T282 694Q294 694 294 685Q294 674 258 534Q220 386 220 383Q220 381 227 388Q288 442 357 442Q411 442 444 415T478 336Q478 285 440 178T402 50Q403 36 407 31T422 26Q450 26 474 56T513 138Q516 149 519 151T535 153Q555 153 555 145Q555 144 551 130Q535 71 500 33Q466 -10 419 -10H414Q367 -10 346 17T325 74Q325 90 361 192T398 345Q398 404 354 404H349Q266 404 205 306L198 293L164 158Q132 28 127 16Q114 -11 83 -11Q69 -11 59 -2T48 16Q48 30 121 320L195 616Q195 629 188 632T149 637H128Q122 643 122 645T124 664Q129 683 137 683Z"></path><path id="MJX-8-TEX-N-2217" d="M229 286Q216 420 216 436Q216 454 240 464Q241 464 245 464T251 465Q263 464 273 456T283 436Q283 419 277 356T270 286L328 328Q384 369 389 372T399 375Q412 375 423 365T435 338Q435 325 425 315Q420 312 357 282T289 250L355 219L425 184Q434 175 434 161Q434 146 425 136T401 125Q393 125 383 131T328 171L270 213Q283 79 283 63Q283 53 276 44T250 35Q231 35 224 44T216 63Q216 80 222 143T229 213L171 171Q115 130 110 127Q106 124 100 124Q87 124 76 134T64 161Q64 166 64 169T67 175T72 181T81 188T94 195T113 204T138 215T170 230T210 250L74 315Q65 324 65 338Q65 353 74 363T98 374Q106 374 116 368T171 328L229 286Z"></path><path id="MJX-8-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-8-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-8-TEX-N-33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path><path id="MJX-8-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-8-TEX-N-37" d="M55 458Q56 460 72 567L88 674Q88 676 108 676H128V672Q128 662 143 655T195 646T364 644H485V605L417 512Q408 500 387 472T360 435T339 403T319 367T305 330T292 284T284 230T278 162T275 80Q275 66 275 52T274 28V19Q270 2 255 -10T221 -22Q210 -22 200 -19T179 0T168 40Q168 198 265 368Q285 400 349 489L395 552H302Q128 552 119 546Q113 543 108 522T98 479L95 458V455H55V458Z"></path><path id="MJX-8-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJX-8-TEX-N-A0" d=""></path><path id="MJX-8-TEX-N-6D" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q351 442 364 440T387 434T406 426T421 417T432 406T441 395T448 384T452 374T455 366L457 361L460 365Q463 369 466 373T475 384T488 397T503 410T523 422T546 432T572 439T603 442Q729 442 740 329Q741 322 741 190V104Q741 66 743 59T754 49Q775 46 803 46H819V0H811L788 1Q764 2 737 2T699 3Q596 3 587 0H579V46H595Q656 46 656 62Q657 64 657 200Q656 335 655 343Q649 371 635 385T611 402T585 404Q540 404 506 370Q479 343 472 315T464 232V168V108Q464 78 465 68T468 55T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msubsup"><g data-mml-node="mi"><use data-c="210E" xlink:href="#MJX-8-TEX-I-210E"></use></g><g data-mml-node="TeXAtom" transform="translate(609,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mo"><use data-c="2217" xlink:href="#MJX-8-TEX-N-2217"></use></g></g><g data-mml-node="mn" transform="translate(609,-263.2) scale(0.707)"><use data-c="32" xlink:href="#MJX-8-TEX-N-32"></use></g></g><g data-mml-node="mo" transform="translate(1290.3,0)"><use data-c="3D" xlink:href="#MJX-8-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(2346.1,0)"><use data-c="33" xlink:href="#MJX-8-TEX-N-33"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(2846.1,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-8-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(3124.1,0)"><use data-c="37" xlink:href="#MJX-8-TEX-N-37"></use><use data-c="30" xlink:href="#MJX-8-TEX-N-30" transform="translate(500,0)"></use></g><g data-mml-node="mtext" transform="translate(4124.1,0)"><use data-c="A0" xlink:href="#MJX-8-TEX-N-A0"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(4374.1,0)"><g data-mml-node="mi"><use data-c="6D" xlink:href="#MJX-8-TEX-N-6D"></use></g></g></g></g></svg></span>, <span class="m" data-tex="q = 0{,}3\sqrt{3{,}70} = 0{,}577"><svg style="vertical-align: -0.66ex;" xmlns="http://www.w3.org/2000/svg" width="21.45ex" height="2.851ex" role="img" focusable="false" viewBox="0 -968.5 9481.1 1260" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-9-TEX-I-1D45E" d="M33 157Q33 258 109 349T280 441Q340 441 372 389Q373 390 377 395T388 406T404 418Q438 442 450 442Q454 442 457 439T460 434Q460 425 391 149Q320 -135 320 -139Q320 -147 365 -148H390Q396 -156 396 -157T393 -175Q389 -188 383 -194H370Q339 -192 262 -192Q234 -192 211 -192T174 -192T157 -193Q143 -193 143 -185Q143 -182 145 -170Q149 -154 152 -151T172 -148Q220 -148 230 -141Q238 -136 258 -53T279 32Q279 33 272 29Q224 -10 172 -10Q117 -10 75 30T33 157ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path><path id="MJX-9-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-9-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJX-9-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-9-TEX-N-33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path><path id="MJX-9-TEX-SO-221A" d="M263 249Q264 249 315 130T417 -108T470 -228L725 302Q981 837 982 839Q989 850 1001 850Q1008 850 1013 844T1020 832V826L741 243Q645 43 540 -176Q479 -303 469 -324T453 -348Q449 -350 436 -350L424 -349L315 -96Q206 156 205 156L171 130Q138 104 137 104L111 130L263 249Z"></path><path id="MJX-9-TEX-N-37" d="M55 458Q56 460 72 567L88 674Q88 676 108 676H128V672Q128 662 143 655T195 646T364 644H485V605L417 512Q408 500 387 472T360 435T339 403T319 367T305 330T292 284T284 230T278 162T275 80Q275 66 275 52T274 28V19Q270 2 255 -10T221 -22Q210 -22 200 -19T179 0T168 40Q168 198 265 368Q285 400 349 489L395 552H302Q128 552 119 546Q113 543 108 522T98 479L95 458V455H55V458Z"></path><path id="MJX-9-TEX-N-35" d="M164 157Q164 133 148 117T109 101H102Q148 22 224 22Q294 22 326 82Q345 115 345 210Q345 313 318 349Q292 382 260 382H254Q176 382 136 314Q132 307 129 306T114 304Q97 304 95 310Q93 314 93 485V614Q93 664 98 664Q100 666 102 666Q103 666 123 658T178 642T253 634Q324 634 389 662Q397 666 402 666Q410 666 410 648V635Q328 538 205 538Q174 538 149 544L139 546V374Q158 388 169 396T205 412T256 420Q337 420 393 355T449 201Q449 109 385 44T229 -22Q148 -22 99 32T50 154Q50 178 61 192T84 210T107 214Q132 214 148 197T164 157Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D45E" xlink:href="#MJX-9-TEX-I-1D45E"></use></g><g data-mml-node="mo" transform="translate(737.8,0)"><use data-c="3D" xlink:href="#MJX-9-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(1793.6,0)"><use data-c="30" xlink:href="#MJX-9-TEX-N-30"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(2293.6,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-9-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(2571.6,0)"><use data-c="33" xlink:href="#MJX-9-TEX-N-33"></use></g><g data-mml-node="msqrt" transform="translate(3071.6,0)"><g transform="translate(1020,0)"><g data-mml-node="mn"><use data-c="33" xlink:href="#MJX-9-TEX-N-33"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(500,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-9-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(778,0)"><use data-c="37" xlink:href="#MJX-9-TEX-N-37"></use><use data-c="30" xlink:href="#MJX-9-TEX-N-30" transform="translate(500,0)"></use></g></g><g data-mml-node="mo" transform="translate(0,58.5)"><use data-c="221A" xlink:href="#MJX-9-TEX-SO-221A"></use></g><rect width="1778" height="60" x="1020" y="848.5"></rect></g><g data-mml-node="mo" transform="translate(6147.3,0)"><use data-c="3D" xlink:href="#MJX-9-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(7203.1,0)"><use data-c="30" xlink:href="#MJX-9-TEX-N-30"></use><use data-c="2C" xlink:href="#MJX-9-TEX-N-2C" transform="translate(500,0)"></use><use data-c="35" xlink:href="#MJX-9-TEX-N-35" transform="translate(778,0)"></use><use data-c="37" xlink:href="#MJX-9-TEX-N-37" transform="translate(1278,0)"></use><use data-c="37" xlink:href="#MJX-9-TEX-N-37" transform="translate(1778,0)"></use></g></g></g></svg></span>.</li>
+<li><strong>MPC</strong> (<span class="m" data-tex="\sigma = 0{,}03"><svg style="vertical-align: -0.439ex;" xmlns="http://www.w3.org/2000/svg" width="8.332ex" height="1.946ex" role="img" focusable="false" viewBox="0 -666 3682.6 860" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-10-TEX-I-1D70E" d="M184 -11Q116 -11 74 34T31 147Q31 247 104 333T274 430Q275 431 414 431H552Q553 430 555 429T559 427T562 425T565 422T567 420T569 416T570 412T571 407T572 401Q572 357 507 357Q500 357 490 357T476 358H416L421 348Q439 310 439 263Q439 153 359 71T184 -11ZM361 278Q361 358 276 358Q152 358 115 184Q114 180 114 178Q106 141 106 117Q106 67 131 47T188 26Q242 26 287 73Q316 103 334 153T356 233T361 278Z"></path><path id="MJX-10-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-10-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJX-10-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-10-TEX-N-33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D70E" xlink:href="#MJX-10-TEX-I-1D70E"></use></g><g data-mml-node="mo" transform="translate(848.8,0)"><use data-c="3D" xlink:href="#MJX-10-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(1904.6,0)"><use data-c="30" xlink:href="#MJX-10-TEX-N-30"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(2404.6,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-10-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(2682.6,0)"><use data-c="30" xlink:href="#MJX-10-TEX-N-30"></use><use data-c="33" xlink:href="#MJX-10-TEX-N-33" transform="translate(500,0)"></use></g></g></g></svg></span>): <span class="m" data-tex="h_2^{*} = 3{,}91\ \mathrm{m}"><svg style="vertical-align: -0.595ex;" xmlns="http://www.w3.org/2000/svg" width="11.781ex" height="2.166ex" role="img" focusable="false" viewBox="0 -694 5207.1 957.2" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-11-TEX-I-210E" d="M137 683Q138 683 209 688T282 694Q294 694 294 685Q294 674 258 534Q220 386 220 383Q220 381 227 388Q288 442 357 442Q411 442 444 415T478 336Q478 285 440 178T402 50Q403 36 407 31T422 26Q450 26 474 56T513 138Q516 149 519 151T535 153Q555 153 555 145Q555 144 551 130Q535 71 500 33Q466 -10 419 -10H414Q367 -10 346 17T325 74Q325 90 361 192T398 345Q398 404 354 404H349Q266 404 205 306L198 293L164 158Q132 28 127 16Q114 -11 83 -11Q69 -11 59 -2T48 16Q48 30 121 320L195 616Q195 629 188 632T149 637H128Q122 643 122 645T124 664Q129 683 137 683Z"></path><path id="MJX-11-TEX-N-2217" d="M229 286Q216 420 216 436Q216 454 240 464Q241 464 245 464T251 465Q263 464 273 456T283 436Q283 419 277 356T270 286L328 328Q384 369 389 372T399 375Q412 375 423 365T435 338Q435 325 425 315Q420 312 357 282T289 250L355 219L425 184Q434 175 434 161Q434 146 425 136T401 125Q393 125 383 131T328 171L270 213Q283 79 283 63Q283 53 276 44T250 35Q231 35 224 44T216 63Q216 80 222 143T229 213L171 171Q115 130 110 127Q106 124 100 124Q87 124 76 134T64 161Q64 166 64 169T67 175T72 181T81 188T94 195T113 204T138 215T170 230T210 250L74 315Q65 324 65 338Q65 353 74 363T98 374Q106 374 116 368T171 328L229 286Z"></path><path id="MJX-11-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-11-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-11-TEX-N-33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path><path id="MJX-11-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-11-TEX-N-39" d="M352 287Q304 211 232 211Q154 211 104 270T44 396Q42 412 42 436V444Q42 537 111 606Q171 666 243 666Q245 666 249 666T257 665H261Q273 665 286 663T323 651T370 619T413 560Q456 472 456 334Q456 194 396 97Q361 41 312 10T208 -22Q147 -22 108 7T68 93T121 149Q143 149 158 135T173 96Q173 78 164 65T148 49T135 44L131 43Q131 41 138 37T164 27T206 22H212Q272 22 313 86Q352 142 352 280V287ZM244 248Q292 248 321 297T351 430Q351 508 343 542Q341 552 337 562T323 588T293 615T246 625Q208 625 181 598Q160 576 154 546T147 441Q147 358 152 329T172 282Q197 248 244 248Z"></path><path id="MJX-11-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-11-TEX-N-A0" d=""></path><path id="MJX-11-TEX-N-6D" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q351 442 364 440T387 434T406 426T421 417T432 406T441 395T448 384T452 374T455 366L457 361L460 365Q463 369 466 373T475 384T488 397T503 410T523 422T546 432T572 439T603 442Q729 442 740 329Q741 322 741 190V104Q741 66 743 59T754 49Q775 46 803 46H819V0H811L788 1Q764 2 737 2T699 3Q596 3 587 0H579V46H595Q656 46 656 62Q657 64 657 200Q656 335 655 343Q649 371 635 385T611 402T585 404Q540 404 506 370Q479 343 472 315T464 232V168V108Q464 78 465 68T468 55T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msubsup"><g data-mml-node="mi"><use data-c="210E" xlink:href="#MJX-11-TEX-I-210E"></use></g><g data-mml-node="TeXAtom" transform="translate(609,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mo"><use data-c="2217" xlink:href="#MJX-11-TEX-N-2217"></use></g></g><g data-mml-node="mn" transform="translate(609,-263.2) scale(0.707)"><use data-c="32" xlink:href="#MJX-11-TEX-N-32"></use></g></g><g data-mml-node="mo" transform="translate(1290.3,0)"><use data-c="3D" xlink:href="#MJX-11-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(2346.1,0)"><use data-c="33" xlink:href="#MJX-11-TEX-N-33"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(2846.1,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-11-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(3124.1,0)"><use data-c="39" xlink:href="#MJX-11-TEX-N-39"></use><use data-c="31" xlink:href="#MJX-11-TEX-N-31" transform="translate(500,0)"></use></g><g data-mml-node="mtext" transform="translate(4124.1,0)"><use data-c="A0" xlink:href="#MJX-11-TEX-N-A0"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(4374.1,0)"><g data-mml-node="mi"><use data-c="6D" xlink:href="#MJX-11-TEX-N-6D"></use></g></g></g></g></svg></span>, <span class="m" data-tex="q = 0{,}3\sqrt{3{,}91} = 0{,}593"><svg style="vertical-align: -0.445ex;" xmlns="http://www.w3.org/2000/svg" width="21.073ex" height="2.398ex" role="img" focusable="false" viewBox="0 -863.5 9314.1 1060" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-12-TEX-I-1D45E" d="M33 157Q33 258 109 349T280 441Q340 441 372 389Q373 390 377 395T388 406T404 418Q438 442 450 442Q454 442 457 439T460 434Q460 425 391 149Q320 -135 320 -139Q320 -147 365 -148H390Q396 -156 396 -157T393 -175Q389 -188 383 -194H370Q339 -192 262 -192Q234 -192 211 -192T174 -192T157 -193Q143 -193 143 -185Q143 -182 145 -170Q149 -154 152 -151T172 -148Q220 -148 230 -141Q238 -136 258 -53T279 32Q279 33 272 29Q224 -10 172 -10Q117 -10 75 30T33 157ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path><path id="MJX-12-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-12-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJX-12-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-12-TEX-N-33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path><path id="MJX-12-TEX-N-221A" d="M95 178Q89 178 81 186T72 200T103 230T169 280T207 309Q209 311 212 311H213Q219 311 227 294T281 177Q300 134 312 108L397 -77Q398 -77 501 136T707 565T814 786Q820 800 834 800Q841 800 846 794T853 782V776L620 293L385 -193Q381 -200 366 -200Q357 -200 354 -197Q352 -195 256 15L160 225L144 214Q129 202 113 190T95 178Z"></path><path id="MJX-12-TEX-N-39" d="M352 287Q304 211 232 211Q154 211 104 270T44 396Q42 412 42 436V444Q42 537 111 606Q171 666 243 666Q245 666 249 666T257 665H261Q273 665 286 663T323 651T370 619T413 560Q456 472 456 334Q456 194 396 97Q361 41 312 10T208 -22Q147 -22 108 7T68 93T121 149Q143 149 158 135T173 96Q173 78 164 65T148 49T135 44L131 43Q131 41 138 37T164 27T206 22H212Q272 22 313 86Q352 142 352 280V287ZM244 248Q292 248 321 297T351 430Q351 508 343 542Q341 552 337 562T323 588T293 615T246 625Q208 625 181 598Q160 576 154 546T147 441Q147 358 152 329T172 282Q197 248 244 248Z"></path><path id="MJX-12-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-12-TEX-N-35" d="M164 157Q164 133 148 117T109 101H102Q148 22 224 22Q294 22 326 82Q345 115 345 210Q345 313 318 349Q292 382 260 382H254Q176 382 136 314Q132 307 129 306T114 304Q97 304 95 310Q93 314 93 485V614Q93 664 98 664Q100 666 102 666Q103 666 123 658T178 642T253 634Q324 634 389 662Q397 666 402 666Q410 666 410 648V635Q328 538 205 538Q174 538 149 544L139 546V374Q158 388 169 396T205 412T256 420Q337 420 393 355T449 201Q449 109 385 44T229 -22Q148 -22 99 32T50 154Q50 178 61 192T84 210T107 214Q132 214 148 197T164 157Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D45E" xlink:href="#MJX-12-TEX-I-1D45E"></use></g><g data-mml-node="mo" transform="translate(737.8,0)"><use data-c="3D" xlink:href="#MJX-12-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(1793.6,0)"><use data-c="30" xlink:href="#MJX-12-TEX-N-30"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(2293.6,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-12-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(2571.6,0)"><use data-c="33" xlink:href="#MJX-12-TEX-N-33"></use></g><g data-mml-node="msqrt" transform="translate(3071.6,0)"><g transform="translate(853,0)"><g data-mml-node="mn"><use data-c="33" xlink:href="#MJX-12-TEX-N-33"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(500,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-12-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(778,0)"><use data-c="39" xlink:href="#MJX-12-TEX-N-39"></use><use data-c="31" xlink:href="#MJX-12-TEX-N-31" transform="translate(500,0)"></use></g></g><g data-mml-node="mo" transform="translate(0,3.5)"><use data-c="221A" xlink:href="#MJX-12-TEX-N-221A"></use></g><rect width="1778" height="60" x="853" y="743.5"></rect></g><g data-mml-node="mo" transform="translate(5980.3,0)"><use data-c="3D" xlink:href="#MJX-12-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(7036.1,0)"><use data-c="30" xlink:href="#MJX-12-TEX-N-30"></use><use data-c="2C" xlink:href="#MJX-12-TEX-N-2C" transform="translate(500,0)"></use><use data-c="35" xlink:href="#MJX-12-TEX-N-35" transform="translate(778,0)"></use><use data-c="39" xlink:href="#MJX-12-TEX-N-39" transform="translate(1278,0)"></use><use data-c="33" xlink:href="#MJX-12-TEX-N-33" transform="translate(1778,0)"></use></g></g></g></svg></span> — <strong>2,8% więcej produktu</strong> z tej samej instalacji.</li>
+</ol>
+
+<div class="box key">
+<span class="lbl">Zapamiętaj</span>
+<p><strong>Lepsza warstwa niższa (mniejsze wahania) pozwala wyższej ustawić cel bliżej ograniczenia.</strong> Bauer i Craig: <span class="cyt">„reduction in variability, thus moving process variables closer to their optimum”</span>.</p>
+</div>
+</section>
+
+<section>
+<h2><span class="num">06</span> Skale czasu oraz warstwy a poziomy</h2>
+<div class="rail"></div>
+
+<figure>
+<svg viewBox="0 0 680 344" class="fig">
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">ROZDZIAŁ SKAL CZASU: OKRES PRACY KAŻDEJ WARSTWY (OŚ LOGARYTMICZNA)</text>
+<clipPath id="cF32f1"><rect x="150" y="50" width="510" height="250"/></clipPath>
+<line x1="167.1" y1="50.0" x2="167.1" y2="300.0" stroke="#E3E8EB" stroke-width="0.8"/>
+<line x1="223.7" y1="50.0" x2="223.7" y2="300.0" stroke="#E3E8EB" stroke-width="0.8"/>
+<line x1="280.4" y1="50.0" x2="280.4" y2="300.0" stroke="#E3E8EB" stroke-width="0.8"/>
+<line x1="337.1" y1="50.0" x2="337.1" y2="300.0" stroke="#E3E8EB" stroke-width="0.8"/>
+<line x1="381.2" y1="50.0" x2="381.2" y2="300.0" stroke="#E3E8EB" stroke-width="0.8"/>
+<line x1="437.8" y1="50.0" x2="437.8" y2="300.0" stroke="#E3E8EB" stroke-width="0.8"/>
+<line x1="481.9" y1="50.0" x2="481.9" y2="300.0" stroke="#E3E8EB" stroke-width="0.8"/>
+<line x1="560.1" y1="50.0" x2="560.1" y2="300.0" stroke="#E3E8EB" stroke-width="0.8"/>
+<line x1="608.0" y1="50.0" x2="608.0" y2="300.0" stroke="#E3E8EB" stroke-width="0.8"/>
+<line x1="643.9" y1="50.0" x2="643.9" y2="300.0" stroke="#E3E8EB" stroke-width="0.8"/>
+<line x1="150.0" y1="300.0" x2="660.0" y2="300.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="150.0" y1="50.0" x2="150.0" y2="300.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="167.1" y1="300.0" x2="167.1" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="167.1" y="316.0" text-anchor="middle" class="tick">10 ms</text>
+<line x1="223.7" y1="300.0" x2="223.7" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="223.7" y="316.0" text-anchor="middle" class="tick">0,1 s</text>
+<line x1="280.4" y1="300.0" x2="280.4" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="280.4" y="316.0" text-anchor="middle" class="tick">1 s</text>
+<line x1="337.1" y1="300.0" x2="337.1" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="337.1" y="316.0" text-anchor="middle" class="tick">10 s</text>
+<line x1="381.2" y1="300.0" x2="381.2" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="381.2" y="316.0" text-anchor="middle" class="tick">1 min</text>
+<line x1="437.8" y1="300.0" x2="437.8" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="437.8" y="316.0" text-anchor="middle" class="tick">10 min</text>
+<line x1="481.9" y1="300.0" x2="481.9" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="481.9" y="316.0" text-anchor="middle" class="tick">1 h</text>
+<line x1="560.1" y1="300.0" x2="560.1" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="560.1" y="316.0" text-anchor="middle" class="tick">1 doba</text>
+<line x1="608.0" y1="300.0" x2="608.0" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="608.0" y="316.0" text-anchor="middle" class="tick">tydz.</text>
+<line x1="643.9" y1="300.0" x2="643.9" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="643.9" y="316.0" text-anchor="middle" class="tick">mies.</text>
+<text x="405.0" y="334.0" text-anchor="middle" class="axlab">okres podejmowania decyzji</text>
+<rect x="560.1" y="66.0" width="83.8" height="26.0" rx="4" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.85"/>
+<circle cx="22.0" cy="79.0" r="9" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="22.0" y="83.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">4</text>
+<text x="36.0" y="83.0" text-anchor="start" class="bx-t" style="fill:#9C3B52;font-size:11px">planowanie</text>
+<text x="552.1" y="83.0" text-anchor="end" class="cap" style="fill:#9C3B52">dni – tygodnie</text>
+<rect x="447.8" y="112.0" width="68.2" height="26.0" rx="4" fill="#B3641A" stroke="none" stroke-width="1" opacity="0.85"/>
+<circle cx="22.0" cy="125.0" r="9" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="22.0" y="129.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">3</text>
+<text x="36.0" y="129.0" text-anchor="start" class="bx-t" style="fill:#B3641A;font-size:11px">optymalizacja</text>
+<text x="524.0" y="129.0" text-anchor="start" class="cap" style="fill:#B3641A">godziny</text>
+<rect x="280.4" y="158.0" width="100.8" height="26.0" rx="4" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.85"/>
+<circle cx="22.0" cy="171.0" r="9" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="22.0" y="175.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">2</text>
+<text x="36.0" y="175.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:11px">nadrzędne (MPC)</text>
+<text x="389.2" y="175.0" text-anchor="start" class="cap" style="fill:#5B4B8A">sekundy – minuty</text>
+<rect x="167.1" y="204.0" width="113.3" height="26.0" rx="4" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.85"/>
+<circle cx="22.0" cy="217.0" r="9" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="22.0" y="221.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">1</text>
+<text x="36.0" y="221.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:11px">bezpośrednie (PID)</text>
+<text x="288.4" y="221.0" text-anchor="start" class="cap" style="fill:#0E6E78">10 ms – 1 s</text>
+<text x="36.0" y="260.0" text-anchor="start" class="bx-t" style="font-size:11px">obiekt</text>
+<circle cx="274.9" cy="256.0" r="4.5" fill="#141C24" stroke="none" stroke-width="1"/>
+<circle cx="343.5" cy="256.0" r="4.5" fill="#141C24" stroke="none" stroke-width="1"/>
+<circle cx="398.2" cy="256.0" r="4.5" fill="#141C24" stroke="none" stroke-width="1"/>
+<text x="274.9" y="276.0" text-anchor="middle" class="cap">zawór 0,8 s</text>
+<text x="347.0" y="246.0" text-anchor="middle" class="cap">τ zbiorników 13–19 s</text>
+<text x="402.0" y="276.0" text-anchor="start" class="cap">ustalanie ≈ 2 min</text>
+<line x1="343.5" y1="256.0" x2="352.9" y2="256.0" stroke="#141C24" stroke-width="3"/>
+</svg>
+<figcaption>Okresy pracy warstw na osi logarytmicznej i skale czasu obiektu (zawór 0,8 s, zbiorniki 13–19 s, ustalanie ≈ 2 min). PID musi być szybszy od zaworu, MPC od zbiorników, a optymalizacja wolniejsza od ustalania. Poziomy wg Skogestad 2004; stałe czasowe — rachunek własny.</figcaption>
+</figure>
+
+<p>Dzięki różnicy tempa każda warstwa widzi niższą jako „już ustaloną”, a wyższą jako „stałą”, więc warstwy sobie nie przeszkadzają. Gdy skale się zbliżą (zakłócenia <span class="cyt">„comparable with the process dynamics”</span> — Tatjewski 2008), model statyczny optymalizacji przestaje być prawdziwy i optymalizację łączy się z MPC.</p>
+
+<figure>
+<svg viewBox="0 0 680 350" class="fig">
+<defs><marker id="arF32g0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B3641A"/></marker><marker id="arF32g1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker><marker id="arF32g2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0E6E78"/></marker><marker id="arF32g3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9C3B52"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">DWA RODZAJE HIERARCHII: WARSTWY (FUNKCJA, CZAS) I POZIOMY (PRZESTRZEŃ)</text>
+<rect x="14.0" y="40.0" width="318.0" height="300.0" rx="6" fill="#F7F8F9" stroke="#C3CDD4" stroke-width="1"/>
+<text x="173.0" y="62.0" text-anchor="middle" class="bx-t">WIELOWARSTWOWA (multilayer)</text>
+<text x="173.0" y="78.0" text-anchor="middle" class="cap">jeden obiekt, zadania podzielone</text>
+<text x="173.0" y="92.0" text-anchor="middle" class="cap">według funkcji i tempa</text>
+<rect x="60.0" y="108.0" width="226.0" height="40.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="60.0" y="108.0" width="226.0" height="3.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="173.0" y="132.0" text-anchor="middle" class="bx-t">optymalizacja</text>
+<path d="M 173.0 148.0 L 173.0 162.0" fill="none" stroke="#B3641A" stroke-width="1.5" marker-end="url(#arF32g0)"/>
+<rect x="60.0" y="164.0" width="226.0" height="40.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="60.0" y="164.0" width="226.0" height="3.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="173.0" y="188.0" text-anchor="middle" class="bx-t">sterowanie nadrzędne</text>
+<path d="M 173.0 204.0 L 173.0 218.0" fill="none" stroke="#5B4B8A" stroke-width="1.5" marker-end="url(#arF32g1)"/>
+<rect x="60.0" y="220.0" width="226.0" height="40.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="60.0" y="220.0" width="226.0" height="3.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="173.0" y="244.0" text-anchor="middle" class="bx-t">sterowanie bezpośrednie</text>
+<path d="M 173.0 260.0 L 173.0 276.0" fill="none" stroke="#0E6E78" stroke-width="1.5" marker-end="url(#arF32g2)"/>
+<rect x="60.0" y="278.0" width="226.0" height="40.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<path d="M 118.0 270.0 L 135.0 270.0" fill="none" stroke="#0E6E78" stroke-width="1.6"/>
+<polygon points="123.0,267.5 123.0,272.5 128.0,270.0 123.0,267.5" fill="#0E6E78"/>
+<polygon points="133.0,267.5 133.0,272.5 128.0,270.0" fill="#0E6E78"/>
+<rect x="133.0" y="273.0" width="17.0" height="19.0" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="133.5" y="281.0" width="16.0" height="10.5" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 150.0 290.0 L 158.0 290.0 L 158.0 294.0" fill="none" stroke="#0E6E78" stroke-width="1.4"/>
+<rect x="153.0" y="294.0" width="17.0" height="17.0" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="153.5" y="302.0" width="16.0" height="8.5" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 170.0 309.0 L 180.0 309.0" fill="none" stroke="#0E6E78" stroke-width="1.4" marker-end="url(#arF32g2)"/>
+<text x="236.0" y="302.0" text-anchor="middle" class="bx-t">obiekt</text>
+<rect x="348.0" y="40.0" width="318.0" height="300.0" rx="6" fill="#F7F8F9" stroke="#C3CDD4" stroke-width="1"/>
+<text x="507.0" y="62.0" text-anchor="middle" class="bx-t">WIELOPOZIOMOWA (multilevel)</text>
+<text x="507.0" y="78.0" text-anchor="middle" class="cap">obiekt podzielony na podsystemy,</text>
+<text x="507.0" y="92.0" text-anchor="middle" class="cap">nad nimi koordynator</text>
+<rect x="422.0" y="108.0" width="170.0" height="40.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="422.0" y="108.0" width="170.0" height="3.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="507.0" y="132.0" text-anchor="middle" class="bx-t">koordynator</text>
+<rect x="364.0" y="196.0" width="86.0" height="40.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="364.0" y="196.0" width="86.0" height="3.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="407.0" y="220.0" text-anchor="middle" class="bx-t" style="font-size:11px">regulator 1</text>
+<path d="M 467.0 150.0 L 407.0 194.0" fill="none" stroke="#9C3B52" stroke-width="1.3" marker-end="url(#arF32g3)"/>
+<path d="M 407.0 238.0 L 407.0 276.0" fill="none" stroke="#0E6E78" stroke-width="1.3" marker-end="url(#arF32g2)"/>
+<rect x="364.0" y="278.0" width="86.0" height="40.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="407.0" y="302.0" text-anchor="middle" class="bx" style="font-size:10.5px">podsystem 1</text>
+<rect x="470.0" y="196.0" width="86.0" height="40.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="470.0" y="196.0" width="86.0" height="3.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="513.0" y="220.0" text-anchor="middle" class="bx-t" style="font-size:11px">regulator 2</text>
+<path d="M 507.0 150.0 L 513.0 194.0" fill="none" stroke="#9C3B52" stroke-width="1.3" marker-end="url(#arF32g3)"/>
+<path d="M 513.0 238.0 L 513.0 276.0" fill="none" stroke="#0E6E78" stroke-width="1.3" marker-end="url(#arF32g2)"/>
+<rect x="470.0" y="278.0" width="86.0" height="40.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="513.0" y="302.0" text-anchor="middle" class="bx" style="font-size:10.5px">podsystem 2</text>
+<rect x="576.0" y="196.0" width="86.0" height="40.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="576.0" y="196.0" width="86.0" height="3.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="619.0" y="220.0" text-anchor="middle" class="bx-t" style="font-size:11px">regulator 3</text>
+<path d="M 547.0 150.0 L 619.0 194.0" fill="none" stroke="#9C3B52" stroke-width="1.3" marker-end="url(#arF32g3)"/>
+<path d="M 619.0 238.0 L 619.0 276.0" fill="none" stroke="#0E6E78" stroke-width="1.3" marker-end="url(#arF32g2)"/>
+<rect x="576.0" y="278.0" width="86.0" height="40.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="619.0" y="302.0" text-anchor="middle" class="bx" style="font-size:10.5px">podsystem 3</text>
+<line x1="452.0" y1="298.0" x2="468.0" y2="298.0" stroke="#9C3B52" stroke-width="1.3" stroke-dasharray="3 3"/>
+<line x1="558.0" y1="298.0" x2="574.0" y2="298.0" stroke="#9C3B52" stroke-width="1.3" stroke-dasharray="3 3"/>
+<text x="507.0" y="176.0" text-anchor="middle" class="cap" style="fill:#9C3B52">koordynacja (ceny, wartości zadane)</text>
+<text x="507.0" y="334.0" text-anchor="middle" class="cap" style="fill:#9C3B52">sprzężenia między podsystemami</text>
+</svg>
+<figcaption>Struktura wielowarstwowa dzieli zadanie według funkcji i tempa nad jednym obiektem. Wielopoziomowa dzieli obiekt na podsystemy z lokalnymi regulatorami i koordynatorem nad nimi (zagadnienia 33 i 36). W dużych instalacjach łączy się obie. Źródła: Findeisen i in. 1980; Tatjewski 2008.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2><span class="num">07</span> Realizacja sprzętowo-programowa</h2>
+<div class="rail"></div>
+
+<p>Model warstwowy przykłada się do modelu referencyjnego ISA-95 (Purdue), który dzieli zakład na poziomy sprzętowe 0–4. Poziom 3 według Wikipedii <span class="cyt">„does not directly control the process, but is concerned with monitoring production and monitoring targets”</span>. Propozycja dla dwóch zbiorników:</p>
+
+<figure>
+<svg viewBox="0 0 680 620" class="fig">
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">PROPOZYCJA REALIZACJI SPRZĘTOWO-PROGRAMOWEJ DLA DWÓCH ZBIORNIKÓW</text>
+<rect x="108.0" y="40.0" width="558.0" height="70.0" rx="5" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.07"/>
+<rect x="108.0" y="136.0" width="558.0" height="88.0" rx="5" fill="#B3641A" stroke="none" stroke-width="1" opacity="0.07"/>
+<rect x="108.0" y="256.0" width="558.0" height="108.0" rx="5" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.07"/>
+<rect x="108.0" y="396.0" width="558.0" height="88.0" rx="5" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.07"/>
+<rect x="108.0" y="516.0" width="558.0" height="92.0" rx="5" fill="#5C6B77" stroke="none" stroke-width="1" opacity="0.07"/>
+<line x1="118.0" y1="118.0" x2="656.0" y2="118.0" stroke="#9C3B52" stroke-width="2.2"/>
+<text x="100.0" y="116.0" text-anchor="end" class="bx-t" style="fill:#9C3B52;font-size:10.5px">sieć biurowa</text>
+<text x="100.0" y="130.0" text-anchor="end" class="cap">Ethernet</text>
+<line x1="118.0" y1="236.0" x2="656.0" y2="236.0" stroke="#B3641A" stroke-width="2.2"/>
+<text x="100.0" y="234.0" text-anchor="end" class="bx-t" style="fill:#B3641A;font-size:10.5px">sieć zakładowa</text>
+<text x="100.0" y="248.0" text-anchor="end" class="cap">Ethernet,</text>
+<text x="100.0" y="261.0" text-anchor="end" class="cap">OPC UA</text>
+<line x1="118.0" y1="376.0" x2="656.0" y2="376.0" stroke="#5B4B8A" stroke-width="2.2"/>
+<text x="100.0" y="374.0" text-anchor="end" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">sieć sterowania</text>
+<text x="100.0" y="388.0" text-anchor="end" class="cap">Ethernet,</text>
+<text x="100.0" y="401.0" text-anchor="end" class="cap">OPC UA</text>
+<line x1="118.0" y1="496.0" x2="656.0" y2="496.0" stroke="#0E6E78" stroke-width="2.2"/>
+<text x="100.0" y="494.0" text-anchor="end" class="bx-t" style="fill:#0E6E78;font-size:10.5px">sieć polowa</text>
+<text x="100.0" y="508.0" text-anchor="end" class="cap">Profinet,</text>
+<text x="100.0" y="521.0" text-anchor="end" class="cap">4–20 mA</text>
+<rect x="170.0" y="62.0" width="200.0" height="44.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="170.0" y="62.0" width="200.0" height="3.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="270.0" y="82.0" text-anchor="middle" class="bx-t" style="font-size:11px">ERP</text>
+<text x="270.0" y="97.0" text-anchor="middle" class="bx">plan, zamówienia, koszty</text>
+<line x1="270.0" y1="106.0" x2="270.0" y2="118.0" stroke="#9C3B52" stroke-width="1.4"/>
+<rect x="540.0" y="107.0" width="116.0" height="22.0" rx="3" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.9"/>
+<text x="598.0" y="122.0" text-anchor="middle" class="cap" style="fill:#FFFFFF">zapora / DMZ</text>
+<line x1="652.0" y1="129.0" x2="652.0" y2="236.0" stroke="#9C3B52" stroke-width="1.4"/>
+<rect x="130.0" y="158.0" width="170.0" height="58.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="130.0" y="158.0" width="170.0" height="3.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="215.0" y="179.0" text-anchor="middle" class="bx-t" style="font-size:11px">serwer optymalizacji</text>
+<text x="215.0" y="194.0" text-anchor="middle" class="bx">RTO: model statyczny,</text>
+<text x="215.0" y="208.0" text-anchor="middle" class="bx">solver, co 15–60 min</text>
+<line x1="215.0" y1="216.0" x2="215.0" y2="236.0" stroke="#B3641A" stroke-width="1.4"/>
+<rect x="320.0" y="158.0" width="150.0" height="58.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="320.0" y="158.0" width="150.0" height="3.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="395.0" y="179.0" text-anchor="middle" class="bx-t" style="font-size:11px">MES</text>
+<text x="395.0" y="194.0" text-anchor="middle" class="bx">realizacja planu,</text>
+<text x="395.0" y="208.0" text-anchor="middle" class="bx">raporty, receptury</text>
+<line x1="395.0" y1="216.0" x2="395.0" y2="236.0" stroke="#B3641A" stroke-width="1.4"/>
+<rect x="484.0" y="158.0" width="156.0" height="58.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="484.0" y="158.0" width="156.0" height="3.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="562.0" y="179.0" text-anchor="middle" class="bx-t" style="font-size:11px">historian</text>
+<text x="562.0" y="194.0" text-anchor="middle" class="bx">archiwum pomiarów</text>
+<text x="562.0" y="208.0" text-anchor="middle" class="bx">(baza szeregów czas.)</text>
+<line x1="562.0" y1="216.0" x2="562.0" y2="236.0" stroke="#B3641A" stroke-width="1.4"/>
+<rect x="124.0" y="282.0" width="170.0" height="70.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="124.0" y="282.0" width="170.0" height="3.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="209.0" y="309.0" text-anchor="middle" class="bx-t" style="font-size:11px">stacja MPC</text>
+<text x="209.0" y="324.0" text-anchor="middle" class="bx">PC przemysłowy,</text>
+<text x="209.0" y="338.0" text-anchor="middle" class="bx">okres 1 s, klient OPC UA</text>
+<line x1="209.0" y1="352.0" x2="209.0" y2="376.0" stroke="#5B4B8A" stroke-width="1.4"/>
+<rect x="310.0" y="282.0" width="170.0" height="70.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="310.0" y="282.0" width="170.0" height="3.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="395.0" y="309.0" text-anchor="middle" class="bx-t" style="font-size:11px">SCADA / HMI</text>
+<text x="395.0" y="324.0" text-anchor="middle" class="bx">operator, alarmy,</text>
+<text x="395.0" y="338.0" text-anchor="middle" class="bx">trendy (np. WinCC)</text>
+<line x1="395.0" y1="352.0" x2="395.0" y2="376.0" stroke="#5B4B8A" stroke-width="1.4"/>
+<rect x="496.0" y="282.0" width="160.0" height="70.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="496.0" y="282.0" width="160.0" height="3.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="576.0" y="309.0" text-anchor="middle" class="bx-t" style="font-size:11px">stacja inżynierska</text>
+<text x="576.0" y="324.0" text-anchor="middle" class="bx">programowanie PLC</text>
+<text x="576.0" y="338.0" text-anchor="middle" class="bx">(np. TIA Portal)</text>
+<line x1="576.0" y1="352.0" x2="576.0" y2="376.0" stroke="#5B4B8A" stroke-width="1.4"/>
+<line x1="210.0" y1="282.0" x2="210.0" y2="236.0" stroke="#5B4B8A" stroke-width="1.4" stroke-dasharray="4 3"/>
+<line x1="395.0" y1="282.0" x2="395.0" y2="236.0" stroke="#5B4B8A" stroke-width="1.4" stroke-dasharray="4 3"/>
+<rect x="150.0" y="418.0" width="230.0" height="60.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="150.0" y="418.0" width="230.0" height="3.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="265.0" y="440.0" text-anchor="middle" class="bx-t" style="font-size:11px">sterownik PLC</text>
+<text x="265.0" y="455.0" text-anchor="middle" class="bx">PID, logika, sekwencje, blokady;</text>
+<text x="265.0" y="469.0" text-anchor="middle" class="bx">cykl 10–100 ms, IEC 61131-3</text>
+<line x1="265.0" y1="418.0" x2="265.0" y2="376.0" stroke="#0E6E78" stroke-width="1.4"/>
+<rect x="400.0" y="418.0" width="250.0" height="60.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="400.0" y="418.0" width="250.0" height="3.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="525.0" y="440.0" text-anchor="middle" class="bx-t" style="font-size:11px">sterownik bezpieczeństwa (SIS)</text>
+<text x="525.0" y="455.0" text-anchor="middle" class="bx">niezależny od PLC: odcięcie</text>
+<text x="525.0" y="469.0" text-anchor="middle" class="bx">pompy przy przelewie</text>
+<line x1="525.0" y1="418.0" x2="525.0" y2="376.0" stroke="#9C3B52" stroke-width="1.4"/>
+<line x1="265.0" y1="478.0" x2="265.0" y2="496.0" stroke="#0E6E78" stroke-width="1.4"/>
+<rect x="124.0" y="536.0" width="96.0" height="44.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="124.0" y="536.0" width="96.0" height="3.0" rx="0" fill="#5C6B77" stroke="none" stroke-width="1"/>
+<text x="172.0" y="556.0" text-anchor="middle" class="bx-t" style="font-size:11px">LT h₁, h₂</text>
+<text x="172.0" y="571.0" text-anchor="middle" class="bx">poziomomierze</text>
+<line x1="172.0" y1="536.0" x2="172.0" y2="496.0" stroke="#5C6B77" stroke-width="1.4"/>
+<rect x="232.0" y="536.0" width="96.0" height="44.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="232.0" y="536.0" width="96.0" height="3.0" rx="0" fill="#5C6B77" stroke="none" stroke-width="1"/>
+<text x="280.0" y="556.0" text-anchor="middle" class="bx-t" style="font-size:11px">FT</text>
+<text x="280.0" y="571.0" text-anchor="middle" class="bx">przepływomierz</text>
+<line x1="280.0" y1="536.0" x2="280.0" y2="496.0" stroke="#5C6B77" stroke-width="1.4"/>
+<rect x="340.0" y="536.0" width="96.0" height="44.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="340.0" y="536.0" width="96.0" height="3.0" rx="0" fill="#5C6B77" stroke="none" stroke-width="1"/>
+<text x="388.0" y="556.0" text-anchor="middle" class="bx-t" style="font-size:11px">zawór</text>
+<text x="388.0" y="571.0" text-anchor="middle" class="bx">z pozycjonerem</text>
+<line x1="388.0" y1="536.0" x2="388.0" y2="496.0" stroke="#5C6B77" stroke-width="1.4"/>
+<rect x="448.0" y="536.0" width="96.0" height="44.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="448.0" y="536.0" width="96.0" height="3.0" rx="0" fill="#5C6B77" stroke="none" stroke-width="1"/>
+<text x="496.0" y="556.0" text-anchor="middle" class="bx-t" style="font-size:11px">pompa</text>
+<text x="496.0" y="571.0" text-anchor="middle" class="bx">z falownikiem</text>
+<line x1="496.0" y1="536.0" x2="496.0" y2="496.0" stroke="#5C6B77" stroke-width="1.4"/>
+<rect x="556.0" y="536.0" width="96.0" height="44.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="556.0" y="536.0" width="96.0" height="3.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="604.0" y="556.0" text-anchor="middle" class="bx-t" style="font-size:11px">LSH</text>
+<text x="604.0" y="571.0" text-anchor="middle" class="bx">sygn. przelewu</text>
+<line x1="604.0" y1="536.0" x2="604.0" y2="478.0" stroke="#9C3B52" stroke-width="1.4"/>
+<rect x="112.0" y="44.0" width="178.7" height="16.0" rx="3" fill="#F7F8F9" stroke="none" stroke-width="1"/>
+<text x="118.0" y="56.0" text-anchor="start" class="cap" style="fill:#9C3B52">poziom 4 · przedsiębiorstwo</text>
+<rect x="112.0" y="140.0" width="209.2" height="16.0" rx="3" fill="#F7F8F9" stroke="none" stroke-width="1"/>
+<text x="118.0" y="152.0" text-anchor="start" class="cap" style="fill:#B3641A">poziom 3 · zarządzanie produkcją</text>
+<rect x="112.0" y="260.0" width="258.0" height="16.0" rx="3" fill="#F7F8F9" stroke="none" stroke-width="1"/>
+<text x="118.0" y="272.0" text-anchor="start" class="cap" style="fill:#5B4B8A">poziom 2 · nadzór i sterowanie nadrzędne</text>
+<rect x="112.0" y="400.0" width="221.4" height="16.0" rx="3" fill="#F7F8F9" stroke="none" stroke-width="1"/>
+<text x="118.0" y="412.0" text-anchor="start" class="cap" style="fill:#0E6E78">poziom 1 · sterowanie bezpośrednie</text>
+<rect x="112.0" y="520.0" width="239.7" height="16.0" rx="3" fill="#F7F8F9" stroke="none" stroke-width="1"/>
+<text x="118.0" y="532.0" text-anchor="start" class="cap" style="fill:#5C6B77">poziom 0 · obiekt i urządzenia polowe</text>
+<text x="387.0" y="604.0" text-anchor="middle" class="cap" style="fill:#141C24">kolorowe strefy = warstwy modelu; poziomy wg modelu referencyjnego ISA-95 / Purdue</text>
+</svg>
+<figcaption>Kolor strefy odpowiada warstwie modelu. Nazwy produktów (S7-1500, TIA Portal, WinCC) to tylko przykłady. Opracowanie własne na podstawie modelu ISA-95 / Purdue.</figcaption>
+</figure>
+
+<ul>
+<li><strong>PLC na dole, bo musi być deterministyczny.</strong> Program wykonuje się w stałym cyklu 10–100 ms, w językach normy IEC 61131-3 (LD, FBD, ST, SFC): PID-y, logika, sekwencje, blokady.</li>
+<li><strong>MPC na komputerze przemysłowym, nie w PLC</strong> — optymalizacja co sekundę wymaga mocy i bibliotek. Czyta pomiary i zapisuje wartości zadane przez OPC UA, a PID-y zostają w sterowniku.</li>
+<li><strong>OPC UA jako wspólny standard w górę</strong> — <span class="cyt">„a cross-platform, open-source, IEC62541 standard for data exchange from sensors to cloud applications”</span>; stacja MPC, SCADA, historian i MES mogą być od różnych producentów.</li>
+<li><strong>Bezpieczeństwo osobno</strong> — odcięcie pompy przy przelewie robi niezależny sterownik bezpieczeństwa z własnym czujnikiem.</li>
+<li><strong>Zapora i DMZ</strong> między siecią biurową (ERP) a zakładem — awaria albo atak w IT nie sięga do sterowników.</li>
+</ul>
+</section>
+
+<section>
+<h2><span class="num">08</span> Niezawodność: gdy warstwa przestaje działać</h2>
+<div class="rail"></div>
+
+<figure>
+<svg viewBox="0 0 680 356" class="fig">
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">CO SIĘ DZIEJE, GDY PRZESTAJE DZIAŁAĆ JEDNA WARSTWA</text>
+<text x="150.0" y="50.0" text-anchor="middle" class="bx-t" style="fill:#5C6B77">awaria warstwy</text>
+<text x="395.0" y="50.0" text-anchor="middle" class="bx-t" style="fill:#5C6B77">co przejmuje, co robi reszta</text>
+<text x="604.0" y="50.0" text-anchor="middle" class="bx-t" style="fill:#5C6B77">koszt</text>
+<rect x="14.0" y="64.0" width="652.0" height="60.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="64.0" width="6.0" height="60.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<circle cx="40.0" cy="86.0" r="10" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="40.0" y="90.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">4</text>
+<polygon points="58.0,75.0 62.8,75.0 59.6,81.4 64.4,81.4 56.4,92.6 58.8,83.8 54.0,83.8" fill="#9C3B52"/>
+<text x="74.0" y="90.0" text-anchor="start" class="bx-t" style="fill:#9C3B52">planowanie (ERP)</text>
+<text x="74.0" y="108.0" text-anchor="start" class="cap">tracimy: aktualność planu</text>
+<text x="262.0" y="90.0" text-anchor="start" class="bx">zakład pracuje według ostatniego planu</text>
+<rect x="560.0" y="86.0" width="90.0" height="12.0" rx="6" fill="#E3E8EB" stroke="none" stroke-width="1"/>
+<rect x="560.0" y="86.0" width="10.8" height="12.0" rx="6" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.322"/>
+<rect x="14.0" y="136.0" width="652.0" height="60.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="136.0" width="6.0" height="60.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
+<circle cx="40.0" cy="158.0" r="10" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="40.0" y="162.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">3</text>
+<polygon points="58.0,147.0 62.8,147.0 59.6,153.4 64.4,153.4 56.4,164.6 58.8,155.8 54.0,155.8" fill="#9C3B52"/>
+<text x="74.0" y="162.0" text-anchor="start" class="bx-t" style="fill:#B3641A">optymalizacja</text>
+<text x="74.0" y="180.0" text-anchor="start" class="cap">tracimy: część zysku</text>
+<text x="262.0" y="162.0" text-anchor="start" class="bx">MPC trzyma ostatnie wartości zadane</text>
+<rect x="560.0" y="158.0" width="90.0" height="12.0" rx="6" fill="#E3E8EB" stroke="none" stroke-width="1"/>
+<rect x="560.0" y="158.0" width="27.0" height="12.0" rx="6" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.43"/>
+<rect x="14.0" y="208.0" width="652.0" height="60.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="208.0" width="6.0" height="60.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<circle cx="40.0" cy="230.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="40.0" y="234.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">2</text>
+<polygon points="58.0,219.0 62.8,219.0 59.6,225.4 64.4,225.4 56.4,236.6 58.8,227.8 54.0,227.8" fill="#9C3B52"/>
+<text x="74.0" y="234.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A">sterowanie nadrzędne</text>
+<text x="74.0" y="252.0" text-anchor="start" class="cap">tracimy: jakość, obsługę</text>
+<text x="262.0" y="234.0" text-anchor="start" class="bx">PLC przechodzi na lokalne wartości zadane,</text>
+<text x="262.0" y="251.0" text-anchor="start" class="bx">bez skoku (bezuderzeniowo), operator czuwa</text>
+<rect x="560.0" y="230.0" width="90.0" height="12.0" rx="6" fill="#E3E8EB" stroke="none" stroke-width="1"/>
+<rect x="560.0" y="230.0" width="54.0" height="12.0" rx="6" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.61"/>
+<rect x="14.0" y="280.0" width="652.0" height="60.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="280.0" width="6.0" height="60.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="40.0" cy="302.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="40.0" y="306.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">1</text>
+<polygon points="58.0,291.0 62.8,291.0 59.6,297.4 64.4,297.4 56.4,308.6 58.8,299.8 54.0,299.8" fill="#9C3B52"/>
+<text x="74.0" y="306.0" text-anchor="start" class="bx-t" style="fill:#0E6E78">sterownik PLC</text>
+<text x="74.0" y="324.0" text-anchor="start" class="cap">tracimy: produkcję</text>
+<text x="262.0" y="306.0" text-anchor="start" class="bx">SIS i zawory „fail-safe” zatrzymują proces</text>
+<text x="262.0" y="323.0" text-anchor="start" class="bx">w bezpiecznym stanie</text>
+<rect x="560.0" y="302.0" width="90.0" height="12.0" rx="6" fill="#E3E8EB" stroke="none" stroke-width="1"/>
+<rect x="560.0" y="302.0" width="90.0" height="12.0" rx="6" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.85"/>
+</svg>
+<figcaption>Im niżej awaria, tym większy koszt: utrata ERP to nieaktualny plan, utrata optymalizacji — część zysku, utrata MPC — jakość, a dopiero utrata PLC zatrzymuje produkcję (w stanie bezpiecznym). Opracowanie własne; mechanizmy przejęcia jak w zagadnieniu 34.</figcaption>
+</figure>
+
+<p>Jak to się realizuje: <strong>watchdog</strong> (wyższa warstwa co cykl zmienia licznik w niższej; gdy stanie, niższa przechodzi w tryb lokalny), <strong>ostatnia poprawna wartość zadana</strong> z ograniczeniem zakresu, <strong>przełączanie bezuderzeniowe</strong> między trybami, <strong>walidacja danych</strong> płynących w górę i <strong>redundancja na dole</strong> (sterownik, sieć, SIS), bo tam awaria kosztuje najwięcej.</p>
+</section>
+
+<section>
+<h2><span class="num">09</span> Narysuj na tablicy</h2>
+<div class="rail"></div>
+
+<figure>
+<svg viewBox="0 0 680 470" class="fig">
+<defs><marker id="arF32k0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0E6E78"/></marker><marker id="arF32k1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker><marker id="arF32k2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker><marker id="arF32k3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B3641A"/></marker><marker id="arF32k4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9C3B52"/></marker><marker id="arF32k5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#141C24"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">NARYSUJ NA TABLICY W 6 RUCHACH</text>
+<rect x="14.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="32.0" cy="58.0" r="10" fill="#5C6B77" stroke="none" stroke-width="1"/>
+<text x="32.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">1</text>
+<text x="48.0" y="56.0" text-anchor="start" class="bx-t">obiekt:</text>
+<text x="48.0" y="70.0" text-anchor="start" class="bx">zbiorniki, zawór, czujniki</text>
+<path d="M 52.0 165.0 L 73.1 165.0" fill="none" stroke="#0E6E78" stroke-width="1.6"/>
+<polygon points="58.2,161.9 58.2,168.1 64.4,165.0 58.2,161.9" fill="#0E6E78"/>
+<polygon points="70.6,161.9 70.6,168.1 64.4,165.0" fill="#0E6E78"/>
+<rect x="70.6" y="168.7" width="21.1" height="23.6" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="71.2" y="178.6" width="19.8" height="13.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 91.7 189.8 L 101.6 189.8 L 101.6 194.7" fill="none" stroke="#0E6E78" stroke-width="1.4"/>
+<rect x="95.4" y="194.7" width="21.1" height="21.1" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="96.0" y="204.6" width="19.8" height="10.5" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 116.5 213.3 L 128.9 213.3" fill="none" stroke="#0E6E78" stroke-width="1.4" marker-end="url(#arF32k0)"/>
+<text x="184.0" y="230.0" text-anchor="end" class="cap">obiekt</text>
+<rect x="236.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="254.0" cy="58.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="254.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">2</text>
+<text x="270.0" y="56.0" text-anchor="start" class="bx-t">warstwa 1: PLC</text>
+<text x="270.0" y="70.0" text-anchor="start" class="bx">PID — u w dół, y w górę</text>
+<path d="M 274.0 165.0 L 295.1 165.0" fill="none" stroke="#0E6E78" stroke-width="1.6"/>
+<polygon points="280.2,161.9 280.2,168.1 286.4,165.0 280.2,161.9" fill="#0E6E78"/>
+<polygon points="292.6,161.9 292.6,168.1 286.4,165.0" fill="#0E6E78"/>
+<rect x="292.6" y="168.7" width="21.1" height="23.6" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="293.2" y="178.6" width="19.8" height="13.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 313.7 189.8 L 323.6 189.8 L 323.6 194.7" fill="none" stroke="#0E6E78" stroke-width="1.4"/>
+<rect x="317.4" y="194.7" width="21.1" height="21.1" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="318.0" y="204.6" width="19.8" height="10.5" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 338.5 213.3 L 350.9 213.3" fill="none" stroke="#0E6E78" stroke-width="1.4" marker-end="url(#arF32k0)"/>
+<text x="406.0" y="230.0" text-anchor="end" class="cap">obiekt</text>
+<rect x="270.0" y="145.0" width="140.0" height="16.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<text x="340.0" y="157.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:10px">PLC · PID</text>
+<path d="M 284.0 161.0 L 284.0 163.0" fill="none" stroke="#0E6E78" stroke-width="1.1" marker-end="url(#arF32k0)"/>
+<path d="M 332.0 210.0 L 332.0 163.0" fill="none" stroke="#5C6B77" stroke-width="1.0" stroke-dasharray="3 2" marker-end="url(#arF32k1)"/>
+<rect x="458.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="476.0" cy="58.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="476.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">3</text>
+<text x="492.0" y="56.0" text-anchor="start" class="bx-t">warstwa 2: MPC</text>
+<text x="492.0" y="70.0" text-anchor="start" class="bx">wartości zadane dla PID</text>
+<path d="M 496.0 165.0 L 517.1 165.0" fill="none" stroke="#0E6E78" stroke-width="1.6"/>
+<polygon points="502.2,161.9 502.2,168.1 508.4,165.0 502.2,161.9" fill="#0E6E78"/>
+<polygon points="514.6,161.9 514.6,168.1 508.4,165.0" fill="#0E6E78"/>
+<rect x="514.6" y="168.7" width="21.1" height="23.6" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="515.2" y="178.6" width="19.8" height="13.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 535.7 189.8 L 545.6 189.8 L 545.6 194.7" fill="none" stroke="#0E6E78" stroke-width="1.4"/>
+<rect x="539.4" y="194.7" width="21.1" height="21.1" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="540.0" y="204.6" width="19.8" height="10.5" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 560.5 213.3 L 572.9 213.3" fill="none" stroke="#0E6E78" stroke-width="1.4" marker-end="url(#arF32k0)"/>
+<text x="628.0" y="230.0" text-anchor="end" class="cap">obiekt</text>
+<rect x="492.0" y="145.0" width="140.0" height="16.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<text x="562.0" y="157.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:10px">PLC · PID</text>
+<path d="M 506.0 161.0 L 506.0 163.0" fill="none" stroke="#0E6E78" stroke-width="1.1" marker-end="url(#arF32k0)"/>
+<path d="M 554.0 210.0 L 554.0 163.0" fill="none" stroke="#5C6B77" stroke-width="1.0" stroke-dasharray="3 2" marker-end="url(#arF32k1)"/>
+<rect x="492.0" y="124.0" width="140.0" height="16.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<text x="562.0" y="136.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:10px">MPC</text>
+<path d="M 522.0 140.0 L 522.0 145.0" fill="none" stroke="#5B4B8A" stroke-width="1.1" marker-end="url(#arF32k2)"/>
+<rect x="14.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="32.0" cy="272.0" r="10" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="32.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">4</text>
+<text x="48.0" y="270.0" text-anchor="start" class="bx-t">warstwa 3:</text>
+<text x="48.0" y="284.0" text-anchor="start" class="bx">optymalizacja punktu pracy</text>
+<path d="M 52.0 379.0 L 73.1 379.0" fill="none" stroke="#0E6E78" stroke-width="1.6"/>
+<polygon points="58.2,375.9 58.2,382.1 64.4,379.0 58.2,375.9" fill="#0E6E78"/>
+<polygon points="70.6,375.9 70.6,382.1 64.4,379.0" fill="#0E6E78"/>
+<rect x="70.6" y="382.7" width="21.1" height="23.6" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="71.2" y="392.6" width="19.8" height="13.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 91.7 403.8 L 101.6 403.8 L 101.6 408.7" fill="none" stroke="#0E6E78" stroke-width="1.4"/>
+<rect x="95.4" y="408.7" width="21.1" height="21.1" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="96.0" y="418.6" width="19.8" height="10.5" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 116.5 427.3 L 128.9 427.3" fill="none" stroke="#0E6E78" stroke-width="1.4" marker-end="url(#arF32k0)"/>
+<text x="184.0" y="444.0" text-anchor="end" class="cap">obiekt</text>
+<rect x="48.0" y="359.0" width="140.0" height="16.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<text x="118.0" y="371.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:10px">PLC · PID</text>
+<path d="M 62.0 375.0 L 62.0 377.0" fill="none" stroke="#0E6E78" stroke-width="1.1" marker-end="url(#arF32k0)"/>
+<path d="M 110.0 424.0 L 110.0 377.0" fill="none" stroke="#5C6B77" stroke-width="1.0" stroke-dasharray="3 2" marker-end="url(#arF32k1)"/>
+<rect x="48.0" y="338.0" width="140.0" height="16.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<text x="118.0" y="350.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:10px">MPC</text>
+<path d="M 78.0 354.0 L 78.0 359.0" fill="none" stroke="#5B4B8A" stroke-width="1.1" marker-end="url(#arF32k2)"/>
+<rect x="48.0" y="317.0" width="140.0" height="16.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.3"/>
+<text x="118.0" y="329.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:10px">optymalizacja</text>
+<path d="M 78.0 333.0 L 78.0 338.0" fill="none" stroke="#B3641A" stroke-width="1.1" marker-end="url(#arF32k3)"/>
+<rect x="236.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="254.0" cy="272.0" r="10" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="254.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">5</text>
+<text x="270.0" y="270.0" text-anchor="start" class="bx-t">warstwa 4:</text>
+<text x="270.0" y="284.0" text-anchor="start" class="bx">planowanie + strzałki</text>
+<path d="M 274.0 379.0 L 295.1 379.0" fill="none" stroke="#0E6E78" stroke-width="1.6"/>
+<polygon points="280.2,375.9 280.2,382.1 286.4,379.0 280.2,375.9" fill="#0E6E78"/>
+<polygon points="292.6,375.9 292.6,382.1 286.4,379.0" fill="#0E6E78"/>
+<rect x="292.6" y="382.7" width="21.1" height="23.6" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="293.2" y="392.6" width="19.8" height="13.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 313.7 403.8 L 323.6 403.8 L 323.6 408.7" fill="none" stroke="#0E6E78" stroke-width="1.4"/>
+<rect x="317.4" y="408.7" width="21.1" height="21.1" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="318.0" y="418.6" width="19.8" height="10.5" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 338.5 427.3 L 350.9 427.3" fill="none" stroke="#0E6E78" stroke-width="1.4" marker-end="url(#arF32k0)"/>
+<text x="406.0" y="444.0" text-anchor="end" class="cap">obiekt</text>
+<rect x="270.0" y="359.0" width="140.0" height="16.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<text x="340.0" y="371.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:10px">PLC · PID</text>
+<path d="M 284.0 375.0 L 284.0 377.0" fill="none" stroke="#0E6E78" stroke-width="1.1" marker-end="url(#arF32k0)"/>
+<path d="M 332.0 424.0 L 332.0 377.0" fill="none" stroke="#5C6B77" stroke-width="1.0" stroke-dasharray="3 2" marker-end="url(#arF32k1)"/>
+<rect x="270.0" y="338.0" width="140.0" height="16.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<text x="340.0" y="350.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:10px">MPC</text>
+<path d="M 300.0 354.0 L 300.0 359.0" fill="none" stroke="#5B4B8A" stroke-width="1.1" marker-end="url(#arF32k2)"/>
+<rect x="270.0" y="317.0" width="140.0" height="16.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.3"/>
+<text x="340.0" y="329.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:10px">optymalizacja</text>
+<path d="M 300.0 333.0 L 300.0 338.0" fill="none" stroke="#B3641A" stroke-width="1.1" marker-end="url(#arF32k3)"/>
+<rect x="270.0" y="296.0" width="140.0" height="16.0" rx="3" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.3"/>
+<text x="340.0" y="308.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:10px">planowanie</text>
+<path d="M 300.0 312.0 L 300.0 317.0" fill="none" stroke="#9C3B52" stroke-width="1.1" marker-end="url(#arF32k4)"/>
+<path d="M 260.0 300.0 L 260.0 372.0" fill="none" stroke="#141C24" stroke-width="1.3" marker-end="url(#arF32k5)"/>
+<path d="M 420.0 372.0 L 420.0 300.0" fill="none" stroke="#5C6B77" stroke-width="1.1" stroke-dasharray="3 2" marker-end="url(#arF32k1)"/>
+<rect x="458.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="476.0" cy="272.0" r="10" fill="#141C24" stroke="none" stroke-width="1"/>
+<text x="476.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">6</text>
+<text x="492.0" y="270.0" text-anchor="start" class="bx-t">z boku: okresy</text>
+<text x="492.0" y="284.0" text-anchor="start" class="bx">i sprzęt każdej warstwy</text>
+<path d="M 484.0 379.0 L 505.1 379.0" fill="none" stroke="#0E6E78" stroke-width="1.6"/>
+<polygon points="490.2,375.9 490.2,382.1 496.4,379.0 490.2,375.9" fill="#0E6E78"/>
+<polygon points="502.6,375.9 502.6,382.1 496.4,379.0" fill="#0E6E78"/>
+<rect x="502.6" y="382.7" width="21.1" height="23.6" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="503.2" y="392.6" width="19.8" height="13.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 523.7 403.8 L 533.6 403.8 L 533.6 408.7" fill="none" stroke="#0E6E78" stroke-width="1.4"/>
+<rect x="527.4" y="408.7" width="21.1" height="21.1" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="528.0" y="418.6" width="19.8" height="10.5" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 548.5 427.3 L 560.9 427.3" fill="none" stroke="#0E6E78" stroke-width="1.4" marker-end="url(#arF32k0)"/>
+<text x="594.0" y="444.0" text-anchor="end" class="cap">obiekt</text>
+<rect x="480.0" y="359.0" width="118.0" height="16.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<text x="539.0" y="371.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:10px">PLC · PID</text>
+<path d="M 494.0 375.0 L 494.0 377.0" fill="none" stroke="#0E6E78" stroke-width="1.1" marker-end="url(#arF32k0)"/>
+<path d="M 542.0 424.0 L 542.0 377.0" fill="none" stroke="#5C6B77" stroke-width="1.0" stroke-dasharray="3 2" marker-end="url(#arF32k1)"/>
+<rect x="480.0" y="338.0" width="118.0" height="16.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<text x="539.0" y="350.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:10px">MPC</text>
+<path d="M 510.0 354.0 L 510.0 359.0" fill="none" stroke="#5B4B8A" stroke-width="1.1" marker-end="url(#arF32k2)"/>
+<rect x="480.0" y="317.0" width="118.0" height="16.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.3"/>
+<text x="539.0" y="329.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:10px">optymalizacja</text>
+<path d="M 510.0 333.0 L 510.0 338.0" fill="none" stroke="#B3641A" stroke-width="1.1" marker-end="url(#arF32k3)"/>
+<rect x="480.0" y="296.0" width="118.0" height="16.0" rx="3" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.3"/>
+<text x="539.0" y="308.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:10px">planowanie</text>
+<path d="M 510.0 312.0 L 510.0 317.0" fill="none" stroke="#9C3B52" stroke-width="1.1" marker-end="url(#arF32k4)"/>
+<path d="M 470.0 300.0 L 470.0 372.0" fill="none" stroke="#141C24" stroke-width="1.3" marker-end="url(#arF32k5)"/>
+<path d="M 608.0 372.0 L 608.0 300.0" fill="none" stroke="#5C6B77" stroke-width="1.1" stroke-dasharray="3 2" marker-end="url(#arF32k1)"/>
+<text x="621.0" y="371.0" text-anchor="start" class="cap" style="fill:#0E6E78">ms</text>
+<text x="642.0" y="371.0" text-anchor="start" class="cap">PLC</text>
+<text x="621.0" y="350.0" text-anchor="start" class="cap" style="fill:#5B4B8A">s</text>
+<text x="642.0" y="350.0" text-anchor="start" class="cap">PC</text>
+<text x="621.0" y="329.0" text-anchor="start" class="cap" style="fill:#B3641A">h</text>
+<text x="642.0" y="329.0" text-anchor="start" class="cap">serw.</text>
+<text x="621.0" y="308.0" text-anchor="start" class="cap" style="fill:#9C3B52">dni</text>
+<text x="642.0" y="308.0" text-anchor="start" class="cap">ERP</text>
+</svg>
+<figcaption>(1) Obiekt: zbiorniki, zawór, czujniki. (2) PLC z PID: u w dół, y w górę. (3) MPC zadaje wartości PID-om. (4) Optymalizacja wybiera najlepsze wartości zadane. (5) Planowanie; z lewej strzałka „cele” w dół, z prawej „pomiary” w górę. (6) Przy każdej warstwie okres i sprzęt. Pilnuj, żeby strzałka szła tylko do warstwy bezpośrednio niżej.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2><span class="num">10</span> Opowiedz własnymi słowami</h2>
+<div class="rail"></div>
+
+<details class="fiszka op"><summary>Wersja 30 sekund (dla kogoś spoza automatyki)</summary>
+<p>„Sterowanie zakładem to za dużo roboty dla jednego programu, więc dzieli się ją jak w firmie. Na dole »robotnicy« — sterowniki, które co ułamek sekundy pilnują zaworów. Nad nimi »brygadzista«, który pilnuje granic. Wyżej »ekonomista«, który co godzinę liczy najlepsze ustawienia. Na górze »zarząd«, który planuje produkcję. Każdy mówi temu pod sobą tylko, co ma osiągnąć, a nie jak.”</p></details>
+
+<details class="fiszka op"><summary>Wersja 2 minuty (egzaminacyjna, siedem zdań-kotwic)</summary>
+<ol>
+<li><strong>Idea:</strong> „Zadanie »prowadź proces bezpiecznie i zyskownie« jest za trudne dla jednego algorytmu, więc dzieli się je funkcjonalnie i czasowo na warstwy.”</li>
+<li><strong>Model:</strong> „Cztery warstwy nad obiektem: sterowanie bezpośrednie, nadrzędne, optymalizacja punktu pracy i planowanie. W dół płyną wartości zadane, w górę pomiary i stan.”</li>
+<li><strong>Warstwy 1–2:</strong> „Bezpośrednia to PID, logika i blokady w cyklu milisekund. Nadrzędna, zwykle MPC, co sekundę pilnuje ograniczeń i zadaje wartości regulatorom.”</li>
+<li><strong>Warstwy 3–4:</strong> „Optymalizacja co godzinę wybiera najbardziej opłacalne wartości zadane na modelu statycznym. Planowanie co dzień ustala, co i ile produkować.”</li>
+<li><strong>Reguły:</strong> „Warstwy różnią się tempem 10–100 razy, więc sobie nie przeszkadzają. Każda działa bez wyższej, a obiektu dotyka tylko najniższa.”</li>
+<li><strong>Korzyść:</strong> „Lepsza regulacja zmniejsza wahania, więc optymalizacja może podejść bliżej ograniczenia — 3,91 zamiast 3,70 m daje prawie 3% więcej produktu.”</li>
+<li><strong>Realizacja:</strong> „Urządzenia polowe, PLC z programem IEC 61131-3, stacja MPC i SCADA po OPC UA, serwer optymalizacji i MES, ERP za zaporą; osobny system bezpieczeństwa i łagodna degradacja przy awarii warstwy.”</li>
+</ol></details>
+
+<h3>Lista kontrolna przed egzaminem</h3>
+<ul class="check">
+<li>Rysuję cztery warstwy nad obiektem ze strzałkami w dół i w górę.</li>
+<li>Dla każdej warstwy podaję zadanie, model, okres i przykład algorytmu.</li>
+<li>Liczę przykład z odsunięciem od ograniczenia (3,70 → 3,91 m).</li>
+<li>Proponuję sprzęt i oprogramowanie dla każdej warstwy.</li>
+<li>Mówię, co się dzieje przy awarii każdej warstwy.</li>
+</ul>
+</section>
+
+<section>
+<h2><span class="num">11</span> Ściąga</h2>
+<div class="rail"></div>
+
+<div class="karty">
+<div class="karta b"><span class="kw">Po co warstwy</span><p>Jedno zadanie „bezpiecznie i zyskownie” za trudne → podział funkcjonalny i czasowy.</p></div>
+<div class="karta s"><span class="kw">W dół / w górę</span><p>W dół wartości zadane i plan; w górę pomiary, stan, aktywne ograniczenia.</p></div>
+<div class="karta"><span class="kw">1 · bezpośrednia</span><p>PID, logika, sekwencje, blokady; 10 ms – 1 s; PLC.</p></div>
+<div class="karta"><span class="kw">2 · nadrzędna</span><p>MPC: ograniczenia, sprzężenia; s – min; zadaje wartości PID-om.</p></div>
+<div class="karta a"><span class="kw">3 · optymalizacja</span><p>Model statyczny + koszt → najlepszy punkt pracy; godziny.</p></div>
+<div class="karta"><span class="kw">4 · planowanie</span><p>Co, ile, kiedy; dni – tygodnie; ERP.</p></div>
+<div class="karta b"><span class="kw">Reguły</span><p>Tempo różni się 10–100×; obiektu dotyka tylko najniższa; każda działa bez wyższej.</p></div>
+<div class="karta s"><span class="kw">Odsunięcie od ograniczenia</span><p>h* = hmax − 3σ: PID 3,70 m, MPC 3,91 m → +2,8% produktu.</p></div>
+<div class="karta a"><span class="kw">Realizacja</span><p>Polowe → PLC (IEC 61131-3) → PC z MPC + SCADA (OPC UA) → serwer RTO, MES → ERP; SIS, zapora.</p></div>
+<div class="karta"><span class="kw">Awaria warstwy</span><p>Niższa trzyma ostatnią wartość zadaną; watchdog, bezuderzeniowo.</p></div>
+</div>
+</section>
+
+<section>
+<h2><span class="num">12</span> Pytania dodatkowe — fiszki</h2>
+<div class="rail"></div>
+
+<details class="fiszka"><summary>Dlaczego optymalizacja nie steruje zaworem bezpośrednio?</summary>
+<p>Bo działa za wolno i na modelu statycznym. Zawór wymaga reakcji w ułamku sekundy, a optymalizacja liczy raz na kwadrans lub godzinę — między jej decyzjami proces byłby bez regulacji.</p></details>
+
+<details class="fiszka"><summary>Czym „warstwa nadrzędna” różni się od „warstwy nadzorczej”?</summary>
+<p>Sterowanie nadrzędne to warstwa 2 — zwykle MPC zadający wartości PID-om. Warstwa nadzorcza (w sensie FTC i prac KISSiWD) ocenia stan pracy — normalny, zakłócony, awaryjny — i przełącza strukturę sterowania albo cele.</p></details>
+
+<details class="fiszka"><summary>PLC czy DCS — kiedy który?</summary>
+<p>PLC ze SCADA — mniejsze instalacje i maszyny: tańszy, elastyczny, łatwo łączy sprzęt różnych producentów. DCS — duże procesy ciągłe (rafinerie, elektrownie): jeden spójny system z wbudowaną redundancją, stacjami operatorskimi i często pakietem MPC. Model warstwowy jest ten sam.</p></details>
+
+<details class="fiszka"><summary>Dlaczego zabezpieczenia są w osobnym sterowniku?</summary>
+<p>Bo nie mogą zależeć od programu sterującego, sieci ani wyższych warstw. System bezpieczeństwa ma własne czujniki i logikę i działa nawet wtedy, gdy PLC się zawiesi.</p></details>
+
+<details class="fiszka"><summary>Gdzie w tym modelu jest operator?</summary>
+<p>W poprzek warstw, najczęściej przy stanowisku SCADA/HMI na poziomie 2. Widzi alarmy ze wszystkich warstw, może zmienić wartości zadane, przełączyć pętlę na ręczne albo zatwierdzić propozycję optymalizacji.</p></details>
+</section>
+
+
+
+<footer>
+  <p><strong style="color:var(--ink)">Źródła</strong></p>
+  <ol class="zr">
+<li>P. Tatjewski, <a href="https://link.springer.com/book/10.1007/978-1-84628-635-3"><em>Advanced Control of Industrial Processes: Structures and Algorithms</em></a>, Springer 2007 (rozdz. 1: struktura wielowarstwowa); wydanie polskie: <em>Sterowanie zaawansowane obiektów przemysłowych. Struktury i algorytmy</em>, EXIT 2002.</li>
+<li>P. Tatjewski, <a href="https://www.sciencedirect.com/science/article/abs/pii/S1367578808000084">Advanced control and on-line process optimization in multilayer structures</a>, Annual Reviews in Control 32, 2008 — dekompozycja funkcjonalna, czasowa i przestrzenna; MPC w warstwie nadrzędnej.</li>
+<li>P. Tatjewski, <a href="https://eudml.org/doc/208001">Supervisory predictive control and on-line set-point optimization</a>, International Journal of Applied Mathematics and Computer Science 20(3), 2010, 483–495 — MPC w warstwie sterowania nadrzędnego.</li>
+<li>W. Findeisen, F. N. Bailey, M. Brdyś, K. Malinowski, P. Tatjewski, A. Woźniak, <a href="https://www.academia.edu/49725660/Control_and_Coordination_In_Hierarchical_Systems"><em>Control and Coordination in Hierarchical Systems</em></a>, Wiley 1980 — klasyczne ujęcie struktur wielowarstwowych i wielopoziomowych (koordynacja).</li>
+<li>S. Skogestad, <a href="https://skoge.folk.ntnu.no/publications/2004/control_structure_design_cce/cce04_skogestad.pdf">Control structure design for complete chemical plants</a>, Computers &amp; Chemical Engineering 28, 2004 — warstwy według skali czasu, połączenie warstw przez wartości zadane.</li>
+<li>M. Bauer, I. K. Craig, <a href="https://www.sciencedirect.com/science/article/abs/pii/S0959152407000996">Economic assessment of advanced process control – A survey and framework</a>, Journal of Process Control 18(1), 2008 — korzyść z mniejszej zmienności.</li>
+<li>M. Grochowski, M. A. Brdyś, K. Duzinkiewicz, R. Langowski, <a href="https://www.sciencedirect.com/science/article/pii/S1474667017316221">Supervisory control of integrated wastewater treatment systems</a>, IFAC Proceedings 2004 — struktura wielopoziomowo-wielowarstwowa z warstwą nadzorczą (KISSiWD PG).</li>
+<li>Wikipedia: <a href="https://en.wikipedia.org/wiki/Distributed_control_system">Distributed control system</a> (poziomy funkcjonalne 0–4); <a href="https://en.wikipedia.org/wiki/Purdue_Enterprise_Reference_Architecture">Purdue Enterprise Reference Architecture</a> (poziomy i skale czasu); <a href="https://en.wikipedia.org/wiki/OPC_Unified_Architecture">OPC Unified Architecture</a>; <a href="https://en.wikipedia.org/wiki/IEC_61131-3">IEC 61131-3</a>.</li>
+</ol>
+
+  <p>Repetytorium do egzaminu dyplomowego &middot; ARiSS II stopień &middot; specjalność Systemy sterowania i wspomagania decyzji. Brak slajdów wykładowych do tego zagadnienia w projekcie — strona powstała z literatury wymienionej wyżej. Obiekt dwóch zbiorników pochodzi z zagadnień 34, 37 i 39; liczby w przykładzie na kartce są przykładowe, a rachunek własny.</p>
+  <p class="backfoot"><a href="index.html">&larr; Wróć do listy zagadnień</a></p>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pytanie 33 — Budowa zdecentralizowanego rozproszonego systemu sterowania</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#141C24; --mut:#5C6B77; --line:#C3CDD4;
+  --paper:#E8ECEF; --card:#FCFDFD;
+  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52;
+  --disp:"Space Grotesk",system-ui,sans-serif;
+  --body:"STIX Two Text","Source Serif 4",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+     font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:860px;margin:0 auto;padding:0 22px 100px}
+
+/* ---- nagłówek ---- */
+header{padding:64px 0 30px;border-bottom:2px solid var(--ink)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+         color:var(--mut);margin:0 0 14px}
+h1{font-family:var(--disp);font-weight:700;font-size:clamp(30px,5vw,46px);line-height:1.08;
+   letter-spacing:-.02em;margin:0 0 18px}
+.quest{font-style:italic;font-size:19px;color:var(--ink);margin:0;padding-left:16px;
+       border-left:3px solid var(--violet)}
+.src{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:18px}
+
+/* ---- sekcje ---- */
+section{margin-top:56px}
+h2{font-family:var(--disp);font-weight:700;font-size:25px;letter-spacing:-.015em;
+   margin:0 0 6px;display:flex;align-items:baseline;gap:12px}
+h2 .num{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--violet);
+        letter-spacing:.08em;flex:none}
+h3{font-family:var(--disp);font-weight:500;font-size:18.5px;margin:34px 0 8px;letter-spacing:-.01em}
+p{margin:0 0 14px}
+.rail{height:5px;background:linear-gradient(90deg,var(--teal) 0%,var(--violet) 55%,var(--amber) 100%);
+      opacity:.85;margin:0 0 22px;border-radius:2px}
+
+/* ---- figury ---- */
+figure{margin:26px 0;background:var(--card);border:1px solid var(--line);border-radius:3px;
+       padding:20px 18px 14px}
+.fig{width:100%;height:auto;display:block}
+figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:12px;
+           padding-top:10px;border-top:1px solid var(--line);line-height:1.5}
+.tick{font-family:var(--mono);font-size:10.5px;fill:#7C8A94}
+.axlab{font-family:var(--mono);font-size:11px;fill:var(--mut)}
+.cap{font-family:var(--mono);font-size:10.5px;fill:var(--mut)}
+.bx{font-family:var(--mono);font-size:10.5px;fill:var(--mut)}
+.bx-t{font-family:var(--disp);font-size:11.5px;font-weight:500;fill:var(--ink)}
+
+/* ---- bloki ---- */
+.box{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--violet);
+     padding:16px 18px;margin:22px 0;border-radius:2px}
+.box.key{border-left-color:var(--rose)}
+.box.warn{border-left-color:var(--amber)}
+.box .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+          color:var(--mut);display:block;margin-bottom:8px}
+.box p:last-child{margin-bottom:0}
+
+/* ---- wzory (TeX składany do SVG skryptem mathbuild.js) ---- */
+.eq{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--violet);
+    padding:18px 18px;margin:22px 0;border-radius:2px;overflow-x:auto;text-align:center;
+    font-size:18.5px;line-height:1.3}
+.eq svg{max-width:100%;height:auto}
+.eq.txt{font-family:var(--mono);font-size:14px;line-height:1.7;color:var(--ink);text-align:center}
+.eq b{color:var(--violet);font-weight:500}
+.eqnote{font-family:var(--mono);font-size:12.5px;color:var(--mut);text-align:center;
+        margin:-14px 0 20px;line-height:1.6}
+.m{white-space:nowrap}
+.m svg{vertical-align:-0.25ex;max-width:100%;height:auto}
+@media (max-width:640px){
+  table{display:block;overflow-x:auto;width:auto;min-width:100%;-webkit-overflow-scrolling:touch}
+  table .m svg{max-width:none}
+  .eq{padding:14px 12px;font-size:16px}
+}
+
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15px;background:var(--card)}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--disp);font-weight:500;font-size:13px;letter-spacing:.02em;
+   background:#F2F5F6;border-bottom:1.5px solid var(--line)}
+td.n{font-family:var(--mono);font-size:13.5px;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+
+ol,ul{margin:0 0 14px;padding-left:22px}
+li{margin-bottom:7px}
+ol.steps{list-style:none;padding-left:0;counter-reset:st}
+ol.steps>li{counter-increment:st;position:relative;padding-left:44px;margin-bottom:18px}
+ol.steps>li::before{content:counter(st);position:absolute;left:0;top:1px;
+  font-family:var(--mono);font-size:12px;width:28px;height:28px;border-radius:50%;
+  background:var(--violet);color:#fff;display:flex;align-items:center;justify-content:center}
+strong{font-weight:600}
+.tag{font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:2px;
+     background:rgba(14,110,120,.12);color:var(--teal);white-space:nowrap}
+.tag.a{background:rgba(179,100,26,.13);color:var(--amber)}
+.tag.v{background:rgba(91,75,138,.13);color:var(--violet)}
+footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
+       font-family:var(--mono);font-size:12px;color:var(--mut)}
+@media print{body{background:#fff}figure,.box,.eq,table{break-inside:avoid}.topnav,.backfoot{display:none}}
+@media (max-width:600px){body{font-size:16px}header{padding-top:40px}}
+
+/* ---- pasek nawigacji ---- */
+.topnav{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:22px 0 0}
+.topnav a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+          color:var(--mut);text-decoration:none;border:1px solid var(--line);background:var(--card);
+          border-radius:2px;padding:6px 11px;transition:color .12s ease,border-color .12s ease}
+.topnav a:hover,.topnav a:focus-visible{color:var(--ink);border-color:var(--ink);outline:none}
+.topnav .here{font-family:var(--mono);font-size:12px;color:var(--mut);letter-spacing:.08em}
+.backfoot{margin:18px 0 0}
+.backfoot a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+            color:var(--teal);text-decoration:none;border-bottom:1px solid var(--line)}
+.backfoot a:hover,.backfoot a:focus-visible{border-bottom-color:var(--teal);outline:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="topnav">
+  <a href="index.html">&larr; Repetytorium</a>
+  <span class="here">zagadnienie 33 z 50 &middot; komputerowe systemy sterowania</span>
+</nav>
+
+<header>
+  <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 33</p>
+  <h1>Budowa zdecentralizowanego rozproszonego systemu sterowania</h1>
+  <p class="quest">Przedstaw proces budowy zdecentralizowanego rozproszonego komputerowego systemu sterowania automatycznego.</p>
+  <p class="src">Komputerowe systemy sterowania i wspomagania decyzji &middot; opracowanie na podstawie literatury i dokumentacji — źródła na dole strony &middot; synteza bloku: 32 (warstwy), 22 (sprzęt), 21 (sieci), 24 (struktury)</p>
+</header>
+
+<style>
+.karty{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:22px 0}
+.karta{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--violet);border-radius:3px;padding:12px 14px}
+.karta.k .kw{color:var(--violet)} .karta.b{border-top-color:var(--teal)} .karta.s{border-top-color:var(--rose)} .karta.a{border-top-color:var(--amber)}
+.karta .kw{font-family:var(--disp);font-weight:700;font-size:17px;line-height:1.25;display:block;margin-bottom:6px;color:var(--violet)}
+.karta.b .kw{color:var(--teal)} .karta.s .kw{color:var(--rose)} .karta.a .kw{color:var(--amber)}
+.karta p{font-size:15px;margin:0;line-height:1.5}
+@media (max-width:600px){.karty{grid-template-columns:1fr}}
+.fiszka{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--violet);border-radius:2px;margin:10px 0;padding:0}
+.fiszka summary{cursor:pointer;list-style:none;padding:12px 16px;font-family:var(--disp);font-weight:500;font-size:16.5px}
+.fiszka summary::-webkit-details-marker{display:none}
+.fiszka summary::before{content:"?";display:inline-flex;width:22px;height:22px;border-radius:50%;background:var(--violet);color:#fff;
+  font-family:var(--mono);font-size:12px;align-items:center;justify-content:center;margin-right:10px;vertical-align:1px}
+.fiszka[open] summary::before{content:"✓";background:var(--teal)}
+.fiszka p,.fiszka ol,.fiszka ul{padding:0 16px 14px 48px;margin:0}
+.fiszka.op{border-left-color:var(--teal)}
+.fiszka.op summary::before{content:"▶";background:var(--teal)}
+ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{color:var(--teal)}
+.cyt{font-style:italic;color:var(--ink)}
+.check{list-style:none;padding-left:0}
+.check li{padding-left:30px;position:relative}
+.check li::before{content:"☐";position:absolute;left:4px;top:-1px;font-family:var(--mono);color:var(--teal);font-size:17px}
+.luka{display:inline-block;min-width:70px;border-bottom:1.5px solid var(--violet);text-align:center;font-family:var(--mono);font-size:14px;color:var(--violet)}
+</style>
+
+<section>
+<h2><span class="num">01</span> Rama odpowiedzi</h2>
+<div class="rail"></div>
+
+<p>Pytanie dotyczy <strong>procesu</strong>, a nie jednej metody — trzeba opowiedzieć, co robi się po kolei, od wymagań do uruchomienia. To synteza bloku: warstwy (32), sprzęt (22), sieci (21) i struktury rozproszone (24) pojawiają się tu jako kolejne kroki jednego projektu.</p>
+
+<div class="box key">
+<span class="lbl">Zdanie, od którego warto zacząć</span>
+<p><strong>Budowa zdecentralizowanego systemu sterowania przebiega od góry do dołu i z powrotem: określamy wymagania i analizujemy obiekt, dzielimy go na słabo sprzężone podsystemy i dobieramy pary wejście–wyjście, wybieramy strukturę (zdecentralizowaną, rozproszoną, hierarchiczną), przypisujemy podsystemy do węzłów sprzętowych i sieci, piszemy oprogramowanie — a potem składamy całość i sprawdzamy ją coraz bliżej obiektu: testy modułów, symulacja z prawdziwym sprzętem, FAT, SAT i uruchomienie.</strong></p>
+</div>
+
+<figure>
+<svg viewBox="0 0 680 440" class="fig">
+<defs><marker id="arF33a0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0E6E78"/></marker><marker id="arF33a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9C3B52"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">PROCES BUDOWY SYSTEMU: OD WYMAGAŃ DO URUCHOMIENIA (MODEL V)</text>
+<rect x="20.0" y="44.0" width="214.0" height="46.0" rx="4" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<circle cx="36.0" cy="62.0" r="9" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="36.0" y="66.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">1</text>
+<text x="50.0" y="66.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:11px">wymagania</text>
+<text x="32.0" y="82.0" text-anchor="start" class="cap" style="font-size:9.5px">cele, ograniczenia, bezpieczeństwo</text>
+<path d="M 80.0 90.0 L 100.0 106.0" fill="none" stroke="#0E6E78" stroke-width="1.2" marker-end="url(#arF33a0)"/>
+<rect x="42.0" y="106.0" width="214.0" height="46.0" rx="4" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<circle cx="58.0" cy="124.0" r="9" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="58.0" y="128.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">2</text>
+<text x="72.0" y="128.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:11px">analiza obiektu</text>
+<text x="54.0" y="144.0" text-anchor="start" class="cap" style="font-size:9.5px">model, sygnały, sprzężenia</text>
+<path d="M 102.0 152.0 L 122.0 168.0" fill="none" stroke="#0E6E78" stroke-width="1.2" marker-end="url(#arF33a0)"/>
+<rect x="64.0" y="168.0" width="214.0" height="46.0" rx="4" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<circle cx="80.0" cy="186.0" r="9" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="80.0" y="190.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">3</text>
+<text x="94.0" y="190.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:11px">dekompozycja</text>
+<text x="76.0" y="206.0" text-anchor="start" class="cap" style="font-size:9.5px">podsystemy, pary we–wy (RGA)</text>
+<path d="M 124.0 214.0 L 144.0 230.0" fill="none" stroke="#0E6E78" stroke-width="1.2" marker-end="url(#arF33a0)"/>
+<rect x="86.0" y="230.0" width="214.0" height="46.0" rx="4" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<circle cx="102.0" cy="248.0" r="9" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="102.0" y="252.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">4</text>
+<text x="116.0" y="252.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:11px">struktura sterowania</text>
+<text x="98.0" y="268.0" text-anchor="start" class="cap" style="font-size:9.5px">zdecentr. / rozprosz. / hierarch.</text>
+<path d="M 146.0 276.0 L 166.0 292.0" fill="none" stroke="#0E6E78" stroke-width="1.2" marker-end="url(#arF33a0)"/>
+<rect x="108.0" y="292.0" width="214.0" height="46.0" rx="4" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<circle cx="124.0" cy="310.0" r="9" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="124.0" y="314.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">5</text>
+<text x="138.0" y="314.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:11px">sprzęt i komunikacja</text>
+<text x="120.0" y="330.0" text-anchor="start" class="cap" style="font-size:9.5px">węzły, sieci, redundancja</text>
+<rect x="446.0" y="44.0" width="214.0" height="46.0" rx="4" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.3"/>
+<circle cx="462.0" cy="62.0" r="9" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="462.0" y="66.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">11</text>
+<text x="476.0" y="66.0" text-anchor="start" class="bx-t" style="fill:#9C3B52;font-size:11px">eksploatacja</text>
+<text x="458.0" y="82.0" text-anchor="start" class="cap" style="font-size:9.5px">utrzymanie, modyfikacje</text>
+<path d="M 586.0 106.0 L 606.0 90.0" fill="none" stroke="#9C3B52" stroke-width="1.2" marker-end="url(#arF33a1)"/>
+<line x1="238.0" y1="67.0" x2="442.0" y2="67.0" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="4 3"/>
+<rect x="424.0" y="106.0" width="214.0" height="46.0" rx="4" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.3"/>
+<circle cx="440.0" cy="124.0" r="9" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="440.0" y="128.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">10</text>
+<text x="454.0" y="128.0" text-anchor="start" class="bx-t" style="fill:#9C3B52;font-size:11px">SAT, uruchomienie</text>
+<text x="436.0" y="144.0" text-anchor="start" class="cap" style="font-size:9.5px">na obiekcie, z operatorami</text>
+<path d="M 564.0 168.0 L 584.0 152.0" fill="none" stroke="#9C3B52" stroke-width="1.2" marker-end="url(#arF33a1)"/>
+<line x1="260.0" y1="129.0" x2="420.0" y2="129.0" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="4 3"/>
+<rect x="402.0" y="168.0" width="214.0" height="46.0" rx="4" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.3"/>
+<circle cx="418.0" cy="186.0" r="9" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="418.0" y="190.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">9</text>
+<text x="432.0" y="190.0" text-anchor="start" class="bx-t" style="fill:#9C3B52;font-size:11px">FAT</text>
+<text x="414.0" y="206.0" text-anchor="start" class="cap" style="font-size:9.5px">u dostawcy, z symulatorem</text>
+<path d="M 542.0 230.0 L 562.0 214.0" fill="none" stroke="#9C3B52" stroke-width="1.2" marker-end="url(#arF33a1)"/>
+<line x1="282.0" y1="191.0" x2="398.0" y2="191.0" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="4 3"/>
+<rect x="380.0" y="230.0" width="214.0" height="46.0" rx="4" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.3"/>
+<circle cx="396.0" cy="248.0" r="9" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="396.0" y="252.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">8</text>
+<text x="410.0" y="252.0" text-anchor="start" class="bx-t" style="fill:#9C3B52;font-size:11px">testy integracyjne, HIL</text>
+<text x="392.0" y="268.0" text-anchor="start" class="cap" style="font-size:9.5px">węzły + sieć + model obiektu</text>
+<path d="M 520.0 292.0 L 540.0 276.0" fill="none" stroke="#9C3B52" stroke-width="1.2" marker-end="url(#arF33a1)"/>
+<line x1="304.0" y1="253.0" x2="376.0" y2="253.0" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="4 3"/>
+<rect x="358.0" y="292.0" width="214.0" height="46.0" rx="4" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.3"/>
+<circle cx="374.0" cy="310.0" r="9" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="374.0" y="314.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">7</text>
+<text x="388.0" y="314.0" text-anchor="start" class="bx-t" style="fill:#9C3B52;font-size:11px">testy modułów</text>
+<text x="370.0" y="330.0" text-anchor="start" class="cap" style="font-size:9.5px">każdy regulator osobno</text>
+<rect x="230.0" y="360.0" width="220.0" height="46.0" rx="4" fill="#B3641A" stroke="none" stroke-width="1" opacity="0.14"/>
+<circle cx="246.0" cy="378.0" r="9" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="246.0" y="382.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">6</text>
+<text x="260.0" y="382.0" text-anchor="start" class="bx-t" style="fill:#B3641A;font-size:11px">oprogramowanie</text>
+<text x="242.0" y="398.0" text-anchor="start" class="cap" style="font-size:9.5px">IEC 61131-3 / 61499, konfiguracja</text>
+<path d="M 130.0 334.0 L 228.0 378.0" fill="none" stroke="#0E6E78" stroke-width="1.2" marker-end="url(#arF33a0)"/>
+<path d="M 452.0 378.0 L 540.0 334.0" fill="none" stroke="#9C3B52" stroke-width="1.2" marker-end="url(#arF33a1)"/>
+<text x="128.0" y="424.0" text-anchor="middle" class="cap" style="fill:#0E6E78">lewe ramię: rozkład na części (projekt)</text>
+<text x="552.0" y="424.0" text-anchor="middle" class="cap" style="fill:#9C3B52">prawe ramię: składanie i sprawdzanie</text>
+</svg>
+<figcaption>Proces budowy jako model V. Wikipedia: <span class="cyt">„The left side of the »V« represents the decomposition of requirements, and the creation of system specifications”</span>, a prawa <span class="cyt">„an integration of parts and their validation”</span>. Każdy etap po prawej sprawdza etap na tej samej wysokości po lewej. Kroki dostosowane do systemu sterowania — opracowanie własne.</figcaption>
+</figure>
+
+<p>Skogestad opisuje podobną procedurę dla całego zakładu: najpierw analiza z góry na dół (cele, stopnie swobody, zmienne regulowane), potem projekt od dołu (regulacja, warstwa nadrzędna, optymalizacja, walidacja). Zaznacza, że <span class="cyt">„the procedure is generally iterative and may require several loops through the steps”</span>.</p>
+</section>
+
+<section>
+<h2><span class="num">02</span> Wymagania i analiza obiektu</h2>
+<div class="rail"></div>
+
+<ul>
+<li><strong>Cele</strong>: co ma być regulowane, z jaką dokładnością, jakie są cele ekonomiczne (warstwy z zagadnienia 32).</li>
+<li><strong>Ograniczenia i bezpieczeństwo</strong>: stany niebezpieczne, co musi działać zawsze, jakie są wymagania czasowe.</li>
+<li><strong>Lista sygnałów</strong>: wszystkie pomiary i elementy wykonawcze ze schematu instalacji — z niej powstaje później przydział do modułów we/wy.</li>
+<li><strong>Model</strong>: przynajmniej wzmocnienia statyczne i stałe czasowe; bez nich nie da się ocenić sprzężeń ani dobrać okresów próbkowania.</li>
+</ul>
+</section>
+
+<section>
+<h2><span class="num">03</span> Dekompozycja: podział na podsystemy</h2>
+<div class="rail"></div>
+
+<figure>
+<svg viewBox="0 0 680 330" class="fig">
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">DEKOMPOZYCJA: TNIEMY TAM, GDZIE SPRZĘŻENIA SĄ SŁABE</text>
+<ellipse cx="135" cy="138" rx="112" ry="92" fill="#0E6E78" opacity="0.08" stroke="#0E6E78" stroke-dasharray="5 4"/>
+<ellipse cx="360" cy="138" rx="100" ry="92" fill="#5B4B8A" opacity="0.08" stroke="#5B4B8A" stroke-dasharray="5 4"/>
+<line x1="70.0" y1="110.0" x2="170.0" y2="80.0" stroke="#141C24" stroke-width="3.2"/>
+<line x1="70.0" y1="110.0" x2="170.0" y2="190.0" stroke="#141C24" stroke-width="3.2"/>
+<line x1="170.0" y1="80.0" x2="170.0" y2="190.0" stroke="#141C24" stroke-width="3.2"/>
+<line x1="300.0" y1="100.0" x2="400.0" y2="80.0" stroke="#141C24" stroke-width="3.2"/>
+<line x1="300.0" y1="100.0" x2="390.0" y2="200.0" stroke="#141C24" stroke-width="3.2"/>
+<line x1="400.0" y1="80.0" x2="390.0" y2="200.0" stroke="#141C24" stroke-width="3.2"/>
+<line x1="170.0" y1="190.0" x2="300.0" y2="100.0" stroke="#9C3B52" stroke-width="1.2" stroke-dasharray="4 3"/>
+<line x1="170.0" y1="80.0" x2="300.0" y2="100.0" stroke="#9C3B52" stroke-width="1.2" stroke-dasharray="4 3"/>
+<circle cx="70.0" cy="110.0" r="17" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.6"/>
+<text x="70.0" y="114.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:10.5px">P1</text>
+<circle cx="170.0" cy="80.0" r="17" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.6"/>
+<text x="170.0" y="84.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:10.5px">P2</text>
+<circle cx="170.0" cy="190.0" r="17" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.6"/>
+<text x="170.0" y="194.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:10.5px">P3</text>
+<circle cx="300.0" cy="100.0" r="17" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.6"/>
+<text x="300.0" y="104.0" text-anchor="middle" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">P4</text>
+<circle cx="400.0" cy="80.0" r="17" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.6"/>
+<text x="400.0" y="84.0" text-anchor="middle" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">P5</text>
+<circle cx="390.0" cy="200.0" r="17" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.6"/>
+<text x="390.0" y="204.0" text-anchor="middle" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">P6</text>
+<text x="135.0" y="250.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:11px">podsystem A</text>
+<text x="360.0" y="250.0" text-anchor="middle" class="bx-t" style="fill:#5B4B8A;font-size:11px">podsystem B</text>
+<text x="236.0" y="72.0" text-anchor="middle" class="cap" style="fill:#9C3B52">cięcie</text>
+<line x1="30.0" y1="282.0" x2="60.0" y2="282.0" stroke="#141C24" stroke-width="3.2"/>
+<text x="66.0" y="286.0" text-anchor="start" class="cap">silne sprzężenie — zostaje w podsystemie</text>
+<line x1="30.0" y1="302.0" x2="60.0" y2="302.0" stroke="#9C3B52" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="66.0" y="306.0" text-anchor="start" class="cap">słabe — wymiana danych albo zakłócenie</text>
+<text x="480.0" y="58.0" text-anchor="start" class="bx-t" style="fill:#141C24;font-size:11px">kryteria podziału</text>
+<rect x="480.0" y="76.0" width="186.0" height="44.0" rx="4" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.1"/>
+<text x="490.0" y="94.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:10.5px">sprzężenia</text>
+<text x="490.0" y="110.0" text-anchor="start" class="cap" style="font-size:9.5px">silne razem, słabe na granicy</text>
+<rect x="480.0" y="130.0" width="186.0" height="44.0" rx="4" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.1"/>
+<text x="490.0" y="148.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">położenie</text>
+<text x="490.0" y="164.0" text-anchor="start" class="cap" style="font-size:9.5px">bliskie urządzenia razem</text>
+<rect x="480.0" y="184.0" width="186.0" height="44.0" rx="4" fill="#B3641A" stroke="none" stroke-width="1" opacity="0.1"/>
+<text x="490.0" y="202.0" text-anchor="start" class="bx-t" style="fill:#B3641A;font-size:10.5px">technologia</text>
+<text x="490.0" y="218.0" text-anchor="start" class="cap" style="font-size:9.5px">jedna operacja = podsystem</text>
+<rect x="480.0" y="238.0" width="186.0" height="44.0" rx="4" fill="#5C6B77" stroke="none" stroke-width="1" opacity="0.1"/>
+<text x="490.0" y="256.0" text-anchor="start" class="bx-t" style="fill:#5C6B77;font-size:10.5px">odpowiedzialność</text>
+<text x="490.0" y="272.0" text-anchor="start" class="cap" style="font-size:9.5px">jeden operator, jeden obszar</text>
+</svg>
+<figcaption>Podsystem to grupa silnie sprzężonych pętli. Słabe sprzężenia przecinamy: po podziale stają się wymianą danych między regulatorami (struktura rozproszona) albo zakłóceniem, które lokalny regulator usunie sam (struktura zdecentralizowana). Opracowanie własne.</figcaption>
+</figure>
+
+<p>Ten krok decyduje o wszystkim dalej. Jeśli podział przetnie silne sprzężenie, żaden lokalny regulator go nie skompensuje, a przykład z zagadnienia 24 pokazał, że zignorowane sprzężenie daje duży błąd. Narzędziem do oceny sprzężeń i doboru par wejście–wyjście jest macierz wzmocnień względnych RGA (Bristol 1966).</p>
+</section>
+
+<section>
+<h2><span class="num">04</span> Przykład na kartce: RGA i wybór par</h2>
+<div class="rail"></div>
+
+<p>Dla obiektu 2×2 o wzmocnieniach statycznych <span class="m" data-tex="g_{ij}"><svg style="vertical-align: -0.666ex;" xmlns="http://www.w3.org/2000/svg" width="2.478ex" height="1.666ex" role="img" focusable="false" viewBox="0 -442 1095.3 736.2" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-2-TEX-I-1D454" d="M311 43Q296 30 267 15T206 0Q143 0 105 45T66 160Q66 265 143 353T314 442Q361 442 401 394L404 398Q406 401 409 404T418 412T431 419T447 422Q461 422 470 413T480 394Q480 379 423 152T363 -80Q345 -134 286 -169T151 -205Q10 -205 10 -137Q10 -111 28 -91T74 -71Q89 -71 102 -80T116 -111Q116 -121 114 -130T107 -144T99 -154T92 -162L90 -164H91Q101 -167 151 -167Q189 -167 211 -155Q234 -144 254 -122T282 -75Q288 -56 298 -13Q311 35 311 43ZM384 328L380 339Q377 350 375 354T369 368T359 382T346 393T328 402T306 405Q262 405 221 352Q191 313 171 233T151 117Q151 38 213 38Q269 38 323 108L331 118L384 328Z"></path><path id="MJX-2-TEX-I-1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path><path id="MJX-2-TEX-I-1D457" d="M297 596Q297 627 318 644T361 661Q378 661 389 651T403 623Q403 595 384 576T340 557Q322 557 310 567T297 596ZM288 376Q288 405 262 405Q240 405 220 393T185 362T161 325T144 293L137 279Q135 278 121 278H107Q101 284 101 286T105 299Q126 348 164 391T252 441Q253 441 260 441T272 442Q296 441 316 432Q341 418 354 401T367 348V332L318 133Q267 -67 264 -75Q246 -125 194 -164T75 -204Q25 -204 7 -183T-12 -137Q-12 -110 7 -91T53 -71Q70 -71 82 -81T95 -112Q95 -148 63 -167Q69 -168 77 -168Q111 -168 139 -140T182 -74L193 -32Q204 11 219 72T251 197T278 308T289 365Q289 372 288 376Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D454" xlink:href="#MJX-2-TEX-I-1D454"></use></g><g data-mml-node="TeXAtom" transform="translate(510,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><use data-c="1D456" xlink:href="#MJX-2-TEX-I-1D456"></use></g><g data-mml-node="mi" transform="translate(345,0)"><use data-c="1D457" xlink:href="#MJX-2-TEX-I-1D457"></use></g></g></g></g></g></svg></span> (wyjście <span class="m" data-tex="i"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="0.781ex" height="1.52ex" role="img" focusable="false" viewBox="0 -661 345 672" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-3-TEX-I-1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D456" xlink:href="#MJX-3-TEX-I-1D456"></use></g></g></g></svg></span>, wejście <span class="m" data-tex="j"><svg style="vertical-align: -0.462ex;" xmlns="http://www.w3.org/2000/svg" width="0.932ex" height="1.957ex" role="img" focusable="false" viewBox="0 -661 412 865" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-4-TEX-I-1D457" d="M297 596Q297 627 318 644T361 661Q378 661 389 651T403 623Q403 595 384 576T340 557Q322 557 310 567T297 596ZM288 376Q288 405 262 405Q240 405 220 393T185 362T161 325T144 293L137 279Q135 278 121 278H107Q101 284 101 286T105 299Q126 348 164 391T252 441Q253 441 260 441T272 442Q296 441 316 432Q341 418 354 401T367 348V332L318 133Q267 -67 264 -75Q246 -125 194 -164T75 -204Q25 -204 7 -183T-12 -137Q-12 -110 7 -91T53 -71Q70 -71 82 -81T95 -112Q95 -148 63 -167Q69 -168 77 -168Q111 -168 139 -140T182 -74L193 -32Q204 11 219 72T251 197T278 308T289 365Q289 372 288 376Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D457" xlink:href="#MJX-4-TEX-I-1D457"></use></g></g></g></svg></span>) element RGA</p>
+<div class="eq" data-tex="\lambda_{11} = \frac{1}{1 - \dfrac{g_{12}\,g_{21}}{g_{11}\,g_{22}}}"><svg style="vertical-align: -4.455ex;" xmlns="http://www.w3.org/2000/svg" width="18.123ex" height="7.491ex" role="img" focusable="false" viewBox="0 -1342 8010.3 3311" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-1-TEX-I-1D706" d="M166 673Q166 685 183 694H202Q292 691 316 644Q322 629 373 486T474 207T524 67Q531 47 537 34T546 15T551 6T555 2T556 -2T550 -11H482Q457 3 450 18T399 152L354 277L340 262Q327 246 293 207T236 141Q211 112 174 69Q123 9 111 -1T83 -12Q47 -12 47 20Q47 37 61 52T199 187Q229 216 266 252T321 306L338 322Q338 323 288 462T234 612Q214 657 183 657Q166 657 166 673Z"></path><path id="MJX-1-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-1-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-1-TEX-N-2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path><path id="MJX-1-TEX-I-1D454" d="M311 43Q296 30 267 15T206 0Q143 0 105 45T66 160Q66 265 143 353T314 442Q361 442 401 394L404 398Q406 401 409 404T418 412T431 419T447 422Q461 422 470 413T480 394Q480 379 423 152T363 -80Q345 -134 286 -169T151 -205Q10 -205 10 -137Q10 -111 28 -91T74 -71Q89 -71 102 -80T116 -111Q116 -121 114 -130T107 -144T99 -154T92 -162L90 -164H91Q101 -167 151 -167Q189 -167 211 -155Q234 -144 254 -122T282 -75Q288 -56 298 -13Q311 35 311 43ZM384 328L380 339Q377 350 375 354T369 368T359 382T346 393T328 402T306 405Q262 405 221 352Q191 313 171 233T151 117Q151 38 213 38Q269 38 323 108L331 118L384 328Z"></path><path id="MJX-1-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D706" xlink:href="#MJX-1-TEX-I-1D706"></use></g><g data-mml-node="TeXAtom" transform="translate(616,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><use data-c="31" xlink:href="#MJX-1-TEX-N-31"></use><use data-c="31" xlink:href="#MJX-1-TEX-N-31" transform="translate(500,0)"></use></g></g></g><g data-mml-node="mo" transform="translate(1650.9,0)"><use data-c="3D" xlink:href="#MJX-1-TEX-N-3D"></use></g><g data-mml-node="mfrac" transform="translate(2706.7,0)"><g data-mml-node="mn" transform="translate(2401.8,676)"><use data-c="31" xlink:href="#MJX-1-TEX-N-31"></use></g><g data-mml-node="mrow" transform="translate(220,-1078)"><g data-mml-node="mn"><use data-c="31" xlink:href="#MJX-1-TEX-N-31"></use></g><g data-mml-node="mo" transform="translate(722.2,0)"><use data-c="2212" xlink:href="#MJX-1-TEX-N-2212"></use></g><g data-mml-node="mstyle" transform="translate(1722.4,0)"><g data-mml-node="mfrac"><g data-mml-node="mrow" transform="translate(220,676)"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D454" xlink:href="#MJX-1-TEX-I-1D454"></use></g><g data-mml-node="TeXAtom" transform="translate(510,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><use data-c="31" xlink:href="#MJX-1-TEX-N-31"></use><use data-c="32" xlink:href="#MJX-1-TEX-N-32" transform="translate(500,0)"></use></g></g></g><g data-mml-node="mstyle" transform="translate(1267.1,0)"><g data-mml-node="mspace"></g></g><g data-mml-node="msub" transform="translate(1434.1,0)"><g data-mml-node="mi"><use data-c="1D454" xlink:href="#MJX-1-TEX-I-1D454"></use></g><g data-mml-node="TeXAtom" transform="translate(510,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><use data-c="32" xlink:href="#MJX-1-TEX-N-32"></use><use data-c="31" xlink:href="#MJX-1-TEX-N-31" transform="translate(500,0)"></use></g></g></g></g><g data-mml-node="mrow" transform="translate(220,-686)"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D454" xlink:href="#MJX-1-TEX-I-1D454"></use></g><g data-mml-node="TeXAtom" transform="translate(510,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><use data-c="31" xlink:href="#MJX-1-TEX-N-31"></use><use data-c="31" xlink:href="#MJX-1-TEX-N-31" transform="translate(500,0)"></use></g></g></g><g data-mml-node="mstyle" transform="translate(1267.1,0)"><g data-mml-node="mspace"></g></g><g data-mml-node="msub" transform="translate(1434.1,0)"><g data-mml-node="mi"><use data-c="1D454" xlink:href="#MJX-1-TEX-I-1D454"></use></g><g data-mml-node="TeXAtom" transform="translate(510,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><use data-c="32" xlink:href="#MJX-1-TEX-N-32"></use><use data-c="32" xlink:href="#MJX-1-TEX-N-32" transform="translate(500,0)"></use></g></g></g></g><rect width="2901.2" height="60" x="120" y="220"></rect></g></g></g><rect width="5063.7" height="60" x="120" y="220"></rect></g></g></g></svg></div>
+<p class="eqnote">λ₁₁ = wzmocnienie u₁ → y₁ przy otwartej drugiej pętli ÷ to samo wzmocnienie przy zamkniętej drugiej pętli; wiersze i kolumny RGA sumują się do 1</p>
+
+<figure>
+<svg viewBox="0 0 680 330" class="fig">
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">RGA: KTÓRE WEJŚCIE STERUJE KTÓRYM WYJŚCIEM I CZY DA SIĘ ZDECENTRALIZOWAĆ</text>
+<rect x="14.0" y="40.0" width="208.0" height="280.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="40.0" width="208.0" height="4.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="118.0" y="64.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:11px">A · słabe sprzężenie</text>
+<text x="44.0" y="112.0" text-anchor="start" class="bx-t" style="font-size:11px">G =</text>
+<text x="106.0" y="102.0" text-anchor="middle" class="bx" style="font-size:11px">2</text>
+<text x="150.0" y="102.0" text-anchor="middle" class="bx" style="font-size:11px">1</text>
+<text x="106.0" y="124.0" text-anchor="middle" class="bx" style="font-size:11px">1</text>
+<text x="150.0" y="124.0" text-anchor="middle" class="bx" style="font-size:11px">2</text>
+<path d="M 90 86 l -5 0 l 0 44 l 5 0" fill="none" stroke="#141C24" stroke-width="1.2"/>
+<path d="M 166 86 l 5 0 l 0 44 l -5 0" fill="none" stroke="#141C24" stroke-width="1.2"/>
+<text x="118.0" y="164.0" text-anchor="middle" class="cap" style="font-size:9.5px">λ₁₁ = 1 / (1 − g₁₂g₂₁ / g₁₁g₂₂)</text>
+<text x="118.0" y="192.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:13px">λ₁₁ = 1,33</text>
+<text x="44.0" y="232.0" text-anchor="start" class="bx-t" style="font-size:11px">RGA =</text>
+<text x="126.0" y="222.0" text-anchor="middle" class="bx" style="fill:#0E6E78;font-size:10.5px">1,33</text>
+<text x="176.0" y="222.0" text-anchor="middle" class="bx" style="fill:#141C24;font-size:10.5px">−0,33</text>
+<text x="126.0" y="244.0" text-anchor="middle" class="bx" style="fill:#141C24;font-size:10.5px">−0,33</text>
+<text x="176.0" y="244.0" text-anchor="middle" class="bx" style="fill:#0E6E78;font-size:10.5px">1,33</text>
+<path d="M 104 206 l -5 0 l 0 44 l 5 0" fill="none" stroke="#141C24" stroke-width="1.2"/>
+<path d="M 200 206 l 5 0 l 0 44 l -5 0" fill="none" stroke="#141C24" stroke-width="1.2"/>
+<text x="118.0" y="284.0" text-anchor="middle" class="cap" style="fill:#141C24">pary u₁→y₁, u₂→y₂;</text>
+<text x="118.0" y="300.0" text-anchor="middle" class="cap" style="fill:#0E6E78">zdecentralizowane wystarczy</text>
+<rect x="236.0" y="40.0" width="208.0" height="280.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="236.0" y="40.0" width="208.0" height="4.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="340.0" y="64.0" text-anchor="middle" class="bx-t" style="fill:#B3641A;font-size:11px">B · „na krzyż”</text>
+<text x="266.0" y="112.0" text-anchor="start" class="bx-t" style="font-size:11px">G =</text>
+<text x="328.0" y="102.0" text-anchor="middle" class="bx" style="font-size:11px">1</text>
+<text x="372.0" y="102.0" text-anchor="middle" class="bx" style="font-size:11px">2</text>
+<text x="328.0" y="124.0" text-anchor="middle" class="bx" style="font-size:11px">2</text>
+<text x="372.0" y="124.0" text-anchor="middle" class="bx" style="font-size:11px">1</text>
+<path d="M 312 86 l -5 0 l 0 44 l 5 0" fill="none" stroke="#141C24" stroke-width="1.2"/>
+<path d="M 388 86 l 5 0 l 0 44 l -5 0" fill="none" stroke="#141C24" stroke-width="1.2"/>
+<text x="340.0" y="164.0" text-anchor="middle" class="cap" style="font-size:9.5px">λ₁₁ = 1 / (1 − g₁₂g₂₁ / g₁₁g₂₂)</text>
+<text x="340.0" y="192.0" text-anchor="middle" class="bx-t" style="fill:#B3641A;font-size:13px">λ₁₁ = −0,33</text>
+<text x="266.0" y="232.0" text-anchor="start" class="bx-t" style="font-size:11px">RGA =</text>
+<text x="348.0" y="222.0" text-anchor="middle" class="bx" style="fill:#B3641A;font-size:10.5px">−0,33</text>
+<text x="398.0" y="222.0" text-anchor="middle" class="bx" style="fill:#141C24;font-size:10.5px">1,33</text>
+<text x="348.0" y="244.0" text-anchor="middle" class="bx" style="fill:#141C24;font-size:10.5px">1,33</text>
+<text x="398.0" y="244.0" text-anchor="middle" class="bx" style="fill:#B3641A;font-size:10.5px">−0,33</text>
+<path d="M 326 206 l -5 0 l 0 44 l 5 0" fill="none" stroke="#141C24" stroke-width="1.2"/>
+<path d="M 422 206 l 5 0 l 0 44 l -5 0" fill="none" stroke="#141C24" stroke-width="1.2"/>
+<text x="340.0" y="284.0" text-anchor="middle" class="cap" style="fill:#141C24">λ &lt; 0: zamień pary</text>
+<text x="340.0" y="300.0" text-anchor="middle" class="cap" style="fill:#B3641A">u₁→y₂, u₂→y₁</text>
+<rect x="458.0" y="40.0" width="208.0" height="280.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="458.0" y="40.0" width="208.0" height="4.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="562.0" y="64.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52;font-size:11px">C · silne sprzężenie</text>
+<text x="488.0" y="112.0" text-anchor="start" class="bx-t" style="font-size:11px">G =</text>
+<text x="550.0" y="102.0" text-anchor="middle" class="bx" style="font-size:11px">2</text>
+<text x="594.0" y="102.0" text-anchor="middle" class="bx" style="font-size:11px">1,9</text>
+<text x="550.0" y="124.0" text-anchor="middle" class="bx" style="font-size:11px">1,9</text>
+<text x="594.0" y="124.0" text-anchor="middle" class="bx" style="font-size:11px">2</text>
+<path d="M 534 86 l -5 0 l 0 44 l 5 0" fill="none" stroke="#141C24" stroke-width="1.2"/>
+<path d="M 610 86 l 5 0 l 0 44 l -5 0" fill="none" stroke="#141C24" stroke-width="1.2"/>
+<text x="562.0" y="164.0" text-anchor="middle" class="cap" style="font-size:9.5px">λ₁₁ = 1 / (1 − g₁₂g₂₁ / g₁₁g₂₂)</text>
+<text x="562.0" y="192.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52;font-size:13px">λ₁₁ = 10,26</text>
+<text x="488.0" y="232.0" text-anchor="start" class="bx-t" style="font-size:11px">RGA =</text>
+<text x="570.0" y="222.0" text-anchor="middle" class="bx" style="fill:#9C3B52;font-size:10.5px">10,26</text>
+<text x="620.0" y="222.0" text-anchor="middle" class="bx" style="fill:#141C24;font-size:10.5px">−9,26</text>
+<text x="570.0" y="244.0" text-anchor="middle" class="bx" style="fill:#141C24;font-size:10.5px">−9,26</text>
+<text x="620.0" y="244.0" text-anchor="middle" class="bx" style="fill:#9C3B52;font-size:10.5px">10,26</text>
+<path d="M 548 206 l -5 0 l 0 44 l 5 0" fill="none" stroke="#141C24" stroke-width="1.2"/>
+<path d="M 644 206 l 5 0 l 0 44 l -5 0" fill="none" stroke="#141C24" stroke-width="1.2"/>
+<text x="562.0" y="284.0" text-anchor="middle" class="cap" style="fill:#141C24">λ ≫ 1: pętle walczą;</text>
+<text x="562.0" y="300.0" text-anchor="middle" class="cap" style="fill:#9C3B52">rozproszone lub MPC</text>
+</svg>
+<figcaption>Trzy obiekty, trzy decyzje. A to strefy grzewcze z zagadnienia 24. Reguły doboru według Skogestada i Postlethwaite’a: <span class="cyt">„Prefer pairings such that the rearranged system, with the selected pairings along the diagonal, has an RGA matrix close to identity”</span> oraz <span class="cyt">„Avoid (if possible) pairing on negative steady-state RGA elements”</span>. Rachunek własny.</figcaption>
+</figure>
+
+<ol class="steps">
+<li><strong>A</strong>: <span class="m" data-tex="\lambda_{11} = 1/(1 - 1/4) = 1{,}33"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="24.477ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 10818.7 1000" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-5-TEX-I-1D706" d="M166 673Q166 685 183 694H202Q292 691 316 644Q322 629 373 486T474 207T524 67Q531 47 537 34T546 15T551 6T555 2T556 -2T550 -11H482Q457 3 450 18T399 152L354 277L340 262Q327 246 293 207T236 141Q211 112 174 69Q123 9 111 -1T83 -12Q47 -12 47 20Q47 37 61 52T199 187Q229 216 266 252T321 306L338 322Q338 323 288 462T234 612Q214 657 183 657Q166 657 166 673Z"></path><path id="MJX-5-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-5-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-5-TEX-N-2F" d="M423 750Q432 750 438 744T444 730Q444 725 271 248T92 -240Q85 -250 75 -250Q68 -250 62 -245T56 -231Q56 -221 230 257T407 740Q411 750 423 750Z"></path><path id="MJX-5-TEX-N-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path id="MJX-5-TEX-N-2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path><path id="MJX-5-TEX-N-34" d="M462 0Q444 3 333 3Q217 3 199 0H190V46H221Q241 46 248 46T265 48T279 53T286 61Q287 63 287 115V165H28V211L179 442Q332 674 334 675Q336 677 355 677H373L379 671V211H471V165H379V114Q379 73 379 66T385 54Q393 47 442 46H471V0H462ZM293 211V545L74 212L183 211H293Z"></path><path id="MJX-5-TEX-N-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path><path id="MJX-5-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-5-TEX-N-33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D706" xlink:href="#MJX-5-TEX-I-1D706"></use></g><g data-mml-node="TeXAtom" transform="translate(616,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><use data-c="31" xlink:href="#MJX-5-TEX-N-31"></use><use data-c="31" xlink:href="#MJX-5-TEX-N-31" transform="translate(500,0)"></use></g></g></g><g data-mml-node="mo" transform="translate(1650.9,0)"><use data-c="3D" xlink:href="#MJX-5-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(2706.7,0)"><use data-c="31" xlink:href="#MJX-5-TEX-N-31"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(3206.7,0)"><g data-mml-node="mo"><use data-c="2F" xlink:href="#MJX-5-TEX-N-2F"></use></g></g><g data-mml-node="mo" transform="translate(3706.7,0)"><use data-c="28" xlink:href="#MJX-5-TEX-N-28"></use></g><g data-mml-node="mn" transform="translate(4095.7,0)"><use data-c="31" xlink:href="#MJX-5-TEX-N-31"></use></g><g data-mml-node="mo" transform="translate(4817.9,0)"><use data-c="2212" xlink:href="#MJX-5-TEX-N-2212"></use></g><g data-mml-node="mn" transform="translate(5818.1,0)"><use data-c="31" xlink:href="#MJX-5-TEX-N-31"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(6318.1,0)"><g data-mml-node="mo"><use data-c="2F" xlink:href="#MJX-5-TEX-N-2F"></use></g></g><g data-mml-node="mn" transform="translate(6818.1,0)"><use data-c="34" xlink:href="#MJX-5-TEX-N-34"></use></g><g data-mml-node="mo" transform="translate(7318.1,0)"><use data-c="29" xlink:href="#MJX-5-TEX-N-29"></use></g><g data-mml-node="mo" transform="translate(7984.9,0)"><use data-c="3D" xlink:href="#MJX-5-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(9040.7,0)"><use data-c="31" xlink:href="#MJX-5-TEX-N-31"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(9540.7,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-5-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(9818.7,0)"><use data-c="33" xlink:href="#MJX-5-TEX-N-33"></use><use data-c="33" xlink:href="#MJX-5-TEX-N-33" transform="translate(500,0)"></use></g></g></g></svg></span> — blisko 1, pary na przekątnej. Po zamknięciu drugiej pętli wzmocnienie <span class="m" data-tex="u_1 \to y_1"><svg style="vertical-align: -0.464ex;" xmlns="http://www.w3.org/2000/svg" width="7.897ex" height="1.62ex" role="img" focusable="false" viewBox="0 -511 3490.7 716" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-6-TEX-I-1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-6-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-6-TEX-N-2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path><path id="MJX-6-TEX-I-1D466" d="M21 287Q21 301 36 335T84 406T158 442Q199 442 224 419T250 355Q248 336 247 334Q247 331 231 288T198 191T182 105Q182 62 196 45T238 27Q261 27 281 38T312 61T339 94Q339 95 344 114T358 173T377 247Q415 397 419 404Q432 431 462 431Q475 431 483 424T494 412T496 403Q496 390 447 193T391 -23Q363 -106 294 -155T156 -205Q111 -205 77 -183T43 -117Q43 -95 50 -80T69 -58T89 -48T106 -45Q150 -45 150 -87Q150 -107 138 -122T115 -142T102 -147L99 -148Q101 -153 118 -160T152 -167H160Q177 -167 186 -165Q219 -156 247 -127T290 -65T313 -9T321 21L315 17Q309 13 296 6T270 -6Q250 -11 231 -11Q185 -11 150 11T104 82Q103 89 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D462" xlink:href="#MJX-6-TEX-I-1D462"></use></g><g data-mml-node="mn" transform="translate(605,-150) scale(0.707)"><use data-c="31" xlink:href="#MJX-6-TEX-N-31"></use></g></g><g data-mml-node="mo" transform="translate(1286.3,0)"><use data-c="2192" xlink:href="#MJX-6-TEX-N-2192"></use></g><g data-mml-node="msub" transform="translate(2564.1,0)"><g data-mml-node="mi"><use data-c="1D466" xlink:href="#MJX-6-TEX-I-1D466"></use></g><g data-mml-node="mn" transform="translate(523,-150) scale(0.707)"><use data-c="31" xlink:href="#MJX-6-TEX-N-31"></use></g></g></g></g></svg></span> spada z 2 do <span class="m" data-tex="2/1{,}33 = 1{,}5"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="12.194ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 5389.6 1000" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-7-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-7-TEX-N-2F" d="M423 750Q432 750 438 744T444 730Q444 725 271 248T92 -240Q85 -250 75 -250Q68 -250 62 -245T56 -231Q56 -221 230 257T407 740Q411 750 423 750Z"></path><path id="MJX-7-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-7-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-7-TEX-N-33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path><path id="MJX-7-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-7-TEX-N-35" d="M164 157Q164 133 148 117T109 101H102Q148 22 224 22Q294 22 326 82Q345 115 345 210Q345 313 318 349Q292 382 260 382H254Q176 382 136 314Q132 307 129 306T114 304Q97 304 95 310Q93 314 93 485V614Q93 664 98 664Q100 666 102 666Q103 666 123 658T178 642T253 634Q324 634 389 662Q397 666 402 666Q410 666 410 648V635Q328 538 205 538Q174 538 149 544L139 546V374Q158 388 169 396T205 412T256 420Q337 420 393 355T449 201Q449 109 385 44T229 -22Q148 -22 99 32T50 154Q50 178 61 192T84 210T107 214Q132 214 148 197T164 157Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mn"><use data-c="32" xlink:href="#MJX-7-TEX-N-32"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(500,0)"><g data-mml-node="mo"><use data-c="2F" xlink:href="#MJX-7-TEX-N-2F"></use></g></g><g data-mml-node="mn" transform="translate(1000,0)"><use data-c="31" xlink:href="#MJX-7-TEX-N-31"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(1500,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-7-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(1778,0)"><use data-c="33" xlink:href="#MJX-7-TEX-N-33"></use><use data-c="33" xlink:href="#MJX-7-TEX-N-33" transform="translate(500,0)"></use></g><g data-mml-node="mo" transform="translate(3055.8,0)"><use data-c="3D" xlink:href="#MJX-7-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(4111.6,0)"><use data-c="31" xlink:href="#MJX-7-TEX-N-31"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(4611.6,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-7-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(4889.6,0)"><use data-c="35" xlink:href="#MJX-7-TEX-N-35"></use></g></g></g></svg></span> — dokładnie dlatego regulator zdecentralizowany z 24 przestrzeliwał.</li>
+<li><strong>B</strong>: <span class="m" data-tex="\lambda_{11} = 1/(1 - 4) = -0{,}33"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="23.974ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 10596.7 1000" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-8-TEX-I-1D706" d="M166 673Q166 685 183 694H202Q292 691 316 644Q322 629 373 486T474 207T524 67Q531 47 537 34T546 15T551 6T555 2T556 -2T550 -11H482Q457 3 450 18T399 152L354 277L340 262Q327 246 293 207T236 141Q211 112 174 69Q123 9 111 -1T83 -12Q47 -12 47 20Q47 37 61 52T199 187Q229 216 266 252T321 306L338 322Q338 323 288 462T234 612Q214 657 183 657Q166 657 166 673Z"></path><path id="MJX-8-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-8-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-8-TEX-N-2F" d="M423 750Q432 750 438 744T444 730Q444 725 271 248T92 -240Q85 -250 75 -250Q68 -250 62 -245T56 -231Q56 -221 230 257T407 740Q411 750 423 750Z"></path><path id="MJX-8-TEX-N-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path id="MJX-8-TEX-N-2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path><path id="MJX-8-TEX-N-34" d="M462 0Q444 3 333 3Q217 3 199 0H190V46H221Q241 46 248 46T265 48T279 53T286 61Q287 63 287 115V165H28V211L179 442Q332 674 334 675Q336 677 355 677H373L379 671V211H471V165H379V114Q379 73 379 66T385 54Q393 47 442 46H471V0H462ZM293 211V545L74 212L183 211H293Z"></path><path id="MJX-8-TEX-N-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path><path id="MJX-8-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJX-8-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-8-TEX-N-33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D706" xlink:href="#MJX-8-TEX-I-1D706"></use></g><g data-mml-node="TeXAtom" transform="translate(616,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><use data-c="31" xlink:href="#MJX-8-TEX-N-31"></use><use data-c="31" xlink:href="#MJX-8-TEX-N-31" transform="translate(500,0)"></use></g></g></g><g data-mml-node="mo" transform="translate(1650.9,0)"><use data-c="3D" xlink:href="#MJX-8-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(2706.7,0)"><use data-c="31" xlink:href="#MJX-8-TEX-N-31"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(3206.7,0)"><g data-mml-node="mo"><use data-c="2F" xlink:href="#MJX-8-TEX-N-2F"></use></g></g><g data-mml-node="mo" transform="translate(3706.7,0)"><use data-c="28" xlink:href="#MJX-8-TEX-N-28"></use></g><g data-mml-node="mn" transform="translate(4095.7,0)"><use data-c="31" xlink:href="#MJX-8-TEX-N-31"></use></g><g data-mml-node="mo" transform="translate(4817.9,0)"><use data-c="2212" xlink:href="#MJX-8-TEX-N-2212"></use></g><g data-mml-node="mn" transform="translate(5818.1,0)"><use data-c="34" xlink:href="#MJX-8-TEX-N-34"></use></g><g data-mml-node="mo" transform="translate(6318.1,0)"><use data-c="29" xlink:href="#MJX-8-TEX-N-29"></use></g><g data-mml-node="mo" transform="translate(6984.9,0)"><use data-c="3D" xlink:href="#MJX-8-TEX-N-3D"></use></g><g data-mml-node="mo" transform="translate(8040.7,0)"><use data-c="2212" xlink:href="#MJX-8-TEX-N-2212"></use></g><g data-mml-node="mn" transform="translate(8818.7,0)"><use data-c="30" xlink:href="#MJX-8-TEX-N-30"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(9318.7,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-8-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(9596.7,0)"><use data-c="33" xlink:href="#MJX-8-TEX-N-33"></use><use data-c="33" xlink:href="#MJX-8-TEX-N-33" transform="translate(500,0)"></use></g></g></g></svg></span> — ujemne. Para <span class="m" data-tex="u_1 \to y_1"><svg style="vertical-align: -0.464ex;" xmlns="http://www.w3.org/2000/svg" width="7.897ex" height="1.62ex" role="img" focusable="false" viewBox="0 -511 3490.7 716" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-9-TEX-I-1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-9-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-9-TEX-N-2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path><path id="MJX-9-TEX-I-1D466" d="M21 287Q21 301 36 335T84 406T158 442Q199 442 224 419T250 355Q248 336 247 334Q247 331 231 288T198 191T182 105Q182 62 196 45T238 27Q261 27 281 38T312 61T339 94Q339 95 344 114T358 173T377 247Q415 397 419 404Q432 431 462 431Q475 431 483 424T494 412T496 403Q496 390 447 193T391 -23Q363 -106 294 -155T156 -205Q111 -205 77 -183T43 -117Q43 -95 50 -80T69 -58T89 -48T106 -45Q150 -45 150 -87Q150 -107 138 -122T115 -142T102 -147L99 -148Q101 -153 118 -160T152 -167H160Q177 -167 186 -165Q219 -156 247 -127T290 -65T313 -9T321 21L315 17Q309 13 296 6T270 -6Q250 -11 231 -11Q185 -11 150 11T104 82Q103 89 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D462" xlink:href="#MJX-9-TEX-I-1D462"></use></g><g data-mml-node="mn" transform="translate(605,-150) scale(0.707)"><use data-c="31" xlink:href="#MJX-9-TEX-N-31"></use></g></g><g data-mml-node="mo" transform="translate(1286.3,0)"><use data-c="2192" xlink:href="#MJX-9-TEX-N-2192"></use></g><g data-mml-node="msub" transform="translate(2564.1,0)"><g data-mml-node="mi"><use data-c="1D466" xlink:href="#MJX-9-TEX-I-1D466"></use></g><g data-mml-node="mn" transform="translate(523,-150) scale(0.707)"><use data-c="31" xlink:href="#MJX-9-TEX-N-31"></use></g></g></g></g></svg></span> zmieniłaby znak wzmocnienia po zamknięciu drugiej pętli. Zamieniamy pary: <span class="m" data-tex="u_1 \to y_2"><svg style="vertical-align: -0.464ex;" xmlns="http://www.w3.org/2000/svg" width="7.897ex" height="1.62ex" role="img" focusable="false" viewBox="0 -511 3490.7 716" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-10-TEX-I-1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-10-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-10-TEX-N-2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path><path id="MJX-10-TEX-I-1D466" d="M21 287Q21 301 36 335T84 406T158 442Q199 442 224 419T250 355Q248 336 247 334Q247 331 231 288T198 191T182 105Q182 62 196 45T238 27Q261 27 281 38T312 61T339 94Q339 95 344 114T358 173T377 247Q415 397 419 404Q432 431 462 431Q475 431 483 424T494 412T496 403Q496 390 447 193T391 -23Q363 -106 294 -155T156 -205Q111 -205 77 -183T43 -117Q43 -95 50 -80T69 -58T89 -48T106 -45Q150 -45 150 -87Q150 -107 138 -122T115 -142T102 -147L99 -148Q101 -153 118 -160T152 -167H160Q177 -167 186 -165Q219 -156 247 -127T290 -65T313 -9T321 21L315 17Q309 13 296 6T270 -6Q250 -11 231 -11Q185 -11 150 11T104 82Q103 89 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-10-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D462" xlink:href="#MJX-10-TEX-I-1D462"></use></g><g data-mml-node="mn" transform="translate(605,-150) scale(0.707)"><use data-c="31" xlink:href="#MJX-10-TEX-N-31"></use></g></g><g data-mml-node="mo" transform="translate(1286.3,0)"><use data-c="2192" xlink:href="#MJX-10-TEX-N-2192"></use></g><g data-mml-node="msub" transform="translate(2564.1,0)"><g data-mml-node="mi"><use data-c="1D466" xlink:href="#MJX-10-TEX-I-1D466"></use></g><g data-mml-node="mn" transform="translate(523,-150) scale(0.707)"><use data-c="32" xlink:href="#MJX-10-TEX-N-32"></use></g></g></g></g></svg></span>, <span class="m" data-tex="u_2 \to y_1"><svg style="vertical-align: -0.464ex;" xmlns="http://www.w3.org/2000/svg" width="7.897ex" height="1.62ex" role="img" focusable="false" viewBox="0 -511 3490.7 716" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-11-TEX-I-1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-11-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-11-TEX-N-2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path><path id="MJX-11-TEX-I-1D466" d="M21 287Q21 301 36 335T84 406T158 442Q199 442 224 419T250 355Q248 336 247 334Q247 331 231 288T198 191T182 105Q182 62 196 45T238 27Q261 27 281 38T312 61T339 94Q339 95 344 114T358 173T377 247Q415 397 419 404Q432 431 462 431Q475 431 483 424T494 412T496 403Q496 390 447 193T391 -23Q363 -106 294 -155T156 -205Q111 -205 77 -183T43 -117Q43 -95 50 -80T69 -58T89 -48T106 -45Q150 -45 150 -87Q150 -107 138 -122T115 -142T102 -147L99 -148Q101 -153 118 -160T152 -167H160Q177 -167 186 -165Q219 -156 247 -127T290 -65T313 -9T321 21L315 17Q309 13 296 6T270 -6Q250 -11 231 -11Q185 -11 150 11T104 82Q103 89 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-11-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D462" xlink:href="#MJX-11-TEX-I-1D462"></use></g><g data-mml-node="mn" transform="translate(605,-150) scale(0.707)"><use data-c="32" xlink:href="#MJX-11-TEX-N-32"></use></g></g><g data-mml-node="mo" transform="translate(1286.3,0)"><use data-c="2192" xlink:href="#MJX-11-TEX-N-2192"></use></g><g data-mml-node="msub" transform="translate(2564.1,0)"><g data-mml-node="mi"><use data-c="1D466" xlink:href="#MJX-11-TEX-I-1D466"></use></g><g data-mml-node="mn" transform="translate(523,-150) scale(0.707)"><use data-c="31" xlink:href="#MJX-11-TEX-N-31"></use></g></g></g></g></svg></span> (wtedy <span class="m" data-tex="\lambda = 1{,}33"><svg style="vertical-align: -0.439ex;" xmlns="http://www.w3.org/2000/svg" width="8.359ex" height="2.009ex" role="img" focusable="false" viewBox="0 -694 3694.6 888" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-12-TEX-I-1D706" d="M166 673Q166 685 183 694H202Q292 691 316 644Q322 629 373 486T474 207T524 67Q531 47 537 34T546 15T551 6T555 2T556 -2T550 -11H482Q457 3 450 18T399 152L354 277L340 262Q327 246 293 207T236 141Q211 112 174 69Q123 9 111 -1T83 -12Q47 -12 47 20Q47 37 61 52T199 187Q229 216 266 252T321 306L338 322Q338 323 288 462T234 612Q214 657 183 657Q166 657 166 673Z"></path><path id="MJX-12-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-12-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-12-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-12-TEX-N-33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D706" xlink:href="#MJX-12-TEX-I-1D706"></use></g><g data-mml-node="mo" transform="translate(860.8,0)"><use data-c="3D" xlink:href="#MJX-12-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(1916.6,0)"><use data-c="31" xlink:href="#MJX-12-TEX-N-31"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(2416.6,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-12-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(2694.6,0)"><use data-c="33" xlink:href="#MJX-12-TEX-N-33"></use><use data-c="33" xlink:href="#MJX-12-TEX-N-33" transform="translate(500,0)"></use></g></g></g></svg></span>).</li>
+<li><strong>C</strong>: <span class="m" data-tex="\lambda_{11} = 1/(1 - 0{,}9025) = 10{,}3"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="27.368ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 12096.7 1000" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-13-TEX-I-1D706" d="M166 673Q166 685 183 694H202Q292 691 316 644Q322 629 373 486T474 207T524 67Q531 47 537 34T546 15T551 6T555 2T556 -2T550 -11H482Q457 3 450 18T399 152L354 277L340 262Q327 246 293 207T236 141Q211 112 174 69Q123 9 111 -1T83 -12Q47 -12 47 20Q47 37 61 52T199 187Q229 216 266 252T321 306L338 322Q338 323 288 462T234 612Q214 657 183 657Q166 657 166 673Z"></path><path id="MJX-13-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-13-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-13-TEX-N-2F" d="M423 750Q432 750 438 744T444 730Q444 725 271 248T92 -240Q85 -250 75 -250Q68 -250 62 -245T56 -231Q56 -221 230 257T407 740Q411 750 423 750Z"></path><path id="MJX-13-TEX-N-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path id="MJX-13-TEX-N-2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path><path id="MJX-13-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJX-13-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-13-TEX-N-39" d="M352 287Q304 211 232 211Q154 211 104 270T44 396Q42 412 42 436V444Q42 537 111 606Q171 666 243 666Q245 666 249 666T257 665H261Q273 665 286 663T323 651T370 619T413 560Q456 472 456 334Q456 194 396 97Q361 41 312 10T208 -22Q147 -22 108 7T68 93T121 149Q143 149 158 135T173 96Q173 78 164 65T148 49T135 44L131 43Q131 41 138 37T164 27T206 22H212Q272 22 313 86Q352 142 352 280V287ZM244 248Q292 248 321 297T351 430Q351 508 343 542Q341 552 337 562T323 588T293 615T246 625Q208 625 181 598Q160 576 154 546T147 441Q147 358 152 329T172 282Q197 248 244 248Z"></path><path id="MJX-13-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-13-TEX-N-35" d="M164 157Q164 133 148 117T109 101H102Q148 22 224 22Q294 22 326 82Q345 115 345 210Q345 313 318 349Q292 382 260 382H254Q176 382 136 314Q132 307 129 306T114 304Q97 304 95 310Q93 314 93 485V614Q93 664 98 664Q100 666 102 666Q103 666 123 658T178 642T253 634Q324 634 389 662Q397 666 402 666Q410 666 410 648V635Q328 538 205 538Q174 538 149 544L139 546V374Q158 388 169 396T205 412T256 420Q337 420 393 355T449 201Q449 109 385 44T229 -22Q148 -22 99 32T50 154Q50 178 61 192T84 210T107 214Q132 214 148 197T164 157Z"></path><path id="MJX-13-TEX-N-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path><path id="MJX-13-TEX-N-33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D706" xlink:href="#MJX-13-TEX-I-1D706"></use></g><g data-mml-node="TeXAtom" transform="translate(616,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><use data-c="31" xlink:href="#MJX-13-TEX-N-31"></use><use data-c="31" xlink:href="#MJX-13-TEX-N-31" transform="translate(500,0)"></use></g></g></g><g data-mml-node="mo" transform="translate(1650.9,0)"><use data-c="3D" xlink:href="#MJX-13-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(2706.7,0)"><use data-c="31" xlink:href="#MJX-13-TEX-N-31"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(3206.7,0)"><g data-mml-node="mo"><use data-c="2F" xlink:href="#MJX-13-TEX-N-2F"></use></g></g><g data-mml-node="mo" transform="translate(3706.7,0)"><use data-c="28" xlink:href="#MJX-13-TEX-N-28"></use></g><g data-mml-node="mn" transform="translate(4095.7,0)"><use data-c="31" xlink:href="#MJX-13-TEX-N-31"></use></g><g data-mml-node="mo" transform="translate(4817.9,0)"><use data-c="2212" xlink:href="#MJX-13-TEX-N-2212"></use></g><g data-mml-node="mn" transform="translate(5818.1,0)"><use data-c="30" xlink:href="#MJX-13-TEX-N-30"></use><use data-c="2C" xlink:href="#MJX-13-TEX-N-2C" transform="translate(500,0)"></use><use data-c="39" xlink:href="#MJX-13-TEX-N-39" transform="translate(778,0)"></use><use data-c="30" xlink:href="#MJX-13-TEX-N-30" transform="translate(1278,0)"></use><use data-c="32" xlink:href="#MJX-13-TEX-N-32" transform="translate(1778,0)"></use></g><g data-mml-node="mn" transform="translate(8096.1,0)"><use data-c="35" xlink:href="#MJX-13-TEX-N-35"></use></g><g data-mml-node="mo" transform="translate(8596.1,0)"><use data-c="29" xlink:href="#MJX-13-TEX-N-29"></use></g><g data-mml-node="mo" transform="translate(9262.9,0)"><use data-c="3D" xlink:href="#MJX-13-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(10318.7,0)"><use data-c="31" xlink:href="#MJX-13-TEX-N-31"></use><use data-c="30" xlink:href="#MJX-13-TEX-N-30" transform="translate(500,0)"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(11318.7,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-13-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(11596.7,0)"><use data-c="33" xlink:href="#MJX-13-TEX-N-33"></use></g></g></g></svg></span> — pętle silnie ze sobą walczą. Tego podsystemu nie dzielimy między dwa niezależne regulatory: potrzebne jest sterowanie wielowymiarowe (MPC) albo struktura rozproszona z wymianą danych.</li>
+</ol>
+
+<div class="box key">
+<span class="lbl">Zapamiętaj</span>
+<p><strong>λ ≈ 1 → decentralizuj śmiało. λ &lt; 0 → zła para, zamień. λ ≫ 1 → nie dziel, steruj razem.</strong></p>
+</div>
+</section>
+
+<section>
+<h2><span class="num">05</span> Wybór struktury i projekt regulatorów</h2>
+<div class="rail"></div>
+
+<table>
+<thead><tr><th>Sytuacja po dekompozycji</th><th>Struktura (→ 24)</th></tr></thead>
+<tbody>
+<tr><td>podsystemy słabo sprzężone, RGA bliskie jedności</td><td>zdecentralizowana: niezależne regulatory lokalne</td></tr>
+<tr><td>sprzężenia umiarkowane, sieć niezawodna</td><td>rozproszona: regulatory wymieniają dane z sąsiadami</td></tr>
+<tr><td>wspólny zasób albo cel (moc, surowiec, plan)</td><td>hierarchiczna: koordynator nad regulatorami lokalnymi</td></tr>
+<tr><td>silne sprzężenie wewnątrz podsystemu</td><td>jeden regulator wielowymiarowy (MPC) dla tego podsystemu</td></tr>
+</tbody>
+</table>
+
+<p>Regulatory projektuje się <strong>od dołu</strong>: najpierw pętle stabilizujące i szybkie (przepływy, poziomy), potem warstwa nadrzędna i koordynacja (32). Każdy regulator lokalny projektuje się na modelu swojego podsystemu, a wpływ sąsiadów traktuje jako zakłócenie albo mierzony sygnał z sieci. Na koniec trzeba sprawdzić <strong>stabilność całości</strong> — zestaw stabilnych pętli lokalnych nie musi dawać stabilnego układu, jeśli sprzężenia są silne.</p>
+</section>
+
+<section>
+<h2><span class="num">06</span> Realizacja: węzły, sieć i oprogramowanie</h2>
+<div class="rail"></div>
+
+<figure>
+<svg viewBox="0 0 680 330" class="fig">
+<defs><marker id="arF33d0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9C3B52"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">Z PODSYSTEMÓW NA WĘZŁY: KAŻDY PODSYSTEM MA WŁASNY STEROWNIK</text>
+<rect x="250.0" y="44.0" width="180.0" height="40.0" rx="4" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.3"/>
+<text x="340.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#B3641A;font-size:11px">koordynator / SCADA</text>
+<text x="340.0" y="77.0" text-anchor="middle" class="cap" style="font-size:9.5px">tylko cele i dane wspólne</text>
+<line x1="60.0" y1="118.0" x2="620.0" y2="118.0" stroke="#5C6B77" stroke-width="2.4"/>
+<text x="620.0" y="112.0" text-anchor="end" class="cap">sieć sterowania</text>
+<line x1="340.0" y1="84.0" x2="340.0" y2="118.0" stroke="#B3641A" stroke-width="1.4"/>
+<line x1="150.0" y1="118.0" x2="150.0" y2="146.0" stroke="#0E6E78" stroke-width="1.4"/>
+<rect x="70.0" y="146.0" width="160.0" height="40.0" rx="4" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.4"/>
+<text x="150.0" y="164.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:11px">węzeł A: sterownik</text>
+<text x="150.0" y="179.0" text-anchor="middle" class="cap" style="font-size:9.5px">pętle podsystemu A</text>
+<line x1="150.0" y1="186.0" x2="150.0" y2="206.0" stroke="#0E6E78" stroke-width="1.4"/>
+<rect x="60.0" y="206.0" width="180.0" height="30.0" rx="3" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.12"/>
+<text x="150.0" y="225.0" text-anchor="middle" class="cap" style="fill:#0E6E78">we/wy przy obiekcie</text>
+<line x1="90.0" y1="236.0" x2="90.0" y2="254.0" stroke="#0E6E78" stroke-width="1.1"/>
+<rect x="70.0" y="254.0" width="40.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="90.0" y="269.0" text-anchor="middle" class="cap" style="font-size:9.5px">P1</text>
+<line x1="150.0" y1="236.0" x2="150.0" y2="254.0" stroke="#0E6E78" stroke-width="1.1"/>
+<rect x="130.0" y="254.0" width="40.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="150.0" y="269.0" text-anchor="middle" class="cap" style="font-size:9.5px">P2</text>
+<line x1="210.0" y1="236.0" x2="210.0" y2="254.0" stroke="#0E6E78" stroke-width="1.1"/>
+<rect x="190.0" y="254.0" width="40.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="210.0" y="269.0" text-anchor="middle" class="cap" style="font-size:9.5px">P3</text>
+<line x1="530.0" y1="118.0" x2="530.0" y2="146.0" stroke="#5B4B8A" stroke-width="1.4"/>
+<rect x="450.0" y="146.0" width="160.0" height="40.0" rx="4" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.4"/>
+<text x="530.0" y="164.0" text-anchor="middle" class="bx-t" style="fill:#5B4B8A;font-size:11px">węzeł B: sterownik</text>
+<text x="530.0" y="179.0" text-anchor="middle" class="cap" style="font-size:9.5px">pętle podsystemu B</text>
+<line x1="530.0" y1="186.0" x2="530.0" y2="206.0" stroke="#5B4B8A" stroke-width="1.4"/>
+<rect x="440.0" y="206.0" width="180.0" height="30.0" rx="3" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.12"/>
+<text x="530.0" y="225.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">we/wy przy obiekcie</text>
+<line x1="470.0" y1="236.0" x2="470.0" y2="254.0" stroke="#5B4B8A" stroke-width="1.1"/>
+<rect x="450.0" y="254.0" width="40.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="470.0" y="269.0" text-anchor="middle" class="cap" style="font-size:9.5px">P4</text>
+<line x1="530.0" y1="236.0" x2="530.0" y2="254.0" stroke="#5B4B8A" stroke-width="1.1"/>
+<rect x="510.0" y="254.0" width="40.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="530.0" y="269.0" text-anchor="middle" class="cap" style="font-size:9.5px">P5</text>
+<line x1="590.0" y1="236.0" x2="590.0" y2="254.0" stroke="#5B4B8A" stroke-width="1.1"/>
+<rect x="570.0" y="254.0" width="40.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="590.0" y="269.0" text-anchor="middle" class="cap" style="font-size:9.5px">P6</text>
+<path d="M 232.0 160.0 L 448.0 160.0" fill="none" stroke="#9C3B52" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arF33d0)"/>
+<path d="M 448.0 172.0 L 232.0 172.0" fill="none" stroke="#9C3B52" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arF33d0)"/>
+<text x="340.0" y="152.0" text-anchor="middle" class="cap" style="fill:#9C3B52">dane o słabych sprzężeniach</text>
+<text x="340.0" y="196.0" text-anchor="middle" class="cap" style="fill:#9C3B52">(P2–P4, P3–P4)</text>
+<text x="340.0" y="304.0" text-anchor="middle" class="cap" style="fill:#141C24">awaria węzła A nie zatrzymuje B; awaria sieci → każdy węzeł pracuje sam (tryb zdecentralizowany)</text>
+<text x="340.0" y="320.0" text-anchor="middle" class="cap">budżet czasu: cykl węzła i sieci dobrany do dynamiki pętli (zagadnienie 21)</text>
+</svg>
+<figcaption>Podsystem = węzeł sprzętowy z własnym sterownikiem i modułami we/wy przy obiekcie. Sieć przenosi tylko to, co wynika ze słabych sprzężeń, i cele od koordynatora. Opracowanie własne; sprzęt jak w zagadnieniu 22, sieci jak w 21.</figcaption>
+</figure>
+
+<ul>
+<li><strong>Przydział sygnałów</strong>: każdy sygnał do węzła swojego podsystemu, możliwie najbliżej obiektu; pętla zamyka się wewnątrz jednego węzła, bez sieci.</li>
+<li><strong>Dobór sieci</strong>: cykl i opóźnienie dobrane do dynamiki pętli, które przez sieć przechodzą (zagadnienie 21).</li>
+<li><strong>Niezawodność</strong>: awaria sieci nie może zatrzymać węzła — każdy ma tryb pracy samodzielnej (ostatnie wartości zadane, 32); redundancja tam, gdzie awaria najdroższa.</li>
+<li><strong>Oprogramowanie</strong>: programy węzłów w językach IEC 61131-3 albo jako rozproszona aplikacja IEC 61499, wspólna baza zmiennych, konfiguracja SCADA i alarmów.</li>
+</ul>
+</section>
+
+<section>
+<h2><span class="num">07</span> Testy i uruchomienie</h2>
+<div class="rail"></div>
+
+<figure>
+<svg viewBox="0 0 680 250" class="fig">
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">OD SYMULACJI DO OBIEKTU: CO JEST PRAWDZIWE NA KOLEJNYCH ETAPACH TESTÓW</text>
+<text x="237.0" y="52.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52;font-size:11.5px">MIL</text>
+<text x="237.0" y="66.0" text-anchor="middle" class="cap" style="font-size:9px">model w pętli</text>
+<text x="331.0" y="52.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52;font-size:11.5px">SIL</text>
+<text x="331.0" y="66.0" text-anchor="middle" class="cap" style="font-size:9px">kod w pętli</text>
+<text x="425.0" y="52.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52;font-size:11.5px">HIL</text>
+<text x="425.0" y="66.0" text-anchor="middle" class="cap" style="font-size:9px">sprzęt w pętli</text>
+<text x="519.0" y="52.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52;font-size:11.5px">FAT</text>
+<text x="519.0" y="66.0" text-anchor="middle" class="cap" style="font-size:9px">u dostawcy</text>
+<text x="613.0" y="52.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52;font-size:11.5px">SAT</text>
+<text x="613.0" y="66.0" text-anchor="middle" class="cap" style="font-size:9px">na obiekcie</text>
+<text x="180.0" y="98.0" text-anchor="end" class="cap" style="fill:#141C24">algorytm sterowania</text>
+<rect x="194.0" y="82.0" width="86.0" height="28.0" rx="3" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.55"/>
+<text x="237.0" y="100.0" text-anchor="middle" class="cap" style="fill:#FFFFFF;font-size:9.5px">prawdziwe</text>
+<rect x="288.0" y="82.0" width="86.0" height="28.0" rx="3" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.55"/>
+<text x="331.0" y="100.0" text-anchor="middle" class="cap" style="fill:#FFFFFF;font-size:9.5px">prawdziwe</text>
+<rect x="382.0" y="82.0" width="86.0" height="28.0" rx="3" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.55"/>
+<text x="425.0" y="100.0" text-anchor="middle" class="cap" style="fill:#FFFFFF;font-size:9.5px">prawdziwe</text>
+<rect x="476.0" y="82.0" width="86.0" height="28.0" rx="3" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.55"/>
+<text x="519.0" y="100.0" text-anchor="middle" class="cap" style="fill:#FFFFFF;font-size:9.5px">prawdziwe</text>
+<rect x="570.0" y="82.0" width="86.0" height="28.0" rx="3" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.55"/>
+<text x="613.0" y="100.0" text-anchor="middle" class="cap" style="fill:#FFFFFF;font-size:9.5px">prawdziwe</text>
+<text x="180.0" y="134.0" text-anchor="end" class="cap" style="fill:#141C24">kod na sterowniku</text>
+<rect x="194.0" y="118.0" width="86.0" height="28.0" rx="3" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="237.0" y="136.0" text-anchor="middle" class="cap" style="font-size:9.5px">model</text>
+<rect x="288.0" y="118.0" width="86.0" height="28.0" rx="3" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.55"/>
+<text x="331.0" y="136.0" text-anchor="middle" class="cap" style="fill:#FFFFFF;font-size:9.5px">prawdziwe</text>
+<rect x="382.0" y="118.0" width="86.0" height="28.0" rx="3" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.55"/>
+<text x="425.0" y="136.0" text-anchor="middle" class="cap" style="fill:#FFFFFF;font-size:9.5px">prawdziwe</text>
+<rect x="476.0" y="118.0" width="86.0" height="28.0" rx="3" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.55"/>
+<text x="519.0" y="136.0" text-anchor="middle" class="cap" style="fill:#FFFFFF;font-size:9.5px">prawdziwe</text>
+<rect x="570.0" y="118.0" width="86.0" height="28.0" rx="3" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.55"/>
+<text x="613.0" y="136.0" text-anchor="middle" class="cap" style="fill:#FFFFFF;font-size:9.5px">prawdziwe</text>
+<text x="180.0" y="170.0" text-anchor="end" class="cap" style="fill:#141C24">sterowniki i sieć</text>
+<rect x="194.0" y="154.0" width="86.0" height="28.0" rx="3" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="237.0" y="172.0" text-anchor="middle" class="cap" style="font-size:9.5px">model</text>
+<rect x="288.0" y="154.0" width="86.0" height="28.0" rx="3" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="331.0" y="172.0" text-anchor="middle" class="cap" style="font-size:9.5px">model</text>
+<rect x="382.0" y="154.0" width="86.0" height="28.0" rx="3" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.55"/>
+<text x="425.0" y="172.0" text-anchor="middle" class="cap" style="fill:#FFFFFF;font-size:9.5px">prawdziwe</text>
+<rect x="476.0" y="154.0" width="86.0" height="28.0" rx="3" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.55"/>
+<text x="519.0" y="172.0" text-anchor="middle" class="cap" style="fill:#FFFFFF;font-size:9.5px">prawdziwe</text>
+<rect x="570.0" y="154.0" width="86.0" height="28.0" rx="3" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.55"/>
+<text x="613.0" y="172.0" text-anchor="middle" class="cap" style="fill:#FFFFFF;font-size:9.5px">prawdziwe</text>
+<text x="180.0" y="206.0" text-anchor="end" class="cap" style="fill:#141C24">obiekt</text>
+<rect x="194.0" y="190.0" width="86.0" height="28.0" rx="3" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="237.0" y="208.0" text-anchor="middle" class="cap" style="font-size:9.5px">model</text>
+<rect x="288.0" y="190.0" width="86.0" height="28.0" rx="3" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="331.0" y="208.0" text-anchor="middle" class="cap" style="font-size:9.5px">model</text>
+<rect x="382.0" y="190.0" width="86.0" height="28.0" rx="3" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="425.0" y="208.0" text-anchor="middle" class="cap" style="font-size:9.5px">model</text>
+<rect x="476.0" y="190.0" width="86.0" height="28.0" rx="3" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="519.0" y="208.0" text-anchor="middle" class="cap" style="font-size:9.5px">model</text>
+<rect x="570.0" y="190.0" width="86.0" height="28.0" rx="3" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.55"/>
+<text x="613.0" y="208.0" text-anchor="middle" class="cap" style="fill:#FFFFFF;font-size:9.5px">prawdziwe</text>
+<text x="340.0" y="238.0" text-anchor="middle" class="cap" style="fill:#141C24">im później znaleziony błąd, tym drożej go poprawić — dlatego obiekt dochodzi dopiero na końcu</text>
+</svg>
+<figcaption>Kolejne etapy testów zastępują modele prawdziwymi elementami. HIL (<em>hardware-in-the-loop</em>) to według Wikipedii <span class="cyt">„a technique that is used in the development and testing of complex real-time embedded systems”</span>: prawdziwe sterowniki i sieć pracują z symulatorem obiektu. FAT odbywa się u dostawcy, SAT — na obiekcie, z udziałem użytkownika.</figcaption>
+</figure>
+
+<p>FAT to według Wikipedii test <span class="cyt">„performed by employees of the supplier organization, to determine whether a component or system satisfies the requirements”</span>. Po nim następuje SAT i <strong>uruchomienie</strong>: sprawdzenie torów sygnałowych, strojenie regulatorów na obiekcie (najpierw pętle wewnętrzne, potem zewnętrzne), próby awarii węzłów i sieci, szkolenie operatorów. Ostatni etap — <strong>eksploatacja</strong> — obejmuje utrzymanie, diagnostykę (27–29) i modyfikacje, które wracają do lewego ramienia V.</p>
+</section>
+
+<section>
+<h2><span class="num">08</span> Narysuj na tablicy</h2>
+<div class="rail"></div>
+
+<figure>
+<svg viewBox="0 0 680 470" class="fig">
+<defs><marker id="arF33f0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9C3B52"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">NARYSUJ NA TABLICY W 6 RUCHACH</text>
+<rect x="14.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="32.0" cy="58.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="32.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">1</text>
+<text x="48.0" y="56.0" text-anchor="start" class="bx-t">litera V:</text>
+<text x="48.0" y="70.0" text-anchor="start" class="bx" style="font-size:9.5px">lewe ramię = projekt</text>
+<line x1="44.0" y1="100.0" x2="118.0" y2="220.0" stroke="#0E6E78" stroke-width="3"/>
+<rect x="236.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="254.0" cy="58.0" r="10" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="254.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">2</text>
+<text x="270.0" y="56.0" text-anchor="start" class="bx-t">prawe ramię:</text>
+<text x="270.0" y="70.0" text-anchor="start" class="bx" style="font-size:9.5px">testy i uruchomienie</text>
+<line x1="266.0" y1="100.0" x2="340.0" y2="220.0" stroke="#0E6E78" stroke-width="3"/>
+<line x1="340.0" y1="220.0" x2="414.0" y2="100.0" stroke="#9C3B52" stroke-width="3"/>
+<line x1="284.3" y1="120.0" x2="395.7" y2="120.0" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<line x1="302.8" y1="150.0" x2="377.2" y2="150.0" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<line x1="321.3" y1="180.0" x2="358.7" y2="180.0" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="458.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="476.0" cy="58.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="476.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">3</text>
+<text x="492.0" y="56.0" text-anchor="start" class="bx-t">dekompozycja:</text>
+<text x="492.0" y="70.0" text-anchor="start" class="bx" style="font-size:9.5px">grupy, cięcie słabych</text>
+<line x1="508.0" y1="130.0" x2="538.0" y2="180.0" stroke="#141C24" stroke-width="2.4"/>
+<line x1="538.0" y1="180.0" x2="498.0" y2="200.0" stroke="#141C24" stroke-width="2.4"/>
+<line x1="508.0" y1="130.0" x2="498.0" y2="200.0" stroke="#141C24" stroke-width="2.4"/>
+<line x1="608.0" y1="130.0" x2="628.0" y2="190.0" stroke="#141C24" stroke-width="2.4"/>
+<line x1="628.0" y1="190.0" x2="588.0" y2="200.0" stroke="#141C24" stroke-width="2.4"/>
+<line x1="608.0" y1="130.0" x2="588.0" y2="200.0" stroke="#141C24" stroke-width="2.4"/>
+<line x1="538.0" y1="180.0" x2="588.0" y2="200.0" stroke="#9C3B52" stroke-width="1" stroke-dasharray="3 2"/>
+<circle cx="508.0" cy="130.0" r="9" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<circle cx="538.0" cy="180.0" r="9" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<circle cx="498.0" cy="200.0" r="9" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<circle cx="608.0" cy="130.0" r="9" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<circle cx="628.0" cy="190.0" r="9" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<circle cx="588.0" cy="200.0" r="9" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<line x1="562.0" y1="100.0" x2="562.0" y2="230.0" stroke="#9C3B52" stroke-width="1.2" stroke-dasharray="5 4"/>
+<rect x="14.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="32.0" cy="272.0" r="10" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="32.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">4</text>
+<text x="48.0" y="270.0" text-anchor="start" class="bx-t">RGA 2×2:</text>
+<text x="48.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">λ₁₁ i wybór par</text>
+<text x="118.0" y="344.0" text-anchor="middle" class="cap" style="font-size:9.5px">λ₁₁ = 1/(1 − g₁₂g₂₁/g₁₁g₂₂)</text>
+<text x="118.0" y="378.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9.5px">≈ 1 → pary na przekątnej</text>
+<text x="118.0" y="400.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9.5px">&lt; 0 → zamień pary</text>
+<text x="118.0" y="422.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:9.5px">≫ 1 → silne sprzężenie</text>
+<rect x="236.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="254.0" cy="272.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="254.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">5</text>
+<text x="270.0" y="270.0" text-anchor="start" class="bx-t">węzły:</text>
+<text x="270.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">sterownik na podsystem</text>
+<line x1="256.0" y1="334.0" x2="424.0" y2="334.0" stroke="#5C6B77" stroke-width="2"/>
+<line x1="296.0" y1="334.0" x2="296.0" y2="354.0" stroke="#0E6E78" stroke-width="1.2"/>
+<rect x="266.0" y="354.0" width="60.0" height="24.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.2"/>
+<text x="296.0" y="370.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9px">węzeł</text>
+<rect x="268.0" y="404.0" width="24.0" height="18.0" rx="2" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<line x1="280.0" y1="378.0" x2="280.0" y2="404.0" stroke="#0E6E78" stroke-width="1"/>
+<rect x="300.0" y="404.0" width="24.0" height="18.0" rx="2" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<line x1="312.0" y1="378.0" x2="312.0" y2="404.0" stroke="#0E6E78" stroke-width="1"/>
+<line x1="384.0" y1="334.0" x2="384.0" y2="354.0" stroke="#5B4B8A" stroke-width="1.2"/>
+<rect x="354.0" y="354.0" width="60.0" height="24.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<text x="384.0" y="370.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9px">węzeł</text>
+<rect x="356.0" y="404.0" width="24.0" height="18.0" rx="2" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<line x1="368.0" y1="378.0" x2="368.0" y2="404.0" stroke="#5B4B8A" stroke-width="1"/>
+<rect x="388.0" y="404.0" width="24.0" height="18.0" rx="2" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<line x1="400.0" y1="378.0" x2="400.0" y2="404.0" stroke="#5B4B8A" stroke-width="1"/>
+<rect x="458.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="476.0" cy="272.0" r="10" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="476.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">6</text>
+<text x="492.0" y="270.0" text-anchor="start" class="bx-t">testy:</text>
+<text x="492.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">MIL→SIL→HIL→FAT→SAT</text>
+<rect x="476.0" y="354.0" width="30.0" height="26.0" rx="3" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.2"/>
+<text x="491.0" y="371.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:8.5px">MIL</text>
+<path d="M 506.0 367.0 L 512.0 367.0" fill="none" stroke="#9C3B52" stroke-width="1" marker-end="url(#arF33f0)"/>
+<rect x="512.0" y="354.0" width="30.0" height="26.0" rx="3" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.2"/>
+<text x="527.0" y="371.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:8.5px">SIL</text>
+<path d="M 542.0 367.0 L 548.0 367.0" fill="none" stroke="#9C3B52" stroke-width="1" marker-end="url(#arF33f0)"/>
+<rect x="548.0" y="354.0" width="30.0" height="26.0" rx="3" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.2"/>
+<text x="563.0" y="371.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:8.5px">HIL</text>
+<path d="M 578.0 367.0 L 584.0 367.0" fill="none" stroke="#9C3B52" stroke-width="1" marker-end="url(#arF33f0)"/>
+<rect x="584.0" y="354.0" width="30.0" height="26.0" rx="3" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.2"/>
+<text x="599.0" y="371.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:8.5px">FAT</text>
+<path d="M 614.0 367.0 L 620.0 367.0" fill="none" stroke="#9C3B52" stroke-width="1" marker-end="url(#arF33f0)"/>
+<rect x="620.0" y="354.0" width="30.0" height="26.0" rx="3" fill="#0E6E78" stroke="#9C3B52" stroke-width="1.2"/>
+<text x="635.0" y="371.0" text-anchor="middle" class="cap" style="fill:#FFFFFF;font-size:8.5px">SAT</text>
+<text x="562.0" y="404.0" text-anchor="middle" class="cap" style="font-size:9px">coraz więcej prawdziwego</text>
+<text x="562.0" y="418.0" text-anchor="middle" class="cap" style="font-size:9px">sprzętu i obiektu</text>
+</svg>
+<figcaption>(1) Lewe ramię V: wymagania, analiza, dekompozycja, struktura, sprzęt. (2) Prawe ramię: testy modułów, HIL, FAT, SAT, eksploatacja, z przerywanymi liniami do etapów, które sprawdzają. (3) Dekompozycja: dwie grupy i cięcie słabych sprzężeń. (4) Wzór na λ₁₁ i trzy reguły. (5) Węzły na sieci, każdy z własnymi we/wy. (6) Łańcuch testów MIL → SAT.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2><span class="num">09</span> Opowiedz własnymi słowami</h2>
+<div class="rail"></div>
+
+<details class="fiszka op"><summary>Wersja 30 sekund (dla kogoś spoza automatyki)</summary>
+<p>„To jak budowa sieci sklepów zamiast jednego wielkiego marketu. Najpierw ustalam, czego potrzeba. Potem dzielę teren na dzielnice tak, żeby każda była w miarę samowystarczalna — a to, co je łączy, załatwiam dostawami między nimi. Każda dzielnica dostaje swojego kierownika i swój sprzęt, a nad nimi jest centrala, która ustala tylko cele. Zanim otworzę sklepy, testuję wszystko na makiecie, potem u dostawcy, a na koniec na miejscu.”</p></details>
+
+<details class="fiszka op"><summary>Wersja 2 minuty (egzaminacyjna, siedem zdań-kotwic)</summary>
+<ol>
+<li><strong>Model procesu:</strong> „Proces budowy opisuje model V: lewe ramię to projekt od wymagań w dół, prawe to składanie i sprawdzanie w górę.”</li>
+<li><strong>Wymagania i analiza:</strong> „Określam cele, ograniczenia i wymagania czasowe, spisuję sygnały i buduję choćby prosty model obiektu.”</li>
+<li><strong>Dekompozycja:</strong> „Dzielę obiekt na podsystemy tak, żeby silne sprzężenia zostały w środku, a słabe na granicach; kryteria to sprzężenia, położenie, technologia i odpowiedzialność.”</li>
+<li><strong>RGA:</strong> „Pary wejście–wyjście dobieram z RGA: λ bliskie 1 — dobra para, ujemne — zła, bardzo duże — podsystemu nie dzielę.”</li>
+<li><strong>Struktura i regulatory:</strong> „Wybieram strukturę zdecentralizowaną, rozproszoną albo hierarchiczną i projektuję regulatory od dołu, a potem sprawdzam stabilność całości.”</li>
+<li><strong>Realizacja:</strong> „Każdy podsystem dostaje własny węzeł z we/wy przy obiekcie, sieć przenosi tylko dane o sprzężeniach i cele, a każdy węzeł umie pracować sam.”</li>
+<li><strong>Testy:</strong> „Testuję od symulacji do obiektu: moduły, HIL, FAT u dostawcy, SAT i uruchomienie na obiekcie, potem eksploatacja.”</li>
+</ol></details>
+
+<h3>Lista kontrolna przed egzaminem</h3>
+<ul class="check">
+<li>Rysuję model V z etapami po obu stronach.</li>
+<li>Podaję cztery kryteria dekompozycji.</li>
+<li>Liczę RGA dla trzech przykładów i mówię, co z nich wynika.</li>
+<li>Dobieram strukturę do stopnia sprzężenia.</li>
+<li>Opisuję przydział do węzłów i tryb pracy samodzielnej.</li>
+<li>Wymieniam etapy testów MIL, SIL, HIL, FAT, SAT.</li>
+</ul>
+</section>
+
+<section>
+<h2><span class="num">10</span> Ściąga</h2>
+<div class="rail"></div>
+
+<div class="karty">
+<div class="karta b"><span class="kw">Model V</span><p>Lewe ramię: projekt (rozkład). Prawe: integracja i sprawdzanie. Procedura iteracyjna.</p></div>
+<div class="karta"><span class="kw">Wymagania i analiza</span><p>Cele, ograniczenia, czas, lista sygnałów, model.</p></div>
+<div class="karta s"><span class="kw">Dekompozycja</span><p>Silne sprzężenia w podsystemie, słabe na granicy; sprzężenia, położenie, technologia, odpowiedzialność.</p></div>
+<div class="karta a"><span class="kw">RGA</span><p>λ₁₁ = 1/(1 − g₁₂g₂₁/g₁₁g₂₂). ≈1 dobra para; &lt;0 zamień; ≫1 nie dziel.</p></div>
+<div class="karta"><span class="kw">Przykład</span><p>A: 1,33 (pary diagonalne); B: −0,33 (na krzyż); C: 10,3 (MPC).</p></div>
+<div class="karta b"><span class="kw">Struktura</span><p>Słabe sprzężenia → zdecentralizowana; umiarkowane → rozproszona; wspólny zasób → hierarchiczna.</p></div>
+<div class="karta"><span class="kw">Regulatory</span><p>Od dołu: szybkie pętle, potem nadrzędne; na końcu stabilność całości.</p></div>
+<div class="karta s"><span class="kw">Węzły</span><p>Podsystem = sterownik + we/wy przy obiekcie; pętla zamknięta w węźle; tryb samodzielny.</p></div>
+<div class="karta a"><span class="kw">Testy</span><p>MIL → SIL → HIL → FAT → SAT → uruchomienie → eksploatacja.</p></div>
+<div class="karta"><span class="kw">Oprogramowanie</span><p>IEC 61131-3 w węzłach lub rozproszona aplikacja IEC 61499; SCADA, alarmy.</p></div>
+</div>
+</section>
+
+<section>
+<h2><span class="num">11</span> Pytania dodatkowe — fiszki</h2>
+<div class="rail"></div>
+
+<details class="fiszka"><summary>Co dokładnie mierzy λ₁₁?</summary>
+<p>Stosunek wzmocnienia u₁ → y₁, gdy druga pętla jest otwarta, do tego samego wzmocnienia, gdy druga pętla jest zamknięta i idealnie trzyma y₂. λ = 1 znaczy, że druga pętla nie zmienia zachowania pierwszej. λ = 1,33 znaczy, że po zamknięciu drugiej pętli wzmocnienie spada o jedną czwartą. Ujemne λ oznacza zmianę znaku — pętla, która była stabilna sama, po zamknięciu drugiej zaczyna działać odwrotnie.</p></details>
+
+<details class="fiszka"><summary>Czym różni się FAT od SAT?</summary>
+<p>FAT (<em>Factory Acceptance Test</em>) wykonuje dostawca u siebie, zanim system trafi na obiekt — zwykle z symulatorem procesu. SAT (<em>Site Acceptance Test</em>) wykonuje się na obiekcie, z prawdziwą instalacją i z udziałem użytkownika. Błąd znaleziony na FAT jest dużo tańszy do poprawienia niż na SAT.</p></details>
+
+<details class="fiszka"><summary>Dlaczego pętlę najlepiej zamknąć w jednym węźle?</summary>
+<p>Bo wtedy nie przechodzi przez sieć: nie ma opóźnienia sieciowego w pętli (utrata fazy ωc·τ z zagadnienia 21), a awaria sieci jej nie przerywa. Przez sieć idą tylko sygnały koordynacji i słabych sprzężeń, dla których opóźnienie jest mniej groźne.</p></details>
+
+<details class="fiszka"><summary>Czy stabilne pętle lokalne gwarantują stabilny system?</summary>
+<p>Nie. Przy silnych sprzężeniach dwie pętle, każda stabilna osobno, mogą razem tworzyć układ niestabilny, bo każda zmienia wzmocnienie drugiej. Dlatego po projekcie lokalnym sprawdza się stabilność całości — na modelu, w symulacji i w teście HIL.</p></details>
+
+<details class="fiszka"><summary>Po co model V, a nie po prostu lista kroków?</summary>
+<p>Bo pokazuje, który test sprawdza który etap projektu: testy modułów sprawdzają oprogramowanie, HIL — strukturę i sprzęt, FAT — zgodność ze specyfikacją, SAT i uruchomienie — wymagania. Dzięki temu wiadomo, do którego kroku wrócić, gdy test nie przejdzie.</p></details>
+</section>
+
+
+
+<footer>
+  <p><strong style="color:var(--ink)">Źródła</strong></p>
+  <ol class="zr">
+<li>S. Skogestad, <a href="https://skoge.folk.ntnu.no/publications/2004/control_structure_design_cce/cce04_skogestad.pdf">Control structure design for complete chemical plants</a>, Computers &amp; Chemical Engineering 28, 2004 — procedura: analiza z góry, projekt od dołu, iteracyjność.</li>
+<li>S. Skogestad, I. Postlethwaite, <a href="https://skoge.folk.ntnu.no/vgprosessregulering/papers-pensum/ch3-ch10-2ndedition.pdf"><em>Multivariable Feedback Control: Analysis and Design</em></a>, wyd. 2, Wiley 2005, rozdz. 3.4 — RGA, wzór 2×2, reguły doboru par.</li>
+<li>E. H. Bristol, On a new measure of interaction for multivariable process control, IEEE Transactions on Automatic Control 11(1), 1966; <a href="https://en.wikipedia.org/wiki/Relative_gain_array">Relative gain array</a>, Wikipedia.</li>
+<li>Wikipedia: <a href="https://en.wikipedia.org/wiki/V-model">V-model</a>; <a href="https://en.wikipedia.org/wiki/Hardware-in-the-loop_simulation">Hardware-in-the-loop simulation</a>; <a href="https://en.wikipedia.org/wiki/Factory_acceptance_test">Factory acceptance test</a>.</li>
+<li>R. Scattolini, Architectures for distributed and hierarchical Model Predictive Control – A review, Journal of Process Control 19(5), 2009 — por. zagadnienie 24.</li>
+</ol>
+
+  <p>Repetytorium do egzaminu dyplomowego &middot; ARiSS II stopień &middot; specjalność Systemy sterowania i wspomagania decyzji. Brak slajdów wykładowych do tego zagadnienia w projekcie — strona powstała z literatury wymienionej wyżej. Liczby w przykładzie są przykładowe, a rachunek własny.</p>
+  <p class="backfoot"><a href="index.html">&larr; Wróć do listy zagadnień</a></p>
+</footer>
+
+</div>
+</body>
+</html>

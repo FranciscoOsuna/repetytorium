@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pytanie 42 — Proces decyzyjny i system wspomagania decyzji</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#141C24; --mut:#5C6B77; --line:#C3CDD4;
+  --paper:#E8ECEF; --card:#FCFDFD;
+  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52;
+  --disp:"Space Grotesk",system-ui,sans-serif;
+  --body:"STIX Two Text","Source Serif 4",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+     font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:860px;margin:0 auto;padding:0 22px 100px}
+
+/* ---- nagłówek ---- */
+header{padding:64px 0 30px;border-bottom:2px solid var(--ink)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+         color:var(--mut);margin:0 0 14px}
+h1{font-family:var(--disp);font-weight:700;font-size:clamp(30px,5vw,46px);line-height:1.08;
+   letter-spacing:-.02em;margin:0 0 18px}
+.quest{font-style:italic;font-size:19px;color:var(--ink);margin:0;padding-left:16px;
+       border-left:3px solid var(--violet)}
+.src{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:18px}
+
+/* ---- sekcje ---- */
+section{margin-top:56px}
+h2{font-family:var(--disp);font-weight:700;font-size:25px;letter-spacing:-.015em;
+   margin:0 0 6px;display:flex;align-items:baseline;gap:12px}
+h2 .num{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--violet);
+        letter-spacing:.08em;flex:none}
+h3{font-family:var(--disp);font-weight:500;font-size:18.5px;margin:34px 0 8px;letter-spacing:-.01em}
+p{margin:0 0 14px}
+.rail{height:5px;background:linear-gradient(90deg,var(--teal) 0%,var(--violet) 55%,var(--amber) 100%);
+      opacity:.85;margin:0 0 22px;border-radius:2px}
+
+/* ---- figury ---- */
+figure{margin:26px 0;background:var(--card);border:1px solid var(--line);border-radius:3px;
+       padding:20px 18px 14px}
+.fig{width:100%;height:auto;display:block}
+figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:12px;
+           padding-top:10px;border-top:1px solid var(--line);line-height:1.5}
+.tick{font-family:var(--mono);font-size:10.5px;fill:#7C8A94}
+.axlab{font-family:var(--mono);font-size:11px;fill:var(--mut)}
+.cap{font-family:var(--mono);font-size:10.5px;fill:var(--mut)}
+.bx{font-family:var(--mono);font-size:10.5px;fill:var(--mut)}
+.bx-t{font-family:var(--disp);font-size:11.5px;font-weight:500;fill:var(--ink)}
+
+/* ---- bloki ---- */
+.box{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--violet);
+     padding:16px 18px;margin:22px 0;border-radius:2px}
+.box.key{border-left-color:var(--rose)}
+.box.warn{border-left-color:var(--amber)}
+.box .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+          color:var(--mut);display:block;margin-bottom:8px}
+.box p:last-child{margin-bottom:0}
+
+/* ---- wzory (TeX składany do SVG skryptem mathbuild.js) ---- */
+.eq{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--violet);
+    padding:18px 18px;margin:22px 0;border-radius:2px;overflow-x:auto;text-align:center;
+    font-size:18.5px;line-height:1.3}
+.eq svg{max-width:100%;height:auto}
+.eq.txt{font-family:var(--mono);font-size:14px;line-height:1.7;color:var(--ink);text-align:center}
+.eq b{color:var(--violet);font-weight:500}
+.eqnote{font-family:var(--mono);font-size:12.5px;color:var(--mut);text-align:center;
+        margin:-14px 0 20px;line-height:1.6}
+.m{white-space:nowrap}
+.m svg{vertical-align:-0.25ex;max-width:100%;height:auto}
+@media (max-width:640px){
+  table{display:block;overflow-x:auto;width:auto;min-width:100%;-webkit-overflow-scrolling:touch}
+  table .m svg{max-width:none}
+  .eq{padding:14px 12px;font-size:16px}
+}
+
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15px;background:var(--card)}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--disp);font-weight:500;font-size:13px;letter-spacing:.02em;
+   background:#F2F5F6;border-bottom:1.5px solid var(--line)}
+td.n{font-family:var(--mono);font-size:13.5px;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+
+ol,ul{margin:0 0 14px;padding-left:22px}
+li{margin-bottom:7px}
+ol.steps{list-style:none;padding-left:0;counter-reset:st}
+ol.steps>li{counter-increment:st;position:relative;padding-left:44px;margin-bottom:18px}
+ol.steps>li::before{content:counter(st);position:absolute;left:0;top:1px;
+  font-family:var(--mono);font-size:12px;width:28px;height:28px;border-radius:50%;
+  background:var(--violet);color:#fff;display:flex;align-items:center;justify-content:center}
+strong{font-weight:600}
+.tag{font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:2px;
+     background:rgba(14,110,120,.12);color:var(--teal);white-space:nowrap}
+.tag.a{background:rgba(179,100,26,.13);color:var(--amber)}
+.tag.v{background:rgba(91,75,138,.13);color:var(--violet)}
+footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
+       font-family:var(--mono);font-size:12px;color:var(--mut)}
+@media print{body{background:#fff}figure,.box,.eq,table{break-inside:avoid}.topnav,.backfoot{display:none}}
+@media (max-width:600px){body{font-size:16px}header{padding-top:40px}}
+
+/* ---- pasek nawigacji ---- */
+.topnav{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:22px 0 0}
+.topnav a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+          color:var(--mut);text-decoration:none;border:1px solid var(--line);background:var(--card);
+          border-radius:2px;padding:6px 11px;transition:color .12s ease,border-color .12s ease}
+.topnav a:hover,.topnav a:focus-visible{color:var(--ink);border-color:var(--ink);outline:none}
+.topnav .here{font-family:var(--mono);font-size:12px;color:var(--mut);letter-spacing:.08em}
+.backfoot{margin:18px 0 0}
+.backfoot a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+            color:var(--teal);text-decoration:none;border-bottom:1px solid var(--line)}
+.backfoot a:hover,.backfoot a:focus-visible{border-bottom-color:var(--teal);outline:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="topnav">
+  <a href="index.html">&larr; Repetytorium</a>
+  <span class="here">zagadnienie 42 z 50 &middot; systemy wspomagania decyzji</span>
+</nav>
+
+<header>
+  <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 42</p>
+  <h1>Proces decyzyjny i system wspomagania decyzji</h1>
+  <p class="quest">Proces decyzyjny – przedstaw czym jest i scharakteryzuj jego niezbędne elementy; System wspomagania decyzji – funkcje, idee działania, możliwe elementy architektury.</p>
+  <p class="src">Systemy sterowania i wspomagania decyzji &middot; wykład K. Duzinkiewicza i R. Piotrowskiego „Wprowadzenie – pojęcia podstawowe” (Struktury i algorytmy wspomagania decyzji) &middot; rama dla zagadnień 35, 43–46</p>
+</header>
+
+<style>
+.karty{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:22px 0}
+.karta{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--violet);border-radius:3px;padding:12px 14px}
+.karta.k .kw{color:var(--violet)} .karta.b{border-top-color:var(--teal)} .karta.s{border-top-color:var(--rose)} .karta.a{border-top-color:var(--amber)}
+.karta .kw{font-family:var(--disp);font-weight:700;font-size:17px;line-height:1.25;display:block;margin-bottom:6px;color:var(--violet)}
+.karta.b .kw{color:var(--teal)} .karta.s .kw{color:var(--rose)} .karta.a .kw{color:var(--amber)}
+.karta p{font-size:15px;margin:0;line-height:1.5}
+@media (max-width:600px){.karty{grid-template-columns:1fr}}
+.fiszka{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--violet);border-radius:2px;margin:10px 0;padding:0}
+.fiszka summary{cursor:pointer;list-style:none;padding:12px 16px;font-family:var(--disp);font-weight:500;font-size:16.5px}
+.fiszka summary::-webkit-details-marker{display:none}
+.fiszka summary::before{content:"?";display:inline-flex;width:22px;height:22px;border-radius:50%;background:var(--violet);color:#fff;
+  font-family:var(--mono);font-size:12px;align-items:center;justify-content:center;margin-right:10px;vertical-align:1px}
+.fiszka[open] summary::before{content:"✓";background:var(--teal)}
+.fiszka p,.fiszka ol,.fiszka ul{padding:0 16px 14px 48px;margin:0}
+.fiszka.op{border-left-color:var(--teal)}
+.fiszka.op summary::before{content:"▶";background:var(--teal)}
+ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{color:var(--teal)}
+.cyt{font-style:italic;color:var(--ink)}
+.check{list-style:none;padding-left:0}
+.check li{padding-left:30px;position:relative}
+.check li::before{content:"☐";position:absolute;left:4px;top:-1px;font-family:var(--mono);color:var(--teal);font-size:17px}
+.luka{display:inline-block;min-width:70px;border-bottom:1.5px solid var(--violet);text-align:center;font-family:var(--mono);font-size:14px;color:var(--violet)}
+</style>
+
+<section>
+<h2><span class="num">01</span> Rama odpowiedzi</h2>
+<div class="rail"></div>
+
+<p>Pytanie ma dwie części. <strong>Proces decyzyjny</strong>: czym jest i jakie elementy są niezbędne, żeby w ogóle można było podjąć decyzję. <strong>System wspomagania decyzji (SWD)</strong>: co robi, na czym polega jego działanie i z czego może się składać. Obie części łączy model decyzyjny — to na nim SWD pracuje.</p>
+
+<div class="box key">
+<span class="lbl">Zdanie, od którego warto zacząć</span>
+<p><strong>Proces decyzyjny to ciąg procesów myślowych lub obliczeniowych, w którym informacja, wiedza i preferencje prowadzą do wyboru jednej z opcji decyzyjnych. Niezbędne są cztery elementy: decydent, co najmniej dwie opcje, czynniki ograniczające i co najmniej jedno kryterium oceny. System wspomagania decyzji to skomputeryzowany system informacyjny, który w tym procesie przetwarza dane, buduje i rozwiązuje modele oraz podsuwa oceny opcji, ale decyzję zostawia człowiekowi.</strong></p>
+</div>
+</section>
+
+<section>
+<h2><span class="num">02</span> Decyzja i proces decyzyjny</h2>
+<div class="rail"></div>
+
+<p>Wykład przytacza kilka definicji decyzji. Najprostsza: <span class="cyt">„świadomy, nielosowy wybór jednego z możliwych, rozpoznawanych wariantów przyszłego działania”</span>. Decyzja jest wynikiem <strong>procesu decyzyjnego</strong> (inaczej: procesu podejmowania decyzji). Podejmowanie decyzji to według wykładu <span class="cyt">„ciąg procesów mentalnych (myślowych) i/lub komputerowych (obliczeniowych)”</span>, w który włączone są informacja, wiedza i preferencje, a którego wynikiem jest decyzja.</p>
+
+<figure>
+<svg viewBox="0 0 680 330" class="fig">
+<defs><marker id="arF42a0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker><marker id="arF42a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B3641A"/></marker><marker id="arF42a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0E6E78"/></marker><marker id="arF42a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9C3B52"/></marker><marker id="arF42a4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">PROCES DECYZYJNY: CO WCHODZI, KTO UCZESTNICZY, CO WYCHODZI</text>
+<rect x="196.0" y="38.0" width="290.0" height="34.0" rx="4" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.08"/>
+<text x="341.0" y="52.0" text-anchor="middle" class="bx-t" style="fill:#5B4B8A;font-size:10px">START, gdy są jednocześnie:</text>
+<text x="341.0" y="66.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">potrzeba wyboru · możliwość wyboru · ktoś, kto chce wybrać</text>
+<path d="M 341.0 73.0 L 341.0 92.0" fill="none" stroke="#5B4B8A" stroke-width="1.4" marker-end="url(#arF42a0)"/>
+<rect x="14.0" y="104.0" width="150.0" height="46.0" rx="5" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.3"/>
+<rect x="14.0" y="104.0" width="150.0" height="4.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="28.0" y="124.0" text-anchor="start" class="bx-t" style="fill:#B3641A;font-size:11px">informacja</text>
+<text x="28.0" y="141.0" text-anchor="start" class="cap" style="fill:#141C24">dane o sytuacji</text>
+<path d="M 166.0 127.0 L 194.0 127.0" fill="none" stroke="#B3641A" stroke-width="1.4" marker-end="url(#arF42a1)"/>
+<rect x="14.0" y="164.0" width="150.0" height="46.0" rx="5" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="14.0" y="164.0" width="150.0" height="4.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="28.0" y="184.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:11px">wiedza</text>
+<text x="28.0" y="201.0" text-anchor="start" class="cap" style="fill:#141C24">modele, doświadczenie</text>
+<path d="M 166.0 187.0 L 194.0 187.0" fill="none" stroke="#0E6E78" stroke-width="1.4" marker-end="url(#arF42a2)"/>
+<rect x="14.0" y="224.0" width="150.0" height="46.0" rx="5" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.3"/>
+<rect x="14.0" y="224.0" width="150.0" height="4.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="28.0" y="244.0" text-anchor="start" class="bx-t" style="fill:#9C3B52;font-size:11px">preferencje</text>
+<text x="28.0" y="261.0" text-anchor="start" class="cap" style="fill:#141C24">czego chce decydent</text>
+<path d="M 166.0 247.0 L 194.0 247.0" fill="none" stroke="#9C3B52" stroke-width="1.4" marker-end="url(#arF42a3)"/>
+<rect x="196.0" y="94.0" width="290.0" height="190.0" rx="8" fill="#F6F5FA" stroke="#5B4B8A" stroke-width="1.6"/>
+<text x="341.0" y="118.0" text-anchor="middle" class="bx-t" style="fill:#5B4B8A;font-size:12px">PODEJMOWANIE DECYZJI</text>
+<text x="341.0" y="136.0" text-anchor="middle" class="cap" style="fill:#141C24">ciąg procesów mentalnych i/lub obliczeniowych</text>
+<circle cx="266.0" cy="202.0" r="34" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.8"/>
+<text x="266.0" y="200.0" text-anchor="middle" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">decydent</text>
+<text x="266.0" y="215.0" text-anchor="middle" class="cap" style="font-size:9px">wybiera</text>
+<circle cx="416.0" cy="202.0" r="34" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.8"/>
+<text x="416.0" y="200.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:10.5px">analityk</text>
+<text x="416.0" y="215.0" text-anchor="middle" class="cap" style="font-size:9px">pomaga</text>
+<path d="M 380.0 202.0 L 302.0 202.0" fill="none" stroke="#0E6E78" stroke-width="1.4" marker-end="url(#arF42a2)"/>
+<text x="341.0" y="194.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9px">wspomaga</text>
+<text x="270.0" y="256.0" text-anchor="middle" class="cap" style="font-size:9.5px">osoba, grupa,</text>
+<text x="270.0" y="270.0" text-anchor="middle" class="cap" style="font-size:9.5px">urządzenie(a)</text>
+<text x="416.0" y="256.0" text-anchor="middle" class="cap" style="font-size:9.5px">osoba lub grupa,</text>
+<text x="416.0" y="270.0" text-anchor="middle" class="cap" style="font-size:9.5px">np. z pomocą SWD</text>
+<rect x="516.0" y="112.0" width="150.0" height="62.0" rx="5" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.8"/>
+<rect x="516.0" y="112.0" width="150.0" height="4.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="591.0" y="140.0" text-anchor="middle" class="bx-t" style="fill:#5B4B8A;font-size:12px">DECYZJA</text>
+<text x="591.0" y="158.0" text-anchor="middle" class="cap" style="fill:#141C24">wybrana opcja</text>
+<path d="M 488.0 143.0 L 514.0 143.0" fill="none" stroke="#5B4B8A" stroke-width="1.6" marker-end="url(#arF42a0)"/>
+<rect x="516.0" y="204.0" width="150.0" height="54.0" rx="5" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text x="591.0" y="226.0" text-anchor="middle" class="bx-t" style="fill:#5C6B77;font-size:11px">brak decyzji</text>
+<text x="591.0" y="240.0" text-anchor="middle" class="cap" style="font-size:9px">proces nie musi</text>
+<text x="591.0" y="252.0" text-anchor="middle" class="cap" style="font-size:9px">się nią kończyć</text>
+<path d="M 488.0 231.0 L 514.0 231.0" fill="none" stroke="#5C6B77" stroke-width="1.3" stroke-dasharray="5 4" marker-end="url(#arF42a4)"/>
+<text x="340.0" y="312.0" text-anchor="middle" class="cap" style="fill:#141C24">problem decyzyjny zostaje rozwiązany przez wybranie jednej z opcji i wskazanie jej jako decyzji</text>
+</svg>
+<figcaption>Proces decyzyjny według wykładu: trzy warunki startu, trzy rodzaje wejść i dwóch uczestników. Proces może zakończyć się decyzją, ale nie musi. Na podstawie: K. Duzinkiewicz, R. Piotrowski, <em>Wprowadzenie – pojęcia podstawowe</em>, slajdy 7–12 i 17.</figcaption>
+</figure>
+
+<ul>
+<li><strong>Decydent</strong> — jednostka, która podejmuje decyzję. Może to być człowiek, grupa osób, urządzenie albo grupa urządzeń. W automatyce decydentem jest też regulator: „o ile otworzyć zawór?” to decyzja.</li>
+<li><strong>Analityk</strong> — osoba lub grupa, która pomaga decydentowi (analityk danych, finansowy, systemowy). SWD jest narzędziem, które część pracy analityka automatyzuje.</li>
+<li><strong>Szczegółowa analiza jest potrzebna</strong>, gdy proces jest złożony (dużo zmiennych, ograniczeń, kilka kryteriów), decyzja może przynieść duże zyski lub straty albo opcji jest bardzo dużo.</li>
+</ul>
+</section>
+
+<section>
+<h2><span class="num">03</span> Niezbędne elementy problemu decyzyjnego</h2>
+<div class="rail"></div>
+
+<figure>
+<svg viewBox="0 0 680 350" class="fig">
+<defs><marker id="arF42b0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B3641A"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">CZTERY NIEZBĘDNE ELEMENTY PROBLEMU DECYZYJNEGO</text>
+<rect x="24.0" y="46.0" width="318.0" height="290.0" rx="6" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.4"/>
+<text x="36.0" y="66.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:10.5px">D — przestrzeń decyzyjna</text>
+<polygon points="52.0,314.0 237.5,314.0 237.5,236.0 158.0,158.0 52.0,158.0" fill="#0E6E78" opacity="0.12"/>
+<circle cx="52.0" cy="314.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="52.0" cy="288.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="52.0" cy="262.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="52.0" cy="236.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="52.0" cy="210.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="52.0" cy="184.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="52.0" cy="158.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="52.0" cy="132.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="52.0" cy="106.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="78.5" cy="314.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="78.5" cy="288.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="78.5" cy="262.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="78.5" cy="236.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="78.5" cy="210.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="78.5" cy="184.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="78.5" cy="158.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="78.5" cy="132.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="78.5" cy="106.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="105.0" cy="314.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="105.0" cy="288.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="105.0" cy="262.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="105.0" cy="236.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="105.0" cy="210.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="105.0" cy="184.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="105.0" cy="158.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="105.0" cy="132.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="105.0" cy="106.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="131.5" cy="314.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="131.5" cy="288.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="131.5" cy="262.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="131.5" cy="236.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="131.5" cy="210.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="131.5" cy="184.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="131.5" cy="158.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="131.5" cy="132.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="131.5" cy="106.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="158.0" cy="314.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="158.0" cy="288.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="158.0" cy="262.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="158.0" cy="236.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="158.0" cy="210.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="158.0" cy="184.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="158.0" cy="158.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="158.0" cy="132.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="158.0" cy="106.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="184.5" cy="314.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="184.5" cy="288.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="184.5" cy="262.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="184.5" cy="236.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="184.5" cy="210.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="184.5" cy="184.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="184.5" cy="158.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="184.5" cy="132.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="184.5" cy="106.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="211.0" cy="314.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="211.0" cy="288.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="211.0" cy="262.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="211.0" cy="236.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="211.0" cy="210.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="211.0" cy="184.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="211.0" cy="158.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="211.0" cy="132.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="211.0" cy="106.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="237.5" cy="314.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="237.5" cy="288.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="237.5" cy="262.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="237.5" cy="236.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="237.5" cy="210.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="237.5" cy="184.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="237.5" cy="158.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="237.5" cy="132.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="237.5" cy="106.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="264.0" cy="314.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="264.0" cy="288.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="264.0" cy="262.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="264.0" cy="236.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="264.0" cy="210.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="264.0" cy="184.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="264.0" cy="158.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="264.0" cy="132.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="264.0" cy="106.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="290.5" cy="314.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="290.5" cy="288.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="290.5" cy="262.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="290.5" cy="236.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="290.5" cy="210.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="290.5" cy="184.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="290.5" cy="158.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="290.5" cy="132.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="290.5" cy="106.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="317.0" cy="314.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="317.0" cy="288.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="317.0" cy="262.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="317.0" cy="236.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="317.0" cy="210.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="317.0" cy="184.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="317.0" cy="158.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="317.0" cy="132.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="317.0" cy="106.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<line x1="237.5" y1="321.8" x2="237.5" y2="80.0" stroke="#9C3B52" stroke-width="1.8"/>
+<line x1="44.0" y1="158.0" x2="327.6" y2="158.0" stroke="#9C3B52" stroke-width="1.8"/>
+<line x1="86.5" y1="87.8" x2="327.6" y2="324.4" stroke="#9C3B52" stroke-width="1.8"/>
+<line x1="200.4" y1="163.2" x2="274.6" y2="308.8" stroke="#B3641A" stroke-width="1.6" stroke-dasharray="6 4"/>
+<path d="M 261.4 202.2 L 290.5 187.9" fill="none" stroke="#B3641A" stroke-width="1.6" marker-end="url(#arF42b0)"/>
+<text x="293.1" y="176.2" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9.5px">lepiej</text>
+<circle cx="237.5" cy="236.0" r="11" fill="#FFFFFF" stroke="#B3641A" stroke-width="1.8"/>
+<polygon points="237.5,228.0 239.6,233.1 245.1,233.5 240.9,237.1 242.2,242.5 237.5,239.6 232.8,242.5 234.1,237.1 229.9,233.5 235.4,233.1" fill="#B3641A"/>
+<text x="128.8" y="246.4" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:10.5px">decyzje dopuszczalne</text>
+<text x="283.9" y="264.6" text-anchor="start" class="bx-t" style="fill:#B3641A;font-size:10px">optymalna</text>
+<text x="57.3" y="142.4" text-anchor="start" class="cap" style="fill:#9C3B52;font-size:9.5px">ograniczenia</text>
+<rect x="362.0" y="46.0" width="304.0" height="62.0" rx="5" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<rect x="362.0" y="46.0" width="304.0" height="4.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<circle cx="380.0" cy="77.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="380.0" y="81.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">1</text>
+<text x="398.0" y="74.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:11px">DECYDENT</text>
+<text x="398.0" y="91.0" text-anchor="start" class="cap" style="fill:#141C24">to on na końcu podejmuje decyzję</text>
+<rect x="362.0" y="120.0" width="304.0" height="62.0" rx="5" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="362.0" y="120.0" width="304.0" height="4.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="380.0" cy="151.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="380.0" y="155.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">2</text>
+<text x="398.0" y="148.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:11px">OPCJE DECYZYJNE</text>
+<text x="398.0" y="165.0" text-anchor="start" class="cap" style="fill:#141C24">co najmniej dwie; wszystkie tworzą D</text>
+<rect x="362.0" y="194.0" width="304.0" height="62.0" rx="5" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.3"/>
+<rect x="362.0" y="194.0" width="304.0" height="4.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<circle cx="380.0" cy="225.0" r="10" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="380.0" y="229.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">3</text>
+<text x="398.0" y="222.0" text-anchor="start" class="bx-t" style="fill:#9C3B52;font-size:11px">CZYNNIKI OGRANICZAJĄCE</text>
+<text x="398.0" y="239.0" text-anchor="start" class="cap" style="fill:#141C24">wycinają z D decyzje dopuszczalne</text>
+<rect x="362.0" y="268.0" width="304.0" height="62.0" rx="5" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.3"/>
+<rect x="362.0" y="268.0" width="304.0" height="4.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
+<circle cx="380.0" cy="299.0" r="10" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="380.0" y="303.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">4</text>
+<text x="398.0" y="296.0" text-anchor="start" class="bx-t" style="fill:#B3641A;font-size:11px">KRYTERIUM OCENY</text>
+<text x="398.0" y="313.0" text-anchor="start" class="cap" style="fill:#141C24">co najmniej jedno; wskazuje najlepszą</text>
+</svg>
+<figcaption>Po lewej: z przestrzeni decyzyjnej D ograniczenia wycinają zbiór decyzji dopuszczalnych, a kryterium wskazuje wśród nich decyzję optymalną. Po prawej: cztery elementy, bez których problemu decyzyjnego nie ma. Opracowanie własne na podstawie slajdów 5 i 22.</figcaption>
+</figure>
+
+<table>
+<thead><tr><th>Element</th><th>Przykład z wykładu: wynajem pomieszczenia dla przedszkola</th></tr></thead>
+<tbody>
+<tr><td><strong>decydent</strong></td><td>dyrekcja przedszkola</td></tr>
+<tr><td><strong>opcje decyzyjne (zbiór D)</strong></td><td>różne pomieszczenia w okolicy</td></tr>
+<tr><td><strong>ograniczenia</strong></td><td>czynsz najwyżej 2 tys. zł miesięcznie; odległość najwyżej 1 km</td></tr>
+<tr><td><strong>kryterium oceny</strong></td><td>wzrost powierzchni gospodarczej, co najmniej o 20%</td></tr>
+</tbody>
+</table>
+
+<p>Pojęcia pomocnicze z wykładu: <strong>problem decyzyjny</strong> to słowny opis sytuacji decyzyjnej, <strong>model decyzyjny</strong> — jego matematyczny zapis. <strong>Decyzja dopuszczalna</strong> spełnia ograniczenia, a <strong>optymalna</strong> jest najlepsza według kryterium. Jedno kryterium daje problem jednokryterialny, kilka — wielokryterialny.</p>
+
+<p>Czynniki dzielą się na <strong>niezależne od decydenta</strong> (np. ilość posiadanych pieniędzy) — zwykle stają się ograniczeniami — i <strong>zależne od niego</strong> (np. ile chce wydać, jak bardzo chce sprawić przyjemność) — te stają się kryteriami.</p>
+</section>
+
+<section>
+<h2><span class="num">04</span> Warunki podejmowania decyzji i rodzaje ograniczeń</h2>
+<div class="rail"></div>
+
+<table>
+<thead><tr><th>Warunki</th><th>Model decyzyjny</th><th>Metody</th></tr></thead>
+<tbody>
+<tr><td><strong>pewność</strong></td><td>deterministyczny: każda decyzja ma jeden, znany skutek</td><td>programowanie matematyczne, optymalizacja klasyczna i „inteligentna”</td></tr>
+<tr><td><strong>ryzyko</strong></td><td>niedeterministyczny: kilka możliwych skutków (działanie natury), znane prawdopodobieństwa</td><td>metody probabilistyczne i statystyczne, drzewa decyzyjne</td></tr>
+<tr><td><strong>niepewność</strong></td><td>niedeterministyczny: kilka możliwych skutków, prawdopodobieństwa nieznane</td><td>statystyka bayesowska</td></tr>
+</tbody>
+</table>
+
+<p>Problem jest deterministyczny, jeśli czynniki niezależne od decydenta nie występują albo są dokładnie znane. W przeciwnym razie niepewność modeluje się probabilistycznie, rozmyto albo przedziałowo.</p>
+
+<ul>
+<li><strong>Ograniczenia istotne i nieistotne</strong> — istotne wyznaczają zbiór opcji dopuszczalnych, nieistotne go nie zmieniają.</li>
+<li><strong>Ograniczenia twarde i miękkie</strong> — twarde trzeba spełnić bezwzględnie, miękkich nie trzeba spełniać dokładnie (wykład: kompaktów „będzie można sprzedać około” tylu sztuk).</li>
+<li><strong>Dwie kategorie problemów</strong>: (1) mało opcji, każda w pełni znana — wystarczy je porównać; (2) opcje muszą spełniać ograniczenia albo jest ich bardzo dużo — trzeba zbudować model ze zmiennymi decyzyjnymi i funkcją kryterialną.</li>
+<li><strong>Problemy wielokryterialne</strong>: wieloatrybutowe (MADP — kilka gotowych opcji z atrybutami, np. wybór samochodu, → 43) i wielocelowe (MODP — opcje określone ograniczeniami, kilka mierzalnych celów, → 45, 46).</li>
+</ul>
+</section>
+
+<section>
+<h2><span class="num">05</span> Model decyzyjny i kroki rozwiązania</h2>
+<div class="rail"></div>
+
+<p>Model decyzyjny ma trzy składniki: <strong>zmienne decyzyjne</strong>, <strong>ograniczenia</strong> (zbiór rozwiązań dopuszczalnych) i <strong>funkcję celu</strong>:</p>
+
+<div class="eq" data-tex="\max_{x_1,\dots,x_n} z = f(x_1,\dots,x_n) \quad\text{przy}\quad g_i(x_1,\dots,x_n) \le b_i,\; i = 1,\dots,m"><svg style="vertical-align: -1.919ex;" xmlns="http://www.w3.org/2000/svg" width="63.85ex" height="3.616ex" role="img" focusable="false" viewBox="0 -750 28221.7 1598.2" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-1-TEX-N-6D" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q351 442 364 440T387 434T406 426T421 417T432 406T441 395T448 384T452 374T455 366L457 361L460 365Q463 369 466 373T475 384T488 397T503 410T523 422T546 432T572 439T603 442Q729 442 740 329Q741 322 741 190V104Q741 66 743 59T754 49Q775 46 803 46H819V0H811L788 1Q764 2 737 2T699 3Q596 3 587 0H579V46H595Q656 46 656 62Q657 64 657 200Q656 335 655 343Q649 371 635 385T611 402T585 404Q540 404 506 370Q479 343 472 315T464 232V168V108Q464 78 465 68T468 55T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z"></path><path id="MJX-1-TEX-N-61" d="M137 305T115 305T78 320T63 359Q63 394 97 421T218 448Q291 448 336 416T396 340Q401 326 401 309T402 194V124Q402 76 407 58T428 40Q443 40 448 56T453 109V145H493V106Q492 66 490 59Q481 29 455 12T400 -6T353 12T329 54V58L327 55Q325 52 322 49T314 40T302 29T287 17T269 6T247 -2T221 -8T190 -11Q130 -11 82 20T34 107Q34 128 41 147T68 188T116 225T194 253T304 268H318V290Q318 324 312 340Q290 411 215 411Q197 411 181 410T156 406T148 403Q170 388 170 359Q170 334 154 320ZM126 106Q126 75 150 51T209 26Q247 26 276 49T315 109Q317 116 318 175Q318 233 317 233Q309 233 296 232T251 223T193 203T147 166T126 106Z"></path><path id="MJX-1-TEX-N-78" d="M201 0Q189 3 102 3Q26 3 17 0H11V46H25Q48 47 67 52T96 61T121 78T139 96T160 122T180 150L226 210L168 288Q159 301 149 315T133 336T122 351T113 363T107 370T100 376T94 379T88 381T80 383Q74 383 44 385H16V431H23Q59 429 126 429Q219 429 229 431H237V385Q201 381 201 369Q201 367 211 353T239 315T268 274L272 270L297 304Q329 345 329 358Q329 364 327 369T322 376T317 380T310 384L307 385H302V431H309Q324 428 408 428Q487 428 493 431H499V385H492Q443 385 411 368Q394 360 377 341T312 257L296 236L358 151Q424 61 429 57T446 50Q464 46 499 46H516V0H510H502Q494 1 482 1T457 2T432 2T414 3Q403 3 377 3T327 1L304 0H295V46H298Q309 46 320 51T331 63Q331 65 291 120L250 175Q249 174 219 133T185 88Q181 83 181 74Q181 63 188 55T206 46Q208 46 208 23V0H201Z"></path><path id="MJX-1-TEX-I-1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path><path id="MJX-1-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-1-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-1-TEX-N-2026" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60ZM525 60Q525 84 542 102T585 120Q609 120 627 104T646 61Q646 36 629 18T586 0T543 17T525 60ZM972 60Q972 84 989 102T1032 120Q1056 120 1074 104T1093 61Q1093 36 1076 18T1033 0T990 17T972 60Z"></path><path id="MJX-1-TEX-I-1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path><path id="MJX-1-TEX-I-1D467" d="M347 338Q337 338 294 349T231 360Q211 360 197 356T174 346T162 335T155 324L153 320Q150 317 138 317Q117 317 117 325Q117 330 120 339Q133 378 163 406T229 440Q241 442 246 442Q271 442 291 425T329 392T367 375Q389 375 411 408T434 441Q435 442 449 442H462Q468 436 468 434Q468 430 463 420T449 399T432 377T418 358L411 349Q368 298 275 214T160 106L148 94L163 93Q185 93 227 82T290 71Q328 71 360 90T402 140Q406 149 409 151T424 153Q443 153 443 143Q443 138 442 134Q425 72 376 31T278 -11Q252 -11 232 6T193 40T155 57Q111 57 76 -3Q70 -11 59 -11H54H41Q35 -5 35 -2Q35 13 93 84Q132 129 225 214T340 322Q352 338 347 338Z"></path><path id="MJX-1-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-1-TEX-I-1D453" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path><path id="MJX-1-TEX-N-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path id="MJX-1-TEX-N-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path><path id="MJX-1-TEX-N-70" d="M36 -148H50Q89 -148 97 -134V-126Q97 -119 97 -107T97 -77T98 -38T98 6T98 55T98 106Q98 140 98 177T98 243T98 296T97 335T97 351Q94 370 83 376T38 385H20V408Q20 431 22 431L32 432Q42 433 61 434T98 436Q115 437 135 438T165 441T176 442H179V416L180 390L188 397Q247 441 326 441Q407 441 464 377T522 216Q522 115 457 52T310 -11Q242 -11 190 33L182 40V-45V-101Q182 -128 184 -134T195 -145Q216 -148 244 -148H260V-194H252L228 -193Q205 -192 178 -192T140 -191Q37 -191 28 -194H20V-148H36ZM424 218Q424 292 390 347T305 402Q234 402 182 337V98Q222 26 294 26Q345 26 384 80T424 218Z"></path><path id="MJX-1-TEX-N-72" d="M36 46H50Q89 46 97 60V68Q97 77 97 91T98 122T98 161T98 203Q98 234 98 269T98 328L97 351Q94 370 83 376T38 385H20V408Q20 431 22 431L32 432Q42 433 60 434T96 436Q112 437 131 438T160 441T171 442H174V373Q213 441 271 441H277Q322 441 343 419T364 373Q364 352 351 337T313 322Q288 322 276 338T263 372Q263 381 265 388T270 400T273 405Q271 407 250 401Q234 393 226 386Q179 341 179 207V154Q179 141 179 127T179 101T180 81T180 66V61Q181 59 183 57T188 54T193 51T200 49T207 48T216 47T225 47T235 46T245 46H276V0H267Q249 3 140 3Q37 3 28 0H20V46H36Z"></path><path id="MJX-1-TEX-N-7A" d="M42 263Q44 270 48 345T53 423V431H393Q399 425 399 415Q399 403 398 402L381 378Q364 355 331 309T265 220L134 41L182 40H206Q254 40 283 46T331 77Q352 105 359 185L361 201Q361 202 381 202H401V196Q401 195 393 103T384 6V0H209L34 1L31 3Q28 8 28 17Q28 30 29 31T160 210T294 394H236Q169 393 152 388Q127 382 113 367Q89 344 82 264V255H42V263Z"></path><path id="MJX-1-TEX-N-79" d="M69 -66Q91 -66 104 -80T118 -116Q118 -134 109 -145T91 -160Q84 -163 97 -166Q104 -168 111 -168Q131 -168 148 -159T175 -138T197 -106T213 -75T225 -43L242 0L170 183Q150 233 125 297Q101 358 96 368T80 381Q79 382 78 382Q66 385 34 385H19V431H26L46 430Q65 430 88 429T122 428Q129 428 142 428T171 429T200 430T224 430L233 431H241V385H232Q183 385 185 366L286 112Q286 113 332 227L376 341V350Q376 365 366 373T348 383T334 385H331V431H337H344Q351 431 361 431T382 430T405 429T422 429Q477 429 503 431H508V385H497Q441 380 422 345Q420 343 378 235T289 9T227 -131Q180 -204 113 -204Q69 -204 44 -177T19 -116Q19 -89 35 -78T69 -66Z"></path><path id="MJX-1-TEX-I-1D454" d="M311 43Q296 30 267 15T206 0Q143 0 105 45T66 160Q66 265 143 353T314 442Q361 442 401 394L404 398Q406 401 409 404T418 412T431 419T447 422Q461 422 470 413T480 394Q480 379 423 152T363 -80Q345 -134 286 -169T151 -205Q10 -205 10 -137Q10 -111 28 -91T74 -71Q89 -71 102 -80T116 -111Q116 -121 114 -130T107 -144T99 -154T92 -162L90 -164H91Q101 -167 151 -167Q189 -167 211 -155Q234 -144 254 -122T282 -75Q288 -56 298 -13Q311 35 311 43ZM384 328L380 339Q377 350 375 354T369 368T359 382T346 393T328 402T306 405Q262 405 221 352Q191 313 171 233T151 117Q151 38 213 38Q269 38 323 108L331 118L384 328Z"></path><path id="MJX-1-TEX-I-1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path><path id="MJX-1-TEX-N-2264" d="M674 636Q682 636 688 630T694 615T687 601Q686 600 417 472L151 346L399 228Q687 92 691 87Q694 81 694 76Q694 58 676 56H670L382 192Q92 329 90 331Q83 336 83 348Q84 359 96 365Q104 369 382 500T665 634Q669 636 674 636ZM84 -118Q84 -108 99 -98H678Q694 -104 694 -118Q694 -130 679 -138H98Q84 -131 84 -118Z"></path><path id="MJX-1-TEX-I-1D44F" d="M73 647Q73 657 77 670T89 683Q90 683 161 688T234 694Q246 694 246 685T212 542Q204 508 195 472T180 418L176 399Q176 396 182 402Q231 442 283 442Q345 442 383 396T422 280Q422 169 343 79T173 -11Q123 -11 82 27T40 150V159Q40 180 48 217T97 414Q147 611 147 623T109 637Q104 637 101 637H96Q86 637 83 637T76 640T73 647ZM336 325V331Q336 405 275 405Q258 405 240 397T207 376T181 352T163 330L157 322L136 236Q114 150 114 114Q114 66 138 42Q154 26 178 26Q211 26 245 58Q270 81 285 114T318 219Q336 291 336 325Z"></path><path id="MJX-1-TEX-I-1D45A" d="M21 287Q22 293 24 303T36 341T56 388T88 425T132 442T175 435T205 417T221 395T229 376L231 369Q231 367 232 367L243 378Q303 442 384 442Q401 442 415 440T441 433T460 423T475 411T485 398T493 385T497 373T500 364T502 357L510 367Q573 442 659 442Q713 442 746 415T780 336Q780 285 742 178T704 50Q705 36 709 31T724 26Q752 26 776 56T815 138Q818 149 821 151T837 153Q857 153 857 145Q857 144 853 130Q845 101 831 73T785 17T716 -10Q669 -10 648 17T627 73Q627 92 663 193T700 345Q700 404 656 404H651Q565 404 506 303L499 291L466 157Q433 26 428 16Q415 -11 385 -11Q372 -11 364 -4T353 8T350 18Q350 29 384 161L420 307Q423 322 423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 181Q151 335 151 342Q154 357 154 369Q154 405 129 405Q107 405 92 377T69 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="munder"><g data-mml-node="mo" transform="translate(418.6,0)"><use data-c="6D" xlink:href="#MJX-1-TEX-N-6D"></use><use data-c="61" xlink:href="#MJX-1-TEX-N-61" transform="translate(833,0)"></use><use data-c="78" xlink:href="#MJX-1-TEX-N-78" transform="translate(1333,0)"></use></g><g data-mml-node="TeXAtom" transform="translate(0,-611) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D465" xlink:href="#MJX-1-TEX-I-1D465"></use></g><g data-mml-node="mn" transform="translate(605,-150) scale(0.707)"><use data-c="31" xlink:href="#MJX-1-TEX-N-31"></use></g></g><g data-mml-node="mo" transform="translate(1008.6,0)"><use data-c="2C" xlink:href="#MJX-1-TEX-N-2C"></use></g><g data-mml-node="mo" transform="translate(1286.6,0)"><use data-c="2026" xlink:href="#MJX-1-TEX-N-2026"></use></g><g data-mml-node="mo" transform="translate(2458.6,0)"><use data-c="2C" xlink:href="#MJX-1-TEX-N-2C"></use></g><g data-mml-node="msub" transform="translate(2736.6,0)"><g data-mml-node="mi"><use data-c="1D465" xlink:href="#MJX-1-TEX-I-1D465"></use></g><g data-mml-node="mi" transform="translate(605,-150) scale(0.707)"><use data-c="1D45B" xlink:href="#MJX-1-TEX-I-1D45B"></use></g></g></g></g><g data-mml-node="mi" transform="translate(2864.9,0)"><use data-c="1D467" xlink:href="#MJX-1-TEX-I-1D467"></use></g><g data-mml-node="mo" transform="translate(3607.6,0)"><use data-c="3D" xlink:href="#MJX-1-TEX-N-3D"></use></g><g data-mml-node="mi" transform="translate(4663.4,0)"><use data-c="1D453" xlink:href="#MJX-1-TEX-I-1D453"></use></g><g data-mml-node="mo" transform="translate(5213.4,0)"><use data-c="28" xlink:href="#MJX-1-TEX-N-28"></use></g><g data-mml-node="msub" transform="translate(5602.4,0)"><g data-mml-node="mi"><use data-c="1D465" xlink:href="#MJX-1-TEX-I-1D465"></use></g><g data-mml-node="mn" transform="translate(605,-150) scale(0.707)"><use data-c="31" xlink:href="#MJX-1-TEX-N-31"></use></g></g><g data-mml-node="mo" transform="translate(6611,0)"><use data-c="2C" xlink:href="#MJX-1-TEX-N-2C"></use></g><g data-mml-node="mo" transform="translate(7055.6,0)"><use data-c="2026" xlink:href="#MJX-1-TEX-N-2026"></use></g><g data-mml-node="mo" transform="translate(8394.3,0)"><use data-c="2C" xlink:href="#MJX-1-TEX-N-2C"></use></g><g data-mml-node="msub" transform="translate(8839,0)"><g data-mml-node="mi"><use data-c="1D465" xlink:href="#MJX-1-TEX-I-1D465"></use></g><g data-mml-node="mi" transform="translate(605,-150) scale(0.707)"><use data-c="1D45B" xlink:href="#MJX-1-TEX-I-1D45B"></use></g></g><g data-mml-node="mo" transform="translate(9918.2,0)"><use data-c="29" xlink:href="#MJX-1-TEX-N-29"></use></g><g data-mml-node="mstyle" transform="translate(10307.2,0)"><g data-mml-node="mspace"></g></g><g data-mml-node="mtext" transform="translate(11307.2,0)"><use data-c="70" xlink:href="#MJX-1-TEX-N-70"></use><use data-c="72" xlink:href="#MJX-1-TEX-N-72" transform="translate(556,0)"></use><use data-c="7A" xlink:href="#MJX-1-TEX-N-7A" transform="translate(948,0)"></use><use data-c="79" xlink:href="#MJX-1-TEX-N-79" transform="translate(1392,0)"></use></g><g data-mml-node="mstyle" transform="translate(13227.2,0)"><g data-mml-node="mspace"></g></g><g data-mml-node="msub" transform="translate(14227.2,0)"><g data-mml-node="mi"><use data-c="1D454" xlink:href="#MJX-1-TEX-I-1D454"></use></g><g data-mml-node="mi" transform="translate(510,-150) scale(0.707)"><use data-c="1D456" xlink:href="#MJX-1-TEX-I-1D456"></use></g></g><g data-mml-node="mo" transform="translate(15031.2,0)"><use data-c="28" xlink:href="#MJX-1-TEX-N-28"></use></g><g data-mml-node="msub" transform="translate(15420.2,0)"><g data-mml-node="mi"><use data-c="1D465" xlink:href="#MJX-1-TEX-I-1D465"></use></g><g data-mml-node="mn" transform="translate(605,-150) scale(0.707)"><use data-c="31" xlink:href="#MJX-1-TEX-N-31"></use></g></g><g data-mml-node="mo" transform="translate(16428.7,0)"><use data-c="2C" xlink:href="#MJX-1-TEX-N-2C"></use></g><g data-mml-node="mo" transform="translate(16873.4,0)"><use data-c="2026" xlink:href="#MJX-1-TEX-N-2026"></use></g><g data-mml-node="mo" transform="translate(18212.1,0)"><use data-c="2C" xlink:href="#MJX-1-TEX-N-2C"></use></g><g data-mml-node="msub" transform="translate(18656.7,0)"><g data-mml-node="mi"><use data-c="1D465" xlink:href="#MJX-1-TEX-I-1D465"></use></g><g data-mml-node="mi" transform="translate(605,-150) scale(0.707)"><use data-c="1D45B" xlink:href="#MJX-1-TEX-I-1D45B"></use></g></g><g data-mml-node="mo" transform="translate(19736,0)"><use data-c="29" xlink:href="#MJX-1-TEX-N-29"></use></g><g data-mml-node="mo" transform="translate(20402.8,0)"><use data-c="2264" xlink:href="#MJX-1-TEX-N-2264"></use></g><g data-mml-node="msub" transform="translate(21458.6,0)"><g data-mml-node="mi"><use data-c="1D44F" xlink:href="#MJX-1-TEX-I-1D44F"></use></g><g data-mml-node="mi" transform="translate(462,-150) scale(0.707)"><use data-c="1D456" xlink:href="#MJX-1-TEX-I-1D456"></use></g></g><g data-mml-node="mo" transform="translate(22214.5,0)"><use data-c="2C" xlink:href="#MJX-1-TEX-N-2C"></use></g><g data-mml-node="mstyle" transform="translate(22492.5,0)"><g data-mml-node="mspace"></g></g><g data-mml-node="mi" transform="translate(22937.2,0)"><use data-c="1D456" xlink:href="#MJX-1-TEX-I-1D456"></use></g><g data-mml-node="mo" transform="translate(23560,0)"><use data-c="3D" xlink:href="#MJX-1-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(24615.7,0)"><use data-c="31" xlink:href="#MJX-1-TEX-N-31"></use></g><g data-mml-node="mo" transform="translate(25115.7,0)"><use data-c="2C" xlink:href="#MJX-1-TEX-N-2C"></use></g><g data-mml-node="mo" transform="translate(25560.4,0)"><use data-c="2026" xlink:href="#MJX-1-TEX-N-2026"></use></g><g data-mml-node="mo" transform="translate(26899.1,0)"><use data-c="2C" xlink:href="#MJX-1-TEX-N-2C"></use></g><g data-mml-node="mi" transform="translate(27343.7,0)"><use data-c="1D45A" xlink:href="#MJX-1-TEX-I-1D45A"></use></g></g></g></svg></div>
+
+<figure>
+<svg viewBox="0 0 680 312" class="fig">
+<defs><marker id="arF42c0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#141C24"/></marker><marker id="arF42c1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">ROZWIĄZANIE PROBLEMU DECYZYJNEGO — 8 KROKÓW Z WYKŁADU</text>
+<rect x="15.0" y="62.0" width="152.0" height="76.0" rx="5" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<rect x="15.0" y="62.0" width="152.0" height="4.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<circle cx="33.0" cy="86.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="33.0" y="90.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">1</text>
+<text x="49.0" y="84.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">Sformułowanie</text>
+<text x="49.0" y="99.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">problemu</text>
+<text x="91.0" y="124.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">słowny opis</text>
+<path d="M 168.0 100.0 L 180.0 100.0" fill="none" stroke="#141C24" stroke-width="1.4" marker-end="url(#arF42c0)"/>
+<rect x="181.0" y="62.0" width="152.0" height="76.0" rx="5" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="181.0" y="62.0" width="152.0" height="4.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="199.0" cy="86.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="199.0" y="90.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">2</text>
+<text x="215.0" y="84.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:10.5px">Budowa</text>
+<text x="215.0" y="99.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:10.5px">modelu</text>
+<text x="257.0" y="124.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">zmienne, cel, ogranicz.</text>
+<path d="M 334.0 100.0 L 346.0 100.0" fill="none" stroke="#141C24" stroke-width="1.4" marker-end="url(#arF42c0)"/>
+<rect x="347.0" y="62.0" width="152.0" height="76.0" rx="5" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="347.0" y="62.0" width="152.0" height="4.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="365.0" cy="86.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="365.0" y="90.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">3</text>
+<text x="381.0" y="84.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:10.5px">Identyfikacja</text>
+<text x="381.0" y="99.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:10.5px">parametrów</text>
+<text x="423.0" y="124.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">liczby z danych</text>
+<path d="M 500.0 100.0 L 512.0 100.0" fill="none" stroke="#141C24" stroke-width="1.4" marker-end="url(#arF42c0)"/>
+<rect x="513.0" y="62.0" width="152.0" height="76.0" rx="5" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="513.0" y="62.0" width="152.0" height="4.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="531.0" cy="86.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="531.0" y="90.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">4</text>
+<text x="547.0" y="84.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:10.5px">Weryfikacja</text>
+<text x="547.0" y="99.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:10.5px">modelu</text>
+<text x="589.0" y="124.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">czy jest wiarygodny?</text>
+<rect x="15.0" y="184.0" width="152.0" height="76.0" rx="5" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.3"/>
+<rect x="15.0" y="184.0" width="152.0" height="4.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
+<circle cx="33.0" cy="208.0" r="10" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="33.0" y="212.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">5</text>
+<text x="49.0" y="206.0" text-anchor="start" class="bx-t" style="fill:#B3641A;font-size:10.5px">Analiza</text>
+<text x="49.0" y="221.0" text-anchor="start" class="bx-t" style="fill:#B3641A;font-size:10.5px">wrażliwości</text>
+<text x="91.0" y="246.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">wpływ zmian danych</text>
+<path d="M 168.0 222.0 L 180.0 222.0" fill="none" stroke="#141C24" stroke-width="1.4" marker-end="url(#arF42c0)"/>
+<rect x="181.0" y="184.0" width="152.0" height="76.0" rx="5" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.3"/>
+<rect x="181.0" y="184.0" width="152.0" height="4.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<circle cx="199.0" cy="208.0" r="10" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="199.0" y="212.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">6</text>
+<text x="215.0" y="206.0" text-anchor="start" class="bx-t" style="fill:#9C3B52;font-size:10.5px">Wybór</text>
+<text x="215.0" y="221.0" text-anchor="start" class="bx-t" style="fill:#9C3B52;font-size:10.5px">algorytmu</text>
+<text x="257.0" y="246.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">optymalny / suboptymalny</text>
+<path d="M 334.0 222.0 L 346.0 222.0" fill="none" stroke="#141C24" stroke-width="1.4" marker-end="url(#arF42c0)"/>
+<rect x="347.0" y="184.0" width="152.0" height="76.0" rx="5" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.3"/>
+<rect x="347.0" y="184.0" width="152.0" height="4.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<circle cx="365.0" cy="208.0" r="10" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="365.0" y="212.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">7</text>
+<text x="381.0" y="206.0" text-anchor="start" class="bx-t" style="fill:#9C3B52;font-size:10.5px">Rozwiązanie</text>
+<text x="381.0" y="221.0" text-anchor="start" class="bx-t" style="fill:#9C3B52;font-size:10.5px">problemu</text>
+<text x="423.0" y="246.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">wyznaczenie decyzji</text>
+<path d="M 500.0 222.0 L 512.0 222.0" fill="none" stroke="#141C24" stroke-width="1.4" marker-end="url(#arF42c0)"/>
+<rect x="513.0" y="184.0" width="152.0" height="76.0" rx="5" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<rect x="513.0" y="184.0" width="152.0" height="4.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<circle cx="531.0" cy="208.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="531.0" y="212.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">8</text>
+<text x="547.0" y="206.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">Wdrożenie</text>
+<text x="547.0" y="221.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">rozwiązania</text>
+<text x="589.0" y="246.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">realizacja w obiekcie</text>
+<path d="M 589.0 139.0 L 589.0 160.0 L 91.0 160.0 L 91.0 182.0" fill="none" stroke="#141C24" stroke-width="1.4" marker-end="url(#arF42c0)"/>
+<path d="M 589.0 61.0 L 589.0 46.0 L 257.0 46.0" fill="none" stroke="#5C6B77" stroke-width="1.3" stroke-dasharray="5 3"/>
+<path d="M 257.0 46.0 L 257.0 60.0" fill="none" stroke="#5C6B77" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#arF42c1)"/>
+<text x="423.0" y="42.0" text-anchor="middle" class="cap" style="font-size:9.5px">model niewiarygodny → popraw</text>
+<rect x="15.0" y="272.0" width="650.0" height="30.0" rx="4" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.08"/>
+<text x="340.0" y="292.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:10.5px">kroki 2–7 to praca na modelu decyzyjnym: dane, modele i algorytmy — tu SWD pomaga najbardziej</text>
+</svg>
+<figcaption>Osiem kroków rozwiązania problemu decyzyjnego według slajdu 34. Powrót od weryfikacji do budowy modelu to uzupełnienie własne. W literaturze zarządzania podobny podział opisuje H. Simon: rozpoznanie, projektowanie, wybór.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2><span class="num">06</span> Przykład na kartce: program produkcji</h2>
+<div class="rail"></div>
+
+<p>Rozwijamy przykład z wykładu (slajdy 14–15). Fabryka produkuje samochody terenowe <span class="m" data-tex="x_1"><svg style="vertical-align: -0.339ex;" xmlns="http://www.w3.org/2000/svg" width="2.282ex" height="1.339ex" role="img" focusable="false" viewBox="0 -442 1008.6 592" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-2-TEX-I-1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path><path id="MJX-2-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D465" xlink:href="#MJX-2-TEX-I-1D465"></use></g><g data-mml-node="mn" transform="translate(605,-150) scale(0.707)"><use data-c="31" xlink:href="#MJX-2-TEX-N-31"></use></g></g></g></g></svg></span> i kompaktowe <span class="m" data-tex="x_2"><svg style="vertical-align: -0.339ex;" xmlns="http://www.w3.org/2000/svg" width="2.282ex" height="1.339ex" role="img" focusable="false" viewBox="0 -442 1008.6 592" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-3-TEX-I-1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path><path id="MJX-3-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D465" xlink:href="#MJX-3-TEX-I-1D465"></use></g><g data-mml-node="mn" transform="translate(605,-150) scale(0.707)"><use data-c="32" xlink:href="#MJX-3-TEX-N-32"></use></g></g></g></g></svg></span> — w sztukach, więc liczby całkowite. Terenowy daje 3 tys. zł zysku, kompaktowy 2 tys. zł. Liczby są przykładowe.</p>
+
+<figure>
+<svg viewBox="0 0 680 410" class="fig">
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">PRZYKŁAD: PROGRAM PRODUKCJI FABRYKI SAMOCHODÓW (DWA MODELE)</text>
+<clipPath id="cF42d1"><rect x="62" y="48" width="330" height="304"/></clipPath>
+<line x1="62.0" y1="352.0" x2="392.0" y2="352.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="62.0" y1="48.0" x2="62.0" y2="352.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="62.0" y1="352.0" x2="62.0" y2="356.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="62.0" y="368.0" text-anchor="middle" class="tick">0</text>
+<line x1="112.0" y1="352.0" x2="112.0" y2="356.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="112.0" y="368.0" text-anchor="middle" class="tick">1</text>
+<line x1="162.0" y1="352.0" x2="162.0" y2="356.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="162.0" y="368.0" text-anchor="middle" class="tick">2</text>
+<line x1="212.0" y1="352.0" x2="212.0" y2="356.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="212.0" y="368.0" text-anchor="middle" class="tick">3</text>
+<line x1="262.0" y1="352.0" x2="262.0" y2="356.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="262.0" y="368.0" text-anchor="middle" class="tick">4</text>
+<line x1="312.0" y1="352.0" x2="312.0" y2="356.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="312.0" y="368.0" text-anchor="middle" class="tick">5</text>
+<line x1="362.0" y1="352.0" x2="362.0" y2="356.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="362.0" y="368.0" text-anchor="middle" class="tick">6</text>
+<line x1="58.0" y1="352.0" x2="62.0" y2="352.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="54.0" y="356.0" text-anchor="end" class="tick">0</text>
+<line x1="58.0" y1="305.9" x2="62.0" y2="305.9" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="54.0" y="309.9" text-anchor="end" class="tick">1</text>
+<line x1="58.0" y1="259.9" x2="62.0" y2="259.9" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="54.0" y="263.9" text-anchor="end" class="tick">2</text>
+<line x1="58.0" y1="213.8" x2="62.0" y2="213.8" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="54.0" y="217.8" text-anchor="end" class="tick">3</text>
+<line x1="58.0" y1="167.8" x2="62.0" y2="167.8" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="54.0" y="171.8" text-anchor="end" class="tick">4</text>
+<line x1="58.0" y1="121.7" x2="62.0" y2="121.7" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="54.0" y="125.7" text-anchor="end" class="tick">5</text>
+<line x1="58.0" y1="75.6" x2="62.0" y2="75.6" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="54.0" y="79.6" text-anchor="end" class="tick">6</text>
+<text x="227.0" y="386.0" text-anchor="middle" class="axlab">x₁ — terenowe [szt./dzień]</text>
+<text x="62.0" y="38.0" text-anchor="start" class="axlab">x₂ — kompaktowe</text>
+<polygon points="62.0,352.0 262.0,352.0 212.0,259.9 112.0,167.8 62.0,167.8" fill="#0E6E78" opacity="0.13"/>
+<circle cx="62.0" cy="352.0" r="3.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="62.0" cy="305.9" r="3.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="62.0" cy="259.9" r="3.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="62.0" cy="213.8" r="3.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="62.0" cy="167.8" r="3.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="62.0" cy="121.7" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="62.0" cy="75.6" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="112.0" cy="352.0" r="3.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="112.0" cy="305.9" r="3.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="112.0" cy="259.9" r="3.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="112.0" cy="213.8" r="3.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="112.0" cy="167.8" r="3.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="112.0" cy="121.7" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="112.0" cy="75.6" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="162.0" cy="352.0" r="3.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="162.0" cy="305.9" r="3.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="162.0" cy="259.9" r="3.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="162.0" cy="213.8" r="3.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="162.0" cy="167.8" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="162.0" cy="121.7" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="162.0" cy="75.6" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="212.0" cy="352.0" r="3.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="212.0" cy="305.9" r="3.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="212.0" cy="259.9" r="3.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="212.0" cy="213.8" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="212.0" cy="167.8" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="212.0" cy="121.7" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="212.0" cy="75.6" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="262.0" cy="352.0" r="3.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="262.0" cy="305.9" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="262.0" cy="259.9" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="262.0" cy="213.8" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="262.0" cy="167.8" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="262.0" cy="121.7" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="262.0" cy="75.6" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="312.0" cy="352.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="312.0" cy="305.9" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="312.0" cy="259.9" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="312.0" cy="213.8" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="312.0" cy="167.8" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="312.0" cy="121.7" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="312.0" cy="75.6" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="362.0" cy="352.0" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="362.0" cy="305.9" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="362.0" cy="259.9" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="362.0" cy="213.8" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="362.0" cy="167.8" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="362.0" cy="121.7" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="362.0" cy="75.6" r="2.4" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<g clip-path="url(#cF42d1)"><polyline points="47.0,107.9 327.0,365.8" fill="none" stroke="#9C3B52" stroke-width="1.8" stroke-linejoin="round"/></g>
+<g clip-path="url(#cF42d1)"><polyline points="77.0,11.2 272.0,370.4" fill="none" stroke="#9C3B52" stroke-width="1.8" stroke-linejoin="round"/></g>
+<g clip-path="url(#cF42d1)"><polyline points="62.0,167.8 392.0,167.8" fill="none" stroke="#B3641A" stroke-width="1.6" stroke-linejoin="round" stroke-dasharray="6 4"/></g>
+<g clip-path="url(#cF42d1)"><polyline points="362.0,352.0 362.0,48.0" fill="none" stroke="#5C6B77" stroke-width="1.3" stroke-linejoin="round" stroke-dasharray="2 4"/></g>
+<g clip-path="url(#cF42d1)"><polyline points="127.0,142.4 287.0,363.5" fill="none" stroke="#5B4B8A" stroke-width="1.4" stroke-linejoin="round" stroke-dasharray="5 4"/></g>
+<circle cx="212.0" cy="259.9" r="10" fill="#FFFFFF" stroke="#5B4B8A" stroke-width="1.8"/>
+<polygon points="212.0,252.9 213.9,257.3 218.7,257.7 215.0,260.9 216.1,265.5 212.0,263.0 207.9,265.5 209.0,260.9 205.3,257.7 210.1,257.3" fill="#5B4B8A"/>
+<line x1="220.0" y1="253.9" x2="254.5" y2="240.8" stroke="#5B4B8A" stroke-width="1"/>
+<text x="257.0" y="236.8" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">optimum (3, 2)</text>
+<text x="257.0" y="251.8" text-anchor="start" class="cap" style="fill:#5B4B8A">z = 13</text>
+<text x="279.5" y="308.2" text-anchor="start" class="cap" style="fill:#9C3B52;font-size:9.5px">montaż</text>
+<text x="93.0" y="59.5" text-anchor="start" class="cap" style="fill:#9C3B52;font-size:9.5px">lakiernia</text>
+<text x="354.5" y="161.8" text-anchor="end" class="cap" style="fill:#B3641A;font-size:9.5px">popyt x₂ ≈ 4 (miękkie)</text>
+<text x="357.0" y="71.0" text-anchor="end" class="cap" style="fill:#5C6B77;font-size:9.5px">x₁ ≤ 6</text>
+<text x="357.0" y="84.0" text-anchor="end" class="cap" style="fill:#5C6B77;font-size:9.5px">nieistotne</text>
+<rect x="420.0" y="44.0" width="246.0" height="190.0" rx="5" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<text x="432.0" y="64.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:11px">MODEL DECYZYJNY</text>
+<text x="434.0" y="90.0" text-anchor="start" class="cap" style="fill:#B3641A;font-size:10.5px">max z = 3x₁ + 2x₂ [tys. zł]</text>
+<text x="434.0" y="112.0" text-anchor="start" class="cap" style="fill:#9C3B52;font-size:10.5px">x₁ + x₂ ≤ 5  (montaż)</text>
+<text x="434.0" y="134.0" text-anchor="start" class="cap" style="fill:#9C3B52;font-size:10.5px">2x₁ + x₂ ≤ 8  (lakiernia)</text>
+<text x="434.0" y="156.0" text-anchor="start" class="cap" style="fill:#B3641A;font-size:10.5px">x₂ ≤ 4  (popyt kompaktów, miękkie)</text>
+<text x="434.0" y="178.0" text-anchor="start" class="cap" style="fill:#5C6B77;font-size:10.5px">x₁ ≤ 6  (popyt terenowych)</text>
+<text x="434.0" y="200.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">x₁, x₂ ≥ 0, całkowite</text>
+<text x="434.0" y="222.0" text-anchor="start" class="cap" style="fill:#0E6E78;font-size:10px">18 opcji dopuszczalnych (kropki)</text>
+<rect x="420.0" y="246.0" width="246.0" height="150.0" rx="5" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<text x="432.0" y="266.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:11px">WIERZCHOŁKI: z = 3x₁ + 2x₂</text>
+<text x="440.0" y="290.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">(0, 0)</text>
+<text x="512.0" y="290.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">z = 0</text>
+<text x="440.0" y="311.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">(4, 0)</text>
+<text x="512.0" y="311.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">z = 12</text>
+<rect x="428.0" y="318.0" width="230.0" height="20.0" rx="3" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.1"/>
+<text x="440.0" y="332.0" text-anchor="start" class="cap" style="fill:#5B4B8A;font-size:10.5px">(3, 2)</text>
+<text x="512.0" y="332.0" text-anchor="start" class="cap" style="fill:#5B4B8A;font-size:10.5px">z = 13  ← najlepszy</text>
+<text x="440.0" y="353.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">(1, 4)</text>
+<text x="512.0" y="353.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">z = 11</text>
+<text x="440.0" y="374.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">(0, 4)</text>
+<text x="512.0" y="374.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">z = 8</text>
+</svg>
+<figcaption>Kropki to opcje decyzyjne, zielone — dopuszczalne. Optimum leży w wierzchołku, w którym przecinają się dwa ograniczenia istotne: montaż i lakiernia. Rachunek własny.</figcaption>
+</figure>
+
+<ol class="steps">
+<li><strong>Elementy:</strong> decydent — kierownik produkcji; opcje — pary liczb <span class="m" data-tex="(x_1, x_2)"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="7.33ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 3239.8 1000" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-4-TEX-N-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path id="MJX-4-TEX-I-1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path><path id="MJX-4-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-4-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-4-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-4-TEX-N-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><use data-c="28" xlink:href="#MJX-4-TEX-N-28"></use></g><g data-mml-node="msub" transform="translate(389,0)"><g data-mml-node="mi"><use data-c="1D465" xlink:href="#MJX-4-TEX-I-1D465"></use></g><g data-mml-node="mn" transform="translate(605,-150) scale(0.707)"><use data-c="31" xlink:href="#MJX-4-TEX-N-31"></use></g></g><g data-mml-node="mo" transform="translate(1397.6,0)"><use data-c="2C" xlink:href="#MJX-4-TEX-N-2C"></use></g><g data-mml-node="msub" transform="translate(1842.2,0)"><g data-mml-node="mi"><use data-c="1D465" xlink:href="#MJX-4-TEX-I-1D465"></use></g><g data-mml-node="mn" transform="translate(605,-150) scale(0.707)"><use data-c="32" xlink:href="#MJX-4-TEX-N-32"></use></g></g><g data-mml-node="mo" transform="translate(2850.8,0)"><use data-c="29" xlink:href="#MJX-4-TEX-N-29"></use></g></g></g></svg></span>; ograniczenia — montaż, lakiernia, popyt; kryterium — zysk. To problem kategorii 2: bez modelu nie wiadomo nawet, które opcje są dopuszczalne.</li>
+<li><strong>Ograniczenia:</strong> po narysowaniu zostaje 18 opcji dopuszczalnych. Ograniczenie <span class="m" data-tex="x_1 \le 6"><svg style="vertical-align: -0.339ex;" xmlns="http://www.w3.org/2000/svg" width="6.43ex" height="1.846ex" role="img" focusable="false" viewBox="0 -666 2842.1 816" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-5-TEX-I-1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path><path id="MJX-5-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-5-TEX-N-2264" d="M674 636Q682 636 688 630T694 615T687 601Q686 600 417 472L151 346L399 228Q687 92 691 87Q694 81 694 76Q694 58 676 56H670L382 192Q92 329 90 331Q83 336 83 348Q84 359 96 365Q104 369 382 500T665 634Q669 636 674 636ZM84 -118Q84 -108 99 -98H678Q694 -104 694 -118Q694 -130 679 -138H98Q84 -131 84 -118Z"></path><path id="MJX-5-TEX-N-36" d="M42 313Q42 476 123 571T303 666Q372 666 402 630T432 550Q432 525 418 510T379 495Q356 495 341 509T326 548Q326 592 373 601Q351 623 311 626Q240 626 194 566Q147 500 147 364L148 360Q153 366 156 373Q197 433 263 433H267Q313 433 348 414Q372 400 396 374T435 317Q456 268 456 210V192Q456 169 451 149Q440 90 387 34T253 -22Q225 -22 199 -14T143 16T92 75T56 172T42 313ZM257 397Q227 397 205 380T171 335T154 278T148 216Q148 133 160 97T198 39Q222 21 251 21Q302 21 329 59Q342 77 347 104T352 209Q352 289 347 316T329 361Q302 397 257 397Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D465" xlink:href="#MJX-5-TEX-I-1D465"></use></g><g data-mml-node="mn" transform="translate(605,-150) scale(0.707)"><use data-c="31" xlink:href="#MJX-5-TEX-N-31"></use></g></g><g data-mml-node="mo" transform="translate(1286.3,0)"><use data-c="2264" xlink:href="#MJX-5-TEX-N-2264"></use></g><g data-mml-node="mn" transform="translate(2342.1,0)"><use data-c="36" xlink:href="#MJX-5-TEX-N-36"></use></g></g></g></svg></span> jest <strong>nieistotne</strong>, bo lakiernia i tak pozwala najwyżej na 4 terenowe. Popyt kompaktów to ograniczenie <strong>miękkie</strong>.</li>
+<li><strong>Kryterium:</strong> dla modelu liniowego optimum leży w wierzchołku zbioru dopuszczalnego. Z tabeli na rysunku: <strong>(3, 2), z = 13 tys. zł</strong>.</li>
+<li><strong>Analiza wrażliwości (krok 5):</strong> jeśli zysk z kompaktu wzrośnie z 2 do 4 tys. zł, to (3, 2) daje 17, a (1, 4) daje 19 — <strong>decyzja się zmienia</strong>. Dokładną analizę opisuje zagadnienie 44.</li>
+</ol>
+
+<div class="box key">
+<span class="lbl">Zapamiętaj</span>
+<p><strong>Ograniczenia wybierają to, co dopuszczalne, a kryterium — to, co najlepsze.</strong> Gdy opcji jest wiele, bez modelu i obliczeń nie da się ich nawet wyliczyć. Właśnie dlatego SWD są skomputeryzowane.</p>
+</div>
+</section>
+
+<section>
+<h2><span class="num">07</span> System wspomagania decyzji: czym jest i jakie ma funkcje</h2>
+<div class="rail"></div>
+
+<p>Według wykładu SWD (<em>Decision Support System</em>, DSS) <span class="cyt">„są klasą skomputeryzowanych systemów informacyjnych, które wspomagają działalność podejmowania decyzji”</span>. Są skomputeryzowane, bo buduje się je dla decyzji, które wymagają przetwarzania dużych ilości danych i złożonych relacji między nimi. Pierwsze SWD zajmowały się tylko danymi (bazy, potem hurtownie danych). Systemy, które pomagają w samym wyborze, pojawiły się dopiero w latach 80. XX wieku.</p>
+
+<table>
+<thead><tr><th>Krok procesu (sekcja 05)</th><th>Funkcja SWD</th></tr></thead>
+<tbody>
+<tr><td>1 · sformułowanie problemu</td><td>zbieranie i prezentacja danych, wykrywanie sytuacji, które wymagają decyzji</td></tr>
+<tr><td>2–4 · model</td><td>przechowywanie modeli, identyfikacja parametrów z danych, weryfikacja na danych historycznych</td></tr>
+<tr><td>5 · wrażliwość</td><td>analiza wrażliwości i pytania „co jeśli” (→ 44)</td></tr>
+<tr><td>6–7 · rozwiązanie</td><td>optymalizacja (LP, QP), symulacja skutków, wnioskowanie i sugestie</td></tr>
+<tr><td>8 · wdrożenie</td><td>przekazanie decyzji do systemu sterowania, monitorowanie skutków</td></tr>
+</tbody>
+</table>
+
+<h3>Idea działania</h3>
+<p>Materiał do zajęć z KSSiWD (T. Ujazdowski) definiuje SWD jako <span class="cyt">„zbiór narzędzi komputerowych wspomagających użytkownika w organizacji i prowadzeniu interaktywnego procesu decyzyjnego”</span>. Z tego wynikają cztery zasady:</p>
+<ul>
+<li><strong>Wspiera, nie zastępuje</strong> — w przemyśle zwykle stosuje się podejście hybrydowe z suwerenną rolą decydenta. Decyzję ostatecznie podejmuje człowiek, także na podstawie doświadczenia i intuicji. Standardy i przepisy wymagają, żeby decydująca rola należała do niego.</li>
+<li><strong>Interaktywność</strong> — decydent zmienia założenia i od razu widzi skutki.</li>
+<li><strong>Częściowa automatyzacja</strong> — w systemach sterowania SWD zawsze automatyzuje niektóre etapy procesu decyzyjnego. Inżynierowie chcą automatyzować więcej, bo to zmniejsza liczbę błędów i przyspiesza reakcję. Operatorzy, którzy odpowiadają za proces, wolą sterować ręcznie.</li>
+<li><strong>Właściwy poziom zaufania</strong> — między brakiem zaufania (ignorowanie automatyki) a nadmiernym zaufaniem (bezrefleksyjne poleganie na systemie).</li>
+</ul>
+</section>
+
+<section>
+<h2><span class="num">08</span> Możliwe elementy architektury</h2>
+<div class="rail"></div>
+
+<figure>
+<svg viewBox="0 0 680 430" class="fig">
+<defs><marker id="arF42e0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker><marker id="arF42e1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0E6E78"/></marker><marker id="arF42e2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#141C24"/></marker><marker id="arF42e3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B3641A"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">MOŻLIWE ELEMENTY ARCHITEKTURY SWD</text>
+<circle cx="62.0" cy="92.0" r="30" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.8"/>
+<text x="62.0" y="90.0" text-anchor="middle" class="bx-t" style="fill:#5B4B8A;font-size:10px">decydent</text>
+<text x="62.0" y="104.0" text-anchor="middle" class="cap" style="font-size:9px">operator</text>
+<circle cx="62.0" cy="170.0" r="30" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.6"/>
+<text x="62.0" y="173.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:10px">analityk</text>
+<rect x="126.0" y="64.0" width="176.0" height="132.0" rx="5" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.4"/>
+<rect x="126.0" y="64.0" width="176.0" height="4.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="214.0" y="90.0" text-anchor="middle" class="bx-t" style="fill:#5B4B8A;font-size:11px">INTERFEJS</text>
+<text x="214.0" y="114.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:10px">panel HMI, strona WWW</text>
+<text x="214.0" y="133.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:10px">pytania „co jeśli”</text>
+<text x="214.0" y="152.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:10px">wykresy, raporty</text>
+<text x="214.0" y="171.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:10px">zatwierdzenie decyzji</text>
+<path d="M 94.0 88.0 L 124.0 88.0" fill="none" stroke="#5B4B8A" stroke-width="1.3" marker-end="url(#arF42e0)"/>
+<path d="M 124.0 104.0 L 94.0 104.0" fill="none" stroke="#5B4B8A" stroke-width="1.3" marker-end="url(#arF42e0)"/>
+<path d="M 94.0 166.0 L 124.0 166.0" fill="none" stroke="#0E6E78" stroke-width="1.3" marker-end="url(#arF42e1)"/>
+<rect x="328.0" y="40.0" width="338.0" height="280.0" rx="6" fill="#F6F5FA" stroke="#C3CDD4" stroke-width="1"/>
+<text x="497.0" y="60.0" text-anchor="middle" class="bx-t" style="fill:#5B4B8A;font-size:11px">JĄDRO SWD (rodzaje wg wykładu)</text>
+<rect x="342.0" y="72.0" width="310.0" height="40.0" rx="4" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.2"/>
+<rect x="342.0" y="72.0" width="4.0" height="40.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="356.0" y="89.0" text-anchor="start" class="bx-t" style="fill:#B3641A;font-size:10.5px">dane</text>
+<text x="356.0" y="104.0" text-anchor="start" class="cap" style="font-size:9.5px">baza / hurtownia danych — analiza danych</text>
+<rect x="342.0" y="120.0" width="310.0" height="40.0" rx="4" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.2"/>
+<rect x="342.0" y="120.0" width="4.0" height="40.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="356.0" y="137.0" text-anchor="start" class="bx-t" style="fill:#9C3B52;font-size:10.5px">informacja i wiedza</text>
+<text x="356.0" y="152.0" text-anchor="start" class="cap" style="font-size:9.5px">bazy decyzyjne, zarządzanie wiedzą</text>
+<rect x="342.0" y="168.0" width="310.0" height="40.0" rx="4" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.2"/>
+<rect x="342.0" y="168.0" width="4.0" height="40.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="356.0" y="185.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:10.5px">modele optymalizacyjne</text>
+<text x="356.0" y="200.0" text-anchor="start" class="cap" style="font-size:9.5px">LP, QP, algorytmy optymalizacji</text>
+<rect x="342.0" y="216.0" width="310.0" height="40.0" rx="4" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.2"/>
+<rect x="342.0" y="216.0" width="4.0" height="40.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="356.0" y="233.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:10.5px">modele reprezentatywne</text>
+<text x="356.0" y="248.0" text-anchor="start" class="cap" style="font-size:9.5px">symulacja skutków decyzji</text>
+<rect x="342.0" y="264.0" width="310.0" height="40.0" rx="4" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<rect x="342.0" y="264.0" width="4.0" height="40.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="356.0" y="281.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">modele sugestywne</text>
+<text x="356.0" y="296.0" text-anchor="start" class="cap" style="font-size:9.5px">wnioskowanie logiczne → sugestie</text>
+<path d="M 304.0 120.0 L 326.0 120.0" fill="none" stroke="#141C24" stroke-width="1.4" marker-end="url(#arF42e2)"/>
+<path d="M 326.0 140.0 L 304.0 140.0" fill="none" stroke="#141C24" stroke-width="1.4" marker-end="url(#arF42e2)"/>
+<rect x="328.0" y="350.0" width="338.0" height="66.0" rx="6" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="497.0" y="372.0" text-anchor="middle" class="bx-t" style="font-size:10.5px">KOMPUTEROWY SYSTEM STEROWANIA</text>
+<text x="497.0" y="390.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:10px">PLC, serwer OPC UA, SCADA — obiekt</text>
+<text x="497.0" y="406.0" text-anchor="middle" class="cap" style="font-size:9.5px">(model współpracy: zagadnienie 35)</text>
+<path d="M 450.0 348.0 L 450.0 322.0" fill="none" stroke="#B3641A" stroke-width="1.5" marker-end="url(#arF42e3)"/>
+<text x="444.0" y="340.0" text-anchor="end" class="cap" style="fill:#B3641A;font-size:9.5px">pomiary</text>
+<path d="M 544.0 322.0 L 544.0 348.0" fill="none" stroke="#5B4B8A" stroke-width="1.5" marker-end="url(#arF42e0)"/>
+<text x="550.0" y="332.0" text-anchor="start" class="cap" style="fill:#5B4B8A;font-size:9.5px">decyzje,</text>
+<text x="550.0" y="344.0" text-anchor="start" class="cap" style="fill:#5B4B8A;font-size:9.5px">wartości zadane</text>
+<rect x="14.0" y="226.0" width="288.0" height="190.0" rx="6" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<text x="158.0" y="248.0" text-anchor="middle" class="bx-t" style="font-size:11px">CO DOSTAJE DECYDENT</text>
+<text x="30.0" y="276.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">· zbiór opcji dopuszczalnych</text>
+<text x="30.0" y="300.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">· ocenę opcji według kryteriów</text>
+<text x="30.0" y="324.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">· decyzję optymalną lub suboptymalną</text>
+<text x="30.0" y="348.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">· analizę wrażliwości</text>
+<text x="30.0" y="372.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">· sugestie z uzasadnieniem</text>
+<path d="M 214.0 198.0 L 214.0 224.0" fill="none" stroke="#5B4B8A" stroke-width="1.4" marker-end="url(#arF42e0)"/>
+</svg>
+<figcaption>Moduły jądra odpowiadają rodzajom SWD z wykładu (podział za P. K. Pukoczem, 2017). Interfejs i połączenie z systemem sterowania pochodzą z projektu SWD na zajęciach z KSSiWD: obiekt – PLC – OPC UA – HMI. Opracowanie własne.</figcaption>
+</figure>
+
+<p>Wykład dzieli SWD według tego, na czym się opierają. Każdy rodzaj to jednocześnie możliwy moduł architektury:</p>
+<ul>
+<li><strong>systemy analizy danych</strong> — przetwarzanie i przekształcanie danych;</li>
+<li><strong>systemy analizy informacji</strong> — informacja w bazach zorientowanych na decyzje lub na model;</li>
+<li><strong>modele optymalizacyjne</strong> — metody optymalizacji, np. zadanie z sekcji 06;</li>
+<li><strong>modele reprezentatywne</strong> — modele symulacyjne;</li>
+<li><strong>modele sugestywne</strong> — wnioskowanie logiczne, które generuje sugestie (→ 47–49);</li>
+<li><strong>systemy zarządzania wiedzą i informacją</strong> — dostęp do wiedzy i jej przetwarzanie.</li>
+</ul>
+<p>Rozwój Internetu dodał <strong>SWD oparte o sieć Web</strong>: obsługę przez przeglądarkę. W klasycznej literaturze (R. Sprague i E. Carlson, 1982) architekturę streszcza się do trzech części: baza danych, baza modeli i interfejs dialogowy. Współpracę SWD z systemem sterowania rozwija zagadnienie 35.</p>
+</section>
+
+<section>
+<h2><span class="num">09</span> Narysuj na tablicy</h2>
+<div class="rail"></div>
+
+<figure>
+<svg viewBox="0 0 680 470" class="fig">
+<defs><marker id="arF42f0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B3641A"/></marker><marker id="arF42f1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0E6E78"/></marker><marker id="arF42f2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9C3B52"/></marker><marker id="arF42f3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker><marker id="arF42f4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#141C24"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">NARYSUJ NA TABLICY W 6 RUCHACH</text>
+<rect x="14.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="32.0" cy="58.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="32.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">1</text>
+<text x="48.0" y="56.0" text-anchor="start" class="bx-t">proces</text>
+<text x="48.0" y="70.0" text-anchor="start" class="bx" style="font-size:9.5px">wejścia → decyzja</text>
+<rect x="24.0" y="102.0" width="70.0" height="24.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1"/>
+<text x="59.0" y="118.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:8.5px">informacja</text>
+<path d="M 94.0 114.0 L 110.0 150.0" fill="none" stroke="#B3641A" stroke-width="1" marker-end="url(#arF42f0)"/>
+<rect x="24.0" y="138.0" width="70.0" height="24.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1"/>
+<text x="59.0" y="154.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:8.5px">wiedza</text>
+<path d="M 94.0 150.0 L 110.0 150.0" fill="none" stroke="#0E6E78" stroke-width="1" marker-end="url(#arF42f1)"/>
+<rect x="24.0" y="174.0" width="70.0" height="24.0" rx="3" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1"/>
+<text x="59.0" y="190.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:8.5px">preferencje</text>
+<path d="M 94.0 186.0 L 110.0 150.0" fill="none" stroke="#9C3B52" stroke-width="1" marker-end="url(#arF42f2)"/>
+<rect x="112.0" y="126.0" width="48.0" height="48.0" rx="4" fill="#F6F5FA" stroke="#5B4B8A" stroke-width="1"/>
+<text x="136.0" y="154.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9.5px">proces</text>
+<path d="M 160.0 150.0 L 174.0 150.0" fill="none" stroke="#5B4B8A" stroke-width="1.2" marker-end="url(#arF42f3)"/>
+<text x="194.0" y="154.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:8.5px">decyzja</text>
+<text x="118.0" y="224.0" text-anchor="middle" class="cap" style="font-size:9px">w środku: decydent + analityk</text>
+<rect x="236.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="254.0" cy="58.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="254.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">2</text>
+<text x="270.0" y="56.0" text-anchor="start" class="bx-t">4 elementy</text>
+<text x="270.0" y="70.0" text-anchor="start" class="bx" style="font-size:9.5px">D, ograniczenia, kryterium</text>
+<rect x="250.0" y="88.0" width="180.0" height="140.0" rx="4" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1"/>
+<circle cx="266.0" cy="212.0" r="2.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="266.0" cy="190.0" r="2.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="266.0" cy="168.0" r="2.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="266.0" cy="146.0" r="2.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="266.0" cy="124.0" r="2.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="266.0" cy="102.0" r="1.8" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="288.0" cy="212.0" r="2.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="288.0" cy="190.0" r="2.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="288.0" cy="168.0" r="2.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="288.0" cy="146.0" r="2.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="288.0" cy="124.0" r="2.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="288.0" cy="102.0" r="1.8" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="310.0" cy="212.0" r="2.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="310.0" cy="190.0" r="2.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="310.0" cy="168.0" r="2.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="310.0" cy="146.0" r="2.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="310.0" cy="124.0" r="2.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="310.0" cy="102.0" r="1.8" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="332.0" cy="212.0" r="2.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="332.0" cy="190.0" r="2.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="332.0" cy="168.0" r="2.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="332.0" cy="146.0" r="2.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="332.0" cy="124.0" r="2.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="332.0" cy="102.0" r="1.8" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="354.0" cy="212.0" r="2.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="354.0" cy="190.0" r="2.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="354.0" cy="168.0" r="2.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="354.0" cy="146.0" r="2.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="354.0" cy="124.0" r="1.8" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="354.0" cy="102.0" r="1.8" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="376.0" cy="212.0" r="2.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="376.0" cy="190.0" r="2.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="376.0" cy="168.0" r="2.6" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="376.0" cy="146.0" r="1.8" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="376.0" cy="124.0" r="1.8" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="376.0" cy="102.0" r="1.8" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="398.0" cy="212.0" r="1.8" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="398.0" cy="190.0" r="1.8" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="398.0" cy="168.0" r="1.8" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="398.0" cy="146.0" r="1.8" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="398.0" cy="124.0" r="1.8" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="398.0" cy="102.0" r="1.8" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="420.0" cy="212.0" r="1.8" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="420.0" cy="190.0" r="1.8" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="420.0" cy="168.0" r="1.8" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="420.0" cy="146.0" r="1.8" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="420.0" cy="124.0" r="1.8" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="420.0" cy="102.0" r="1.8" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<line x1="387.0" y1="92.0" x2="387.0" y2="226.0" stroke="#9C3B52" stroke-width="1.4"/>
+<line x1="254.0" y1="113.0" x2="426.0" y2="113.0" stroke="#9C3B52" stroke-width="1.4"/>
+<polygon points="376.0,161.0 377.9,165.5 382.7,165.8 379.0,169.0 380.1,173.7 376.0,171.2 371.9,173.7 373.0,169.0 369.3,165.8 374.1,165.5" fill="#B3641A"/>
+<text x="340.0" y="236.0" text-anchor="middle" class="cap"></text>
+<rect x="458.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="476.0" cy="58.0" r="10" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="476.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">3</text>
+<text x="492.0" y="56.0" text-anchor="start" class="bx-t">warunki</text>
+<text x="492.0" y="70.0" text-anchor="start" class="bx" style="font-size:9.5px">pewność, ryzyko, niepewność</text>
+<circle cx="562.0" cy="164.0" r="70" fill="none" stroke="#9C3B52" stroke-width="1.6"/>
+<text x="562.0" y="108.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:9px">pewność</text>
+<circle cx="562.0" cy="186.0" r="48" fill="none" stroke="#0E6E78" stroke-width="1.6"/>
+<text x="562.0" y="152.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9px">ryzyko</text>
+<circle cx="562.0" cy="208.0" r="26" fill="none" stroke="#5B4B8A" stroke-width="1.6"/>
+<text x="562.0" y="211.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:8px">niepewność</text>
+<rect x="14.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="32.0" cy="272.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="32.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">4</text>
+<text x="48.0" y="270.0" text-anchor="start" class="bx-t">model</text>
+<text x="48.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">zmienne, ograniczenia, cel</text>
+<text x="118.0" y="332.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:12px">x = (x₁, …, xₙ)</text>
+<text x="118.0" y="370.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52;font-size:12px">gᵢ(x) ≤ bᵢ</text>
+<text x="118.0" y="408.0" text-anchor="middle" class="bx-t" style="fill:#B3641A;font-size:12px">max f(x)</text>
+<text x="118.0" y="440.0" text-anchor="middle" class="cap" style="font-size:9px">8 kroków: formułuję … wdrażam</text>
+<rect x="236.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="254.0" cy="272.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="254.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">5</text>
+<text x="270.0" y="270.0" text-anchor="start" class="bx-t">przykład</text>
+<text x="270.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">wielokąt i optimum</text>
+<clipPath id="cF42f103"><rect x="266" y="306" width="160" height="128"/></clipPath>
+<line x1="266.0" y1="434.0" x2="430.0" y2="434.0" stroke="#C3CDD4" stroke-width="1"/>
+<line x1="266.0" y1="302.0" x2="266.0" y2="434.0" stroke="#C3CDD4" stroke-width="1"/>
+<polygon points="266.0,434.0 382.4,434.0 353.3,387.5 295.1,340.9 266.0,340.9" fill="#0E6E78" opacity="0.15" stroke="#0E6E78"/>
+<polygon points="353.3,380.5 355.1,384.9 359.9,385.3 356.3,388.4 357.4,393.1 353.3,390.6 349.2,393.1 350.3,388.4 346.6,385.3 351.4,384.9" fill="#5B4B8A"/>
+<text x="362.0" y="378.1" text-anchor="start" class="cap" style="fill:#5B4B8A;font-size:9.5px">(3, 2)</text>
+<rect x="458.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="476.0" cy="272.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="476.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">6</text>
+<text x="492.0" y="270.0" text-anchor="start" class="bx-t">SWD</text>
+<text x="492.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">interfejs + jądro + KSS</text>
+<rect x="470.0" y="314.0" width="54.0" height="70.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1"/>
+<text x="497.0" y="353.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:8.5px">interf.</text>
+<rect x="558.0" y="304.0" width="90.0" height="24.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1"/>
+<text x="603.0" y="320.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9px">dane</text>
+<rect x="558.0" y="334.0" width="90.0" height="24.0" rx="3" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1"/>
+<text x="603.0" y="350.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:9px">wiedza</text>
+<rect x="558.0" y="364.0" width="90.0" height="24.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1"/>
+<text x="603.0" y="380.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9px">modele</text>
+<path d="M 524.0 349.0 L 556.0 349.0" fill="none" stroke="#141C24" stroke-width="1" marker-end="url(#arF42f4)"/>
+<rect x="558.0" y="414.0" width="90.0" height="24.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<text x="603.0" y="430.0" text-anchor="middle" class="cap" style="font-size:9px">KSS</text>
+<path d="M 588.0 412.0 L 588.0 396.0" fill="none" stroke="#B3641A" stroke-width="1" marker-end="url(#arF42f0)"/>
+<path d="M 618.0 396.0 L 618.0 412.0" fill="none" stroke="#5B4B8A" stroke-width="1" marker-end="url(#arF42f3)"/>
+</svg>
+<figcaption>(1) Informacja, wiedza i preferencje wchodzą do procesu, w którym decydent korzysta z pomocy analityka; wychodzi decyzja. (2) Przestrzeń D, linie ograniczeń, gwiazdka optimum. (3) Trzy zagnieżdżone koła: pewność, ryzyko, niepewność. (4) Model: zmienne, ograniczenia, funkcja celu. (5) Wielokąt i optimum (3, 2). (6) Interfejs, jądro (dane, wiedza, modele) i KSS pod spodem.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2><span class="num">10</span> Opowiedz własnymi słowami</h2>
+<div class="rail"></div>
+
+<details class="fiszka op"><summary>Wersja 30 sekund (dla kogoś spoza automatyki)</summary>
+<p>„Decyzja to świadomy wybór jednej z kilku możliwości. Żeby w ogóle było co decydować, potrzebny jest ktoś, kto wybiera, co najmniej dwie możliwości, jakieś ograniczenia i sposób oceny, co jest lepsze. Gdy możliwości są tysiące, a danych bardzo dużo, pomaga komputerowy system wspomagania decyzji. Zbiera dane, liczy i podpowiada, ale ostatnie słowo należy do człowieka.”</p></details>
+
+<details class="fiszka op"><summary>Wersja 2 minuty (egzaminacyjna, siedem zdań-kotwic)</summary>
+<ol>
+<li><strong>Definicja:</strong> „Proces decyzyjny to ciąg procesów myślowych lub obliczeniowych, w którym informacja, wiedza i preferencje prowadzą do decyzji — choć proces nie musi się nią zakończyć.”</li>
+<li><strong>Elementy:</strong> „Niezbędne są decydent, co najmniej dwie opcje tworzące przestrzeń decyzyjną, czynniki ograniczające i co najmniej jedno kryterium oceny.”</li>
+<li><strong>Warunki:</strong> „Decyzję podejmuje się w warunkach pewności, ryzyka albo niepewności, a ograniczenia bywają istotne lub nieistotne, twarde lub miękkie.”</li>
+<li><strong>Model i kroki:</strong> „Model to zmienne, ograniczenia i funkcja celu. Kroki: sformułowanie, model, parametry, weryfikacja, wrażliwość, algorytm, rozwiązanie, wdrożenie.”</li>
+<li><strong>Przykład:</strong> „W programie produkcji dwóch modeli samochodów ograniczenia zostawiają 18 opcji, a kryterium zysku wskazuje wierzchołek (3, 2).”</li>
+<li><strong>SWD:</strong> „To skomputeryzowany system informacyjny wspierający interaktywny proces decyzyjny. Automatyzuje część etapów, ale nie zastępuje decydenta.”</li>
+<li><strong>Architektura:</strong> „Interfejs, dane, wiedza, modele optymalizacyjne, symulacyjne i sugestywne, a w automatyce połączenie z systemem sterowania.”</li>
+</ol></details>
+
+<h3>Lista kontrolna przed egzaminem</h3>
+<ul class="check">
+<li>Podaję definicję decyzji i procesu decyzyjnego.</li>
+<li>Wymieniam cztery niezbędne elementy i pokazuję je na przykładzie.</li>
+<li>Rozróżniam pewność, ryzyko i niepewność.</li>
+<li>Wymieniam 8 kroków rozwiązania problemu.</li>
+<li>Rozwiązuję przykład produkcyjny i wskazuję ograniczenie nieistotne.</li>
+<li>Podaję funkcje SWD, cztery zasady działania i rodzaje modułów.</li>
+</ul>
+</section>
+
+<section>
+<h2><span class="num">11</span> Ściąga</h2>
+<div class="rail"></div>
+
+<div class="karty">
+<div class="karta b"><span class="kw">Decyzja</span><p>Świadomy, nielosowy wybór jednego z rozpoznanych wariantów działania.</p></div>
+<div class="karta"><span class="kw">Proces decyzyjny</span><p>Procesy myślowe i obliczeniowe: informacja, wiedza, preferencje → decyzja (nie zawsze).</p></div>
+<div class="karta s"><span class="kw">4 elementy</span><p>Decydent · ≥ 2 opcje (zbiór D) · ograniczenia · ≥ 1 kryterium.</p></div>
+<div class="karta a"><span class="kw">Uczestnicy</span><p>Decydent wybiera (człowiek, grupa, urządzenie), analityk pomaga.</p></div>
+<div class="karta"><span class="kw">Warunki</span><p>Pewność: optymalizacja. Ryzyko: probabilistyka. Niepewność: statystyka bayesowska.</p></div>
+<div class="karta b"><span class="kw">Ograniczenia</span><p>Istotne / nieistotne; twarde / miękkie.</p></div>
+<div class="karta s"><span class="kw">8 kroków</span><p>Sformułowanie → model → parametry → weryfikacja → wrażliwość → algorytm → rozwiązanie → wdrożenie.</p></div>
+<div class="karta a"><span class="kw">Przykład</span><p>max 3x₁ + 2x₂; 18 opcji dopuszczalnych; optimum (3, 2), z = 13.</p></div>
+<div class="karta b"><span class="kw">SWD</span><p>Skomputeryzowany system informacyjny; interaktywny; wspiera, nie zastępuje.</p></div>
+<div class="karta"><span class="kw">Architektura</span><p>Interfejs + dane + wiedza + modele (optymalizacyjne, reprezentatywne, sugestywne) + KSS.</p></div>
+</div>
+</section>
+
+<section>
+<h2><span class="num">12</span> Pytania dodatkowe — fiszki</h2>
+<div class="rail"></div>
+
+<details class="fiszka"><summary>Czy regulator podejmuje decyzje?</summary>
+<p>Tak. Wykład zalicza do decydentów także urządzenia i grupy urządzeń: regulator decyduje, o ile otworzyć zawór albo zmienić prąd grzałki. Jego proces decyzyjny jest w pełni sformalizowany i zautomatyzowany. SWD stosuje się tam, gdzie decyzji nie da się w całości oddać algorytmowi i decydentem pozostaje człowiek.</p></details>
+
+<details class="fiszka"><summary>Czym różni się decyzja dopuszczalna od optymalnej?</summary>
+<p>Dopuszczalna spełnia wszystkie ograniczenia. Optymalna jest najlepsza wśród dopuszczalnych według przyjętego kryterium. W przykładzie produkcyjnym dopuszczalnych jest 18, optymalna jedna: (3, 2).</p></details>
+
+<details class="fiszka"><summary>Po co odróżniać ograniczenia istotne od nieistotnych?</summary>
+<p>Nieistotne nie zmieniają zbioru decyzji dopuszczalnych, więc można je pominąć i uprościć model. W przykładzie popyt <span class="m" data-tex="x_1 \le 6"><svg style="vertical-align: -0.339ex;" xmlns="http://www.w3.org/2000/svg" width="6.43ex" height="1.846ex" role="img" focusable="false" viewBox="0 -666 2842.1 816" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-6-TEX-I-1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path><path id="MJX-6-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-6-TEX-N-2264" d="M674 636Q682 636 688 630T694 615T687 601Q686 600 417 472L151 346L399 228Q687 92 691 87Q694 81 694 76Q694 58 676 56H670L382 192Q92 329 90 331Q83 336 83 348Q84 359 96 365Q104 369 382 500T665 634Q669 636 674 636ZM84 -118Q84 -108 99 -98H678Q694 -104 694 -118Q694 -130 679 -138H98Q84 -131 84 -118Z"></path><path id="MJX-6-TEX-N-36" d="M42 313Q42 476 123 571T303 666Q372 666 402 630T432 550Q432 525 418 510T379 495Q356 495 341 509T326 548Q326 592 373 601Q351 623 311 626Q240 626 194 566Q147 500 147 364L148 360Q153 366 156 373Q197 433 263 433H267Q313 433 348 414Q372 400 396 374T435 317Q456 268 456 210V192Q456 169 451 149Q440 90 387 34T253 -22Q225 -22 199 -14T143 16T92 75T56 172T42 313ZM257 397Q227 397 205 380T171 335T154 278T148 216Q148 133 160 97T198 39Q222 21 251 21Q302 21 329 59Q342 77 347 104T352 209Q352 289 347 316T329 361Q302 397 257 397Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D465" xlink:href="#MJX-6-TEX-I-1D465"></use></g><g data-mml-node="mn" transform="translate(605,-150) scale(0.707)"><use data-c="31" xlink:href="#MJX-6-TEX-N-31"></use></g></g><g data-mml-node="mo" transform="translate(1286.3,0)"><use data-c="2264" xlink:href="#MJX-6-TEX-N-2264"></use></g><g data-mml-node="mn" transform="translate(2342.1,0)"><use data-c="36" xlink:href="#MJX-6-TEX-N-36"></use></g></g></g></svg></span> nie ma znaczenia, bo lakiernia i tak pozwala najwyżej na 4 terenowe. Po zmianie danych ograniczenie nieistotne może jednak stać się istotne.</p></details>
+
+<details class="fiszka"><summary>Czym różnią się problemy wieloatrybutowe od wielocelowych?</summary>
+<p>Wieloatrybutowe (MADP) mają niewiele z góry znanych opcji, każdą opisaną atrybutami, np. cztery samochody z ceną, spalaniem i bagażnikiem (→ 43). Wielocelowe (MODP) nie mają z góry listy opcji: opcje wynikają z ograniczeń na zmienne decyzyjne, a celów jest kilka (→ 45, 46).</p></details>
+
+<details class="fiszka"><summary>Dlaczego zbyt duże zaufanie do SWD jest groźne?</summary>
+<p>Bo decydent zaczyna bezrefleksyjnie przyjmować podpowiedzi i nie zauważa, gdy model przestaje pasować do rzeczywistości. Z drugiej strony brak zaufania sprawia, że system jest ignorowany. Dlatego przy szerokiej automatyzacji trzeba przeanalizować możliwe błędy systemu i procedury reagowania na nie.</p></details>
+</section>
+
+
+
+<footer>
+  <p><strong style="color:var(--ink)">Źródła</strong></p>
+  <ol class="zr">
+<li>K. Duzinkiewicz, R. Piotrowski, <em>Struktury i algorytmy wspomagania decyzji — Wprowadzenie, pojęcia podstawowe</em>, materiały wykładowe, Politechnika Gdańska, WEiA, 14.10.2025 (plik <code>42_proces_decyzyjny_SWD.pdf</code>): definicje decyzji, decydenta i analityka, podejmowania i wspomagania decyzji, niezbędne elementy, warunki, rodzaje ograniczeń, model i kroki, podział SWD.</li>
+<li>T. Ujazdowski, <em>System wspomagania decyzji — Obiekt, Real-time + PLC + HMI</em>, cz. II „Zaufanie”, materiały do zajęć z Komputerowych Systemów Sterowania i Wspomagania Decyzji, PG, 18.12.2025 (plik <code>35_cz2_…pdf</code>): definicja SWD jako zbioru narzędzi, rola decydenta, poziom zaufania, elementy PLC–OPC UA–HMI.</li>
+<li>K. Nermend, <em>Metody analizy wielokryterialnej i wielowymiarowej we wspomaganiu decyzji</em>, PWN 2017 — definicje decyzji (cytowane na wykładzie); P. K. Pukocz, <em>System wspomagania decyzji w transferze technologii informatycznych oparty o metodę roadmappingu</em>, rozprawa doktorska, AGH 2017 — podział SWD (cytowany na wykładzie).</li>
+<li>R. H. Sprague, E. D. Carlson, <em>Building Effective Decision Support Systems</em>, Prentice-Hall 1982 — klasyczna architektura dane–modele–dialog (uzupełnienie spoza wykładu); H. A. Simon, <em>The New Science of Management Decision</em>, 1960 — fazy procesu decyzyjnego (wzmianka).</li>
+</ol>
+
+  <p>Repetytorium do egzaminu dyplomowego &middot; ARiSS II stopień &middot; specjalność Systemy sterowania i wspomagania decyzji. Strona oparta na wykładzie wskazanym do tego zagadnienia; elementy spoza wykładu są oznaczone w podpisach. Liczby w przykładzie produkcyjnym są przykładowe, a rachunek własny.</p>
+  <p class="backfoot"><a href="index.html">&larr; Wróć do listy zagadnień</a></p>
+</footer>
+
+</div>
+</body>
+</html>

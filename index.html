@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Repetytorium — egzamin dyplomowy ARiSS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#141C24; --mut:#5C6B77; --line:#C3CDD4;
+  --paper:#E8ECEF; --card:#FCFDFD;
+  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52;
+  --disp:"Space Grotesk",system-ui,sans-serif;
+  --body:"STIX Two Text","Source Serif 4",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+     font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:960px;margin:0 auto;padding:0 22px 100px}
+
+/* ---- nagłówek ---- */
+header{padding:64px 0 30px;border-bottom:2px solid var(--ink)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+         color:var(--mut);margin:0 0 14px}
+h1{font-family:var(--disp);font-weight:700;font-size:clamp(32px,5.4vw,50px);line-height:1.06;
+   letter-spacing:-.025em;margin:0 0 18px}
+.quest{font-style:italic;font-size:19px;margin:0;padding-left:16px;border-left:3px solid var(--violet)}
+.src{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:18px}
+
+/* ---- pasek stanu ---- */
+.status{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin:26px 0 4px;
+        font-family:var(--mono);font-size:12.5px;color:var(--mut)}
+.status b{font-weight:500;color:var(--ink)}
+.bar{flex:1 1 200px;min-width:160px;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.bar span{display:block;height:100%;border-radius:3px;
+          background:linear-gradient(90deg,var(--teal),var(--violet))}
+
+/* ---- panel komisji ---- */
+.panel{margin:30px 0 0;background:var(--card);border:1px solid var(--line);
+       border-left:3px solid var(--violet);border-radius:2px;padding:16px 18px}
+.panel .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+            color:var(--mut);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.panel .lbl button{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+      color:var(--mut);background:none;border:1px solid var(--line);border-radius:2px;
+      padding:3px 8px;cursor:pointer}
+.panel .lbl button:hover{color:var(--ink);border-color:var(--ink)}
+.people{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0 0}
+.person{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:12px;
+        border:1px solid var(--line);background:#F2F5F6;border-radius:2px;padding:5px 10px;
+        cursor:pointer;user-select:none;transition:border-color .12s ease,background .12s ease}
+.person:hover{border-color:var(--mut)}
+.person input{appearance:none;width:9px;height:9px;border:1px solid var(--mut);border-radius:1px;margin:0}
+.person.on{background:rgba(91,75,138,.10);border-color:var(--violet);color:var(--ink)}
+.person.on input{background:var(--violet);border-color:var(--violet)}
+.person .cnt{color:var(--mut);font-size:11px}
+.verdict{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin:14px 0 0;line-height:1.6}
+.verdict b{color:var(--violet);font-weight:500}
+.todo{font-family:var(--mono);font-size:11.5px;color:var(--amber);margin:10px 0 0}
+
+/* ---- spis przedmiotów ---- */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:26px 0 0;padding:0;list-style:none}
+.chips a{display:inline-block;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;
+         text-transform:uppercase;color:var(--mut);text-decoration:none;
+         border:1px solid var(--line);background:var(--card);border-radius:2px;padding:6px 10px}
+.chips a:hover,.chips a:focus-visible{color:var(--ink);border-color:var(--ink);outline:none}
+.chips a .c{color:var(--violet)}
+
+/* ---- przedmioty ---- */
+section{margin-top:52px;scroll-margin-top:20px}
+h2{font-family:var(--disp);font-weight:700;font-size:24px;letter-spacing:-.015em;
+   margin:0 0 6px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+h2 .num{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--violet);
+        letter-spacing:.1em;text-transform:uppercase;flex:none}
+h2 .cnt{font-family:var(--mono);font-size:12px;font-weight:400;color:var(--mut);
+        letter-spacing:.06em;margin-left:auto;flex:none}
+.lead{font-size:15.5px;line-height:1.55;color:var(--mut);margin:0 0 12px;max-width:720px}
+.meta{font-family:var(--mono);font-size:11.5px;color:var(--mut);margin:0 0 10px;
+      display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
+.meta .who{color:var(--violet)}
+.meta .who.none{color:var(--amber)}
+.rail{height:5px;background:linear-gradient(90deg,var(--teal) 0%,var(--violet) 55%,var(--amber) 100%);
+      opacity:.85;margin:0 0 18px;border-radius:2px}
+
+/* ---- pozycje ---- */
+.list{display:flex;flex-direction:column;gap:8px}
+.q{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);
+   border-left:3px solid var(--line);border-radius:2px;padding:13px 16px;text-decoration:none;color:inherit;
+   transition:opacity .15s ease,border-color .15s ease,transform .12s ease}
+.q .n{font-family:var(--mono);font-size:12.5px;font-weight:500;color:var(--mut);
+      flex:none;width:26px;padding-top:3px;text-align:right}
+.q .t{flex:1;font-size:16.5px;line-height:1.5}
+.q .tt{display:block}
+.q .przed{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.04em;
+          color:var(--mut);margin-top:5px}
+.q .side{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:5px;padding-top:2px}
+.q .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+        color:var(--mut);white-space:nowrap}
+.q .who{font-family:var(--mono);font-size:10.5px;color:var(--mut);white-space:nowrap;
+        display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
+.q .who span{border:1px solid var(--line);border-radius:2px;padding:1px 5px}
+.q .who span.on{border-color:var(--violet);color:var(--violet);background:rgba(91,75,138,.08)}
+.q.soon{opacity:.75}
+.q.next{opacity:1;border-left-color:var(--amber);box-shadow:0 0 0 1px rgba(179,100,26,.22)}
+.q.next .n,.q.next .tag{color:var(--amber)}
+.q.ready{border-left-color:var(--teal)}
+.q.ready .n{color:var(--teal)}
+.q.ready .tag{color:var(--teal)}
+.q.ready .tt{font-weight:600}
+.q.ready .tt::after{content:" →";color:var(--teal);font-family:var(--disp);font-weight:500}
+.q.ready:hover,.q.ready:focus-visible{background:#fff;border-color:var(--teal);outline:none;transform:translateX(2px)}
+
+/* tryb komisji */
+body.komisja .q{opacity:.38}
+body.komisja .q.hit{opacity:1;border-left-color:var(--violet);box-shadow:0 0 0 1px rgba(91,75,138,.18)}
+body.komisja .q.hit.ready{border-left-color:var(--teal)}
+body.komisja section.dim h2,body.komisja section.dim .meta{opacity:.45}
+.hitmark{display:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+         text-transform:uppercase;color:var(--violet)}
+body.komisja .q.hit .hitmark{display:block}
+
+footer{margin-top:70px;padding-top:20px;border-top:1px solid var(--line);
+       font-family:var(--mono);font-size:12px;color:var(--mut);line-height:1.7}
+
+@media (max-width:680px){
+  body{font-size:16px}
+  header{padding-top:40px}
+  h2 .cnt{display:none}
+  .q{padding:12px 13px;gap:10px}
+  .q .side .who{display:none}
+  .q .side{flex-direction:row}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">Egzamin dyplomowy · ARiSS · II stopień · Systemy sterowania i wspomagania decyzji</p>
+  <h1>Repetytorium</h1>
+  <p class="quest">Zestaw 50 zagadnień egzaminacyjnych ułożony w <strong>kolejności nauki</strong>: każdy etap korzysta z tego, co odłożył poprzedni. Przy pytaniach jeszcze nieopracowanych widać numer w kolejce. Zaznacz członków komisji, żeby zobaczyć, które pytania są w ich zasięgu.</p>
+  <div class="status">
+    <span>opracowane: <b id="done">0</b> / <b id="total">50</b></span>
+    <div class="bar"><span id="fill" style="width:0%"></span></div>
+    <span id="left"></span>
+  </div>
+
+  <div class="panel">
+    <div class="lbl">
+      <span>Skład komisji</span>
+      <button id="clear" type="button">wyczyść</button>
+    </div>
+    <div class="people" id="people"></div>
+    <p class="verdict" id="verdict">Nikt nie zaznaczony — widok pełnej listy.</p>
+    <p class="todo" id="todo"></p>
+  </div>
+
+  <ul class="chips" id="chips"></ul>
+</header>
+
+<main id="cats"></main>
+
+<footer>
+  Etapy nie są przedmiotami z planu studiów — to kolejność, w jakiej zagadnienia najlepiej się na siebie nakładają:
+  ten sam obiekt kolejnymi metodami, bliźniacze pytania obok siebie, synteza po składnikach. Przedmiot i obsada
+  wykładu są podane przy każdym pytaniu; komplet siedzi w tablicach <code>PEOPLE</code>, <code>PRZEDMIOTY</code>
+  i <code>ETAPY</code> na dole tego pliku.<br>
+  Pliki opracowań: <code>pytanie_NN_slug.html</code> w tym samym folderze.
+</footer>
+
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════════
+   1. WYKŁADOWCY
+   Klucz → { name: pełne nazwisko, short: etykieta na tagu }
+   Skład Katedry Inteligentnych Systemów Sterowania i Wspomagania Decyzji
+   (eia.pg.edu.pl) + osoby znane z materiałów wykładowych.
+   ══════════════════════════════════════════════════════════════════════ */
+const PEOPLE = {
+  grochowski:  {name:"dr hab. inż. Michał Grochowski, prof. PG", short:"Grochowski"},
+  duzinkiewicz:{name:"dr hab. inż. Kazimierz Duzinkiewicz, prof. PG", short:"Duzinkiewicz"},
+  puchalski:   {name:"dr inż. Bartosz Puchalski", short:"Puchalski"},
+  piotrowski:  {name:"dr hab. inż. Robert Piotrowski, prof. PG", short:"Piotrowski"},
+  tarnawski:   {name:"dr hab. inż. Jarosław Tarnawski, prof. PG", short:"Tarnawski"},
+  rutkowski:   {name:"dr inż. Tomasz Rutkowski", short:"Rutkowski"},
+  dzwonkowski: {name:"dr inż. Ariel Dzwonkowski", short:"Dzwonkowski"},
+  zawalich:    {name:"dr inż. Jacek Zawalich", short:"Zawalich"},
+  /* pozostali z Katedry ISSiWD, gdyby weszli do komisji — wystarczy odkomentować:
+  langowski: {name:"dr inż. Rafał Łangowski", short:"Łangowski"},
+  zubowicz:  {name:"dr inż. Tomasz Zubowicz", short:"Zubowicz"},   */
+};
+
+/* ══════════════════════════════════════════════════════════════════════
+   2. PRZEDMIOTY
+   Źródło wykładowców i semestru dla pytań; przypisanie pytanie → przedmiot
+   siedzi w polu `p` każdej pozycji w ETAPY poniżej.
+   ══════════════════════════════════════════════════════════════════════ */
+const PRZEDMIOTY = {
+  mid: {name:"Modelowanie i identyfikacja", short:"modelowanie i identyfikacja", sem:"sem. 1 · kierunkowy", teachers:["duzinkiewicz","grochowski","puchalski"]},
+  ts: {name:"Teoria sterowania", short:"teoria sterowania", sem:"sem. 1 · kierunkowy", teachers:["duzinkiewicz","piotrowski"]},
+  opt: {name:"Metody optymalizacji", short:"metody optymalizacji", sem:"sem. 1 · kierunkowy", teachers:[]},
+  msi: {name:"Metody sztucznej inteligencji", short:"metody sztucznej inteligencji", sem:"sem. 1 · kierunkowy", teachers:[]},
+  cps: {name:"Cyfrowe przetwarzanie sygnałów", short:"cyfrowe przetwarzanie sygnałów", sem:"sem. 2 · kierunkowy", teachers:["dzwonkowski"]},
+  sas: {name:"Struktury i algorytmy sterowania", short:"struktury i algorytmy sterowania", sem:"sem. 2 · specjalność", teachers:["rutkowski"]},
+  kss: {name:"Komputerowe systemy sterowania i wspomagania decyzji", short:"komputerowe systemy sterowania", sem:"sem. 2 · specjalność · KSSiWD", teachers:["tarnawski"]},
+  sswd: {name:"Systemy sterowania i wspomagania decyzji", short:"systemy wspomagania decyzji", sem:"sem. 1 i 2 · kierunkowy + specjalność", teachers:["piotrowski","duzinkiewicz"]},
+  mid2: {name:"Monitorowanie i diagnostyka w systemach sterowania", short:"monitorowanie i diagnostyka", sem:"sem. 2 · specjalność", teachers:["grochowski"]},
+  siw: {name:"Systemy inżynierii wiedzy", short:"systemy inżynierii wiedzy", sem:"sem. 2 · specjalność", teachers:["rutkowski"]},
+  app: {name:"Automatyka procesów przemysłowych", short:"automatyka procesów przemysłowych", sem:"sem. 3 · kierunkowy", teachers:["zawalich"]},
+};
+
+/* ══════════════════════════════════════════════════════════════════════
+   3. ETAPY NAUKI — kolejność opracowywania i powtarzania
+   Kolejność wynika z trzech reguł (szczegóły w notatce `kolejnosc-opracowan`):
+   ten sam obiekt kolejnymi metodami uczy więcej niż nowy obiekt przy każdej
+   metodzie; bliźniaki robi się razem; synteza idzie po składnikach.
+   p: klucz przedmiotu (stąd wykładowcy i semestr), file: gotowe opracowanie.
+   ══════════════════════════════════════════════════════════════════════ */
+const ETAPY = [
+ {name:"Skąd się bierze model", lead:"Wszystko dalsze zakłada, że model obiektu istnieje. Ten etap mówi, skąd go wziąć: z wiedzy o procesie albo z danych — i jak sprawdzić, czy jest cokolwiek wart.", items:[
+   {n:1, p:"mid", t:"Technologie modelowania oparte o wiedzę i oparte o dane – podaj charakterystykę, wskaż związki, przedstaw kroki budowy modeli.", file:"pytanie_01_technologie_modelowania.html"},
+   {n:2, p:"mid", t:"Metoda najmniejszych kwadratów w identyfikacji parametrów modeli analitycznych – odmiany, algorytmy znajdowania estymat parametrów.", file:"pytanie_02_metoda_najmniejszych_kwadratow.html"},
+   {n:3, p:"mid", t:"Modele rozmyte lingwistyczne – struktury, uproszczone wnioskowanie Mamdaniego, rozmywanie, wyostrzenie.", file:"pytanie_03_modele_rozmyte_lingwistyczne.html"},
+   {n:4, p:"mid", t:"Modele neuronowe jednokierunkowe i rekurencyjne – struktury, uczenie relacji wejście–wyjście.", file:"pytanie_04_modele_neuronowe.html"},
+ ]},
+
+ {name:"Sterowanie w przestrzeni stanu", lead:"Rdzeń całej specjalności. Najpierw warunki, kiedy sterowanie i estymacja są w ogóle możliwe, potem sprzężenie od stanu, uchyb ustalony i obserwator. Wszystkie cztery zagadnienia policzone na tym samym obiekcie dwóch zbiorników.", items:[
+   {n:5, p:"ts", t:"Sterowalność, obserwowalność – badanie, znaczenie w metodzie alokacji biegunów i konstrukcji obserwatorów.", file:"pytanie_05_sterowalnosc_obserwowalnosc.html"},
+   {n:6, p:"ts", t:"Sterowanie ze sprzężeniem od stanu – metoda alokacji biegunów i wykorzystanie macierzy kompensacji wzmocnień, metody projektowania.", file:"pytanie_06_sprzezenie_od_stanu.html"},
+   {n:7, p:"ts", t:"Sterowanie ze sprzężeniem od stanu – metoda alokacji biegunów i wykorzystanie działań całkujących, metody projektowania.", file:"pytanie_07_dzialanie_calkujace.html"},
+   {n:8, p:"ts", t:"Obserwatory – funkcja, rodzaje, metody projektowania.", file:"pytanie_08_obserwatory.html"},
+ ]},
+
+ {name:"Szukanie najlepszego rozwiązania", lead:"Optymalizacja jest językiem, w którym zapisuje się sterowanie optymalne, sterowanie predykcyjne i wspomaganie decyzji. Metody klasyczne, potem genetyczne, na koniec wielokryterialność.", items:[
+   {n:9, p:"opt", t:"Klasyfikacja i charakterystyka algorytmów optymalizacji nieliniowej bez ograniczeń i z ograniczeniami.", file:"pytanie_09_optymalizacja.html"},
+   {n:10, p:"opt", t:"Przedstaw zastosowanie metody funkcji kary w zagadnieniach optymalizacyjnych.", file:"pytanie_10_funkcja_kary.html"},
+   {n:13, p:"msi", t:"Schemat i parametry działania algorytmu genetycznego.", file:"pytanie_13_ag_schemat_parametry.html"},
+   {n:14, p:"msi", t:"Kodowanie i operatory genetyczne w algorytmach genetycznych.", file:"pytanie_14_kodowanie_operatory.html"},
+   {n:11, p:"msi", t:"Charakterystyka wykorzystania algorytmu genetycznego w zagadnieniach optymalizacji z ograniczeniami.", file:"pytanie_11_ag_ograniczenia.html"},
+   {n:12, p:"opt", t:"Sformułowanie zadania optymalizacji wielokryterialnej i metody poszukiwania zbioru rozwiązań Pareto optymalnych.", file:"pytanie_12_wielokryterialna.html"},
+ ]},
+
+ {name:"Systemy, które się uczą", lead:"Modele, których nie wyprowadza się z równań, tylko uczy z danych albo zapisuje regułami. Wracają później przy sterowaniu inteligentnym i przy diagnostyce.", items:[
+   {n:15, p:"msi", t:"Struktury i mechanizmy wnioskowania systemów rozmytych.", file:"pytanie_15_systemy_rozmyte.html"},
+   {n:16, p:"msi", t:"Struktury i metody uczenia sieci neuronowych.", file:"pytanie_16_sieci_neuronowe.html"},
+   {n:30, p:"msi", t:"Wymień i opisz podstawowe mechanizmy samoorganizacji sieci neuronowych samoorganizujących.", file:"pytanie_30_samoorganizacja.html"},
+ ]},
+
+ {name:"Sygnał cyfrowy i jego filtracja", lead:"Każdy regulator z tego zestawu pracuje na próbkach. Ten etap tłumaczy, co się dzieje z sygnałem po drodze do algorytmu i wprowadza filtr Kalmana jako narzędzie estymacji.", items:[
+   {n:17, p:"cps", t:"Filtry cyfrowe – opis, właściwości i zastosowania.", file:"pytanie_17_filtry_cyfrowe.html"},
+   {n:19, p:"cps", t:"Zalety technologii cyfrowego przetwarzania sygnałów.", file:"pytanie_19_zalety_cyfrowego.html"},
+   {n:20, p:"cps", t:"Rozszerzony filtr Kalmana a filtr Kalmana – podobieństwa, różnice, zastosowania.", file:"pytanie_20_ekf.html"},
+ ]},
+
+ {name:"Od predykcji do adaptacji", lead:"Główna oś specjalności i najdroższy etap w całym zestawie. Ten sam obiekt sterowany kolejno: mimo opóźnienia, z estymatą stanu, z predykcją, mimo nieliniowości, mimo niepewności modelu, z modelem uczonym na bieżąco. Każde kolejne zagadnienie odpowiada na pytanie, które zostawiło poprzednie.", items:[
+   {n:18, p:"sas", t:"Przedstaw metody sterowania obiektami z opóźnieniami i dokonaj wzajemnego porównania tych metod.", file:"pytanie_18_opoznienia.html"},
+   {n:40, p:"sas", t:"Przedstaw filtr Kalmana i opisz jego zastosowanie w strukturach sterowania.", file:"pytanie_40_filtr_kalmana.html"},
+   {n:23, p:"sas", t:"Przedstaw podstawowe elementy technologii sterowania predykcyjnego.", file:"pytanie_23_sterowanie_predykcyjne.html"},
+   {n:34, p:"kss", t:"Przedstaw jeden z możliwych sposobów realizacji regulatora predykcyjnego w komputerowym systemie sterowania.", file:"pytanie_34_realizacja_mpc.html"},
+   {n:39, p:"sas", t:"Przedstaw obszary zastosowania i opisz technologię sterowania w oparciu o linearyzację przez sprzężenie zwrotne dla obiektów deterministycznych oraz z niepewnością.", file:"pytanie_39_linearyzacja.html"},
+   {n:37, p:"sas", t:"Przedstaw obszary zastosowania i opisz technologię sterowania ślizgowego.", file:"pytanie_37_sterowanie_slizgowe.html"},
+   {n:38, p:"sas", t:"Opisz technologię i przedstaw obszary zastosowania pośredniego sterowania adaptacyjnego z modelem identyfikowanym on-line.", file:"pytanie_38_posrednie_sterowanie_adaptacyjne.html"},
+   {n:41, p:"sas", t:"Przedstaw sterowanie inteligentne z wykorzystaniem dynamicznych sieci neuronowych oraz systemów rozmytych Takagi-Sugeno.", file:"pytanie_41_sterowanie_inteligentne.html"},
+ ]},
+
+ {name:"Kiedy obiekt przestaje pasować do modelu", lead:"Ta sama idea, co innowacja filtru Kalmana: reszta między modelem a rzeczywistością niesie informację o uszkodzeniu. Najpierw metody wykrywania, na końcu sterowanie, które potrafi uszkodzenie przeżyć.", items:[
+   {n:27, p:"mid2", t:"Wymień i opisz kroki algorytmu budowy modelu PCA, a następnie wyjaśnij sposób jego wykorzystania do diagnostyki procesów.", file:"pytanie_27_model_pca_diagnostyka.html"},
+   {n:31, p:"mid2", t:"Wymień i opisz kroki algorytmu budowy modelu Kernel PCA. Porównaj metodę Kernel PCA z metodą PCA.", file:"pytanie_31_kernel_pca.html"},
+   {n:28, p:"mid2", t:"Opisz metodę SVM (maszyny wektorów podtrzymujących) i przedstaw jej zastosowanie do rozwiązywania zagadnień klasyfikacji.", file:"pytanie_28_svm.html"},
+   {n:29, p:"mid2", t:"Przedstaw ideę sterowania tolerującego uszkodzenia (FTC – Fault Tolerant Control).", file:"pytanie_29_ftc.html"},
+ ]},
+
+ {name:"Gdzie to wszystko mieszka", lead:"Warstwa systemowa: hierarchia warstw, sprzęt, komunikacja i rozproszenie. Model warstwowy jest ramą, w której dopiero widać, gdzie kończy się regulacja, a zaczyna optymalizacja i decyzja.", items:[
+   {n:32, p:"kss", t:"Przedstaw hierarchiczny warstwowy model komputerowego systemu sterowania, scharakteryzuj poszczególne warstwy i zaproponuj jego realizację sprzętowo-programową.", file:"pytanie_32_model_warstwowy.html"},
+   {n:22, p:"kss", t:"Struktura funkcjonalna i sprzętowa systemów automatyki przemysłowej.", file:"pytanie_22_struktura_automatyki.html"},
+   {n:21, p:"kss", t:"Systemy komunikacji w rozproszonych systemach sterowania.", file:"pytanie_21_komunikacja.html"},
+   {n:24, p:"kss", t:"Przedstaw rozproszone i wieloagentowe struktury sterowania.", file:"pytanie_24_wieloagentowe.html"},
+   {n:33, p:"kss", t:"Przedstaw proces budowy zdecentralizowanego rozproszonego komputerowego systemu sterowania automatycznego.", file:"pytanie_33_budowa_systemu.html"},
+ ]},
+
+ {name:"Decyzje ponad regulacją", lead:"Najwyższa warstwa: cele, których nie da się zapisać jednym wskaźnikiem jakości. Od definicji procesu decyzyjnego, przez metody wieloatrybutowe i wielocelowe, po dekompozycję zadań wielkiej skali.", items:[
+   {n:42, p:"sswd", t:"Proces decyzyjny – czym jest i jakie są jego niezbędne elementy; system wspomagania decyzji – funkcje, idee działania, możliwe elementy architektury.", file:"pytanie_42_proces_decyzyjny.html"},
+   {n:35, p:"sswd", t:"Przedstaw zadania systemu wspomagania decyzji i możliwy model jego współpracy z komputerowym systemem sterowania automatycznego.", file:"pytanie_35_swd_i_kss.html"},
+   {n:43, p:"sswd", t:"Wieloatrybutowe zagadnienia decyzyjne – charakterystyka i wybrana metoda rozwiązywania.", file:"pytanie_43_wieloatrybutowe.html"},
+   {n:45, p:"sswd", t:"Wielocelowe zagadnienia decyzyjne – algorytmy rozwiązywania z uwzględnieniem przyjętego porządku Pareto.", file:"pytanie_45_pareto.html"},
+   {n:46, p:"sswd", t:"Wielocelowe zagadnienia decyzyjne – algorytmy rozwiązywania z uwzględnieniem przyjętego porządku leksykograficznego.", file:"pytanie_46_leksykograficzny.html"},
+   {n:44, p:"sswd", t:"Analizy wrażliwości w zagadnieniach decyzyjnych na przykładzie zagadnień liniowych – cele, przykłady możliwości realizacji.", file:"pytanie_44_wrazliwosc.html"},
+   {n:36, p:"sswd", t:"Przedstaw realizację algorytmu Dantziga–Wolfe’a w hierarchicznym systemie wspomagania decyzji.", file:"pytanie_36_dantzig_wolfe.html"},
+ ]},
+
+ {name:"Wiedza zapisana regułami", lead:"Krótki, samodzielny łańcuch — słownik pojęć, metody wnioskowania, struktura systemu ekspertowego i przeszukiwanie grafu. Niezależny od reszty zestawu, więc można go wcisnąć w dowolną lukę.", items:[
+   {n:47, p:"siw", t:"Wyjaśnij pojęcia i podaj przykłady zastosowania predykatu, reguły produkcji, reguły decyzyjnej oraz klauzuli.", file:"pytanie_47_predykat_reguly_klauzule.html"},
+   {n:48, p:"siw", t:"Wymień i opisz podstawowe metody wnioskowania dedukcyjnego na podstawie faktów oraz na podstawie celów."},
+   {n:49, p:"siw", t:"Przedstaw i opisz podstawową strukturę systemu ekspertowego."},
+   {n:50, p:"siw", t:"Opisz działanie i przedstaw cechy algorytmu A*."},
+ ]},
+
+ {name:"Projekt, dokumentacja, jakość", lead:"Dwa zagadnienia spoza linii technicznej. Nic nie odblokowują i od niczego nie zależą — ale są najtańsze w całym zestawie i zamykają całą kategorię jednym posiedzeniem.", items:[
+   {n:25, p:"app", t:"Przedstaw typowe procesy w zarządzaniu projektem."},
+   {n:26, p:"app", t:"Struktura i zawartość dokumentów w typowym systemie zarządzania jakością w zakładzie produkcyjnym."},
+ ]},
+
+];
+
+/* ══════════════════════════════════════════════════════════════════════
+   3. RENDEROWANIE
+   ══════════════════════════════════════════════════════════════════════ */
+const pad = n => String(n).padStart(2,"0");
+const slug = s => s.toLowerCase().replace(/[ąàá]/g,"a").replace(/ć/g,"c").replace(/ę/g,"e")
+                   .replace(/ł/g,"l").replace(/ń/g,"n").replace(/[óò]/g,"o").replace(/ś/g,"s")
+                   .replace(/[żź]/g,"z").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+
+const store = {
+  get(){ try{ return JSON.parse(localStorage.getItem("komisja")||"[]"); }catch(e){ return []; } },
+  set(v){ try{ localStorage.setItem("komisja", JSON.stringify(v)); }catch(e){} }
+};
+
+const cats = document.getElementById("cats");
+const chips = document.getElementById("chips");
+let total = 0, done = 0;
+const rows = [];           // {el, who:[klucze], sec}
+const counts = {};         // klucz wykładowcy → liczba pytań
+
+let kolejka = 0;                       // numer w kolejce opracowań (tylko pozycje bez pliku)
+
+ETAPY.forEach((et,si) => {
+  const id = "e-" + slug(et.name);
+  const ready = et.items.filter(i => i.file).length;
+  total += et.items.length;
+  done  += ready;
+
+  const li = document.createElement("li");
+  li.innerHTML = `<a href="#${id}">${et.name} <span class="c">${ready}/${et.items.length}</span></a>`;
+  chips.appendChild(li);
+
+  const przed = [...new Set(et.items.map(i => PRZEDMIOTY[i.p].name))];
+  const osoby = [...new Set(et.items.flatMap(i => i.who || PRZEDMIOTY[i.p].teachers))];
+  const who = osoby.length
+      ? `<span class="who">${osoby.map(k => PEOPLE[k].short).join(" · ")}</span>`
+      : `<span class="who none">wykładowcy do uzupełnienia</span>`;
+
+  const sec = document.createElement("section");
+  sec.id = id;
+  sec.innerHTML =
+    `<h2><span class="num">etap ${pad(si+1)}</span> ${et.name}` +
+    `<span class="cnt">${ready} / ${et.items.length} opracowane</span></h2>` +
+    `<p class="lead">${et.lead}</p>` +
+    `<p class="meta"><span>${przed.join(" · ")}</span>${who}</p>` +
+    `<div class="rail"></div><div class="list"></div>`;
+  const list = sec.querySelector(".list");
+
+  et.items.forEach(q => {
+    const P = PRZEDMIOTY[q.p];
+    const keys = q.who || P.teachers;
+    keys.forEach(k => counts[k] = (counts[k]||0) + 1);
+    const el = document.createElement(q.file ? "a" : "div");
+    el.className = "q " + (q.file ? "ready" : "soon");
+    if (q.file) el.href = q.file;
+    let tag;
+    if (q.file) { tag = "opracowane"; }
+    else {
+      kolejka++;
+      tag = kolejka === 1 ? "następne w kolejce" : "w kolejce &middot; " + pad(kolejka);
+      if (kolejka === 1) el.classList.add("next");
+    }
+    el.innerHTML =
+      `<span class="n">${pad(q.n)}</span>` +
+      `<span class="t"><span class="tt">${q.t}</span><span class="przed">${P.short}</span></span>` +
+      `<span class="side"><span class="tag">${tag}</span>` +
+      `<span class="hitmark">komisja</span>` +
+      `<span class="who">${keys.map(k=>`<span data-k="${k}">${PEOPLE[k].short}</span>`).join("")}</span></span>`;
+    list.appendChild(el);
+    rows.push({el, who:keys, sec});
+  });
+
+  cats.appendChild(sec);
+});
+
+document.getElementById("done").textContent  = done;
+document.getElementById("total").textContent = total;
+document.getElementById("fill").style.width  = (100*done/total).toFixed(1) + "%";
+document.getElementById("left").textContent  = "pozostało " + (total-done);
+
+/* ---- panel komisji ---- */
+const peopleBox = document.getElementById("people");
+const verdict = document.getElementById("verdict");
+const selected = new Set(store.get());
+
+Object.keys(PEOPLE).forEach(k => {
+  const lab = document.createElement("label");
+  lab.className = "person";
+  lab.innerHTML = `<input type="checkbox" data-k="${k}"><span>${PEOPLE[k].short}</span>` +
+                  `<span class="cnt">${counts[k]||0}</span>`;
+  peopleBox.appendChild(lab);
+});
+
+function apply(){
+  document.body.classList.toggle("komisja", selected.size > 0);
+  let hits = 0, hitsReady = 0;
+  const perSection = new Map();
+  rows.forEach(r => {
+    const hit = r.who.some(k => selected.has(k));
+    r.el.classList.toggle("hit", hit);
+    r.el.querySelectorAll(".who span").forEach(s =>
+      s.classList.toggle("on", selected.has(s.dataset.k)));
+    if (hit){ hits++; if (r.el.classList.contains("ready")) hitsReady++; }
+    perSection.set(r.sec, (perSection.get(r.sec)||0) + (hit?1:0));
+  });
+  perSection.forEach((n, sec) => sec.classList.toggle("dim", selected.size>0 && n===0));
+  peopleBox.querySelectorAll("input").forEach(i =>
+    i.parentElement.classList.toggle("on", selected.has(i.dataset.k)));
+
+  if (!selected.size){
+    verdict.textContent = "Nikt nie zaznaczony — widok pełnej listy.";
+  } else {
+    const names = [...selected].map(k => PEOPLE[k].short).join(", ");
+    verdict.innerHTML = `Komisja: ${names} &nbsp;·&nbsp; w zasięgu <b>${hits}</b> z ${total} zagadnień, ` +
+      `z czego opracowanych <b>${hitsReady}</b>. Pozostałe pytania są przygaszone.`;
+  }
+  store.set([...selected]);
+}
+
+peopleBox.addEventListener("change", e => {
+  const k = e.target.dataset.k;
+  if (!k) return;
+  e.target.checked ? selected.add(k) : selected.delete(k);
+  apply();
+});
+document.getElementById("clear").addEventListener("click", () => {
+  selected.clear();
+  peopleBox.querySelectorAll("input").forEach(i => i.checked = false);
+  apply();
+});
+
+peopleBox.querySelectorAll("input").forEach(i => { if (selected.has(i.dataset.k)) i.checked = true; });
+apply();
+
+/* ---- ile przedmiotów czeka na obsadę ---- */
+const missing = Object.values(PRZEDMIOTY).filter(p => !p.teachers.length).map(p => p.name);
+if (missing.length){
+  document.getElementById("todo").textContent =
+    "Do uzupełnienia obsada wykładów: " + missing.join(" · ");
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pytanie 22 — Struktura funkcjonalna i sprzętowa systemów automatyki</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#141C24; --mut:#5C6B77; --line:#C3CDD4;
+  --paper:#E8ECEF; --card:#FCFDFD;
+  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52;
+  --disp:"Space Grotesk",system-ui,sans-serif;
+  --body:"STIX Two Text","Source Serif 4",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+     font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:860px;margin:0 auto;padding:0 22px 100px}
+
+/* ---- nagłówek ---- */
+header{padding:64px 0 30px;border-bottom:2px solid var(--ink)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+         color:var(--mut);margin:0 0 14px}
+h1{font-family:var(--disp);font-weight:700;font-size:clamp(30px,5vw,46px);line-height:1.08;
+   letter-spacing:-.02em;margin:0 0 18px}
+.quest{font-style:italic;font-size:19px;color:var(--ink);margin:0;padding-left:16px;
+       border-left:3px solid var(--violet)}
+.src{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:18px}
+
+/* ---- sekcje ---- */
+section{margin-top:56px}
+h2{font-family:var(--disp);font-weight:700;font-size:25px;letter-spacing:-.015em;
+   margin:0 0 6px;display:flex;align-items:baseline;gap:12px}
+h2 .num{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--violet);
+        letter-spacing:.08em;flex:none}
+h3{font-family:var(--disp);font-weight:500;font-size:18.5px;margin:34px 0 8px;letter-spacing:-.01em}
+p{margin:0 0 14px}
+.rail{height:5px;background:linear-gradient(90deg,var(--teal) 0%,var(--violet) 55%,var(--amber) 100%);
+      opacity:.85;margin:0 0 22px;border-radius:2px}
+
+/* ---- figury ---- */
+figure{margin:26px 0;background:var(--card);border:1px solid var(--line);border-radius:3px;
+       padding:20px 18px 14px}
+.fig{width:100%;height:auto;display:block}
+figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:12px;
+           padding-top:10px;border-top:1px solid var(--line);line-height:1.5}
+.tick{font-family:var(--mono);font-size:10.5px;fill:#7C8A94}
+.axlab{font-family:var(--mono);font-size:11px;fill:var(--mut)}
+.cap{font-family:var(--mono);font-size:10.5px;fill:var(--mut)}
+.bx{font-family:var(--mono);font-size:10.5px;fill:var(--mut)}
+.bx-t{font-family:var(--disp);font-size:11.5px;font-weight:500;fill:var(--ink)}
+
+/* ---- bloki ---- */
+.box{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--violet);
+     padding:16px 18px;margin:22px 0;border-radius:2px}
+.box.key{border-left-color:var(--rose)}
+.box.warn{border-left-color:var(--amber)}
+.box .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+          color:var(--mut);display:block;margin-bottom:8px}
+.box p:last-child{margin-bottom:0}
+
+/* ---- wzory (TeX składany do SVG skryptem mathbuild.js) ---- */
+.eq{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--violet);
+    padding:18px 18px;margin:22px 0;border-radius:2px;overflow-x:auto;text-align:center;
+    font-size:18.5px;line-height:1.3}
+.eq svg{max-width:100%;height:auto}
+.eq.txt{font-family:var(--mono);font-size:14px;line-height:1.7;color:var(--ink);text-align:center}
+.eq b{color:var(--violet);font-weight:500}
+.eqnote{font-family:var(--mono);font-size:12.5px;color:var(--mut);text-align:center;
+        margin:-14px 0 20px;line-height:1.6}
+.m{white-space:nowrap}
+.m svg{vertical-align:-0.25ex;max-width:100%;height:auto}
+@media (max-width:640px){
+  table{display:block;overflow-x:auto;width:auto;min-width:100%;-webkit-overflow-scrolling:touch}
+  table .m svg{max-width:none}
+  .eq{padding:14px 12px;font-size:16px}
+}
+
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15px;background:var(--card)}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--disp);font-weight:500;font-size:13px;letter-spacing:.02em;
+   background:#F2F5F6;border-bottom:1.5px solid var(--line)}
+td.n{font-family:var(--mono);font-size:13.5px;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+
+ol,ul{margin:0 0 14px;padding-left:22px}
+li{margin-bottom:7px}
+ol.steps{list-style:none;padding-left:0;counter-reset:st}
+ol.steps>li{counter-increment:st;position:relative;padding-left:44px;margin-bottom:18px}
+ol.steps>li::before{content:counter(st);position:absolute;left:0;top:1px;
+  font-family:var(--mono);font-size:12px;width:28px;height:28px;border-radius:50%;
+  background:var(--violet);color:#fff;display:flex;align-items:center;justify-content:center}
+strong{font-weight:600}
+.tag{font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:2px;
+     background:rgba(14,110,120,.12);color:var(--teal);white-space:nowrap}
+.tag.a{background:rgba(179,100,26,.13);color:var(--amber)}
+.tag.v{background:rgba(91,75,138,.13);color:var(--violet)}
+footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
+       font-family:var(--mono);font-size:12px;color:var(--mut)}
+@media print{body{background:#fff}figure,.box,.eq,table{break-inside:avoid}.topnav,.backfoot{display:none}}
+@media (max-width:600px){body{font-size:16px}header{padding-top:40px}}
+
+/* ---- pasek nawigacji ---- */
+.topnav{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:22px 0 0}
+.topnav a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+          color:var(--mut);text-decoration:none;border:1px solid var(--line);background:var(--card);
+          border-radius:2px;padding:6px 11px;transition:color .12s ease,border-color .12s ease}
+.topnav a:hover,.topnav a:focus-visible{color:var(--ink);border-color:var(--ink);outline:none}
+.topnav .here{font-family:var(--mono);font-size:12px;color:var(--mut);letter-spacing:.08em}
+.backfoot{margin:18px 0 0}
+.backfoot a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+            color:var(--teal);text-decoration:none;border-bottom:1px solid var(--line)}
+.backfoot a:hover,.backfoot a:focus-visible{border-bottom-color:var(--teal);outline:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="topnav">
+  <a href="index.html">&larr; Repetytorium</a>
+  <span class="here">zagadnienie 22 z 50 &middot; komputerowe systemy sterowania</span>
+</nav>
+
+<header>
+  <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 22</p>
+  <h1>Struktura funkcjonalna i sprzętowa systemów automatyki przemysłowej</h1>
+  <p class="quest">Struktura funkcjonalna i sprzętowa systemów automatyki przemysłowej.</p>
+  <p class="src">Komputerowe systemy sterowania i wspomagania decyzji &middot; opracowanie na podstawie literatury i dokumentacji — źródła na dole strony &middot; uzupełnia 32 (warstwy), rozwijane w 21 (sieci)</p>
+</header>
+
+<style>
+.karty{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:22px 0}
+.karta{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--violet);border-radius:3px;padding:12px 14px}
+.karta.k .kw{color:var(--violet)} .karta.b{border-top-color:var(--teal)} .karta.s{border-top-color:var(--rose)} .karta.a{border-top-color:var(--amber)}
+.karta .kw{font-family:var(--disp);font-weight:700;font-size:17px;line-height:1.25;display:block;margin-bottom:6px;color:var(--violet)}
+.karta.b .kw{color:var(--teal)} .karta.s .kw{color:var(--rose)} .karta.a .kw{color:var(--amber)}
+.karta p{font-size:15px;margin:0;line-height:1.5}
+@media (max-width:600px){.karty{grid-template-columns:1fr}}
+.fiszka{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--violet);border-radius:2px;margin:10px 0;padding:0}
+.fiszka summary{cursor:pointer;list-style:none;padding:12px 16px;font-family:var(--disp);font-weight:500;font-size:16.5px}
+.fiszka summary::-webkit-details-marker{display:none}
+.fiszka summary::before{content:"?";display:inline-flex;width:22px;height:22px;border-radius:50%;background:var(--violet);color:#fff;
+  font-family:var(--mono);font-size:12px;align-items:center;justify-content:center;margin-right:10px;vertical-align:1px}
+.fiszka[open] summary::before{content:"✓";background:var(--teal)}
+.fiszka p,.fiszka ol,.fiszka ul{padding:0 16px 14px 48px;margin:0}
+.fiszka.op{border-left-color:var(--teal)}
+.fiszka.op summary::before{content:"▶";background:var(--teal)}
+ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{color:var(--teal)}
+.cyt{font-style:italic;color:var(--ink)}
+.check{list-style:none;padding-left:0}
+.check li{padding-left:30px;position:relative}
+.check li::before{content:"☐";position:absolute;left:4px;top:-1px;font-family:var(--mono);color:var(--teal);font-size:17px}
+.luka{display:inline-block;min-width:70px;border-bottom:1.5px solid var(--violet);text-align:center;font-family:var(--mono);font-size:14px;color:var(--violet)}
+</style>
+
+<section>
+<h2><span class="num">01</span> Rama odpowiedzi</h2>
+<div class="rail"></div>
+
+<p>Pytanie ma dwie części: <strong>struktura funkcjonalna</strong> — jakie zadania wykonuje system automatyki — i <strong>struktura sprzętowa</strong> — z jakich urządzeń jest zbudowany i jak są połączone. Podział na warstwy i ich skale czasu opisuje zagadnienie 32, a sieci — zagadnienie 21. Tutaj chodzi o to, <em>co</em> system robi i <em>czym</em>.</p>
+
+<div class="box key">
+<span class="lbl">Zdanie, od którego warto zacząć</span>
+<p><strong>System automatyki przemysłowej mierzy stan procesu, steruje nim (regulacja, logika, zabezpieczenia), udostępnia go ludziom (HMI, alarmy, archiwum) i innym systemom. Sprzętowo składa się z urządzeń polowych, układów wejść/wyjść, sterowników, sieci oraz stacji i serwerów, a te same funkcje można rozłożyć na sprzęt w różnych architekturach: scentralizowanej, z rozproszonymi wejściami/wyjściami, PLC + SCADA albo DCS.</strong></p>
+</div>
+
+<figure>
+<svg viewBox="0 0 680 400" class="fig">
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">MAPA ZAGADNIENIA: CO SYSTEM ROBI I Z CZEGO JEST ZBUDOWANY</text>
+<rect x="14.0" y="40.0" width="318.0" height="300.0" rx="6" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="14.0" y="40.0" width="318.0" height="5.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="173.0" y="66.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78">STRUKTURA FUNKCJONALNA</text>
+<text x="173.0" y="82.0" text-anchor="middle" class="cap">co system robi</text>
+<circle cx="38.0" cy="104.0" r="9" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="38.0" y="108.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">1</text>
+<text x="56.0" y="108.0" text-anchor="start" class="bx">pomiar i akwizycja danych</text>
+<circle cx="38.0" cy="133.0" r="9" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="38.0" y="137.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">2</text>
+<text x="56.0" y="137.0" text-anchor="start" class="bx">sterowanie: regulacja i logika</text>
+<circle cx="38.0" cy="162.0" r="9" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="38.0" y="166.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">3</text>
+<text x="56.0" y="166.0" text-anchor="start" class="bx">zabezpieczenia i blokady</text>
+<circle cx="38.0" cy="191.0" r="9" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="38.0" y="195.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">4</text>
+<text x="56.0" y="195.0" text-anchor="start" class="bx">obsługa operatorska (HMI)</text>
+<circle cx="38.0" cy="220.0" r="9" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="38.0" y="224.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">5</text>
+<text x="56.0" y="224.0" text-anchor="start" class="bx">alarmowanie</text>
+<circle cx="38.0" cy="249.0" r="9" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="38.0" y="253.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">6</text>
+<text x="56.0" y="253.0" text-anchor="start" class="bx">archiwizacja i raporty</text>
+<circle cx="38.0" cy="278.0" r="9" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="38.0" y="282.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">7</text>
+<text x="56.0" y="282.0" text-anchor="start" class="bx">komunikacja z innymi systemami</text>
+<circle cx="38.0" cy="307.0" r="9" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="38.0" y="311.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">8</text>
+<text x="56.0" y="311.0" text-anchor="start" class="bx">diagnostyka</text>
+<rect x="348.0" y="40.0" width="318.0" height="300.0" rx="6" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<rect x="348.0" y="40.0" width="318.0" height="5.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="507.0" y="66.0" text-anchor="middle" class="bx-t" style="fill:#5B4B8A">STRUKTURA SPRZĘTOWA</text>
+<text x="507.0" y="82.0" text-anchor="middle" class="cap">z czego jest zbudowany</text>
+<rect x="366.0" y="100.0" width="282.0" height="38.0" rx="4" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.07"/>
+<text x="378.0" y="116.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:11px">stacje i serwery</text>
+<text x="378.0" y="131.0" text-anchor="start" class="cap">SCADA/HMI, inżynierska, archiwum</text>
+<rect x="366.0" y="146.0" width="282.0" height="38.0" rx="4" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.1"/>
+<text x="378.0" y="162.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:11px">sieci</text>
+<text x="378.0" y="177.0" text-anchor="start" class="cap">Ethernet przemysłowy, fieldbus (→ 21)</text>
+<rect x="366.0" y="192.0" width="282.0" height="38.0" rx="4" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.13"/>
+<text x="378.0" y="208.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:11px">sterowniki</text>
+<text x="378.0" y="223.0" text-anchor="start" class="cap">PLC, PAC, DCS, sterownik bezpieczeństwa</text>
+<rect x="366.0" y="238.0" width="282.0" height="38.0" rx="4" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.16"/>
+<text x="378.0" y="254.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:11px">układy wejść/wyjść</text>
+<text x="378.0" y="269.0" text-anchor="start" class="cap">lokalne i rozproszone</text>
+<rect x="366.0" y="284.0" width="282.0" height="38.0" rx="4" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.19"/>
+<text x="378.0" y="300.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:11px">urządzenia polowe</text>
+<text x="378.0" y="315.0" text-anchor="start" class="cap">czujniki, przetworniki, zawory, napędy</text>
+<rect x="14.0" y="352.0" width="652.0" height="40.0" rx="4" fill="#EEF1F3" stroke="none" stroke-width="1"/>
+<text x="340.0" y="370.0" text-anchor="middle" class="bx-t" style="font-size:11px">ARCHITEKTURY: scentralizowana · z rozproszonymi wejściami/wyjściami · PLC + SCADA · DCS</text>
+<text x="340.0" y="385.0" text-anchor="middle" class="cap">te same funkcje, różny podział na sprzęt</text>
+</svg>
+<figcaption>Po lewej funkcje systemu, po prawej grupy sprzętu od urządzeń polowych do serwerów, na dole cztery typowe architektury. Opracowanie własne na podstawie Wikipedii (PLC, SCADA, DCS) i modelu ISA-95.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2><span class="num">02</span> Struktura funkcjonalna: co system robi</h2>
+<div class="rail"></div>
+
+<figure>
+<svg viewBox="0 0 680 430" class="fig">
+<defs><marker id="arF22b0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0E6E78"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">STRUKTURA FUNKCJONALNA NA PRZYKŁADZIE DWÓCH ZBIORNIKÓW</text>
+<rect x="250.0" y="164.0" width="180.0" height="124.0" rx="6" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<path d="M 274.0 182.8 L 302.9 182.8" fill="none" stroke="#0E6E78" stroke-width="1.6"/>
+<polygon points="282.5,178.6 282.5,187.1 291.0,182.8 282.5,178.6" fill="#0E6E78"/>
+<polygon points="299.5,178.6 299.5,187.1 291.0,182.8" fill="#0E6E78"/>
+<rect x="299.5" y="187.9" width="28.9" height="32.3" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="300.4" y="201.5" width="27.2" height="17.8" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 328.4 216.8 L 342.0 216.8 L 342.0 223.6" fill="none" stroke="#0E6E78" stroke-width="1.4"/>
+<rect x="333.5" y="223.6" width="28.9" height="28.9" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="334.4" y="237.2" width="27.2" height="14.4" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 362.4 249.1 L 379.4 249.1" fill="none" stroke="#0E6E78" stroke-width="1.4" marker-end="url(#arF22b0)"/>
+<text x="313.9" y="232.1" text-anchor="middle" class="bx" style="font-size:10px">h₁</text>
+<text x="347.9" y="263.6" text-anchor="middle" class="bx" style="font-size:10px">h₂</text>
+<text x="340.0" y="282.0" text-anchor="middle" class="bx-t" style="font-size:11px">proces</text>
+<rect x="14.0" y="50.0" width="220.0" height="70.0" rx="4" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.2"/>
+<rect x="14.0" y="50.0" width="220.0" height="4.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="32.0" cy="76.0" r="9" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="32.0" y="80.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">1</text>
+<text x="48.0" y="80.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:11.5px">pomiar</text>
+<text x="28.0" y="104.0" text-anchor="start" class="cap">h₁, h₂, przepływ, stan pompy</text>
+<line x1="234.0" y1="85.0" x2="250.0" y2="181.0" stroke="#0E6E78" stroke-width="1.0" stroke-dasharray="3 3"/>
+<rect x="14.0" y="142.0" width="220.0" height="70.0" rx="4" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.2"/>
+<rect x="14.0" y="142.0" width="220.0" height="4.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="32.0" cy="168.0" r="9" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="32.0" y="172.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">2</text>
+<text x="48.0" y="172.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:11.5px">sterowanie</text>
+<text x="28.0" y="196.0" text-anchor="start" class="cap">PI przepływu, sekwencja startu</text>
+<line x1="234.0" y1="177.0" x2="250.0" y2="211.0" stroke="#0E6E78" stroke-width="1.0" stroke-dasharray="3 3"/>
+<rect x="14.0" y="234.0" width="220.0" height="70.0" rx="4" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.2"/>
+<rect x="14.0" y="234.0" width="220.0" height="4.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<circle cx="32.0" cy="260.0" r="9" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<text x="32.0" y="264.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">3</text>
+<text x="48.0" y="264.0" text-anchor="start" class="bx-t" style="fill:#9C3B52;font-size:11.5px">zabezpieczenia</text>
+<text x="28.0" y="288.0" text-anchor="start" class="cap">pompa stop przy przelewie</text>
+<line x1="234.0" y1="269.0" x2="250.0" y2="241.0" stroke="#9C3B52" stroke-width="1.0" stroke-dasharray="3 3"/>
+<rect x="14.0" y="326.0" width="220.0" height="70.0" rx="4" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="14.0" y="326.0" width="220.0" height="4.0" rx="0" fill="#5C6B77" stroke="none" stroke-width="1"/>
+<circle cx="32.0" cy="352.0" r="9" fill="#5C6B77" stroke="none" stroke-width="1"/>
+<text x="32.0" y="356.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">4</text>
+<text x="48.0" y="356.0" text-anchor="start" class="bx-t" style="fill:#5C6B77;font-size:11.5px">diagnostyka</text>
+<text x="28.0" y="380.0" text-anchor="start" class="cap">przerwany przewód, awaria modułu</text>
+<line x1="234.0" y1="361.0" x2="250.0" y2="271.0" stroke="#5C6B77" stroke-width="1.0" stroke-dasharray="3 3"/>
+<rect x="446.0" y="50.0" width="220.0" height="70.0" rx="4" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<rect x="446.0" y="50.0" width="220.0" height="4.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<circle cx="464.0" cy="76.0" r="9" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="464.0" y="80.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">5</text>
+<text x="480.0" y="80.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:11.5px">obsługa operatorska</text>
+<text x="460.0" y="104.0" text-anchor="start" class="cap">synoptyka, wartości zadane</text>
+<line x1="446.0" y1="85.0" x2="430.0" y2="181.0" stroke="#5B4B8A" stroke-width="1.0" stroke-dasharray="3 3"/>
+<rect x="446.0" y="142.0" width="220.0" height="70.0" rx="4" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.2"/>
+<rect x="446.0" y="142.0" width="220.0" height="4.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
+<circle cx="464.0" cy="168.0" r="9" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="464.0" y="172.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">6</text>
+<text x="480.0" y="172.0" text-anchor="start" class="bx-t" style="fill:#B3641A;font-size:11.5px">alarmowanie</text>
+<text x="460.0" y="196.0" text-anchor="start" class="cap">h₂ &gt; 3,8 m → alarm</text>
+<line x1="446.0" y1="177.0" x2="430.0" y2="211.0" stroke="#B3641A" stroke-width="1.0" stroke-dasharray="3 3"/>
+<rect x="446.0" y="234.0" width="220.0" height="70.0" rx="4" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<rect x="446.0" y="234.0" width="220.0" height="4.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<circle cx="464.0" cy="260.0" r="9" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="464.0" y="264.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">7</text>
+<text x="480.0" y="264.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:11.5px">archiwizacja, raporty</text>
+<text x="460.0" y="288.0" text-anchor="start" class="cap">trendy, zużycie energii</text>
+<line x1="446.0" y1="269.0" x2="430.0" y2="241.0" stroke="#5B4B8A" stroke-width="1.0" stroke-dasharray="3 3"/>
+<rect x="446.0" y="326.0" width="220.0" height="70.0" rx="4" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<rect x="446.0" y="326.0" width="220.0" height="4.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<circle cx="464.0" cy="352.0" r="9" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="464.0" y="356.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">8</text>
+<text x="480.0" y="356.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:11.5px">komunikacja</text>
+<text x="460.0" y="380.0" text-anchor="start" class="cap">dane do MES, zdalny dostęp</text>
+<line x1="446.0" y1="361.0" x2="430.0" y2="271.0" stroke="#5B4B8A" stroke-width="1.0" stroke-dasharray="3 3"/>
+<text x="340.0" y="330.0" text-anchor="middle" class="cap" style="fill:#0E6E78">← przy procesie</text>
+<text x="340.0" y="346.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">dla ludzi i systemów →</text>
+</svg>
+<figcaption>Osiem funkcji na przykładzie dwóch zbiorników. Po lewej funkcje działające bezpośrednio na procesie, po prawej — funkcje dla ludzi i innych systemów. Opracowanie własne.</figcaption>
+</figure>
+
+<ol class="steps">
+<li><strong>Pomiar i akwizycja</strong> — odczyt czujników, filtracja, przeliczenie na jednostki fizyczne, kontrola wiarygodności.</li>
+<li><strong>Sterowanie</strong> — <em>ciągłe</em> (regulatory PID trzymające poziom, przepływ, temperaturę) i <em>dyskretne</em> (logika i sekwencje: „uruchom pompę, potem otwórz zawór”).</li>
+<li><strong>Zabezpieczenia i blokady</strong> — reakcja na stan niebezpieczny niezależnie od tego, co robi sterowanie (pompa stop przy przelewie).</li>
+<li><strong>Diagnostyka</strong> — wykrywanie przerwanego przewodu, awarii modułu, przekroczenia czasu cyklu.</li>
+<li><strong>Obsługa operatorska (HMI)</strong> — obraz procesu, zmiana wartości zadanych, przełączanie ręczny/automat.</li>
+<li><strong>Alarmowanie</strong> — wykrycie stanu nienormalnego, powiadomienie, potwierdzenie przez operatora.</li>
+<li><strong>Archiwizacja i raporty</strong> — przebiegi w czasie, zdarzenia, zużycie mediów.</li>
+<li><strong>Komunikacja</strong> — wymiana danych z innymi sterownikami i z systemami wyższego poziomu (MES, ERP).</li>
+</ol>
+</section>
+
+<section>
+<h2><span class="num">03</span> Tor sygnału: jak funkcje łączą się w pętlę</h2>
+<div class="rail"></div>
+
+<p>Funkcje z sekcji 02 są ogniwami jednego łańcucha. Warto umieć go opowiedzieć na jednym sygnale — poziomie w zbiorniku:</p>
+
+<figure>
+<svg viewBox="0 0 680 330" class="fig">
+<defs><marker id="arF22c0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#141C24"/></marker><marker id="arF22c1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">TOR SYGNAŁU: OD CZUJNIKA DO ZAWORU — CO SIĘ DZIEJE Z INFORMACJĄ</text>
+<rect x="14.0" y="56.0" width="116.0" height="56.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="56.0" width="116.0" height="3.0" rx="0" fill="#5C6B77" stroke="none" stroke-width="1"/>
+<text x="72.0" y="82.0" text-anchor="middle" class="bx-t" style="font-size:11px">czujnik +</text>
+<text x="72.0" y="97.0" text-anchor="middle" class="bx">przetwornik</text>
+<rect x="22.0" y="124.0" width="100.0" height="22.0" rx="11" fill="#5C6B77" stroke="none" stroke-width="1" opacity="0.12"/>
+<text x="72.0" y="139.0" text-anchor="middle" class="cap" style="fill:#5C6B77">h = 2,75 m</text>
+<text x="72.0" y="162.0" text-anchor="middle" class="cap">wielkość fizyczna</text>
+<path d="M 131.0 84.0 L 147.0 84.0" fill="none" stroke="#141C24" stroke-width="1.5" marker-end="url(#arF22c0)"/>
+<rect x="148.0" y="56.0" width="116.0" height="56.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="148.0" y="56.0" width="116.0" height="3.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="206.0" y="82.0" text-anchor="middle" class="bx-t" style="font-size:11px">moduł AI</text>
+<text x="206.0" y="97.0" text-anchor="middle" class="bx">przetw. A/C</text>
+<rect x="156.0" y="124.0" width="100.0" height="22.0" rx="11" fill="#B3641A" stroke="none" stroke-width="1" opacity="0.12"/>
+<text x="206.0" y="139.0" text-anchor="middle" class="cap" style="fill:#B3641A">12,8 mA</text>
+<text x="206.0" y="162.0" text-anchor="middle" class="cap">prąd 4–20 mA</text>
+<path d="M 265.0 84.0 L 281.0 84.0" fill="none" stroke="#141C24" stroke-width="1.5" marker-end="url(#arF22c0)"/>
+<rect x="282.0" y="56.0" width="116.0" height="56.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="282.0" y="56.0" width="116.0" height="3.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="340.0" y="82.0" text-anchor="middle" class="bx-t" style="font-size:11px">program</text>
+<text x="340.0" y="97.0" text-anchor="middle" class="bx">PLC</text>
+<rect x="290.0" y="124.0" width="100.0" height="22.0" rx="11" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.12"/>
+<text x="340.0" y="139.0" text-anchor="middle" class="cap" style="fill:#0E6E78">15206 → 2,75 m</text>
+<text x="340.0" y="162.0" text-anchor="middle" class="cap">liczba → jednostki</text>
+<path d="M 399.0 84.0 L 415.0 84.0" fill="none" stroke="#141C24" stroke-width="1.5" marker-end="url(#arF22c0)"/>
+<rect x="416.0" y="56.0" width="116.0" height="56.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="416.0" y="56.0" width="116.0" height="3.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="474.0" y="82.0" text-anchor="middle" class="bx-t" style="font-size:11px">moduł AO</text>
+<text x="474.0" y="97.0" text-anchor="middle" class="bx">przetw. C/A</text>
+<rect x="424.0" y="124.0" width="100.0" height="22.0" rx="11" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.12"/>
+<text x="474.0" y="139.0" text-anchor="middle" class="cap" style="fill:#0E6E78">u = 60 %</text>
+<text x="474.0" y="162.0" text-anchor="middle" class="cap">liczba → prąd</text>
+<path d="M 533.0 84.0 L 549.0 84.0" fill="none" stroke="#141C24" stroke-width="1.5" marker-end="url(#arF22c0)"/>
+<rect x="550.0" y="56.0" width="116.0" height="56.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="550.0" y="56.0" width="116.0" height="3.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="608.0" y="82.0" text-anchor="middle" class="bx-t" style="font-size:11px">pozycjoner</text>
+<text x="608.0" y="97.0" text-anchor="middle" class="bx">+ zawór</text>
+<rect x="558.0" y="124.0" width="100.0" height="22.0" rx="11" fill="#B3641A" stroke="none" stroke-width="1" opacity="0.12"/>
+<text x="608.0" y="139.0" text-anchor="middle" class="cap" style="fill:#B3641A">13,6 mA</text>
+<text x="608.0" y="162.0" text-anchor="middle" class="cap">prąd → położenie</text>
+<path d="M 608.0 170.0 L 608.0 208.0 L 72.0 208.0" fill="none" stroke="#5C6B77" stroke-width="1.4"/>
+<path d="M 72.0 208.0 L 72.0 172.0" fill="none" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arF22c1)"/>
+<rect x="200.0" y="196.0" width="280.0" height="24.0" rx="12" fill="#EEF1F3" stroke="none" stroke-width="1"/>
+<text x="340.0" y="212.0" text-anchor="middle" class="cap" style="fill:#141C24">proces: zmiana przepływu → zmiana poziomu</text>
+<path d="M 340.0 56.0 L 340.0 44.0" fill="none" stroke="#5B4B8A" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="348.0" y="48.0" text-anchor="start" class="cap" style="fill:#5B4B8A">ta sama wartość trafia do HMI, alarmów i archiwum</text>
+<rect x="14.0" y="240.0" width="652.0" height="78.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<text x="30.0" y="262.0" text-anchor="start" class="bx-t" style="fill:#B3641A">dlaczego 4–20 mA, a nie 0–20 mA?</text>
+<text x="30.0" y="282.0" text-anchor="start" class="bx">„żywe zero”: 4 mA = początek zakresu, a 0 mA = przerwany przewód — da się je odróżnić;</text>
+<text x="30.0" y="300.0" text-anchor="start" class="bx">prąd nie maleje na długim przewodzie, a przetwornik może być zasilany z tej samej pętli</text>
+</svg>
+<figcaption>Informacja zmienia postać pięć razy: wielkość fizyczna → prąd → liczba w sterowniku → prąd → położenie zaworu. Proces zamyka pętlę. Ta sama liczba w programie trafia też do HMI, alarmów i archiwum. Liczby jak w przykładzie z sekcji 06.</figcaption>
+</figure>
+
+<p>Standardem sygnału analogowego jest pętla prądowa 4–20 mA. Jej „żywe zero” <span class="cyt">„allows powering of the device even with no process signal output”</span>, a <span class="cyt">„currents less than 3.8 mA or more than 20.5 mA are taken to indicate a fault”</span> (Wikipedia, <em>Current loop</em>). Sygnały binarne (stan pompy, wyłącznik krańcowy) to zwykle 24 V DC.</p>
+</section>
+
+<section>
+<h2><span class="num">04</span> Struktura sprzętowa: z czego system jest zbudowany</h2>
+<div class="rail"></div>
+
+<table>
+<thead><tr><th>Grupa</th><th>Rola</th><th>Przykłady</th></tr></thead>
+<tbody>
+<tr><td><strong>urządzenia polowe</strong></td><td>zamiana wielkości fizycznej na sygnał i sygnału na działanie</td><td>przetworniki poziomu, ciśnienia, przepływu; zawory z pozycjonerem; falowniki; wyłączniki</td></tr>
+<tr><td><strong>układy wejść/wyjść</strong></td><td>zamiana sygnałów elektrycznych na liczby i odwrotnie</td><td>moduły DI, DO, AI, AO — w kasecie sterownika albo rozproszone przy obiekcie</td></tr>
+<tr><td><strong>sterowniki</strong></td><td>wykonywanie programu sterowania w stałym cyklu</td><td>PLC, PAC, sterowniki DCS; osobny sterownik bezpieczeństwa</td></tr>
+<tr><td><strong>sieci</strong></td><td>przesyłanie danych między urządzeniami (szczegóły → 21)</td><td>Profinet, Profibus, Modbus, Ethernet, OPC UA</td></tr>
+<tr><td><strong>stacje i serwery</strong></td><td>nadzór, obsługa, programowanie, archiwum</td><td>stacje operatorskie SCADA/HMI, stacja inżynierska, serwer archiwum</td></tr>
+<tr><td><strong>zasilanie</strong></td><td>ciągłość pracy przy zaniku sieci</td><td>zasilacze 24 V DC, UPS, zasilanie redundantne</td></tr>
+</tbody>
+</table>
+
+<p>Nadzór realizuje oprogramowanie SCADA — według Wikipedii <span class="cyt">„a control system architecture comprising computers, networked data communications and graphical user interfaces for high-level supervision of machines and processes”</span>.</p>
+</section>
+
+<section>
+<h2><span class="num">05</span> Sterownik PLC: budowa i cykl pracy</h2>
+<div class="rail"></div>
+
+<p>PLC to <span class="cyt">„an industrial computer that has been ruggedized and adapted for the control of manufacturing processes”</span> (Wikipedia). Jest sercem struktury sprzętowej, bo to w nim wykonują się funkcje sterowania, zabezpieczeń i część diagnostyki.</p>
+
+<figure>
+<svg viewBox="0 0 680 400" class="fig">
+<defs><marker id="arF22d0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#141C24"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">STEROWNIK PLC: Z CZEGO SIĘ SKŁADA I JAK PRACUJE</text>
+<text x="170.0" y="52.0" text-anchor="middle" class="bx-t" style="fill:#5B4B8A;font-size:11px">BUDOWA MODUŁOWA (kaseta, szyna)</text>
+<rect x="14.0" y="60.0" width="330.0" height="182.0" rx="4" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="20.0" y="66.0" width="42.0" height="170.0" rx="3" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.3"/>
+<rect x="20.0" y="66.0" width="42.0" height="6.0" rx="0" fill="#5C6B77" stroke="none" stroke-width="1"/>
+<text x="41.0" y="94.0" text-anchor="middle" class="bx-t" style="fill:#5C6B77;font-size:11.5px">PS</text>
+<rect x="66.0" y="66.0" width="42.0" height="170.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<rect x="66.0" y="66.0" width="42.0" height="6.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="87.0" y="94.0" text-anchor="middle" class="bx-t" style="fill:#5B4B8A;font-size:11.5px">CPU</text>
+<rect x="112.0" y="66.0" width="42.0" height="170.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="112.0" y="66.0" width="42.0" height="6.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="133.0" y="94.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:11.5px">DI</text>
+<circle cx="133.0" cy="116.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="133.0" cy="133.0" r="3.2" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="133.0" cy="150.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="133.0" cy="167.0" r="3.2" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="133.0" cy="184.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="133.0" cy="201.0" r="3.2" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<rect x="158.0" y="66.0" width="42.0" height="170.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="158.0" y="66.0" width="42.0" height="6.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="179.0" y="94.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:11.5px">DO</text>
+<circle cx="179.0" cy="116.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="179.0" cy="133.0" r="3.2" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="179.0" cy="150.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="179.0" cy="167.0" r="3.2" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="179.0" cy="184.0" r="3.2" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<circle cx="179.0" cy="201.0" r="3.2" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<rect x="204.0" y="66.0" width="42.0" height="170.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.3"/>
+<rect x="204.0" y="66.0" width="42.0" height="6.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="225.0" y="94.0" text-anchor="middle" class="bx-t" style="fill:#B3641A;font-size:11.5px">AI</text>
+<circle cx="225.0" cy="116.0" r="3.2" fill="#B3641A" stroke="none" stroke-width="1"/>
+<circle cx="225.0" cy="133.0" r="3.2" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="225.0" cy="150.0" r="3.2" fill="#B3641A" stroke="none" stroke-width="1"/>
+<circle cx="225.0" cy="167.0" r="3.2" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="225.0" cy="184.0" r="3.2" fill="#B3641A" stroke="none" stroke-width="1"/>
+<circle cx="225.0" cy="201.0" r="3.2" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<rect x="250.0" y="66.0" width="42.0" height="170.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.3"/>
+<rect x="250.0" y="66.0" width="42.0" height="6.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="271.0" y="94.0" text-anchor="middle" class="bx-t" style="fill:#B3641A;font-size:11.5px">AO</text>
+<circle cx="271.0" cy="116.0" r="3.2" fill="#B3641A" stroke="none" stroke-width="1"/>
+<circle cx="271.0" cy="133.0" r="3.2" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="271.0" cy="150.0" r="3.2" fill="#B3641A" stroke="none" stroke-width="1"/>
+<circle cx="271.0" cy="167.0" r="3.2" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<circle cx="271.0" cy="184.0" r="3.2" fill="#B3641A" stroke="none" stroke-width="1"/>
+<circle cx="271.0" cy="201.0" r="3.2" fill="#C3CDD4" stroke="none" stroke-width="1"/>
+<rect x="296.0" y="66.0" width="42.0" height="170.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<rect x="296.0" y="66.0" width="42.0" height="6.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="317.0" y="94.0" text-anchor="middle" class="bx-t" style="fill:#5B4B8A;font-size:11.5px">CP</text>
+<text x="41.0" y="258.0" text-anchor="middle" class="cap" style="fill:#5C6B77;font-size:9.5px">zasilacz</text>
+<text x="41.0" y="270.0" text-anchor="middle" class="cap" style="font-size:9.5px">24 V DC</text>
+<text x="87.0" y="288.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9.5px">procesor</text>
+<text x="87.0" y="300.0" text-anchor="middle" class="cap" style="font-size:9.5px">program, pamięć</text>
+<text x="133.0" y="258.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9.5px">wej. binarne</text>
+<text x="133.0" y="270.0" text-anchor="middle" class="cap" style="font-size:9.5px">16 × 24 V</text>
+<text x="179.0" y="288.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9.5px">wyj. binarne</text>
+<text x="179.0" y="300.0" text-anchor="middle" class="cap" style="font-size:9.5px">16 × 24 V</text>
+<text x="225.0" y="258.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9.5px">wej. analog.</text>
+<text x="225.0" y="270.0" text-anchor="middle" class="cap" style="font-size:9.5px">8 × 4–20 mA</text>
+<text x="271.0" y="288.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9.5px">wyj. analog.</text>
+<text x="271.0" y="300.0" text-anchor="middle" class="cap" style="font-size:9.5px">4 × 4–20 mA</text>
+<text x="317.0" y="258.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9.5px">komunikacja</text>
+<text x="317.0" y="270.0" text-anchor="middle" class="cap" style="font-size:9.5px">Profinet</text>
+<text x="170.0" y="350.0" text-anchor="middle" class="cap" style="fill:#141C24">kompaktowy: to samo w jednej obudowie</text>
+<text x="170.0" y="366.0" text-anchor="middle" class="cap" style="fill:#141C24">rozproszone we/wy: moduły w szafce przy obiekcie</text>
+<text x="506.0" y="52.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:11px">CYKL PRACY (powtarzany bez końca)</text>
+<circle cx="506" cy="206" r="96" fill="none" stroke="#C3CDD4" stroke-width="1.6" stroke-dasharray="5 4"/>
+<rect x="444.0" y="90.0" width="124.0" height="40.0" rx="4" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<circle cx="457.0" cy="108.0" r="8" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="457.0" y="112.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">1</text>
+<text x="469.0" y="108.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:10.5px">odczyt wejść</text>
+<text x="469.0" y="123.0" text-anchor="start" class="cap" style="font-size:9.5px">do obrazu procesu</text>
+<rect x="540.0" y="186.0" width="124.0" height="40.0" rx="4" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<circle cx="553.0" cy="204.0" r="8" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="553.0" y="208.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">2</text>
+<text x="565.0" y="204.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">program</text>
+<text x="565.0" y="219.0" text-anchor="start" class="cap" style="font-size:9.5px">na obrazie wejść</text>
+<rect x="444.0" y="282.0" width="124.0" height="40.0" rx="4" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<circle cx="457.0" cy="300.0" r="8" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="457.0" y="304.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">3</text>
+<text x="469.0" y="300.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:10.5px">zapis wyjść</text>
+<text x="469.0" y="315.0" text-anchor="start" class="cap" style="font-size:9.5px">z obrazu do modułów</text>
+<rect x="348.0" y="186.0" width="124.0" height="40.0" rx="4" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.3"/>
+<circle cx="361.0" cy="204.0" r="8" fill="#5C6B77" stroke="none" stroke-width="1"/>
+<text x="361.0" y="208.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">4</text>
+<text x="373.0" y="204.0" text-anchor="start" class="bx-t" style="fill:#5C6B77;font-size:10.5px">komunikacja</text>
+<text x="373.0" y="219.0" text-anchor="start" class="cap" style="font-size:9.5px">i diagnostyka</text>
+<path d="M 568.2 132.5 L 579.5 143.8" fill="none" stroke="#141C24" stroke-width="1.6" marker-end="url(#arF22d0)"/>
+<path d="M 579.5 268.2 L 568.2 279.5" fill="none" stroke="#141C24" stroke-width="1.6" marker-end="url(#arF22d0)"/>
+<path d="M 443.8 279.5 L 432.5 268.2" fill="none" stroke="#141C24" stroke-width="1.6" marker-end="url(#arF22d0)"/>
+<path d="M 432.5 143.8 L 443.8 132.5" fill="none" stroke="#141C24" stroke-width="1.6" marker-end="url(#arF22d0)"/>
+<text x="506.0" y="202.0" text-anchor="middle" class="bx-t" style="font-size:11px">cykl</text>
+<text x="506.0" y="217.0" text-anchor="middle" class="cap">1–100 ms</text>
+<text x="506.0" y="350.0" text-anchor="middle" class="cap" style="fill:#141C24">PID: w przerwaniu cyklicznym o stałym okresie</text>
+<text x="506.0" y="366.0" text-anchor="middle" class="cap" style="fill:#141C24">za długi cykl → watchdog zatrzymuje sterownik</text>
+</svg>
+<figcaption>Regulator PID działa w przerwaniu o stałym okresie, bo algorytm dyskretny wymaga stałego czasu próbkowania. Źródło: Wikipedia, <em>Programmable logic controller</em>; nazwy modułów jak w S7-1500.</figcaption>
+</figure>
+
+<p>Wikipedia: <span class="cyt">„The simplest scan cycle consists of 3 steps: Read inputs, Execute the program, Write outputs”</span>. Program nie czyta wejść bezpośrednio, tylko ich kopię z początku cyklu — <strong>obraz procesu</strong>. Dzięki temu w ciągu jednego cyklu każde wejście ma jedną wartość, a wyjścia zmieniają się wszystkie naraz, na końcu cyklu.</p>
+
+<div class="box key">
+<span class="lbl">Zapamiętaj</span>
+<p><strong>PLC = zasilacz + CPU + moduły we/wy + komunikacja. Cykl: odczyt wejść → program na obrazie procesu → zapis wyjść → komunikacja. Czas cyklu to milisekundy i ogranicza szybkość reakcji.</strong></p>
+</div>
+</section>
+
+<section>
+<h2><span class="num">06</span> Przykład na kartce: od prądu do poziomu</h2>
+<div class="rail"></div>
+
+<p>Przetwornik poziomu ma zakres 0–5 m i daje 4–20 mA. Moduł wejść analogowych S7-1500 zamienia zakres nominalny 4–20 mA na liczby 0…27648.</p>
+
+<figure>
+<svg viewBox="0 0 680 486" class="fig">
+<defs><marker id="arF22e0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9C3B52"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">PRZYKŁAD: OD PRĄDU DO POZIOMU I ILE TRWA REAKCJA STEROWNIKA</text>
+<clipPath id="cF22e1"><rect x="70" y="56" width="580" height="194"/></clipPath>
+<line x1="70.0" y1="250.0" x2="650.0" y2="250.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="70.0" y1="56.0" x2="70.0" y2="250.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="70.0" y1="250.0" x2="70.0" y2="254.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="70.0" y="266.0" text-anchor="middle" class="tick">0</text>
+<line x1="175.5" y1="250.0" x2="175.5" y2="254.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="175.5" y="266.0" text-anchor="middle" class="tick">4</text>
+<line x1="280.9" y1="250.0" x2="280.9" y2="254.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="280.9" y="266.0" text-anchor="middle" class="tick">8</text>
+<line x1="386.4" y1="250.0" x2="386.4" y2="254.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="386.4" y="266.0" text-anchor="middle" class="tick">12</text>
+<line x1="491.8" y1="250.0" x2="491.8" y2="254.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="491.8" y="266.0" text-anchor="middle" class="tick">16</text>
+<line x1="597.3" y1="250.0" x2="597.3" y2="254.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<text x="597.3" y="266.0" text-anchor="middle" class="tick">20</text>
+<line x1="66.0" y1="229.0" x2="70.0" y2="229.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="70.0" y1="229.0" x2="650.0" y2="229.0" stroke="#E3E8EB" stroke-width="0.8"/>
+<text x="62.0" y="233.0" text-anchor="end" class="tick">0</text>
+<line x1="66.0" y1="202.8" x2="70.0" y2="202.8" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="70.0" y1="202.8" x2="650.0" y2="202.8" stroke="#E3E8EB" stroke-width="0.8"/>
+<text x="62.0" y="206.8" text-anchor="end" class="tick">1</text>
+<line x1="66.0" y1="176.6" x2="70.0" y2="176.6" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="70.0" y1="176.6" x2="650.0" y2="176.6" stroke="#E3E8EB" stroke-width="0.8"/>
+<text x="62.0" y="180.6" text-anchor="end" class="tick">2</text>
+<line x1="66.0" y1="150.4" x2="70.0" y2="150.4" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="70.0" y1="150.4" x2="650.0" y2="150.4" stroke="#E3E8EB" stroke-width="0.8"/>
+<text x="62.0" y="154.4" text-anchor="end" class="tick">3</text>
+<line x1="66.0" y1="124.2" x2="70.0" y2="124.2" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="70.0" y1="124.2" x2="650.0" y2="124.2" stroke="#E3E8EB" stroke-width="0.8"/>
+<text x="62.0" y="128.2" text-anchor="end" class="tick">4</text>
+<line x1="66.0" y1="97.9" x2="70.0" y2="97.9" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="70.0" y1="97.9" x2="650.0" y2="97.9" stroke="#E3E8EB" stroke-width="0.8"/>
+<text x="62.0" y="101.9" text-anchor="end" class="tick">5</text>
+<text x="360.0" y="284.0" text-anchor="middle" class="axlab">prąd w pętli [mA]</text>
+<text x="70.0" y="46.0" text-anchor="start" class="axlab">poziom h₂ [m]</text>
+<rect x="70.0" y="56.0" width="100.2" height="194.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.1"/>
+<rect x="610.5" y="56.0" width="39.5" height="194.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.1"/>
+<text x="120.1" y="74.0" text-anchor="middle" class="cap" style="fill:#9C3B52">awaria</text>
+<text x="120.1" y="88.0" text-anchor="middle" class="cap" style="fill:#9C3B52">&lt; 3,8 mA</text>
+<text x="630.2" y="74.0" text-anchor="middle" class="cap" style="fill:#9C3B52">&gt;20,5</text>
+<g clip-path="url(#cF22e1)"><polyline points="175.5,229.0 597.3,97.9" fill="none" stroke="#141C24" stroke-width="2.2" stroke-linejoin="round"/></g>
+<line x1="175.5" y1="229.0" x2="175.5" y2="250.0" stroke="#0E6E78" stroke-width="1" stroke-dasharray="3 3"/>
+<line x1="70.0" y1="229.0" x2="175.5" y2="229.0" stroke="#0E6E78" stroke-width="1" stroke-dasharray="3 3"/>
+<circle cx="175.5" cy="229.0" r="5" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<line x1="597.3" y1="97.9" x2="597.3" y2="250.0" stroke="#0E6E78" stroke-width="1" stroke-dasharray="3 3"/>
+<line x1="70.0" y1="97.9" x2="597.3" y2="97.9" stroke="#0E6E78" stroke-width="1" stroke-dasharray="3 3"/>
+<circle cx="597.3" cy="97.9" r="5" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<line x1="407.5" y1="156.9" x2="407.5" y2="250.0" stroke="#B3641A" stroke-width="1" stroke-dasharray="3 3"/>
+<line x1="70.0" y1="156.9" x2="407.5" y2="156.9" stroke="#B3641A" stroke-width="1" stroke-dasharray="3 3"/>
+<circle cx="407.5" cy="156.9" r="5" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="187.5" y="213.0" text-anchor="start" class="cap" style="fill:#0E6E78">4 mA = 0 m</text>
+<text x="589.3" y="89.9" text-anchor="end" class="cap" style="fill:#0E6E78">20 mA = 5 m</text>
+<text x="415.5" y="172.9" text-anchor="start" class="cap" style="fill:#B3641A">12,8 mA = 2,75 m</text>
+<text x="24.0" y="316.0" text-anchor="start" class="bx-t" style="font-size:11px">CZAS REAKCJI: zmiana na wejściu → zmiana na wyjściu (cykl 10 ms)</text>
+<clipPath id="cF22e55"><rect x="70" y="334" width="580" height="90"/></clipPath>
+<rect x="70.0" y="368.0" width="23.2" height="18.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.8"/>
+<rect x="93.2" y="368.0" width="146.9" height="18.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.35"/>
+<rect x="240.1" y="368.0" width="23.2" height="18.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.8"/>
+<rect x="263.3" y="368.0" width="23.2" height="18.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.8"/>
+<rect x="286.5" y="368.0" width="146.9" height="18.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.35"/>
+<rect x="433.5" y="368.0" width="23.2" height="18.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.8"/>
+<rect x="456.7" y="368.0" width="23.2" height="18.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.8"/>
+<rect x="479.9" y="368.0" width="146.9" height="18.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.35"/>
+<rect x="626.8" y="368.0" width="23.2" height="18.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.8"/>
+<text x="81.6" y="400.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9px">odczyt</text>
+<text x="166.7" y="381.0" text-anchor="middle" class="cap" style="font-size:9.5px">program</text>
+<text x="251.7" y="400.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9px">zapis</text>
+<polygon points="91.1,348.0 103.1,348.0 97.1,360.0" fill="#9C3B52"/>
+<text x="107.1" y="356.0" text-anchor="start" class="cap" style="fill:#9C3B52">zmiana wejścia tuż po odczycie</text>
+<line x1="97.1" y1="414.0" x2="456.7" y2="414.0" stroke="#9C3B52" stroke-width="1.6" marker-end="url(#arF22e0)"/>
+<text x="276.9" y="430.0" text-anchor="middle" class="cap" style="fill:#9C3B52">najgorzej ≈ 2 cykle: filtr 3 ms + 2·10 ms + wyjście 1 ms ≈ 24 ms</text>
+<text x="70.0" y="450.0" text-anchor="middle" class="tick">0 ms</text>
+<text x="263.3" y="450.0" text-anchor="middle" class="tick">10 ms</text>
+<text x="456.7" y="450.0" text-anchor="middle" class="tick">20 ms</text>
+<text x="650.0" y="450.0" text-anchor="middle" class="tick">30 ms</text>
+</svg>
+<figcaption>Górny wykres: prosta skalowania prąd → poziom z zaznaczonymi strefami awarii. Dolny: oś czasu trzech cykli sterownika i najgorszy przypadek reakcji na zmianę wejścia. Zakres 0…27648 według dokumentacji S7-1500; progi awarii według Wikipedii (<em>Current loop</em>); czasy filtra i wyjścia przykładowe.</figcaption>
+</figure>
+
+<ol class="steps">
+<li><strong>Prąd → liczba.</strong> Przy 12,8 mA: <span class="m" data-tex="\frac{12{,}8 - 4}{16}\cdot 27648 = 15206"><svg style="vertical-align: -0.816ex;" xmlns="http://www.w3.org/2000/svg" width="21.848ex" height="2.978ex" role="img" focusable="false" viewBox="0 -955.9 9656.9 1316.4" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-1-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-1-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-1-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-1-TEX-N-38" d="M70 417T70 494T124 618T248 666Q319 666 374 624T429 515Q429 485 418 459T392 417T361 389T335 371T324 363L338 354Q352 344 366 334T382 323Q457 264 457 174Q457 95 399 37T249 -22Q159 -22 101 29T43 155Q43 263 172 335L154 348Q133 361 127 368Q70 417 70 494ZM286 386L292 390Q298 394 301 396T311 403T323 413T334 425T345 438T355 454T364 471T369 491T371 513Q371 556 342 586T275 624Q268 625 242 625Q201 625 165 599T128 534Q128 511 141 492T167 463T217 431Q224 426 228 424L286 386ZM250 21Q308 21 350 55T392 137Q392 154 387 169T375 194T353 216T330 234T301 253T274 270Q260 279 244 289T218 306L210 311Q204 311 181 294T133 239T107 157Q107 98 150 60T250 21Z"></path><path id="MJX-1-TEX-N-2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path><path id="MJX-1-TEX-N-34" d="M462 0Q444 3 333 3Q217 3 199 0H190V46H221Q241 46 248 46T265 48T279 53T286 61Q287 63 287 115V165H28V211L179 442Q332 674 334 675Q336 677 355 677H373L379 671V211H471V165H379V114Q379 73 379 66T385 54Q393 47 442 46H471V0H462ZM293 211V545L74 212L183 211H293Z"></path><path id="MJX-1-TEX-N-36" d="M42 313Q42 476 123 571T303 666Q372 666 402 630T432 550Q432 525 418 510T379 495Q356 495 341 509T326 548Q326 592 373 601Q351 623 311 626Q240 626 194 566Q147 500 147 364L148 360Q153 366 156 373Q197 433 263 433H267Q313 433 348 414Q372 400 396 374T435 317Q456 268 456 210V192Q456 169 451 149Q440 90 387 34T253 -22Q225 -22 199 -14T143 16T92 75T56 172T42 313ZM257 397Q227 397 205 380T171 335T154 278T148 216Q148 133 160 97T198 39Q222 21 251 21Q302 21 329 59Q342 77 347 104T352 209Q352 289 347 316T329 361Q302 397 257 397Z"></path><path id="MJX-1-TEX-N-22C5" d="M78 250Q78 274 95 292T138 310Q162 310 180 294T199 251Q199 226 182 208T139 190T96 207T78 250Z"></path><path id="MJX-1-TEX-N-37" d="M55 458Q56 460 72 567L88 674Q88 676 108 676H128V672Q128 662 143 655T195 646T364 644H485V605L417 512Q408 500 387 472T360 435T339 403T319 367T305 330T292 284T284 230T278 162T275 80Q275 66 275 52T274 28V19Q270 2 255 -10T221 -22Q210 -22 200 -19T179 0T168 40Q168 198 265 368Q285 400 349 489L395 552H302Q128 552 119 546Q113 543 108 522T98 479L95 458V455H55V458Z"></path><path id="MJX-1-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-1-TEX-N-35" d="M164 157Q164 133 148 117T109 101H102Q148 22 224 22Q294 22 326 82Q345 115 345 210Q345 313 318 349Q292 382 260 382H254Q176 382 136 314Q132 307 129 306T114 304Q97 304 95 310Q93 314 93 485V614Q93 664 98 664Q100 666 102 666Q103 666 123 658T178 642T253 634Q324 634 389 662Q397 666 402 666Q410 666 410 648V635Q328 538 205 538Q174 538 149 544L139 546V374Q158 388 169 396T205 412T256 420Q337 420 393 355T449 201Q449 109 385 44T229 -22Q148 -22 99 32T50 154Q50 178 61 192T84 210T107 214Q132 214 148 197T164 157Z"></path><path id="MJX-1-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mfrac"><g data-mml-node="mrow" transform="translate(220,477.2) scale(0.707)"><g data-mml-node="mn"><use data-c="31" xlink:href="#MJX-1-TEX-N-31"></use><use data-c="32" xlink:href="#MJX-1-TEX-N-32" transform="translate(500,0)"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(1000,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-1-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(1278,0)"><use data-c="38" xlink:href="#MJX-1-TEX-N-38"></use></g><g data-mml-node="mo" transform="translate(1778,0)"><use data-c="2212" xlink:href="#MJX-1-TEX-N-2212"></use></g><g data-mml-node="mn" transform="translate(2556,0)"><use data-c="34" xlink:href="#MJX-1-TEX-N-34"></use></g></g><g data-mml-node="mn" transform="translate(946.9,-345) scale(0.707)"><use data-c="31" xlink:href="#MJX-1-TEX-N-31"></use><use data-c="36" xlink:href="#MJX-1-TEX-N-36" transform="translate(500,0)"></use></g><rect width="2360.9" height="60" x="120" y="220"></rect></g><g data-mml-node="mo" transform="translate(2823.1,0)"><use data-c="22C5" xlink:href="#MJX-1-TEX-N-22C5"></use></g><g data-mml-node="mn" transform="translate(3323.4,0)"><use data-c="32" xlink:href="#MJX-1-TEX-N-32"></use><use data-c="37" xlink:href="#MJX-1-TEX-N-37" transform="translate(500,0)"></use><use data-c="36" xlink:href="#MJX-1-TEX-N-36" transform="translate(1000,0)"></use><use data-c="34" xlink:href="#MJX-1-TEX-N-34" transform="translate(1500,0)"></use><use data-c="38" xlink:href="#MJX-1-TEX-N-38" transform="translate(2000,0)"></use></g><g data-mml-node="mo" transform="translate(6101.1,0)"><use data-c="3D" xlink:href="#MJX-1-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(7156.9,0)"><use data-c="31" xlink:href="#MJX-1-TEX-N-31"></use><use data-c="35" xlink:href="#MJX-1-TEX-N-35" transform="translate(500,0)"></use><use data-c="32" xlink:href="#MJX-1-TEX-N-32" transform="translate(1000,0)"></use><use data-c="30" xlink:href="#MJX-1-TEX-N-30" transform="translate(1500,0)"></use><use data-c="36" xlink:href="#MJX-1-TEX-N-36" transform="translate(2000,0)"></use></g></g></g></svg></span>.</li>
+<li><strong>Liczba → metry</strong> (program): <span class="m" data-tex="\frac{15206}{27648}\cdot 5\ \mathrm{m} = 2{,}75\ \mathrm{m}"><svg style="vertical-align: -0.816ex;" xmlns="http://www.w3.org/2000/svg" width="19.701ex" height="2.773ex" role="img" focusable="false" viewBox="0 -864.9 8707.8 1225.5" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-2-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-2-TEX-N-35" d="M164 157Q164 133 148 117T109 101H102Q148 22 224 22Q294 22 326 82Q345 115 345 210Q345 313 318 349Q292 382 260 382H254Q176 382 136 314Q132 307 129 306T114 304Q97 304 95 310Q93 314 93 485V614Q93 664 98 664Q100 666 102 666Q103 666 123 658T178 642T253 634Q324 634 389 662Q397 666 402 666Q410 666 410 648V635Q328 538 205 538Q174 538 149 544L139 546V374Q158 388 169 396T205 412T256 420Q337 420 393 355T449 201Q449 109 385 44T229 -22Q148 -22 99 32T50 154Q50 178 61 192T84 210T107 214Q132 214 148 197T164 157Z"></path><path id="MJX-2-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-2-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJX-2-TEX-N-36" d="M42 313Q42 476 123 571T303 666Q372 666 402 630T432 550Q432 525 418 510T379 495Q356 495 341 509T326 548Q326 592 373 601Q351 623 311 626Q240 626 194 566Q147 500 147 364L148 360Q153 366 156 373Q197 433 263 433H267Q313 433 348 414Q372 400 396 374T435 317Q456 268 456 210V192Q456 169 451 149Q440 90 387 34T253 -22Q225 -22 199 -14T143 16T92 75T56 172T42 313ZM257 397Q227 397 205 380T171 335T154 278T148 216Q148 133 160 97T198 39Q222 21 251 21Q302 21 329 59Q342 77 347 104T352 209Q352 289 347 316T329 361Q302 397 257 397Z"></path><path id="MJX-2-TEX-N-37" d="M55 458Q56 460 72 567L88 674Q88 676 108 676H128V672Q128 662 143 655T195 646T364 644H485V605L417 512Q408 500 387 472T360 435T339 403T319 367T305 330T292 284T284 230T278 162T275 80Q275 66 275 52T274 28V19Q270 2 255 -10T221 -22Q210 -22 200 -19T179 0T168 40Q168 198 265 368Q285 400 349 489L395 552H302Q128 552 119 546Q113 543 108 522T98 479L95 458V455H55V458Z"></path><path id="MJX-2-TEX-N-34" d="M462 0Q444 3 333 3Q217 3 199 0H190V46H221Q241 46 248 46T265 48T279 53T286 61Q287 63 287 115V165H28V211L179 442Q332 674 334 675Q336 677 355 677H373L379 671V211H471V165H379V114Q379 73 379 66T385 54Q393 47 442 46H471V0H462ZM293 211V545L74 212L183 211H293Z"></path><path id="MJX-2-TEX-N-38" d="M70 417T70 494T124 618T248 666Q319 666 374 624T429 515Q429 485 418 459T392 417T361 389T335 371T324 363L338 354Q352 344 366 334T382 323Q457 264 457 174Q457 95 399 37T249 -22Q159 -22 101 29T43 155Q43 263 172 335L154 348Q133 361 127 368Q70 417 70 494ZM286 386L292 390Q298 394 301 396T311 403T323 413T334 425T345 438T355 454T364 471T369 491T371 513Q371 556 342 586T275 624Q268 625 242 625Q201 625 165 599T128 534Q128 511 141 492T167 463T217 431Q224 426 228 424L286 386ZM250 21Q308 21 350 55T392 137Q392 154 387 169T375 194T353 216T330 234T301 253T274 270Q260 279 244 289T218 306L210 311Q204 311 181 294T133 239T107 157Q107 98 150 60T250 21Z"></path><path id="MJX-2-TEX-N-22C5" d="M78 250Q78 274 95 292T138 310Q162 310 180 294T199 251Q199 226 182 208T139 190T96 207T78 250Z"></path><path id="MJX-2-TEX-N-A0" d=""></path><path id="MJX-2-TEX-N-6D" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q351 442 364 440T387 434T406 426T421 417T432 406T441 395T448 384T452 374T455 366L457 361L460 365Q463 369 466 373T475 384T488 397T503 410T523 422T546 432T572 439T603 442Q729 442 740 329Q741 322 741 190V104Q741 66 743 59T754 49Q775 46 803 46H819V0H811L788 1Q764 2 737 2T699 3Q596 3 587 0H579V46H595Q656 46 656 62Q657 64 657 200Q656 335 655 343Q649 371 635 385T611 402T585 404Q540 404 506 370Q479 343 472 315T464 232V168V108Q464 78 465 68T468 55T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z"></path><path id="MJX-2-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-2-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mfrac"><g data-mml-node="mn" transform="translate(220,394) scale(0.707)"><use data-c="31" xlink:href="#MJX-2-TEX-N-31"></use><use data-c="35" xlink:href="#MJX-2-TEX-N-35" transform="translate(500,0)"></use><use data-c="32" xlink:href="#MJX-2-TEX-N-32" transform="translate(1000,0)"></use><use data-c="30" xlink:href="#MJX-2-TEX-N-30" transform="translate(1500,0)"></use><use data-c="36" xlink:href="#MJX-2-TEX-N-36" transform="translate(2000,0)"></use></g><g data-mml-node="mn" transform="translate(220,-345) scale(0.707)"><use data-c="32" xlink:href="#MJX-2-TEX-N-32"></use><use data-c="37" xlink:href="#MJX-2-TEX-N-37" transform="translate(500,0)"></use><use data-c="36" xlink:href="#MJX-2-TEX-N-36" transform="translate(1000,0)"></use><use data-c="34" xlink:href="#MJX-2-TEX-N-34" transform="translate(1500,0)"></use><use data-c="38" xlink:href="#MJX-2-TEX-N-38" transform="translate(2000,0)"></use></g><rect width="1967.8" height="60" x="120" y="220"></rect></g><g data-mml-node="mo" transform="translate(2430,0)"><use data-c="22C5" xlink:href="#MJX-2-TEX-N-22C5"></use></g><g data-mml-node="mn" transform="translate(2930.2,0)"><use data-c="35" xlink:href="#MJX-2-TEX-N-35"></use></g><g data-mml-node="mtext" transform="translate(3430.2,0)"><use data-c="A0" xlink:href="#MJX-2-TEX-N-A0"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(3680.2,0)"><g data-mml-node="mi"><use data-c="6D" xlink:href="#MJX-2-TEX-N-6D"></use></g></g><g data-mml-node="mo" transform="translate(4791,0)"><use data-c="3D" xlink:href="#MJX-2-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(5846.8,0)"><use data-c="32" xlink:href="#MJX-2-TEX-N-32"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(6346.8,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-2-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(6624.8,0)"><use data-c="37" xlink:href="#MJX-2-TEX-N-37"></use><use data-c="35" xlink:href="#MJX-2-TEX-N-35" transform="translate(500,0)"></use></g><g data-mml-node="mtext" transform="translate(7624.8,0)"><use data-c="A0" xlink:href="#MJX-2-TEX-N-A0"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(7874.8,0)"><g data-mml-node="mi"><use data-c="6D" xlink:href="#MJX-2-TEX-N-6D"></use></g></g></g></g></svg></span>.</li>
+<li><strong>Rozdzielczość</strong>: <span class="m" data-tex="5\ \mathrm{m} / 27648 = 0{,}18\ \mathrm{mm}"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="21.743ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 9610.6 1000" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-3-TEX-N-35" d="M164 157Q164 133 148 117T109 101H102Q148 22 224 22Q294 22 326 82Q345 115 345 210Q345 313 318 349Q292 382 260 382H254Q176 382 136 314Q132 307 129 306T114 304Q97 304 95 310Q93 314 93 485V614Q93 664 98 664Q100 666 102 666Q103 666 123 658T178 642T253 634Q324 634 389 662Q397 666 402 666Q410 666 410 648V635Q328 538 205 538Q174 538 149 544L139 546V374Q158 388 169 396T205 412T256 420Q337 420 393 355T449 201Q449 109 385 44T229 -22Q148 -22 99 32T50 154Q50 178 61 192T84 210T107 214Q132 214 148 197T164 157Z"></path><path id="MJX-3-TEX-N-A0" d=""></path><path id="MJX-3-TEX-N-6D" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q351 442 364 440T387 434T406 426T421 417T432 406T441 395T448 384T452 374T455 366L457 361L460 365Q463 369 466 373T475 384T488 397T503 410T523 422T546 432T572 439T603 442Q729 442 740 329Q741 322 741 190V104Q741 66 743 59T754 49Q775 46 803 46H819V0H811L788 1Q764 2 737 2T699 3Q596 3 587 0H579V46H595Q656 46 656 62Q657 64 657 200Q656 335 655 343Q649 371 635 385T611 402T585 404Q540 404 506 370Q479 343 472 315T464 232V168V108Q464 78 465 68T468 55T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z"></path><path id="MJX-3-TEX-N-2F" d="M423 750Q432 750 438 744T444 730Q444 725 271 248T92 -240Q85 -250 75 -250Q68 -250 62 -245T56 -231Q56 -221 230 257T407 740Q411 750 423 750Z"></path><path id="MJX-3-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-3-TEX-N-37" d="M55 458Q56 460 72 567L88 674Q88 676 108 676H128V672Q128 662 143 655T195 646T364 644H485V605L417 512Q408 500 387 472T360 435T339 403T319 367T305 330T292 284T284 230T278 162T275 80Q275 66 275 52T274 28V19Q270 2 255 -10T221 -22Q210 -22 200 -19T179 0T168 40Q168 198 265 368Q285 400 349 489L395 552H302Q128 552 119 546Q113 543 108 522T98 479L95 458V455H55V458Z"></path><path id="MJX-3-TEX-N-36" d="M42 313Q42 476 123 571T303 666Q372 666 402 630T432 550Q432 525 418 510T379 495Q356 495 341 509T326 548Q326 592 373 601Q351 623 311 626Q240 626 194 566Q147 500 147 364L148 360Q153 366 156 373Q197 433 263 433H267Q313 433 348 414Q372 400 396 374T435 317Q456 268 456 210V192Q456 169 451 149Q440 90 387 34T253 -22Q225 -22 199 -14T143 16T92 75T56 172T42 313ZM257 397Q227 397 205 380T171 335T154 278T148 216Q148 133 160 97T198 39Q222 21 251 21Q302 21 329 59Q342 77 347 104T352 209Q352 289 347 316T329 361Q302 397 257 397Z"></path><path id="MJX-3-TEX-N-34" d="M462 0Q444 3 333 3Q217 3 199 0H190V46H221Q241 46 248 46T265 48T279 53T286 61Q287 63 287 115V165H28V211L179 442Q332 674 334 675Q336 677 355 677H373L379 671V211H471V165H379V114Q379 73 379 66T385 54Q393 47 442 46H471V0H462ZM293 211V545L74 212L183 211H293Z"></path><path id="MJX-3-TEX-N-38" d="M70 417T70 494T124 618T248 666Q319 666 374 624T429 515Q429 485 418 459T392 417T361 389T335 371T324 363L338 354Q352 344 366 334T382 323Q457 264 457 174Q457 95 399 37T249 -22Q159 -22 101 29T43 155Q43 263 172 335L154 348Q133 361 127 368Q70 417 70 494ZM286 386L292 390Q298 394 301 396T311 403T323 413T334 425T345 438T355 454T364 471T369 491T371 513Q371 556 342 586T275 624Q268 625 242 625Q201 625 165 599T128 534Q128 511 141 492T167 463T217 431Q224 426 228 424L286 386ZM250 21Q308 21 350 55T392 137Q392 154 387 169T375 194T353 216T330 234T301 253T274 270Q260 279 244 289T218 306L210 311Q204 311 181 294T133 239T107 157Q107 98 150 60T250 21Z"></path><path id="MJX-3-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-3-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJX-3-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-3-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mn"><use data-c="35" xlink:href="#MJX-3-TEX-N-35"></use></g><g data-mml-node="mtext" transform="translate(500,0)"><use data-c="A0" xlink:href="#MJX-3-TEX-N-A0"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(750,0)"><g data-mml-node="mi"><use data-c="6D" xlink:href="#MJX-3-TEX-N-6D"></use></g></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(1583,0)"><g data-mml-node="mo"><use data-c="2F" xlink:href="#MJX-3-TEX-N-2F"></use></g></g><g data-mml-node="mn" transform="translate(2083,0)"><use data-c="32" xlink:href="#MJX-3-TEX-N-32"></use><use data-c="37" xlink:href="#MJX-3-TEX-N-37" transform="translate(500,0)"></use><use data-c="36" xlink:href="#MJX-3-TEX-N-36" transform="translate(1000,0)"></use><use data-c="34" xlink:href="#MJX-3-TEX-N-34" transform="translate(1500,0)"></use><use data-c="38" xlink:href="#MJX-3-TEX-N-38" transform="translate(2000,0)"></use></g><g data-mml-node="mo" transform="translate(4860.8,0)"><use data-c="3D" xlink:href="#MJX-3-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(5916.6,0)"><use data-c="30" xlink:href="#MJX-3-TEX-N-30"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(6416.6,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-3-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(6694.6,0)"><use data-c="31" xlink:href="#MJX-3-TEX-N-31"></use><use data-c="38" xlink:href="#MJX-3-TEX-N-38" transform="translate(500,0)"></use></g><g data-mml-node="mtext" transform="translate(7694.6,0)"><use data-c="A0" xlink:href="#MJX-3-TEX-N-A0"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(7944.6,0)"><g data-mml-node="mi"><use data-c="6D" xlink:href="#MJX-3-TEX-N-6D"></use><use data-c="6D" xlink:href="#MJX-3-TEX-N-6D" transform="translate(833,0)"></use></g></g></g></g></svg></span> — znacznie dokładniej, niż mierzy sam przetwornik.</li>
+<li><strong>Awaria.</strong> Odczyt 3,2 mA nie oznacza poziomu −0,25 m, tylko przerwany przewód albo uszkodzony przetwornik. Program nie może użyć tej wartości do regulacji: alarm i przejście w stan bezpieczny.</li>
+<li><strong>Czas reakcji.</strong> Zmiana wejścia tuż po odczycie czeka na następny cykl, potem na wykonanie programu: <span class="m" data-tex="3 + 2\cdot 10 + 1 \approx 24\ \mathrm{ms}"><svg style="vertical-align: -0.186ex;" xmlns="http://www.w3.org/2000/svg" width="21.443ex" height="1.717ex" role="img" focusable="false" viewBox="0 -677 9477.9 759" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-4-TEX-N-33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path><path id="MJX-4-TEX-N-2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path><path id="MJX-4-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-4-TEX-N-22C5" d="M78 250Q78 274 95 292T138 310Q162 310 180 294T199 251Q199 226 182 208T139 190T96 207T78 250Z"></path><path id="MJX-4-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-4-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJX-4-TEX-N-2248" d="M55 319Q55 360 72 393T114 444T163 472T205 482Q207 482 213 482T223 483Q262 483 296 468T393 413L443 381Q502 346 553 346Q609 346 649 375T694 454Q694 465 698 474T708 483Q722 483 722 452Q722 386 675 338T555 289Q514 289 468 310T388 357T308 404T224 426Q164 426 125 393T83 318Q81 289 69 289Q55 289 55 319ZM55 85Q55 126 72 159T114 210T163 238T205 248Q207 248 213 248T223 249Q262 249 296 234T393 179L443 147Q502 112 553 112Q609 112 649 141T694 220Q694 249 708 249T722 217Q722 153 675 104T555 55Q514 55 468 76T388 123T308 170T224 192Q164 192 125 159T83 84Q80 55 69 55Q55 55 55 85Z"></path><path id="MJX-4-TEX-N-34" d="M462 0Q444 3 333 3Q217 3 199 0H190V46H221Q241 46 248 46T265 48T279 53T286 61Q287 63 287 115V165H28V211L179 442Q332 674 334 675Q336 677 355 677H373L379 671V211H471V165H379V114Q379 73 379 66T385 54Q393 47 442 46H471V0H462ZM293 211V545L74 212L183 211H293Z"></path><path id="MJX-4-TEX-N-A0" d=""></path><path id="MJX-4-TEX-N-6D" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q351 442 364 440T387 434T406 426T421 417T432 406T441 395T448 384T452 374T455 366L457 361L460 365Q463 369 466 373T475 384T488 397T503 410T523 422T546 432T572 439T603 442Q729 442 740 329Q741 322 741 190V104Q741 66 743 59T754 49Q775 46 803 46H819V0H811L788 1Q764 2 737 2T699 3Q596 3 587 0H579V46H595Q656 46 656 62Q657 64 657 200Q656 335 655 343Q649 371 635 385T611 402T585 404Q540 404 506 370Q479 343 472 315T464 232V168V108Q464 78 465 68T468 55T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z"></path><path id="MJX-4-TEX-N-73" d="M295 316Q295 356 268 385T190 414Q154 414 128 401Q98 382 98 349Q97 344 98 336T114 312T157 287Q175 282 201 278T245 269T277 256Q294 248 310 236T342 195T359 133Q359 71 321 31T198 -10H190Q138 -10 94 26L86 19L77 10Q71 4 65 -1L54 -11H46H42Q39 -11 33 -5V74V132Q33 153 35 157T45 162H54Q66 162 70 158T75 146T82 119T101 77Q136 26 198 26Q295 26 295 104Q295 133 277 151Q257 175 194 187T111 210Q75 227 54 256T33 318Q33 357 50 384T93 424T143 442T187 447H198Q238 447 268 432L283 424L292 431Q302 440 314 448H322H326Q329 448 335 442V310L329 304H301Q295 310 295 316Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mn"><use data-c="33" xlink:href="#MJX-4-TEX-N-33"></use></g><g data-mml-node="mo" transform="translate(722.2,0)"><use data-c="2B" xlink:href="#MJX-4-TEX-N-2B"></use></g><g data-mml-node="mn" transform="translate(1722.4,0)"><use data-c="32" xlink:href="#MJX-4-TEX-N-32"></use></g><g data-mml-node="mo" transform="translate(2444.7,0)"><use data-c="22C5" xlink:href="#MJX-4-TEX-N-22C5"></use></g><g data-mml-node="mn" transform="translate(2944.9,0)"><use data-c="31" xlink:href="#MJX-4-TEX-N-31"></use><use data-c="30" xlink:href="#MJX-4-TEX-N-30" transform="translate(500,0)"></use></g><g data-mml-node="mo" transform="translate(4167.1,0)"><use data-c="2B" xlink:href="#MJX-4-TEX-N-2B"></use></g><g data-mml-node="mn" transform="translate(5167.3,0)"><use data-c="31" xlink:href="#MJX-4-TEX-N-31"></use></g><g data-mml-node="mo" transform="translate(5945.1,0)"><use data-c="2248" xlink:href="#MJX-4-TEX-N-2248"></use></g><g data-mml-node="mn" transform="translate(7000.9,0)"><use data-c="32" xlink:href="#MJX-4-TEX-N-32"></use><use data-c="34" xlink:href="#MJX-4-TEX-N-34" transform="translate(500,0)"></use></g><g data-mml-node="mtext" transform="translate(8000.9,0)"><use data-c="A0" xlink:href="#MJX-4-TEX-N-A0"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(8250.9,0)"><g data-mml-node="mi"><use data-c="6D" xlink:href="#MJX-4-TEX-N-6D"></use><use data-c="73" xlink:href="#MJX-4-TEX-N-73" transform="translate(833,0)"></use></g></g></g></g></svg></span> (filtr wejścia, dwa cykle, opóźnienie wyjścia). Dlatego szybkie zabezpieczenia robi się sprzętowo albo w przerwaniach.</li>
+</ol>
+</section>
+
+<section>
+<h2><span class="num">07</span> Architektury sprzętowe</h2>
+<div class="rail"></div>
+
+<figure>
+<svg viewBox="0 0 680 470" class="fig">
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">CZTERY TYPOWE ARCHITEKTURY SPRZĘTOWE</text>
+<rect x="14.0" y="40.0" width="318.0" height="204.0" rx="5" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<text x="26.0" y="60.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:11px">A · SCENTRALIZOWANA</text>
+<text x="26.0" y="76.0" text-anchor="start" class="cap">każdy sygnał osobnym przewodem do szafy</text>
+<rect x="123.0" y="90.0" width="100.0" height="34.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="123.0" y="90.0" width="100.0" height="3.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="173.0" y="111.0" text-anchor="middle" class="bx-t" style="font-size:11px">PLC</text>
+<rect x="37.0" y="215.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 138.0 124.0 L 138.0 160.0 L 44.0 182.0 L 44.0 215.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<rect x="74.0" y="215.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 148.0 124.0 L 148.0 160.0 L 81.0 182.0 L 81.0 215.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<rect x="111.0" y="215.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 158.0 124.0 L 158.0 160.0 L 118.0 182.0 L 118.0 215.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<rect x="148.0" y="215.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 168.0 124.0 L 168.0 160.0 L 155.0 182.0 L 155.0 215.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<rect x="185.0" y="215.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 178.0 124.0 L 178.0 160.0 L 192.0 182.0 L 192.0 215.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<rect x="222.0" y="215.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 188.0 124.0 L 188.0 160.0 L 229.0 182.0 L 229.0 215.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<rect x="259.0" y="215.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 198.0 124.0 L 198.0 160.0 L 266.0 182.0 L 266.0 215.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<rect x="296.0" y="215.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 208.0 124.0 L 208.0 160.0 L 303.0 182.0 L 303.0 215.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<text x="173.0" y="240.0" text-anchor="middle" class="cap" style="fill:#0E6E78">setki przewodów</text>
+<rect x="348.0" y="40.0" width="318.0" height="204.0" rx="5" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<text x="360.0" y="60.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:11px">B · Z ROZPROSZONYMI WE/WY</text>
+<text x="360.0" y="76.0" text-anchor="start" class="cap">moduły przy obiekcie, do szafy jeden kabel</text>
+<rect x="457.0" y="90.0" width="100.0" height="34.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="457.0" y="90.0" width="100.0" height="3.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="507.0" y="111.0" text-anchor="middle" class="bx-t" style="font-size:11px">PLC</text>
+<line x1="507.0" y1="124.0" x2="507.0" y2="144.0" stroke="#B3641A" stroke-width="2"/>
+<line x1="398.0" y1="144.0" x2="616.0" y2="144.0" stroke="#B3641A" stroke-width="2.4"/>
+<text x="620.0" y="140.0" text-anchor="start" class="cap" style="fill:#B3641A">sieć</text>
+<line x1="428.0" y1="144.0" x2="428.0" y2="158.0" stroke="#B3641A" stroke-width="2"/>
+<rect x="394.0" y="158.0" width="68.0" height="24.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.2"/>
+<text x="428.0" y="174.0" text-anchor="middle" class="cap" style="fill:#0E6E78">we/wy</text>
+<rect x="376.0" y="215.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 413.0 182.0 L 383.0 215.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<rect x="406.0" y="215.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 423.0 182.0 L 413.0 215.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<rect x="436.0" y="215.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 433.0 182.0 L 443.0 215.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<rect x="466.0" y="215.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 443.0 182.0 L 473.0 215.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<line x1="586.0" y1="144.0" x2="586.0" y2="158.0" stroke="#B3641A" stroke-width="2"/>
+<rect x="552.0" y="158.0" width="68.0" height="24.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.2"/>
+<text x="586.0" y="174.0" text-anchor="middle" class="cap" style="fill:#0E6E78">we/wy</text>
+<rect x="534.0" y="215.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 571.0 182.0 L 541.0 215.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<rect x="564.0" y="215.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 581.0 182.0 L 571.0 215.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<rect x="594.0" y="215.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 591.0 182.0 L 601.0 215.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<rect x="624.0" y="215.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 601.0 182.0 L 631.0 215.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<rect x="14.0" y="254.0" width="318.0" height="204.0" rx="5" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<text x="26.0" y="274.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:11px">C · PLC + SCADA</text>
+<text x="26.0" y="290.0" text-anchor="start" class="cap">kilka sterowników, nadzór na komputerach</text>
+<rect x="34.0" y="304.0" width="80.0" height="28.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<text x="74.0" y="322.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">SCADA</text>
+<line x1="74.0" y1="332.0" x2="74.0" y2="350.0" stroke="#5B4B8A" stroke-width="1.4"/>
+<rect x="133.0" y="304.0" width="80.0" height="28.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<text x="173.0" y="322.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">HMI</text>
+<line x1="173.0" y1="332.0" x2="173.0" y2="350.0" stroke="#5B4B8A" stroke-width="1.4"/>
+<rect x="232.0" y="304.0" width="80.0" height="28.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<text x="272.0" y="322.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">archiwum</text>
+<line x1="272.0" y1="332.0" x2="272.0" y2="350.0" stroke="#5B4B8A" stroke-width="1.4"/>
+<line x1="34.0" y1="350.0" x2="312.0" y2="350.0" stroke="#5B4B8A" stroke-width="2.4"/>
+<text x="38.0" y="345.0" text-anchor="start" class="cap" style="fill:#5B4B8A">Ethernet</text>
+<line x1="74.0" y1="350.0" x2="74.0" y2="370.0" stroke="#5B4B8A" stroke-width="1.4"/>
+<rect x="38.0" y="370.0" width="72.0" height="28.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="38.0" y="370.0" width="72.0" height="3.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="74.0" y="388.0" text-anchor="middle" class="bx-t" style="font-size:10.5px">PLC 1</text>
+<rect x="41.0" y="429.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 64.0 398.0 L 48.0 429.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<rect x="67.0" y="429.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 74.0 398.0 L 74.0 429.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<rect x="93.0" y="429.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 84.0 398.0 L 100.0 429.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<line x1="173.0" y1="350.0" x2="173.0" y2="370.0" stroke="#5B4B8A" stroke-width="1.4"/>
+<rect x="137.0" y="370.0" width="72.0" height="28.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="137.0" y="370.0" width="72.0" height="3.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="173.0" y="388.0" text-anchor="middle" class="bx-t" style="font-size:10.5px">PLC 2</text>
+<rect x="140.0" y="429.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 163.0 398.0 L 147.0 429.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<rect x="166.0" y="429.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 173.0 398.0 L 173.0 429.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<rect x="192.0" y="429.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 183.0 398.0 L 199.0 429.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<line x1="272.0" y1="350.0" x2="272.0" y2="370.0" stroke="#5B4B8A" stroke-width="1.4"/>
+<rect x="236.0" y="370.0" width="72.0" height="28.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="236.0" y="370.0" width="72.0" height="3.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="272.0" y="388.0" text-anchor="middle" class="bx-t" style="font-size:10.5px">PLC 3</text>
+<rect x="239.0" y="429.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 262.0 398.0 L 246.0 429.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<rect x="265.0" y="429.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 272.0 398.0 L 272.0 429.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<rect x="291.0" y="429.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 282.0 398.0 L 298.0 429.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<rect x="348.0" y="254.0" width="318.0" height="204.0" rx="5" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<text x="360.0" y="274.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:11px">D · DCS</text>
+<text x="360.0" y="290.0" text-anchor="start" class="cap">jeden spójny system, redundancja wbudowana</text>
+<rect x="378.0" y="304.0" width="80.0" height="28.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<text x="418.0" y="322.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">stacja op.</text>
+<line x1="418.0" y1="332.0" x2="418.0" y2="346.0" stroke="#5B4B8A" stroke-width="1.4"/>
+<rect x="467.0" y="304.0" width="80.0" height="28.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<text x="507.0" y="322.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">stacja op.</text>
+<line x1="507.0" y1="332.0" x2="507.0" y2="346.0" stroke="#5B4B8A" stroke-width="1.4"/>
+<rect x="556.0" y="304.0" width="80.0" height="28.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<text x="596.0" y="322.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">inżynierska</text>
+<line x1="596.0" y1="332.0" x2="596.0" y2="346.0" stroke="#5B4B8A" stroke-width="1.4"/>
+<line x1="368.0" y1="346.0" x2="646.0" y2="346.0" stroke="#5B4B8A" stroke-width="2.2"/>
+<line x1="368.0" y1="353.0" x2="646.0" y2="353.0" stroke="#5B4B8A" stroke-width="2.2"/>
+<text x="370.0" y="368.0" text-anchor="start" class="cap" style="fill:#5B4B8A">sieć ×2</text>
+<line x1="438.0" y1="353.0" x2="438.0" y2="370.0" stroke="#5B4B8A" stroke-width="1.4"/>
+<rect x="394.0" y="370.0" width="40.0" height="28.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.2"/>
+<rect x="442.0" y="370.0" width="40.0" height="28.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="414.0" y="388.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9.5px">ster.</text>
+<text x="462.0" y="388.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9.5px">zapas</text>
+<rect x="386.0" y="429.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 423.0 398.0 L 393.0 429.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<rect x="416.0" y="429.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 433.0 398.0 L 423.0 429.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<rect x="446.0" y="429.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 443.0 398.0 L 453.0 429.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<rect x="476.0" y="429.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 453.0 398.0 L 483.0 429.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<line x1="568.0" y1="353.0" x2="568.0" y2="370.0" stroke="#5B4B8A" stroke-width="1.4"/>
+<rect x="524.0" y="370.0" width="40.0" height="28.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.2"/>
+<rect x="572.0" y="370.0" width="40.0" height="28.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.2" stroke-dasharray="3 2"/>
+<text x="544.0" y="388.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9.5px">ster.</text>
+<text x="592.0" y="388.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9.5px">zapas</text>
+<rect x="516.0" y="429.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 553.0 398.0 L 523.0 429.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<rect x="546.0" y="429.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 563.0 398.0 L 553.0 429.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<rect x="576.0" y="429.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 573.0 398.0 L 583.0 429.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+<rect x="606.0" y="429.0" width="14.0" height="14.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<path d="M 583.0 398.0 L 613.0 429.0" fill="none" stroke="#0E6E78" stroke-width="0.9"/>
+</svg>
+<figcaption>Te same funkcje, cztery sposoby rozłożenia ich na sprzęt. A i B różnią się okablowaniem, C i D — sposobem integracji: C składa się z elementów różnych producentów, D to jeden spójny system. Opracowanie własne na podstawie Wikipedii (DCS, PLC).</figcaption>
+</figure>
+
+<table>
+<thead><tr><th>Architektura</th><th>Zalety</th><th>Wady</th><th>Gdzie</th></tr></thead>
+<tbody>
+<tr><td><strong>A · scentralizowana</strong></td><td>prosta, tania przy małej liczbie sygnałów</td><td>dużo długich przewodów; awaria sterownika zatrzymuje wszystko</td><td>maszyna, mały obiekt</td></tr>
+<tr><td><strong>B · rozproszone we/wy</strong></td><td>krótkie przewody, łatwa rozbudowa, jeden kabel sieciowy</td><td>zależność od sieci; opóźnienie sieciowe w pętli</td><td>linia produkcyjna, rozległy obiekt</td></tr>
+<tr><td><strong>C · PLC + SCADA</strong></td><td>elastyczność, sprzęt różnych producentów</td><td>integracja i spójność danych po stronie wykonawcy</td><td>wodociągi, oczyszczalnie, zakłady średniej wielkości</td></tr>
+<tr><td><strong>D · DCS</strong></td><td>wspólna baza zmiennych, redundancja, narzędzia procesowe</td><td>cena, związanie z jednym producentem</td><td>rafinerie, elektrownie, chemia</td></tr>
+</tbody>
+</table>
+
+<p>DCS to system, <span class="cyt">„in which control functions are distributed among multiple autonomous controllers”</span>, w odróżnieniu od systemów scentralizowanych, gdzie funkcje wykonuje głównie jeden sterownik (Wikipedia). W każdej architekturze niezawodność zapewnia się tak samo: <strong>redundancja</strong> tam, gdzie awaria jest najdroższa (sterownik, sieć, zasilanie), <strong>osobny sterownik bezpieczeństwa</strong> dla zabezpieczeń i <strong>diagnostyka</strong> modułów i przewodów.</p>
+</section>
+
+<section>
+<h2><span class="num">08</span> Narysuj na tablicy</h2>
+<div class="rail"></div>
+
+<figure>
+<svg viewBox="0 0 680 470" class="fig">
+<defs><marker id="arF22g0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0E6E78"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">NARYSUJ NA TABLICY W 6 RUCHACH</text>
+<rect x="14.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="32.0" cy="58.0" r="10" fill="#5C6B77" stroke="none" stroke-width="1"/>
+<text x="32.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">1</text>
+<text x="48.0" y="56.0" text-anchor="start" class="bx-t">proces:</text>
+<text x="48.0" y="70.0" text-anchor="start" class="bx">zbiorniki, czujnik, zawór</text>
+<path d="M 24.0 160.8 L 44.4 160.8" fill="none" stroke="#0E6E78" stroke-width="1.6"/>
+<polygon points="30.0,157.8 30.0,163.8 36.0,160.8 30.0,157.8" fill="#0E6E78"/>
+<polygon points="42.0,157.8 42.0,163.8 36.0,160.8" fill="#0E6E78"/>
+<rect x="42.0" y="164.4" width="20.4" height="22.8" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="42.6" y="174.0" width="19.2" height="12.6" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 62.4 184.8 L 72.0 184.8 L 72.0 189.6" fill="none" stroke="#0E6E78" stroke-width="1.4"/>
+<rect x="66.0" y="189.6" width="20.4" height="20.4" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="66.6" y="199.2" width="19.2" height="10.2" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 86.4 207.6 L 98.4 207.6" fill="none" stroke="#0E6E78" stroke-width="1.4" marker-end="url(#arF22g0)"/>
+<rect x="236.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="254.0" cy="58.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="254.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">2</text>
+<text x="270.0" y="56.0" text-anchor="start" class="bx-t">PLC:</text>
+<text x="270.0" y="70.0" text-anchor="start" class="bx">moduły AI, AO, CPU</text>
+<path d="M 246.0 160.8 L 266.4 160.8" fill="none" stroke="#0E6E78" stroke-width="1.6"/>
+<polygon points="252.0,157.8 252.0,163.8 258.0,160.8 252.0,157.8" fill="#0E6E78"/>
+<polygon points="264.0,157.8 264.0,163.8 258.0,160.8" fill="#0E6E78"/>
+<rect x="264.0" y="164.4" width="20.4" height="22.8" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="264.6" y="174.0" width="19.2" height="12.6" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 284.4 184.8 L 294.0 184.8 L 294.0 189.6" fill="none" stroke="#0E6E78" stroke-width="1.4"/>
+<rect x="288.0" y="189.6" width="20.4" height="20.4" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="288.6" y="199.2" width="19.2" height="10.2" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 308.4 207.6 L 320.4 207.6" fill="none" stroke="#0E6E78" stroke-width="1.4" marker-end="url(#arF22g0)"/>
+<rect x="336.0" y="160.0" width="96.0" height="40.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="340.0" y="164.0" width="27.0" height="32.0" rx="2" fill="#FCFDFD" stroke="#B3641A" stroke-width="1"/>
+<text x="353.5" y="184.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9px">AI</text>
+<rect x="371.0" y="164.0" width="27.0" height="32.0" rx="2" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1"/>
+<text x="384.5" y="184.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9px">CPU</text>
+<rect x="402.0" y="164.0" width="27.0" height="32.0" rx="2" fill="#FCFDFD" stroke="#B3641A" stroke-width="1"/>
+<text x="415.5" y="184.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9px">AO</text>
+<rect x="458.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="476.0" cy="58.0" r="10" fill="#B3641A" stroke="none" stroke-width="1"/>
+<text x="476.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">3</text>
+<text x="492.0" y="56.0" text-anchor="start" class="bx-t">tor sygnału:</text>
+<text x="492.0" y="70.0" text-anchor="start" class="bx">4–20 mA → liczba → m</text>
+<path d="M 468.0 160.8 L 488.4 160.8" fill="none" stroke="#0E6E78" stroke-width="1.6"/>
+<polygon points="474.0,157.8 474.0,163.8 480.0,160.8 474.0,157.8" fill="#0E6E78"/>
+<polygon points="486.0,157.8 486.0,163.8 480.0,160.8" fill="#0E6E78"/>
+<rect x="486.0" y="164.4" width="20.4" height="22.8" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="486.6" y="174.0" width="19.2" height="12.6" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 506.4 184.8 L 516.0 184.8 L 516.0 189.6" fill="none" stroke="#0E6E78" stroke-width="1.4"/>
+<rect x="510.0" y="189.6" width="20.4" height="20.4" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="510.6" y="199.2" width="19.2" height="10.2" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 530.4 207.6 L 542.4 207.6" fill="none" stroke="#0E6E78" stroke-width="1.4" marker-end="url(#arF22g0)"/>
+<rect x="558.0" y="160.0" width="96.0" height="40.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="562.0" y="164.0" width="27.0" height="32.0" rx="2" fill="#FCFDFD" stroke="#B3641A" stroke-width="1"/>
+<text x="575.5" y="184.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9px">AI</text>
+<rect x="593.0" y="164.0" width="27.0" height="32.0" rx="2" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1"/>
+<text x="606.5" y="184.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9px">CPU</text>
+<rect x="624.0" y="164.0" width="27.0" height="32.0" rx="2" fill="#FCFDFD" stroke="#B3641A" stroke-width="1"/>
+<text x="637.5" y="184.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9px">AO</text>
+<path d="M 530.0 216.0 L 575.0 216.0 L 575.0 198.0" fill="none" stroke="#B3641A" stroke-width="1.2"/>
+<path d="M 637.0 198.0 L 637.0 140.0 L 480.0 140.0 L 480.0 157.0" fill="none" stroke="#B3641A" stroke-width="1.2"/>
+<text x="598.0" y="232.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9.5px">4–20 mA</text>
+<rect x="14.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="32.0" cy="272.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<text x="32.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">4</text>
+<text x="48.0" y="270.0" text-anchor="start" class="bx-t">cykl PLC:</text>
+<text x="48.0" y="284.0" text-anchor="start" class="bx">odczyt, program, zapis</text>
+<path d="M 24.0 374.8 L 44.4 374.8" fill="none" stroke="#0E6E78" stroke-width="1.6"/>
+<polygon points="30.0,371.8 30.0,377.8 36.0,374.8 30.0,371.8" fill="#0E6E78"/>
+<polygon points="42.0,371.8 42.0,377.8 36.0,374.8" fill="#0E6E78"/>
+<rect x="42.0" y="378.4" width="20.4" height="22.8" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="42.6" y="388.0" width="19.2" height="12.6" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 62.4 398.8 L 72.0 398.8 L 72.0 403.6" fill="none" stroke="#0E6E78" stroke-width="1.4"/>
+<rect x="66.0" y="403.6" width="20.4" height="20.4" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="66.6" y="413.2" width="19.2" height="10.2" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 86.4 421.6 L 98.4 421.6" fill="none" stroke="#0E6E78" stroke-width="1.4" marker-end="url(#arF22g0)"/>
+<rect x="114.0" y="374.0" width="96.0" height="40.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="118.0" y="378.0" width="27.0" height="32.0" rx="2" fill="#FCFDFD" stroke="#B3641A" stroke-width="1"/>
+<text x="131.5" y="398.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9px">AI</text>
+<rect x="149.0" y="378.0" width="27.0" height="32.0" rx="2" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1"/>
+<text x="162.5" y="398.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9px">CPU</text>
+<rect x="180.0" y="378.0" width="27.0" height="32.0" rx="2" fill="#FCFDFD" stroke="#B3641A" stroke-width="1"/>
+<text x="193.5" y="398.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9px">AO</text>
+<path d="M 86.0 430.0 L 131.0 430.0 L 131.0 412.0" fill="none" stroke="#B3641A" stroke-width="1.2"/>
+<path d="M 193.0 412.0 L 193.0 354.0 L 36.0 354.0 L 36.0 371.0" fill="none" stroke="#B3641A" stroke-width="1.2"/>
+<text x="154.0" y="446.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9.5px">4–20 mA</text>
+<circle cx="194.0" cy="320.0" r="14" fill="none" stroke="#0E6E78" stroke-width="1.3" stroke-dasharray="3 2"/>
+<path d="M 206.0 312.0 L 207.0 318.0" fill="none" stroke="#0E6E78" stroke-width="1.2" marker-end="url(#arF22g0)"/>
+<text x="194.0" y="324.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:8.5px">cykl</text>
+<rect x="236.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="254.0" cy="272.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="254.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">5</text>
+<text x="270.0" y="270.0" text-anchor="start" class="bx-t">SCADA/HMI</text>
+<text x="270.0" y="284.0" text-anchor="start" class="bx">i archiwum przez sieć</text>
+<path d="M 246.0 374.8 L 266.4 374.8" fill="none" stroke="#0E6E78" stroke-width="1.6"/>
+<polygon points="252.0,371.8 252.0,377.8 258.0,374.8 252.0,371.8" fill="#0E6E78"/>
+<polygon points="264.0,371.8 264.0,377.8 258.0,374.8" fill="#0E6E78"/>
+<rect x="264.0" y="378.4" width="20.4" height="22.8" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="264.6" y="388.0" width="19.2" height="12.6" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 284.4 398.8 L 294.0 398.8 L 294.0 403.6" fill="none" stroke="#0E6E78" stroke-width="1.4"/>
+<rect x="288.0" y="403.6" width="20.4" height="20.4" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="288.6" y="413.2" width="19.2" height="10.2" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 308.4 421.6 L 320.4 421.6" fill="none" stroke="#0E6E78" stroke-width="1.4" marker-end="url(#arF22g0)"/>
+<rect x="336.0" y="374.0" width="96.0" height="40.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="340.0" y="378.0" width="27.0" height="32.0" rx="2" fill="#FCFDFD" stroke="#B3641A" stroke-width="1"/>
+<text x="353.5" y="398.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9px">AI</text>
+<rect x="371.0" y="378.0" width="27.0" height="32.0" rx="2" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1"/>
+<text x="384.5" y="398.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9px">CPU</text>
+<rect x="402.0" y="378.0" width="27.0" height="32.0" rx="2" fill="#FCFDFD" stroke="#B3641A" stroke-width="1"/>
+<text x="415.5" y="398.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9px">AO</text>
+<path d="M 308.0 430.0 L 353.0 430.0 L 353.0 412.0" fill="none" stroke="#B3641A" stroke-width="1.2"/>
+<path d="M 415.0 412.0 L 415.0 354.0 L 258.0 354.0 L 258.0 371.0" fill="none" stroke="#B3641A" stroke-width="1.2"/>
+<text x="376.0" y="446.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9.5px">4–20 mA</text>
+<circle cx="416.0" cy="320.0" r="14" fill="none" stroke="#0E6E78" stroke-width="1.3" stroke-dasharray="3 2"/>
+<path d="M 428.0 312.0 L 429.0 318.0" fill="none" stroke="#0E6E78" stroke-width="1.2" marker-end="url(#arF22g0)"/>
+<text x="416.0" y="324.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:8.5px">cykl</text>
+<rect x="256.0" y="300.0" width="70.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<text x="291.0" y="315.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9.5px">SCADA</text>
+<path d="M 326.0 311.0 L 384.0 311.0 L 384.0 378.0" fill="none" stroke="#5B4B8A" stroke-width="1.2" stroke-dasharray="4 3"/>
+<rect x="458.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<circle cx="476.0" cy="272.0" r="10" fill="#141C24" stroke="none" stroke-width="1"/>
+<text x="476.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">6</text>
+<text x="492.0" y="270.0" text-anchor="start" class="bx-t">funkcje</text>
+<text x="492.0" y="284.0" text-anchor="start" class="bx">dopisz przy blokach</text>
+<path d="M 468.0 374.8 L 488.4 374.8" fill="none" stroke="#0E6E78" stroke-width="1.6"/>
+<polygon points="474.0,371.8 474.0,377.8 480.0,374.8 474.0,371.8" fill="#0E6E78"/>
+<polygon points="486.0,371.8 486.0,377.8 480.0,374.8" fill="#0E6E78"/>
+<rect x="486.0" y="378.4" width="20.4" height="22.8" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="486.6" y="388.0" width="19.2" height="12.6" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 506.4 398.8 L 516.0 398.8 L 516.0 403.6" fill="none" stroke="#0E6E78" stroke-width="1.4"/>
+<rect x="510.0" y="403.6" width="20.4" height="20.4" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="510.6" y="413.2" width="19.2" height="10.2" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
+<path d="M 530.4 421.6 L 542.4 421.6" fill="none" stroke="#0E6E78" stroke-width="1.4" marker-end="url(#arF22g0)"/>
+<rect x="558.0" y="374.0" width="96.0" height="40.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="562.0" y="378.0" width="27.0" height="32.0" rx="2" fill="#FCFDFD" stroke="#B3641A" stroke-width="1"/>
+<text x="575.5" y="398.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9px">AI</text>
+<rect x="593.0" y="378.0" width="27.0" height="32.0" rx="2" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1"/>
+<text x="606.5" y="398.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9px">CPU</text>
+<rect x="624.0" y="378.0" width="27.0" height="32.0" rx="2" fill="#FCFDFD" stroke="#B3641A" stroke-width="1"/>
+<text x="637.5" y="398.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9px">AO</text>
+<path d="M 530.0 430.0 L 575.0 430.0 L 575.0 412.0" fill="none" stroke="#B3641A" stroke-width="1.2"/>
+<path d="M 637.0 412.0 L 637.0 354.0 L 480.0 354.0 L 480.0 371.0" fill="none" stroke="#B3641A" stroke-width="1.2"/>
+<text x="598.0" y="446.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9.5px">4–20 mA</text>
+<circle cx="638.0" cy="320.0" r="14" fill="none" stroke="#0E6E78" stroke-width="1.3" stroke-dasharray="3 2"/>
+<path d="M 650.0 312.0 L 651.0 318.0" fill="none" stroke="#0E6E78" stroke-width="1.2" marker-end="url(#arF22g0)"/>
+<text x="638.0" y="324.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:8.5px">cykl</text>
+<rect x="478.0" y="300.0" width="70.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<text x="513.0" y="315.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9.5px">SCADA</text>
+<path d="M 548.0 311.0 L 606.0 311.0 L 606.0 378.0" fill="none" stroke="#5B4B8A" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="562.0" y="370.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:8.5px">sterowanie</text>
+<text x="478.0" y="338.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:8.5px">HMI, alarmy</text>
+</svg>
+<figcaption>(1) Proces: zbiorniki, czujnik, zawór. (2) Obok sterownik z modułami AI, CPU, AO. (3) Tor: czujnik → AI (4–20 mA), AO → zawór. (4) Kółko cyklu przy CPU: odczyt, program, zapis. (5) Wyżej SCADA/HMI połączona siecią. (6) Przy blokach dopisz funkcje: pomiar, sterowanie, HMI, alarmy, archiwum.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2><span class="num">09</span> Opowiedz własnymi słowami</h2>
+<div class="rail"></div>
+
+<details class="fiszka op"><summary>Wersja 30 sekund (dla kogoś spoza automatyki)</summary>
+<p>„System automatyki to czujniki, które mierzą, co się dzieje, sterownik, który co kilka milisekund decyduje, co zrobić, i zawory czy silniki, które to wykonują. Nad tym są komputery, na których operator widzi instalację, dostaje alarmy i może przejrzeć historię. Czasem wszystko jest podłączone do jednej szafy, czasem rozrzucone po zakładzie i połączone siecią — ale zadania są zawsze te same.”</p></details>
+
+<details class="fiszka op"><summary>Wersja 2 minuty (egzaminacyjna, siedem zdań-kotwic)</summary>
+<ol>
+<li><strong>Funkcje:</strong> „System automatyki mierzy, steruje — w sposób ciągły i logiczny — zabezpiecza, diagnozuje, obsługuje operatora, alarmuje, archiwizuje i komunikuje się z innymi systemami.”</li>
+<li><strong>Tor sygnału:</strong> „Poziom zamienia się na prąd 4–20 mA, moduł AI na liczbę, program na metry i sterowanie, moduł AO na prąd, a pozycjoner na położenie zaworu.”</li>
+<li><strong>Sprzęt:</strong> „Urządzenia polowe, układy wejść/wyjść, sterowniki, sieci, stacje operatorskie i serwery, plus zasilanie.”</li>
+<li><strong>PLC:</strong> „Sterownik ma zasilacz, CPU, moduły wejść/wyjść i komunikacji; pracuje w cyklu: odczyt wejść, program na obrazie procesu, zapis wyjść.”</li>
+<li><strong>Liczby:</strong> „4–20 mA ma żywe zero, więc przerwę w przewodzie odróżniam od zera pomiaru; czas reakcji to w najgorszym razie około dwóch cykli.”</li>
+<li><strong>Architektury:</strong> „Scentralizowana, z rozproszonymi wejściami/wyjściami, PLC + SCADA i DCS — te same funkcje, inny podział na sprzęt.”</li>
+<li><strong>Niezawodność:</strong> „Redundancja sterownika, sieci i zasilania, osobny sterownik bezpieczeństwa i diagnostyka przewodów.”</li>
+</ol></details>
+
+<h3>Lista kontrolna przed egzaminem</h3>
+<ul class="check">
+<li>Wymieniam osiem funkcji i podaję przykład każdej na zbiornikach.</li>
+<li>Opowiadam tor sygnału od czujnika do zaworu.</li>
+<li>Wymieniam grupy sprzętu i rysuję sterownik z modułami.</li>
+<li>Opisuję cykl PLC i obraz procesu.</li>
+<li>Przeliczam 12,8 mA na poziom i mówię, co oznacza 3,2 mA.</li>
+<li>Porównuję cztery architektury.</li>
+</ul>
+</section>
+
+<section>
+<h2><span class="num">10</span> Ściąga</h2>
+<div class="rail"></div>
+
+<div class="karty">
+<div class="karta b"><span class="kw">8 funkcji</span><p>Pomiar, sterowanie, zabezpieczenia, diagnostyka, HMI, alarmy, archiwum, komunikacja.</p></div>
+<div class="karta"><span class="kw">Sterowanie</span><p>Ciągłe (PID) i dyskretne (logika, sekwencje).</p></div>
+<div class="karta s"><span class="kw">Tor sygnału</span><p>h [m] → 4–20 mA → liczba → m → u [%] → 4–20 mA → położenie zaworu.</p></div>
+<div class="karta a"><span class="kw">4–20 mA</span><p>Żywe zero: poniżej 3,8 mA = awaria; zasilanie z pętli; odporność na zakłócenia.</p></div>
+<div class="karta"><span class="kw">Grupy sprzętu</span><p>Polowe, we/wy, sterowniki, sieci, stacje i serwery, zasilanie.</p></div>
+<div class="karta b"><span class="kw">PLC</span><p>PS + CPU + DI/DO/AI/AO + CP; kompaktowy albo modułowy.</p></div>
+<div class="karta s"><span class="kw">Cykl PLC</span><p>Odczyt wejść → program na obrazie procesu → zapis wyjść → komunikacja; ms.</p></div>
+<div class="karta a"><span class="kw">Skalowanie S7</span><p>4–20 mA → 0…27648; 12,8 mA → 15206 → 2,75 m.</p></div>
+<div class="karta"><span class="kw">Architektury</span><p>Scentralizowana · rozproszone we/wy · PLC + SCADA · DCS.</p></div>
+<div class="karta"><span class="kw">Niezawodność</span><p>Redundancja CPU, sieci, zasilania; osobny SIS; diagnostyka.</p></div>
+</div>
+</section>
+
+<section>
+<h2><span class="num">11</span> Pytania dodatkowe — fiszki</h2>
+<div class="rail"></div>
+
+<details class="fiszka"><summary>Po co obraz procesu w PLC?</summary>
+<p>Żeby w ciągu jednego cyklu każde wejście miało jedną wartość. Gdyby program czytał wejścia bezpośrednio, sygnał zmieniający się w trakcie cyklu mógłby mieć dwie różne wartości w dwóch miejscach programu. Wyjścia też są zapisywane naraz, na końcu cyklu.</p></details>
+
+<details class="fiszka"><summary>Dlaczego regulator PID umieszcza się w przerwaniu cyklicznym?</summary>
+<p>Bo algorytm dyskretny zakłada stały okres próbkowania. Czas zwykłego cyklu zmienia się z każdym przebiegiem programu, a przerwanie cykliczne wywołuje regulator co stały czas, np. co 100 ms.</p></details>
+
+<details class="fiszka"><summary>Czym różni się PLC od DCS?</summary>
+<p>PLC to pojedynczy sterownik; system z PLC buduje się z elementów różnych producentów i integruje przez SCADA. DCS to kompletny system jednego producenta: wiele sterowników, stacje operatorskie, wspólna baza zmiennych i wbudowana redundancja. Granica się zaciera — nowoczesne PLC (PAC) potrafią to samo, a DCS korzystają ze standardowych sieci.</p></details>
+
+<details class="fiszka"><summary>Dlaczego zabezpieczenia są w osobnym sterowniku?</summary>
+<p>Bo nie mogą zależeć od programu sterującego, który może mieć błąd albo się zawiesić. Sterownik bezpieczeństwa ma własne czujniki, prostą, certyfikowaną logikę i często zdublowany procesor.</p></details>
+
+<details class="fiszka"><summary>Co zyskujemy, rozpraszając wejścia/wyjścia?</summary>
+<p>Moduły stoją przy maszynie, więc zamiast setek długich przewodów do szafy jest jeden kabel sieciowy. Łatwiej rozbudować instalację i szukać usterek. Kosztem jest zależność od sieci i dodatkowe opóźnienie w pętli.</p></details>
+</section>
+
+
+
+<footer>
+  <p><strong style="color:var(--ink)">Źródła</strong></p>
+  <ol class="zr">
+<li>Wikipedia: <a href="https://en.wikipedia.org/wiki/Programmable_logic_controller">Programmable logic controller</a> (definicja, cykl pracy, budowa kompaktowa i modułowa, rozproszone we/wy); <a href="https://en.wikipedia.org/wiki/SCADA">SCADA</a>; <a href="https://en.wikipedia.org/wiki/Distributed_control_system">Distributed control system</a>; <a href="https://en.wikipedia.org/wiki/Current_loop">Current loop</a> (4–20 mA, żywe zero, progi awarii).</li>
+<li>Siemens, <a href="https://support.industry.siemens.com/cs/attachments/download/67989094/s71500_analog_value_processing_manual_en-US_en-US.pdf">SIMATIC S7-1500 — Analog value processing</a>, podręcznik funkcji (reprezentacja wartości analogowych, zakres nominalny 0…27648); <a href="https://www.manualslib.com/manual/1540441/Siemens-Simatic-S7-1500.html?page=52">tabela zakresów prądowych</a>.</li>
+<li>P. Tatjewski, <em>Sterowanie zaawansowane obiektów przemysłowych. Struktury i algorytmy</em>, EXIT 2002 (struktury systemów sterowania) — por. zagadnienie 32.</li>
+<li>Model referencyjny ISA-95 / Purdue: <a href="https://en.wikipedia.org/wiki/Purdue_Enterprise_Reference_Architecture">Purdue Enterprise Reference Architecture</a>, Wikipedia.</li>
+</ol>
+
+  <p>Repetytorium do egzaminu dyplomowego &middot; ARiSS II stopień &middot; specjalność Systemy sterowania i wspomagania decyzji. Brak slajdów wykładowych do tego zagadnienia w projekcie — strona powstała z literatury wymienionej wyżej. Obiekt dwóch zbiorników jak w zagadnieniach 32, 34 i 39; liczby w przykładzie są przykładowe, a rachunek własny.</p>
+  <p class="backfoot"><a href="index.html">&larr; Wróć do listy zagadnień</a></p>
+</footer>
+
+</div>
+</body>
+</html>
