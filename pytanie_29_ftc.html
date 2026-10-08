@@ -155,6 +155,24 @@ ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{colo
 .check li{padding-left:30px;position:relative}
 .check li::before{content:"☐";position:absolute;left:4px;top:-1px;font-family:var(--mono);color:var(--teal);font-size:17px}
 .luka{display:inline-block;min-width:70px;border-bottom:1.5px solid var(--violet);text-align:center;font-family:var(--mono);font-size:14px;color:var(--violet)}
+/*stickybar-start*/
+.topnav{display:none}
+#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(232,236,239,.96);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+#sbar .in{max-width:860px;margin:0 auto;padding:9px 22px 8px}
+#sbar .r1{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
+#sbar a{color:var(--ink);text-decoration:none;text-transform:uppercase;letter-spacing:.1em;white-space:nowrap;
+  border-bottom:1px solid var(--line);padding-bottom:1px}
+#sbar a:hover,#sbar a:focus-visible{border-color:var(--ink);outline:none}
+#sbar .nr{color:var(--mut);white-space:nowrap}
+#sbar .pc{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--teal);font-weight:500;white-space:nowrap}
+#sbar .qt{margin:5px 0 0;font-family:var(--body);font-size:15px;line-height:1.3;font-style:italic;color:var(--ink)}
+#sbar .trk{position:absolute;left:0;right:0;bottom:-1px;height:3px;background:transparent}
+#sbar .trk i{display:block;height:100%;width:0;background:var(--teal)}
+html{scroll-padding-top:var(--sbh,84px)}
+@media (max-width:600px){#sbar .in{padding:8px 16px 7px}#sbar .qt{font-size:14px}}
+@media print{#sbar{display:none}}
+/*stickybar-end*/
 </style>
 
 <section>
@@ -1285,5 +1303,29 @@ ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{colo
 </footer>
 
 </div>
+<!--stickybar-js-start-->
+<script>
+(function(){
+  var q=document.querySelector('.quest'),ey=document.querySelector('.eyebrow'),h=document.querySelector('h1');
+  var m=ey&&ey.textContent.match(/pytanie\s+(\d+)/i), n=m?m[1]:'';
+  var bar=document.createElement('div'); bar.id='sbar'; bar.setAttribute('role','banner');
+  bar.innerHTML='<div class="in"><div class="r1"><a href="index.html">&larr; Lista</a><span class="nr"></span><span class="pc" aria-live="off">0%</span></div><p class="qt"></p></div><div class="trk"><i></i></div>';
+  bar.querySelector('.nr').textContent=n?'Pytanie '+n:'';
+  bar.querySelector('.qt').textContent=(q?q.textContent:(h?h.textContent:'')).trim();
+  document.body.insertBefore(bar,document.body.firstChild);
+  var fill=bar.querySelector('.trk i'),pc=bar.querySelector('.pc'),tick=false;
+  function size(){var hh=bar.offsetHeight;document.documentElement.style.setProperty('--sbh',(hh+12)+'px');document.body.style.paddingTop=hh+'px';}
+  function upd(){tick=false;var d=document.documentElement,max=d.scrollHeight-window.innerHeight;
+    var p=max>0?Math.min(1,Math.max(0,(window.pageYOffset||d.scrollTop)/max)):1;
+    var v=Math.round(p*100);fill.style.width=(p*100)+'%';pc.textContent=v+'%';}
+  function req(){if(!tick){tick=true;requestAnimationFrame(upd);}}
+  window.addEventListener('scroll',req,{passive:true});
+  window.addEventListener('resize',function(){size();req();});
+  window.addEventListener('load',function(){size();upd();});
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){size();upd();});
+  size();upd();
+})();
+</script>
+<!--stickybar-js-end-->
 </body>
 </html>

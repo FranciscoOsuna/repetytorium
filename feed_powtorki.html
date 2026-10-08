@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Feed powtórkowy — repetytorium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F4F1; --ink:#1B2A26; --muted:#5A6A64; --line:rgba(27,42,38,.16);
+  --accent:#2350C4; --good:#1D7F47; --bad:#B8402C; --chip:rgba(27,42,38,.06);
+  --ql:42%; --qs:62%;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#1D3430; --ink:#ECEEE4; --muted:#A3B4AC; --line:rgba(236,238,228,.17);
+    --accent:#F1CD5A; --good:#8DD3A6; --bad:#F29A88; --chip:rgba(236,238,228,.07);
+    --ql:78%; --qs:72%; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1D3430; --ink:#ECEEE4; --muted:#A3B4AC; --line:rgba(236,238,228,.17);
+  --accent:#F1CD5A; --good:#8DD3A6; --bad:#F29A88; --chip:rgba(236,238,228,.07);
+  --ql:78%; --qs:72%; color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"Bricolage Grotesque",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:17px;line-height:1.5;overflow:hidden;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* top bar */
+#hud{position:fixed;top:0;left:0;right:0;z-index:5;padding:calc(env(safe-area-inset-top,0px) + 10px) 18px 10px;display:flex;align-items:center;gap:14px;font-size:15px;pointer-events:none;background:linear-gradient(var(--bg) 55%,transparent)}
+#hud > *{pointer-events:auto}
+.streak{font-weight:800;font-variant-numeric:tabular-nums;font-size:17px}
+.streak.hot{color:var(--accent)}
+.today{color:var(--muted);font-variant-numeric:tabular-nums}
+#hud .back{color:var(--muted);text-decoration:none;font-size:22px;line-height:1;padding:2px 4px}
+#filterBtn{margin-left:auto;background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:6px 14px}
+
+/* feed */
+#feed{height:100%;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior:contain;scrollbar-width:none}
+#feed::-webkit-scrollbar{display:none}
+.card{height:100%;scroll-snap-align:start;scroll-snap-stop:always;display:flex;justify-content:center;position:relative;
+  --qc:hsl(var(--h,150) var(--qs) var(--ql))}
+.card::before{content:"";position:absolute;left:0;top:18%;bottom:18%;width:5px;border-radius:0 4px 4px 0;background:var(--qc)}
+.wrap{width:100%;max-width:34rem;padding:68px 26px 26px;display:flex;flex-direction:column;overflow-y:auto}
+.meta{display:flex;align-items:baseline;gap:10px;color:var(--muted);font-size:14px}
+.meta .op{margin-left:auto;color:var(--muted);font-size:13px;text-decoration:none;border-bottom:1px solid var(--line);white-space:nowrap}
+.qn{font-weight:800;font-size:15px;color:var(--qc);border:1.5px solid var(--qc);border-radius:7px;padding:0 7px;line-height:1.5}
+.kind{margin-top:22px;font-size:14px;color:var(--qc);font-weight:600}
+.body{margin:auto 0;padding:12px 0}
+h2{font-size:clamp(25px,7vw,32px);line-height:1.15;font-weight:800;margin:6px 0 16px;letter-spacing:-.01em;text-wrap:balance}
+.prompt{font-size:clamp(23px,6.4vw,29px);line-height:1.2;font-weight:600;margin:6px 0 18px;text-wrap:balance}
+p{margin:0 0 12px;max-width:62ch}
+.analogy{border:1.5px dashed var(--line);border-radius:14px;padding:12px 14px;color:var(--muted);margin-top:14px}
+.analogy b{color:var(--ink);font-weight:600}
+.haslo{font-size:clamp(30px,8.6vw,40px);line-height:1.08;font-weight:800;letter-spacing:-.02em;margin:4px 0 20px;text-wrap:balance}
+.quote{border-left:3px solid var(--qc);padding:2px 0 2px 14px}
+
+/* reveal */
+.reveal{border:1.5px solid var(--line);border-radius:16px;padding:16px;min-height:120px;position:relative}
+.reveal .cover{position:absolute;inset:0;border-radius:15px;background:var(--chip);border:0;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:15px;backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}
+.reveal.shut .ans{filter:blur(6px);user-select:none}
+.reveal:not(.shut) .cover{display:none}
+
+/* comparison */
+.cmp{display:grid;grid-template-columns:6.6em 1fr 1fr;border-top:1px solid var(--line);font-size:14px;line-height:1.3}
+.cmp div{padding:7px 8px 7px 0;border-bottom:1px solid var(--line)}
+.cmp .hd{font-weight:800;color:var(--qc);font-size:15px}
+.cmp .rl{color:var(--muted);font-size:12.5px;padding-right:8px;overflow-wrap:anywhere}
+
+/* quiz */
+.opts{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.opt{flex:1 1 auto;min-width:30%;background:var(--chip);border:1.5px solid var(--line);border-radius:14px;padding:13px 14px;text-align:center;font-weight:600;transition:background .2s,border-color .2s}
+.opt.ok{border-color:var(--good);color:var(--good)}
+.opt.no{border-color:var(--bad);color:var(--bad)}
+.opt[disabled]{cursor:default}
+.blank{display:inline-block;min-width:4.5em;border-bottom:2.5px solid var(--qc);text-align:center;font-weight:800;color:var(--qc)}
+.why{margin-top:14px;color:var(--muted);font-size:16px}
+.verdict{font-weight:800}
+.verdict.ok{color:var(--good)} .verdict.no{color:var(--bad)}
+
+/* steps */
+.pool{display:flex;flex-direction:column;gap:8px}
+.step{background:var(--chip);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;text-align:left;font-size:16px}
+.step.shake{animation:shake .3s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.done{list-style:none;padding:0;margin:0 0 10px;counter-reset:s}
+.done li{counter-increment:s;padding:7px 0 7px 34px;position:relative;font-size:16px}
+.done li::before{content:counter(s);position:absolute;left:0;top:6px;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--qc);color:var(--qc);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+
+/* actions */
+.act{display:flex;gap:10px;margin-top:18px}
+.act button{flex:1;border-radius:14px;padding:14px;border:1.5px solid var(--line);background:transparent;font-weight:600}
+.act .yes{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.act.rated button{opacity:.35;pointer-events:none}
+.hint{color:var(--muted);font-size:14px;text-align:center;margin-top:12px}
+
+/* intro + milestone */
+.big{font-size:clamp(40px,12vw,60px);line-height:1;font-weight:800;letter-spacing:-.03em;margin:0 0 18px}
+.stat{display:flex;gap:24px;margin:10px 0 18px}
+.stat b{display:block;font-size:34px;font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat span{color:var(--muted);font-size:14px}
+
+/* filter sheet */
+#sheet{position:fixed;inset:0;z-index:10;display:none;background:rgba(0,0,0,.35)}
+#sheet.open{display:block}
+.panel{position:absolute;left:0;right:0;bottom:0;background:var(--bg);border-radius:22px 22px 0 0;padding:22px 22px calc(22px + env(safe-area-inset-bottom,0px));max-width:34rem;margin:0 auto;border-top:1px solid var(--line)}
+.panel h3{margin:0 0 4px;font-size:22px}
+.panel .sub{color:var(--muted);font-size:14px;margin-bottom:14px}
+.qrow{display:flex;align-items:center;gap:12px;width:100%;background:transparent;border:0;border-bottom:1px solid var(--line);padding:12px 0;text-align:left}
+.qrow .box{width:22px;height:22px;border-radius:6px;border:2px solid var(--qc);flex:none;display:flex;align-items:center;justify-content:center;color:var(--bg);font-size:14px;font-weight:800}
+.qrow.on .box{background:var(--qc)}
+.qrow .nm{flex:1}
+.bar{width:64px;height:6px;border-radius:3px;background:var(--chip);overflow:hidden;flex:none}
+.bar i{display:block;height:100%;background:var(--qc)}
+.panel .row{display:flex;gap:10px;margin-top:16px}
+.panel .row button{flex:1;padding:13px;border-radius:14px;border:1.5px solid var(--line);background:transparent;font-weight:600}
+.panel .row .yes{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+@media (max-height: 760px){
+  body{font-size:15.5px;line-height:1.42}
+  .wrap{padding:58px 22px 18px}
+  .kind{margin-top:12px}
+  .prompt{font-size:clamp(20px,5.6vw,25px);margin-bottom:12px}
+  h2{font-size:clamp(22px,6.2vw,28px);margin-bottom:10px}
+  .haslo{font-size:clamp(26px,7.6vw,34px)}
+  .reveal{padding:12px}
+  .act{margin-top:12px} .act button{padding:12px}
+  .opt{padding:11px 12px}
+  .why{font-size:14.5px;margin-top:10px}
+  .cmp{font-size:13px} .cmp div{padding:6px 6px 6px 0}
+  .analogy{padding:9px 12px;margin-top:10px}
+}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="hud">
+  <a class="back" href="index.html" aria-label="Powrót do repetytorium">←</a>
+  <span class="streak" id="streak" aria-label="seria">🔥 0</span>
+  <span class="today" id="today">dziś 0</span>
+  <button id="filterBtn">Pytania</button>
+</div>
+<main id="feed" aria-live="polite"></main>
+<div id="sheet" role="dialog" aria-label="Wybór pytań">
+  <div class="panel">
+    <h3>Które pytania?</h3>
+    <div class="sub">Pasek pokazuje, jaką część kart danego pytania już umiesz.</div>
+    <div id="qlist"></div>
+    <div class="row"><button id="allBtn">Wszystkie</button><button class="yes" id="applyBtn">Pokaż w feedzie</button></div>
+  </div>
+</div>
+<script>
+const CARDS = [{"id": "q27-01", "q": 27, "typ": "fakt", "poziom": 1, "zrodlo": "sekcja 03", "tytul": "Po co PCA, skoro są karty Shewharta?", "tresc": "W procesie pracuje kilkanaście skorelowanych czujników. Osobna karta kontrolna dla każdego daje dużo fałszywych alarmów i nie widzi, że czujniki przestały się ze sobą zgadzać. PCA buduje jeden model normalnej pracy całego procesu i sprawdza go dwiema miarami.", "analogia": "Zamiast pilnować każdego termometru osobno, pilnujesz, czy termometry mówią to samo."}, {"id": "q27-02", "q": 27, "typ": "porownanie", "poziom": 2, "zrodlo": "sekcja 07", "tytul": "Dwie miary monitoringu PCA", "kolumny": ["T² (Hotellinga)", "SPE"], "wiersze": [["Co mierzy", "jak daleko od średniej, ale wewnątrz płaszczyzny modelu", "jak daleko od płaszczyzny modelu, czyli błąd odtworzenia próbki"], ["Co znaczy alarm", "znane korelacje trzymają się, tylko zmiana jest za duża", "złamana korelacja, zmienność, której model nie zna"], ["Typowa przyczyna", "wzrost obciążenia, zmiana punktu pracy", "usterka lub dryf jednego czujnika"], ["Granica", "z rozkładu F", "wzór Jacksona–Mudholkara"]]}, {"id": "q27-03", "q": 27, "typ": "kroki", "poziom": 2, "zrodlo": "sekcja 05", "tytul": "Budowa modelu PCA", "kroki": ["Zbierz dane z normalnej pracy procesu", "Znormalizuj: średnia 0, wariancja 1", "Policz macierz kowariancji", "Wyznacz wartości i wektory własne", "Wybierz liczbę składowych L", "Wyznacz granice T² i SPE"], "wyjasnienie": "Dopiero potem monitoring on-line: każdą nową próbkę normalizujesz i liczysz dla niej T² i SPE."}, {"id": "q27-04", "q": 27, "typ": "pf", "poziom": 2, "zrodlo": "sekcja 05", "twierdzenie": "Nową próbkę w trakcie monitoringu normalizuje się jej własną średnią i odchyleniem.", "prawda": false, "wyjasnienie": "Średnią i odchylenie bierze się z danych uczących. Model opisuje normalną pracę w tamtej skali; inna skala zafałszuje T² i SPE."}, {"id": "q27-05", "q": 27, "typ": "luka", "poziom": 2, "zrodlo": "sekcja 08", "zdanie": "Jeden czujnik zaczyna dryfować, a reszta pracuje normalnie. Alarm najpewniej podniesie ___.", "opcje": ["SPE", "T²", "żadna z miar"], "poprawna": 0, "wyjasnienie": "Dryf jednego czujnika łamie korelację, więc próbka wypada z płaszczyzny modelu. W przykładzie z 5 czujnikami SPE wykrył 88% próbek dryfu, a T² tylko 3%."}, {"id": "q27-06", "q": 27, "typ": "dopytka", "poziom": 2, "zrodlo": "sekcja 05", "pytanie": "Jak dobiera Pan liczbę składowych głównych?", "odpowiedz": "Każda wartość własna mówi, ile wariancji, czyli informacji, niesie jej składowa. Zostawiam tyle składowych, żeby opisały co najmniej zadany procent wariancji, albo — dla danych znormalizowanych — te z wartością własną większą od 1. Za mało składowych i normalna zmienność trafia do SPE jako fałszywe alarmy; za dużo i model wchłania szum."}, {"id": "q27-07", "q": 27, "typ": "zapamietaj", "poziom": 1, "zrodlo": "sekcja 07", "haslo": "T² — za daleko po płaszczyźnie. SPE — poza płaszczyzną.", "rozwiniecie": "Płaszczyzna to podprzestrzeń L składowych głównych, w której leżą dane z normalnej pracy."}, {"id": "q27-08", "q": 27, "typ": "fiszka", "poziom": 3, "zrodlo": "sekcja 08", "pytanie": "Do czego służy wykres wkładów po alarmie?", "odpowiedz": "Pokazuje, które zmienne najbardziej przyczyniły się do przekroczenia T² albo SPE, czyli wskazuje podejrzany czujnik. Uwaga: wkład potrafi się rozmazać na zmienne skorelowane z uszkodzoną."}, {"id": "q21-01", "q": 21, "typ": "fakt", "poziom": 1, "zrodlo": "sekcja 02", "tytul": "Determinizm ważniejszy niż przepustowość", "tresc": "Sieć w systemie sterowania ocenia się po gwarantowanym najgorszym czasie dostarczenia danych, a nie po średniej prędkości. Regulator musi wiedzieć, że pomiar dotrze na czas w każdym cyklu.", "analogia": "Autobus, który zawsze jedzie 20 minut, jest lepszy niż taki, który średnio jedzie 10, ale czasem godzinę."}, {"id": "q21-02", "q": 21, "typ": "porownanie", "poziom": 2, "zrodlo": "sekcja 04", "tytul": "Dwie metody dostępu do łącza", "kolumny": ["Master–slave", "Arbitraż CAN"], "wiersze": [["Kto nadaje", "slave tylko wtedy, gdy master go zapyta", "każdy węzeł, gdy łącze jest wolne"], ["Co przy jednoczesnym nadawaniu", "nie zdarza się, master porządkuje ruch", "wygrywa ramka o najwyższym priorytecie, reszta czeka"], ["Wada", "czas cyklu rośnie z liczbą urządzeń", "wiadomości o niskim priorytecie mogą czekać długo"], ["Przykład", "Modbus", "CAN bus"]]}, {"id": "q21-03", "q": 21, "typ": "pf", "poziom": 1, "zrodlo": "sekcja 03", "twierdzenie": "Sieci polowe implementują wszystkie siedem warstw modelu OSI.", "prawda": false, "wyjasnienie": "Zwykle tylko warstwy 1, 2 i 7: fizyczną, łącza danych i aplikacji. Pominięcie warstw 3–6 zmniejsza narzut i skraca czas przesłania."}, {"id": "q21-04", "q": 21, "typ": "luka", "poziom": 2, "zrodlo": "sekcja 04", "zdanie": "Gdy dwa węzły CAN zaczną nadawać jednocześnie, wygrywa ramka o ___ identyfikatorze.", "opcje": ["najniższym", "najwyższym", "losowym"], "poprawna": 0, "wyjasnienie": "Bit 0 jest dominujący i nadpisuje bit 1 na magistrali. Węzeł, który słyszy inny bit niż nadał, wycofuje się, a ramka zwycięzcy przechodzi bez zniszczenia."}, {"id": "q21-05", "q": 21, "typ": "fiszka", "poziom": 3, "zrodlo": "sekcja 07", "pytanie": "Dlaczego opóźnienie w sieci szkodzi regulacji?", "odpowiedz": "Opóźnienie τ dodaje przesunięcie fazy Δφ = ωc·τ (ωc to pulsacja odcięcia układu) i zjada zapas fazy. Wolny obiekt, jak zbiorniki, tego prawie nie odczuje; szybkie serwo przez Modbus straciłoby stabilność, stąd sieci typu Profinet IRT czy EtherCAT."}, {"id": "q21-06", "q": 21, "typ": "fakt", "poziom": 2, "zrodlo": "sekcja 04", "tytul": "EtherCAT: ramka w locie", "tresc": "Jedna ramka przechodzi przez wszystkie urządzenia po kolei. Każde w biegu odczytuje swoje dane i dopisuje odpowiedź, nie zatrzymując ramki. Dzięki temu cały obieg trwa bardzo krótko.", "analogia": "Pociąg, z którego każda stacja zdejmuje i dokłada paczki, nie zatrzymując go."}, {"id": "q21-07", "q": 21, "typ": "dopytka", "poziom": 2, "zrodlo": "sekcja 04", "pytanie": "Czym różni się model klient–serwer od producent–konsument?", "odpowiedz": "W klient–serwer każda dana wymaga zapytania i odpowiedzi, jak w Modbusie. W producent–konsument nadawca publikuje daną raz, a odbierają ją wszyscy zainteresowani, jak w Profinecie. Drugi model oszczędza pasmo i daje wszystkim odbiorcom tę samą wartość w tej samej chwili."}, {"id": "q44-01", "q": 44, "typ": "fakt", "poziom": 1, "zrodlo": "sekcja 02", "tytul": "Istota analizy wrażliwości", "tresc": "Rozwiązanie zadania liniowego opiera się na danych, które w praktyce są niepewne: cenach, zasobach, technologii. Analiza wrażliwości odpowiada na dwa pytania: jak bardzo dane mogą się zmienić, zanim zmieni się plan optymalny, i jak zmieni się przy tym wartość celu."}, {"id": "q44-02", "q": 44, "typ": "fiszka", "poziom": 2, "zrodlo": "sekcja 05", "pytanie": "Co mówi cena dualna ograniczenia?", "odpowiedz": "O ile wzrośnie optymalna wartość celu, gdy zasób zwiększymy o jednostkę — dopóki zmiana mieści się w przedziale, w którym baza się nie zmienia. Przykład: cena dualna surowca 1 oznacza +1 zysku za każdą dodatkową jednostkę surowca w przedziale od 40 do 70."}, {"id": "q44-03", "q": 44, "typ": "pf", "poziom": 2, "zrodlo": "sekcja 05", "twierdzenie": "Zasób, który w optimum nie jest w pełni zużyty, ma dodatnią cenę dualną.", "prawda": false, "wyjasnienie": "Komplementarność: jeśli zostaje luz, dodatkowa jednostka nic nie da, więc cena dualna wynosi 0. W przykładzie rynek 2 ma luz 20 i cenę dualną 0."}, {"id": "q44-04", "q": 44, "typ": "luka", "poziom": 2, "zrodlo": "sekcja 06", "zdanie": "Nowy produkt opłaca się wprowadzić, gdy jego zysk jednostkowy jest ___ od kosztu alternatywnego zasobów, które zużyje.", "opcje": ["większy", "mniejszy", "równy"], "poprawna": 0, "wyjasnienie": "Koszt alternatywny to zużycie zasobów wycenione cenami dualnymi. Produkt zużywa 1,5 jednostki surowca o cenie 1, więc koszt alternatywny wynosi 1,5; przy zysku 2 produkt wchodzi do planu."}, {"id": "q44-05", "q": 44, "typ": "porownanie", "poziom": 3, "zrodlo": "sekcje 04–05", "tytul": "Zmiana w celu a zmiana w zasobach", "kolumny": ["Zmiana c_j (cena)", "Zmiana b_i (zasób)"], "wiersze": [["Na wykresie", "obraca się prosta celu", "przesuwa się prosta ograniczenia"], ["W przedziale stabilności", "optymalny wierzchołek ten sam, zmienia się tylko z*", "baza ta sama, punkt optimum się przesuwa"], ["Wartość celu z*", "zmienia się o x_j razy zmiana ceny", "zmienia się o cenę dualną razy zmiana zasobu"]]}, {"id": "q44-06", "q": 44, "typ": "zapamietaj", "poziom": 1, "zrodlo": "sekcja 05", "haslo": "Cena dualna = ile wart jest jeszcze jeden kawałek zasobu.", "rozwiniecie": "Zasób z luzem jest wart zero. Wartość ma tylko to, czego brakuje."}, {"id": "q44-07", "q": 44, "typ": "dopytka", "poziom": 2, "zrodlo": "sekcja 08", "pytanie": "Jak w praktyce wykonuje się analizę wrażliwości?", "odpowiedz": "Solver po rozwiązaniu zadania podaje raport wrażliwości: ceny dualne, koszty zredukowane i przedziały dopuszczalnych zmian współczynników. Przy większych zmianach stosuje się analizę postoptymalną, programowanie parametryczne albo porównanie scenariuszy."}, {"id": "q47-01", "q": 47, "typ": "fakt", "poziom": 1, "zrodlo": "sekcja 03", "tytul": "Predykat", "tresc": "Predykat to wyrażenie, które dla podanych argumentów zwraca prawdę albo fałsz. Przekracza(Temperatura(x), 39) dla pacjenta z 38 stopniami daje fałsz, a dla pacjenta z 39,5 — prawdę.", "analogia": "Funkcja zwraca wartość, predykat zwraca tylko „tak” albo „nie”."}, {"id": "q47-02", "q": 47, "typ": "porownanie", "poziom": 2, "zrodlo": "sekcje 04–05", "tytul": "Reguła produkcji a reguła decyzyjna", "kolumny": ["Reguła produkcji", "Reguła decyzyjna"], "wiersze": [["Część TO", "nowy fakt, wniosek", "akcja do wykonania"], ["Do czego", "łańcuchy wnioskowania w bazie wiedzy", "wybór działania, sterowanie"], ["Przykład", "JEŻELI gorączka i kaszel TO grypa", "JEŻELI poziom w Z1 za wysoki TO zamknij zawór, W PRZECIWNYM RAZIE otwórz"]]}, {"id": "q47-03", "q": 47, "typ": "fiszka", "poziom": 2, "zrodlo": "sekcja 06", "pytanie": "Dlaczego p ⇒ q można zapisać jako ¬p ∨ q?", "odpowiedz": "Implikacja jest fałszywa tylko w jednym przypadku: gdy p jest prawdziwe, a q fałszywe. ¬p ∨ q („nie p lub q”) jest fałszywe dokładnie w tym samym przypadku, więc obie formuły mają tę samą tabelę prawdy."}, {"id": "q47-04", "q": 47, "typ": "pf", "poziom": 2, "zrodlo": "sekcja 06", "twierdzenie": "Klauzula Horna zawiera co najwyżej jeden literał pozytywny, czyli bez negacji.", "prawda": true, "wyjasnienie": "To definicja standardowa. Uwaga: slajd 28 wykładu mówi „co najmniej jeden” — to błąd na slajdzie, bo zaraz dalej pojawia się klauzula Horna bez literałów pozytywnych."}, {"id": "q47-05", "q": 47, "typ": "luka", "poziom": 1, "zrodlo": "sekcja 05", "zdanie": "Implikacja p ⇒ q, w której p jest fałszywe, jest zawsze ___.", "opcje": ["prawdziwa", "fałszywa", "nieokreślona"], "poprawna": 0, "wyjasnienie": "To tzw. paradoks implikacji: z fałszywego warunku wynika cokolwiek. Dlatego reguła decyzyjna potrzebuje części W PRZECIWNYM RAZIE, żeby określić działanie, gdy warunek nie zachodzi."}, {"id": "q47-06", "q": 47, "typ": "dopytka", "poziom": 3, "zrodlo": "sekcja 06", "pytanie": "Co to jest skolemizacja?", "odpowiedz": "To usunięcie kwantyfikatora „istnieje” przez wstawienie funkcji, która wskazuje ten istniejący obiekt. Z „dla każdego x istnieje y takie, że y jest matką x” robię „dla każdego x, f(x) jest matką x”. Funkcja zależy od x, bo każdy ma inną matkę. Bez tego nie dostanę postaci klauzulowej."}, {"id": "q47-07", "q": 47, "typ": "zapamietaj", "poziom": 1, "zrodlo": "sekcja 06", "haslo": "Reguła → klauzula: zaneguj warunek, dopisz wniosek przez LUB.", "rozwiniecie": "JEŻELI Usterka TO Bezpiecznik LUB Zasilacz daje ¬Usterka ∨ Bezpiecznik ∨ Zasilacz."}, {"id": "q27-09", "q": 27, "typ": "fakt", "poziom": 1, "zrodlo": "sekcja 04", "tytul": "Idea PCA w jednym akapicie", "tresc": "PCA zastępuje wiele skorelowanych zmiennych kilkoma nowymi, zwanymi składowymi głównymi. Każda składowa to kombinacja liniowa starych zmiennych, skierowana wzdłuż największej zmienności danych i prostopadła do poprzednich. Zwykle kilka pierwszych składowych opisuje prawie całą zmienność procesu.", "analogia": "Chmura punktów w kształcie cygara: jedna oś wzdłuż cygara mówi prawie wszystko o tym, gdzie leży punkt."}, {"id": "q27-10", "q": 27, "typ": "fiszka", "poziom": 1, "zrodlo": "sekcja 05", "pytanie": "Po co normalizować dane przed PCA?", "odpowiedz": "Zmienne mają różne jednostki i zakresy. Bez normalizacji zmienna o największych liczbach, np. ciśnienie w paskalach, zdominowałaby składowe tylko przez skalę. Po sprowadzeniu każdej zmiennej do średniej 0 i wariancji 1 macierz kowariancji staje się macierzą korelacji."}, {"id": "q27-11", "q": 27, "typ": "fiszka", "poziom": 2, "zrodlo": "sekcja 04", "pytanie": "Co oznaczają wektor własny i wartość własna w PCA?", "odpowiedz": "Wektor własny macierzy kowariancji to kierunek składowej głównej, czyli przepis, z jakimi wagami (ładunkami) zmienne tworzą nową zmienną. Wartość własna to wariancja danych wzdłuż tego kierunku, czyli ile informacji niesie dana składowa."}, {"id": "q27-12", "q": 27, "typ": "luka", "poziom": 2, "zrodlo": "sekcja 05", "zdanie": "Dla danych znormalizowanych prosta reguła mówi: zostaw składowe, których wartość własna jest większa od ___.", "opcje": ["1", "0", "0,5"], "poprawna": 0, "wyjasnienie": "Po normalizacji każda zmienna ma wariancję 1. Składowa z λ < 1 niesie mniej informacji niż pojedyncza zmienna, więc nie opłaca się jej trzymać. Alternatywa: tyle składowych, żeby opisały zadany procent wariancji."}, {"id": "q27-13", "q": 27, "typ": "pf", "poziom": 1, "zrodlo": "sekcja 08", "twierdzenie": "Dane uczące model PCA powinny zawierać także przykłady stanów awaryjnych.", "prawda": false, "wyjasnienie": "PCA uczy się tylko normalnej pracy. Awarię wykrywa jako odstępstwo od tego wzorca, więc nie potrzebuje jej przykładów. To duża zaleta, bo danych z awarii zwykle prawie nie ma."}, {"id": "q27-14", "q": 27, "typ": "pf", "poziom": 2, "zrodlo": "sekcja 07", "twierdzenie": "Wysokie T² przy niskim SPE zawsze oznacza uszkodzenie.", "prawda": false, "wyjasnienie": "Wysokie T² przy niskim SPE to ruch duży, ale zgodny ze znanymi korelacjami, np. zmiana obciążenia czy punktu pracy. Może to być stan legalny, którego nie było w danych uczących, więc alarm T² wymaga interpretacji."}, {"id": "q27-15", "q": 27, "typ": "fiszka", "poziom": 2, "zrodlo": "sekcja 07", "pytanie": "Jak liczy się T² i SPE — intuicyjnie?", "odpowiedz": "Próbkę rzutuję na płaszczyznę składowych. T² to suma kwadratów jej współrzędnych na tej płaszczyźnie, każda podzielona przez wariancję składowej, więc punkty o równym T² leżą na elipsach. SPE to kwadrat odległości próbki od jej rzutu, czyli różnica między próbką a jej odtworzeniem z L składowych."}, {"id": "q27-16", "q": 27, "typ": "fiszka", "poziom": 2, "zrodlo": "sekcja 08", "pytanie": "Jak PCA wpisuje się w fazy diagnostyki (FDD)?", "odpowiedz": "Detekcja: T² lub SPE przekracza granicę. Izolacja: wykres wkładów wskazuje zmienne odpowiedzialne za alarm. Identyfikacja, czyli ustalenie rodzaju i przyczyny uszkodzenia, wymaga już wiedzy o procesie, bo PCA sama jej nie daje."}, {"id": "q27-17", "q": 27, "typ": "dopytka", "poziom": 3, "zrodlo": "sekcja 11", "pytanie": "Jakie są ograniczenia PCA w diagnostyce?", "odpowiedz": "Po pierwsze liniowość: przy zakrzywionych zależnościach, jak wypływ zależny od pierwiastka z poziomu, normalne próbki dają fałszywe SPE, i tu pomaga kernel PCA. Po drugie model jest statyczny i nie widzi dynamiki; rozwiązaniem jest dynamiczne PCA. Po trzecie model dotyczy jednego punktu pracy, więc zmiana trybu pracy wymaga nowego modelu."}, {"id": "q27-18", "q": 27, "typ": "fakt", "poziom": 2, "zrodlo": "sekcja 03", "tytul": "Dlaczego wiele kart Shewharta zawodzi", "tresc": "Każda karta z granicą 95% fałszywie alarmuje w 5% próbek. Przy 9 niezależnych kartach szansa, że żadna nie zaalarmuje, to 0,95⁹ ≈ 0,63, czyli ponad co trzecia próbka normalnej pracy daje jakiś alarm. Do tego żadna karta nie zauważy, że czujniki przestały się zgadzać, jeśli każdy z osobna mieści się w granicach."}, {"id": "q31-01", "q": 31, "typ": "fakt", "poziom": 1, "zrodlo": "sekcja 01", "tytul": "Kiedy PCA przestaje wystarczać", "tresc": "PCA dopasowuje do danych płaszczyznę, czyli zakłada liniowe zależności między zmiennymi. W zbiorniku wypływ zależy od pierwiastka z poziomu, więc chmura normalnych próbek jest zakrzywiona. Płaszczyzna jej nie obejmie: próbki z krańców krzywej dają wysokie SPE i fałszywe alarmy.", "analogia": "Jak przykładanie linijki do łuku: w środku pasuje, na końcach odstaje."}, {"id": "q31-02", "q": 31, "typ": "fakt", "poziom": 1, "zrodlo": "sekcja 02", "tytul": "Idea kernel PCA", "tresc": "Dane przenosi się nieliniowym odwzorowaniem Φ do przestrzeni cech o dużo większym wymiarze i tam wykonuje zwykłe PCA. Zależność, która w przestrzeni pomiarów jest krzywa, w przestrzeni cech staje się liniowa."}, {"id": "q31-03", "q": 31, "typ": "fiszka", "poziom": 2, "zrodlo": "sekcja 03", "pytanie": "Na czym polega sztuczka jądra?", "odpowiedz": "PCA w przestrzeni cech potrzebuje tylko iloczynów skalarnych Φ(x)·Φ(y). Funkcja jądra k(x, y) daje ten iloczyn wprost z wektorów pomiarów, więc samego Φ nigdy nie trzeba liczyć. Przykład z wykładu: k(x, y) = (1 + xᵀy)² dla dwóch zmiennych odpowiada przejściu do 6 cech, m.in. x₁², x₂² i x₁x₂."}, {"id": "q31-04", "q": 31, "typ": "pf", "poziom": 2, "zrodlo": "sekcja 03", "twierdzenie": "Jądrem może być dowolna funkcja dwóch wektorów.", "prawda": false, "wyjasnienie": "Funkcja musi spełniać warunki Mercera: być symetryczna, a macierz K z wartościami k(xᵢ, xⱼ) musi być półdodatnio określona. Tylko wtedy k naprawdę jest iloczynem skalarnym w jakiejś przestrzeni cech."}, {"id": "q31-05", "q": 31, "typ": "luka", "poziom": 1, "zrodlo": "sekcja 03", "zdanie": "Gdy nie ma przesłanek do wyboru innej funkcji, wykład zaleca jądro ___.", "opcje": ["Gaussa", "wielomianowe", "sigmoidalne"], "poprawna": 0, "wyjasnienie": "Jądro Gaussa ma jeden parametr, szerokość σ, i dobrze dopasowuje się do kształtu danych. Pozostałe typowe jądra to wielomianowe, sigmoidalne i odwrotnej formy kwadratowej."}, {"id": "q31-06", "q": 31, "typ": "kroki", "poziom": 2, "zrodlo": "sekcja 04", "tytul": "Budowa modelu kernel PCA", "kroki": ["Znormalizuj dane jak w PCA", "Wybierz funkcję jądra i jej parametr", "Policz macierz jądra K (N×N)", "Wycentruj K w przestrzeni cech", "Wyznacz i przeskaluj wektory własne K", "Wybierz L i granicę błędu rekonstrukcji"], "wyjasnienie": "Struktura jak w PCA, tylko zamiast macierzy kowariancji zmiennych jest macierz jądra między próbkami."}, {"id": "q31-07", "q": 31, "typ": "fiszka", "poziom": 3, "zrodlo": "sekcja 04", "pytanie": "Po co centrowanie macierzy jądra?", "odpowiedz": "W PCA od danych odejmuje się średnią. W przestrzeni cech nie znamy obrazów Φ(x), więc średniej nie odejmiemy wprost; robi się to pośrednio, przekształcając macierz K. Bez tego pierwsza składowa opisywałaby położenie środka danych zamiast ich zmienności."}, {"id": "q31-08", "q": 31, "typ": "porownanie", "poziom": 2, "zrodlo": "sekcja 06", "tytul": "PCA a kernel PCA: model", "kolumny": ["PCA", "Kernel PCA"], "wiersze": [["Zależności", "liniowe", "nieliniowe"], ["Macierz", "kowariancji M×M (M zmiennych)", "jądra N×N (N próbek)"], ["Maks. liczba składowych", "M", "N"], ["Miara monitoringu", "T² i SPE z granicami statystycznymi", "błąd rekonstrukcji w przestrzeni cech, granica jako izolinia"]]}, {"id": "q31-09", "q": 31, "typ": "porownanie", "poziom": 3, "zrodlo": "sekcja 06", "tytul": "PCA a kernel PCA: koszt i obsługa", "kolumny": ["PCA", "Kernel PCA"], "wiersze": [["Nowa próbka", "mnożenie przez macierz ładunków", "jądro z każdą próbką uczącą"], ["Pamięć modelu", "macierz ładunków i granice", "cały zbiór uczący"], ["Parametry do dobrania", "L", "L i szerokość jądra σ"], ["Izolacja uszkodzenia", "wykres wkładów w zmiennych procesu", "trudna, składowe nie mają prostej interpretacji"]]}, {"id": "q31-10", "q": 31, "typ": "fiszka", "poziom": 2, "zrodlo": "sekcja 05", "pytanie": "Co się dzieje przy złej szerokości jądra Gaussa σ?", "odpowiedz": "Za duża σ: eksponenta zachowuje się prawie liniowo, odwzorowanie traci nieliniowość i kPCA zbliża się do zwykłego PCA. Za mała σ: granica decyzyjna robi się nieregularna, dopasowana do pojedynczych punktów, i model staje się wrażliwy na zakłócenia."}, {"id": "q31-11", "q": 31, "typ": "fiszka", "poziom": 2, "zrodlo": "sekcja 05", "pytanie": "Jak liczba składowych L wpływa na model kPCA?", "odpowiedz": "Za mało składowych upraszcza model i daje zbyt luźną granicę, przez którą przejdą uszkodzenia. Za dużo prowadzi do przeuczenia: model zapamiętuje dane uczące i traci zdolność uogólniania. Ścisłych reguł nie ma, a L nie może przekroczyć liczby próbek uczących."}, {"id": "q31-12", "q": 31, "typ": "pf", "poziom": 2, "zrodlo": "sekcja 03", "twierdzenie": "Kernel PCA z jądrem liniowym k(x, y) = xᵀy daje zwykłe PCA.", "prawda": true, "wyjasnienie": "Jądro liniowe to zwykły iloczyn skalarny, więc odwzorowanie Φ niczego nie zmienia. Widać więc, że PCA jest szczególnym przypadkiem kernel PCA."}, {"id": "q31-13", "q": 31, "typ": "fakt", "poziom": 2, "zrodlo": "sekcja 05", "tytul": "Jak kPCA wykrywa anomalię", "tresc": "Miarą jest błąd rekonstrukcji: kwadrat odległości obrazu próbki w przestrzeni cech od jej rzutu na L składowych. Powierzchnia stałego błędu jest płaska w przestrzeni cech, ale w przestrzeni pomiarów ma kształt dopasowany do danych uczących. Ta powierzchnia, dobrana z marginesem, jest granicą decyzyjną."}, {"id": "q31-14", "q": 31, "typ": "pf", "poziom": 3, "zrodlo": "sekcja 05", "twierdzenie": "W kPCA, tak jak w PCA, błąd rekonstrukcji rośnie bez ograniczeń, gdy próbka oddala się od danych.", "prawda": false, "wyjasnienie": "W PCA błąd rekonstrukcji nie jest ograniczony od góry. W kPCA, wskutek nieliniowego odwzorowania, zbiega daleko od danych do wartości granicznej. Granicę decyzyjną wybiera się więc jako izolinię poniżej tej wartości."}, {"id": "q31-15", "q": 31, "typ": "luka", "poziom": 2, "zrodlo": "sekcja 03", "zdanie": "W kernel PCA liczba możliwych składowych głównych zależy od liczby ___.", "opcje": ["próbek uczących", "zmiennych pomiarowych", "parametrów jądra"], "poprawna": 0, "wyjasnienie": "Macierz jądra ma wymiar N×N, gdzie N to liczba próbek. kPCA może więc dać znacznie więcej składowych niż PCA, które ma ich najwyżej tyle, ile zmiennych."}, {"id": "q31-16", "q": 31, "typ": "dopytka", "poziom": 2, "zrodlo": "sekcja 06", "pytanie": "Kiedy wybrałby Pan kernel PCA zamiast PCA?", "odpowiedz": "Gdy zależności między zmiennymi są wyraźnie nieliniowe, np. przy szerokim zakresie pracy zbiornika, i zwykłe PCA daje fałszywe alarmy. Warunkiem jest rozsądna liczba próbek, bo macierz jądra rośnie z ich kwadratem. Przy zależnościach bliskich liniowym zostaję przy PCA: jest prostsze, szybsze i pozwala izolować uszkodzenie wykresem wkładów."}, {"id": "q31-17", "q": 31, "typ": "zapamietaj", "poziom": 1, "zrodlo": "sekcja 02", "haslo": "Kernel PCA = PCA na obrazach danych, liczone samymi iloczynami skalarnymi.", "rozwiniecie": "Obrazów Φ(x) nikt nie liczy; wystarcza funkcja jądra k(x, y)."}, {"id": "q31-18", "q": 31, "typ": "fiszka", "poziom": 3, "zrodlo": "sekcja 04", "pytanie": "Jak w kPCA policzyć współrzędne nowej próbki?", "odpowiedz": "Liczę jądro nowej próbki z każdą próbką uczącą, centruję te wartości tak samo jak macierz K i mnożę przez przeskalowane wektory własne. Dlatego model kPCA musi przechowywać cały zbiór uczący, a koszt jednej próbki rośnie z jego rozmiarem."}, {"id": "q2-01", "q": 2, "typ": "fakt", "poziom": 1, "zrodlo": "sekcja 01", "tytul": "Istota metody najmniejszych kwadratów", "tresc": "Zakładam strukturę modelu z nieznanymi parametrami. MNK wybiera takie parametry, dla których suma kwadratów residuów, czyli różnic między pomiarem a predykcją modelu, jest najmniejsza.", "analogia": "Prosta przez chmurę punktów ustawiona tak, żeby suma kwadratów pionowych odległości punktów od niej była jak najmniejsza."}, {"id": "q2-02", "q": 2, "typ": "fiszka", "poziom": 1, "zrodlo": "sekcja 02", "pytanie": "Jakie dwa błędy występują w estymacji i czym się różnią?", "odpowiedz": "Błąd pomiaru to różnica między wartością zmierzoną a prawdziwą; jest nieznany, modelujemy go np. szumem gaussowskim o zerowej średniej. Błąd resztkowy, czyli residuum, to różnica między wartością zmierzoną a estymowaną; jest znany po wyznaczeniu estymaty i to jego kwadraty MNK minimalizuje."}, {"id": "q2-03", "q": 2, "typ": "pf", "poziom": 1, "zrodlo": "sekcja 02", "twierdzenie": "Jawne rozwiązanie MNK wymaga modelu liniowego względem wejścia u.", "prawda": false, "wyjasnienie": "Model musi być liniowy względem parametrów. Model y = x₁ + x₂·u + x₃·u² jest dobry, bo parametry stoją przy znanych funkcjach bazowych 1, u, u². Funkcje bazowe muszą być tylko liniowo niezależne."}, {"id": "q2-04", "q": 2, "typ": "fakt", "poziom": 2, "zrodlo": "sekcja 02", "tytul": "Równanie obserwacji", "tresc": "Wszystkie pomiary zapisuje się jako y = Hx + e. Wektor y to pomiary, x to szukane parametry, e to residua, a H to macierz obserwacji: każdy wiersz zawiera wartości funkcji bazowych w chwili jednego pomiaru."}, {"id": "q2-05", "q": 2, "typ": "fiszka", "poziom": 2, "zrodlo": "sekcja 03", "pytanie": "Skąd się bierze wzór x̂ = (HᵀH)⁻¹Hᵀy?", "odpowiedz": "Kryterium, suma kwadratów residuów, jest formą kwadratową parametrów. W minimum gradient jest zerowy, co daje układ równań normalnych HᵀH·x̂ = Hᵀy. Jeśli HᵀH jest odwracalna, wychodzi wzór jawny. To minimum, a nie siodło, bo hesjan HᵀH jest dodatnio określony."}, {"id": "q2-06", "q": 2, "typ": "luka", "poziom": 2, "zrodlo": "sekcja 03", "zdanie": "Jawna estymata MNK istnieje, gdy rząd macierzy obserwacji H jest równy liczbie ___.", "opcje": ["parametrów", "pomiarów", "wejść"], "poprawna": 0, "wyjasnienie": "Wtedy HᵀH jest odwracalna. W praktyce trzeba mieć co najmniej tyle liniowo niezależnych pomiarów, ile parametrów, a funkcje bazowe muszą być liniowo niezależne."}, {"id": "q2-07", "q": 2, "typ": "fiszka", "poziom": 2, "zrodlo": "sekcja 04", "pytanie": "Jak użyć MNK do identyfikacji obiektu dynamicznego?", "odpowiedz": "Zapisuję model dyskretny liniowy względem parametrów, np. y(k) = A·y(k−1) + B·u(k−1). Każdy pomiar daje wiersz macierzy H = [y(k−1), u(k−1)], a szukany wektor to x = [A, B]. Na wykładzie: impuls na wejściu, 101 próbek co 0,1 s, szum o odchyleniu 0,08."}, {"id": "q2-08", "q": 2, "typ": "porownanie", "poziom": 2, "zrodlo": "sekcja 05", "tytul": "MNK zwykła a ważona", "kolumny": ["Zwykła", "Ważona"], "wiersze": [["Założenie", "wszystkie pomiary jednakowo dokładne", "pomiary mają różną dokładność"], ["Kryterium", "suma kwadratów residuów eᵀe", "ważona suma eᵀWe"], ["Estymata", "(HᵀH)⁻¹Hᵀy", "(HᵀWH)⁻¹HᵀWy"], ["Wagi", "brak", "dokładniejszy pomiar dostaje większą wagę"]]}, {"id": "q2-09", "q": 2, "typ": "fiszka", "poziom": 3, "zrodlo": "sekcja 06", "pytanie": "Co zrobić, gdy część pomiarów jest dokładna?", "odpowiedz": "Pomiary dokładne traktuję jako ograniczenia równościowe H₂x = y₂, a residua minimalizuję tylko dla pomiarów niedokładnych. Rozwiązuje się to metodą mnożników Lagrange'a. Wynik to estymata z pomiarów niedokładnych poprawiona o K·(y₂ − H₂x̄), więc model przechodzi dokładnie przez pomiary dokładne."}, {"id": "q2-10", "q": 2, "typ": "fakt", "poziom": 1, "zrodlo": "sekcja 07", "tytul": "MNK rekurencyjna: po co", "tresc": "Pomiary przychodzą kolejno i estymatę chcemy mieć po każdym z nich. Liczenie wszystkiego od nowa jest kosztowne, więc poprawia się poprzednią estymatę: x̂(k+1) = x̂(k) + K·(y(k+1) − H(k+1)·x̂(k)). W nawiasie jest błąd, z jakim stara estymata przewidziała nowy pomiar."}, {"id": "q2-11", "q": 2, "typ": "zapamietaj", "poziom": 1, "zrodlo": "sekcja 07", "haslo": "Nowa estymata = stara + wzmocnienie × (pomiar − przewidywanie).", "rozwiniecie": "Wykład nazywa to równaniem aktualizacji Kalmana, a K macierzą wzmocnień Kalmana. Ta sama struktura wraca w filtrze Kalmana."}, {"id": "q2-12", "q": 2, "typ": "fiszka", "poziom": 3, "zrodlo": "sekcja 07", "pytanie": "Po co w MNK rekurencyjnej lemat Shermana–Morrisona–Woodbury'ego?", "odpowiedz": "Bez niego aktualizacja macierzy P wymaga w każdym kroku odwracania macierzy n×n, co nie daje przewagi nad liczeniem od nowa. Lemat pozwala zamiast tego odwracać macierz o rozmiarze liczby nowych pomiarów; przy jednym pomiarze to zwykłe dzielenie przez liczbę."}, {"id": "q2-13", "q": 2, "typ": "kroki", "poziom": 2, "zrodlo": "sekcja 07", "tytul": "Jeden krok MNK rekurencyjnej", "kroki": ["Weź estymatę x̂ i macierz P z poprzedniego kroku", "Zbierz nowy pomiar i zbuduj wiersz H", "Policz wzmocnienie K z P i H", "Popraw estymatę o K × błąd predykcji", "Zaktualizuj macierz P"], "wyjasnienie": "To forma kowariancyjna, najczęściej stosowana ze względu na niewielki koszt obliczeń."}, {"id": "q2-14", "q": 2, "typ": "fiszka", "poziom": 2, "zrodlo": "sekcja 07", "pytanie": "Jak wystartować MNK rekurencyjną?", "odpowiedz": "Są trzy sposoby. Można przyjąć estymatę a priori razem z jej macierzą P. Można policzyć jednokrotną MNK na pierwszej paczce danych i od niej kontynuować. Można też przyjąć bardzo małe wartości początkowe parametrów i P₀ = α·I z bardzo dużym α, co oznacza „nic nie wiem”."}, {"id": "q2-15", "q": 2, "typ": "pf", "poziom": 2, "zrodlo": "sekcja 07", "twierdzenie": "Duża wartość początkowa macierzy P₀ oznacza, że ufamy estymacie początkowej.", "prawda": false, "wyjasnienie": "Jest odwrotnie: duże P₀ to duża niepewność. Wzmocnienie jest wtedy duże i pierwsze pomiary mocno przesuwają estymatę. P maleje z każdym pomiarem."}, {"id": "q2-16", "q": 2, "typ": "pf", "poziom": 2, "zrodlo": "sekcja 07", "twierdzenie": "Sekwencyjna MNK wystartowana z jednokrotnej estymacji daje po wszystkich pomiarach tę samą estymatę co jednokrotna MNK na całych danych.", "prawda": true, "wyjasnienie": "To ta sama metoda zorganizowana inaczej: liczy wynik po kawałku, wykorzystując poprzednie obliczenia. Przy starcie z dużym P₀ wynik jest bardzo bliski, ale nie identyczny."}, {"id": "q2-17", "q": 2, "typ": "dopytka", "poziom": 1, "zrodlo": "sekcja 01", "pytanie": "Jakie odmiany metody najmniejszych kwadratów Pan zna?", "odpowiedz": "Jednokrotną, gdy wszystkie pomiary są dostępne naraz. Ważoną, gdy pomiary mają różną dokładność. Z pomiarami dokładnymi, gdzie część pomiarów jest ograniczeniem i używa się mnożników Lagrange'a. Wreszcie sekwencyjną, czyli rekurencyjną, gdy pomiary przychodzą kolejno i estymata jest poprawiana po każdym z nich."}, {"id": "q2-18", "q": 2, "typ": "dopytka", "poziom": 3, "zrodlo": "uzupełnienie (pyt. 38)", "pytanie": "Co, jeśli parametry obiektu zmieniają się w czasie?", "odpowiedz": "Zwykła MNK rekurencyjna z czasem przestaje reagować, bo P maleje i każdy nowy pomiar waży coraz mniej. Dodaje się wtedy współczynnik zapominania λ nieco mniejszy od 1, np. 0,98: starsze pomiary tracą wagę wykładniczo i estymator nadąża za zmianami. Tak działa identyfikacja w sterowaniu adaptacyjnym."}, {"id": "q20-01", "q": 20, "typ": "fakt", "poziom": 1, "zrodlo": "sekcja 01", "tytul": "Filtr Kalmana w trzech zdaniach", "tresc": "Filtr estymuje stan liniowego obiektu z zaszumionych pomiarów. W każdym kroku przewiduje stan modelem, a potem koryguje go pomiarem. Waga korekty, czyli wzmocnienie, wynika z porównania niepewności modelu Q z niepewnością pomiaru R."}, {"id": "q20-02", "q": 20, "typ": "fiszka", "poziom": 1, "zrodlo": "sekcja 03", "pytanie": "Co EKF robi inaczej niż zwykły filtr Kalmana?", "odpowiedz": "Do przewidywania stanu i pomiaru używa pełnego modelu nieliniowego. Do przenoszenia niepewności P i liczenia wzmocnienia używa jakobianów, czyli macierzy pochodnych modelu, liczonych w każdym kroku w bieżącej estymacie. W skrócie: linearyzuje model co krok wokół tego, gdzie jest estymata."}, {"id": "q20-03", "q": 20, "typ": "porownanie", "poziom": 2, "zrodlo": "sekcja 04", "tytul": "Filtr Kalmana a rozszerzony filtr Kalmana", "kolumny": ["KF", "EKF"], "wiersze": [["Model", "liniowy", "nieliniowy"], ["Macierze do P i K", "stałe A, C", "jakobiany liczone co krok"], ["Wzmocnienie", "można policzyć z góry", "tylko na bieżąco, zależy od estymaty"], ["Optymalność", "optymalny przy szumach gaussowskich", "przybliżenie, bez gwarancji zbieżności"]]}, {"id": "q20-04", "q": 20, "typ": "fiszka", "poziom": 1, "zrodlo": "sekcja 04", "pytanie": "Jakie są podobieństwa KF i EKF?", "odpowiedz": "Ten sam cykl predykcja–korekcja i ten sam wzór korekty: estymata plus wzmocnienie razy innowacja, czyli różnica między pomiarem a przewidywaniem. Te same nastawy Q i R. W obu filtrach macierz P to deklarowana niepewność estymaty."}, {"id": "q20-05", "q": 20, "typ": "pf", "poziom": 2, "zrodlo": "sekcja 05", "twierdzenie": "Zwykły KF z modelem zlinearyzowanym raz daje daleko od punktu linearyzacji jedynie bardziej zaszumioną estymatę.", "prawda": false, "wyjasnienie": "Daje obciążenie, czyli błąd systematyczny (w przykładzie −0,094), i do tego zaniża własną niepewność: deklarował odchylenie 0,019 przy faktycznym błędzie 0,086."}, {"id": "q20-06", "q": 20, "typ": "luka", "poziom": 1, "zrodlo": "sekcja 03", "zdanie": "W EKF jakobiany modelu liczy się w ___.", "opcje": ["bieżącej estymacie stanu", "punkcie pracy z projektu", "wartości zadanej"], "poprawna": 0, "wyjasnienie": "Styczna jest stawiana tam, gdzie filtr myśli, że jest obiekt. Dzięki temu EKF działa w całym zakresie pracy, ale przy złej estymacie styczna trafia w złe miejsce."}, {"id": "q20-07", "q": 20, "typ": "fiszka", "poziom": 3, "zrodlo": "sekcja 06", "pytanie": "Jak dochodzi do rozbieżności EKF?", "odpowiedz": "Zła estymata daje styczną w złym miejscu, a więc złe wzmocnienie. Najgroźniejszy jest filtr zbyt pewny siebie: przy małym P i za małym Q prawie przestaje słuchać pomiarów i błąd narasta. W przykładzie P₀ = 10⁻⁴ i Q mniejsze o 6 rzędów zwiększyły błąd 80 razy."}, {"id": "q20-08", "q": 20, "typ": "zapamietaj", "poziom": 1, "zrodlo": "sekcja 06", "haslo": "Q w EKF dobiera się z zapasem.", "rozwiniecie": "Musi pomieścić nie tylko niepewność obiektu, ale też błąd samej linearyzacji."}, {"id": "q20-09", "q": 20, "typ": "fakt", "poziom": 2, "zrodlo": "sekcja 07", "tytul": "Estymacja parametru przez rozszerzenie stanu", "tresc": "Nieznany parametr dopisuje się do wektora stanu jako wielkość o zerowej pochodnej, a EKF estymuje go razem ze stanem. W przykładzie zatkanie odpływu, czyli spadek współczynnika wypływu o 35%, filtr wykrył z dokładnością 5% po 6,3 s, mając tylko jeden pomiar poziomu."}, {"id": "q20-10", "q": 20, "typ": "pf", "poziom": 2, "zrodlo": "sekcja 07", "twierdzenie": "Rozszerzenie stanu o nieznany parametr czyni model nieliniowym, nawet gdy obiekt był liniowy.", "prawda": true, "wyjasnienie": "Parametr mnoży się ze stanem, np. k·h, a iloczyn dwóch zmiennych stanu jest nieliniowy. Dlatego estymacja parametrów on-line to naturalne zastosowanie EKF."}, {"id": "q20-11", "q": 20, "typ": "fiszka", "poziom": 3, "zrodlo": "sekcja 05", "pytanie": "Czy naprawdę trzeba liczyć jakobian w każdym kroku?", "odpowiedz": "Tak, jeśli obiekt pracuje w szerokim zakresie. W przykładzie zbiorników pochodna ∂f₁/∂h₁ zmieniała się w trakcie przebiegu od −1,15 do −0,31, czyli prawie czterokrotnie. Jedna stała linearyzacja myliłaby się wtedy systematycznie."}, {"id": "q20-12", "q": 20, "typ": "fiszka", "poziom": 2, "zrodlo": "sekcja 05", "pytanie": "Jak sprawdzić, czy filtrowi można wierzyć?", "odpowiedz": "Porównuję rzeczywisty błąd estymaty z pasem ±2σ wyliczonym z P. Wiarygodny filtr mieści się w pasie przez zdecydowaną większość czasu. W przykładzie zwykły KF na obiekcie nieliniowym był poza własnym pasem przez 53% czasu, a EKF ani razu."}, {"id": "q20-13", "q": 20, "typ": "pf", "poziom": 1, "zrodlo": "sekcja 04", "twierdzenie": "EKF jest optymalnym estymatorem stanu dla obiektów nieliniowych.", "prawda": false, "wyjasnienie": "EKF to przybliżenie: zastępuje model styczną w bieżącej estymacie. Optymalność w sensie minimalnej wariancji ma tylko zwykły filtr Kalmana dla obiektu liniowego z szumami gaussowskimi."}, {"id": "q20-14", "q": 20, "typ": "dopytka", "poziom": 2, "zrodlo": "sekcja 08", "pytanie": "Gdzie stosuje się rozszerzony filtr Kalmana?", "odpowiedz": "Wszędzie, gdzie model jest nieliniowy, a stan trzeba odtworzyć z pomiarów, np. w zbiornikach z wypływem grawitacyjnym. Drugie zastosowanie to estymacja parametrów on-line przez rozszerzenie stanu, potrzebna w sterowaniu adaptacyjnym. Trzecie to diagnostyka: zmiana estymowanego parametru, jak zatkany odpływ, sygnalizuje uszkodzenie."}, {"id": "q20-15", "q": 20, "typ": "dopytka", "poziom": 2, "zrodlo": "sekcja 08", "pytanie": "Kiedy wystarczy zwykły filtr Kalmana?", "odpowiedz": "Gdy obiekt jest liniowy albo pracuje blisko jednego punktu pracy. Wtedy zwykły filtr jest prostszy, wzmocnienie można policzyć z góry i ma gwarancję optymalności. W przykładzie blisko punktu linearyzacji jego błąd był kilkukrotnie mniejszy niż daleko od niego."}, {"id": "q40-01", "q": 40, "typ": "fakt", "poziom": 1, "zrodlo": "sekcja 01", "tytul": "Filtr Kalmana jako obserwator", "tresc": "Filtr Kalmana ma tę samą strukturę co obserwator Luenbergera: model obiektu plus korekta proporcjonalna do różnicy między pomiarem a przewidywaniem. Różnica polega na tym, że wzmocnienia się nie wybiera, tylko wylicza z Q, czyli jak bardzo obiekt odchodzi od modelu, i R, czyli jak szumi czujnik. Wynik minimalizuje średni kwadrat błędu estymaty."}, {"id": "q40-02", "q": 40, "typ": "kroki", "poziom": 1, "zrodlo": "sekcja 02", "tytul": "Jeden krok filtru Kalmana", "kroki": ["Przewidź stan modelem i sterowaniem", "Przewidź niepewność P", "Policz wzmocnienie K", "Porównaj pomiar z przewidywaniem", "Popraw estymatę o K × innowacja", "Zaktualizuj niepewność P"], "wyjasnienie": "Pierwsze dwa kroki to predykcja, pozostałe to korekcja pomiarem."}, {"id": "q40-03", "q": 40, "typ": "zapamietaj", "poziom": 1, "zrodlo": "sekcja 01", "haslo": "Cztery role filtru: stan, zakłócenie, diagnostyka, fuzja.", "rozwiniecie": "Stan dla regulatora, wielkości spoza modelu obiektu (zakłócenia i parametry), sygnał diagnostyczny z innowacji i łączenie czujników."}, {"id": "q40-04", "q": 40, "typ": "fiszka", "poziom": 2, "zrodlo": "sekcja 03", "pytanie": "Czym jest struktura LQG i zasada separacji?", "odpowiedz": "LQG to regulator LQR, który zamiast niemierzonego stanu dostaje estymatę z filtru Kalmana. Zasada separacji mówi, że regulator i filtr można projektować osobno, a bieguny całego układu to suma biegunów regulatora i biegunów filtru. W przykładzie zgadzało się to co do ostatniego bitu."}, {"id": "q40-05", "q": 40, "typ": "pf", "poziom": 3, "zrodlo": "sekcja 03", "twierdzenie": "Dzięki zasadzie separacji LQG zachowuje gwarantowane zapasy stabilności LQR.", "prawda": false, "wyjasnienie": "Separacja dotyczy biegunów, nie odporności. Po dołożeniu filtru zapas fazy spadł z 79° do 46°, a minimalna odległość od punktu krytycznego z 1,0 do 0,61."}, {"id": "q40-06", "q": 40, "typ": "fiszka", "poziom": 2, "zrodlo": "sekcja 05", "pytanie": "Jak filtr Kalmana pomaga skompensować niemierzone zakłócenie?", "odpowiedz": "Model rozszerza się o zakłócenie jako stały stan, filtr je estymuje, a regulator odejmuje estymatę od sterowania. W przykładzie IAE spadło z 13,68 do 0,41, a uchyb ustalony praktycznie do zera. Ten sam rozszerzony obserwator musi dawać i stan, i zakłócenie: dołożenie estymaty zakłócenia do zwykłego filtru zostawiło uchyb −0,16."}, {"id": "q40-07", "q": 40, "typ": "fiszka", "poziom": 2, "zrodlo": "sekcja 06", "pytanie": "Jak innowacja filtru służy do diagnostyki?", "odpowiedz": "Innowacja to różnica między pomiarem a przewidywaniem filtru. Przy poprawnym modelu jest białym szumem o zerowej średniej. Po usterce, np. wycieku, jej średnia odjeżdża, a znormalizowany kwadrat innowacji (NIS) skoczył w przykładzie z 0,97 do 16,6, choć na wyjściu regulowanym nie było nic widać, bo regulator maskował usterkę."}, {"id": "q40-08", "q": 40, "typ": "luka", "poziom": 1, "zrodlo": "sekcja 06", "zdanie": "Przy poprawnym modelu innowacja filtru Kalmana jest ___.", "opcje": ["białym szumem o średniej 0", "stałą dodatnią", "równa zeru w każdej próbce"], "poprawna": 0, "wyjasnienie": "Filtr wykorzystał już całą przewidywalną część sygnału, więc zostaje sam szum. Każda struktura w innowacji, jak przesunięta średnia, oznacza, że model przestał pasować do obiektu."}, {"id": "q40-09", "q": 40, "typ": "pf", "poziom": 2, "zrodlo": "sekcja 04", "twierdzenie": "Filtr Kalmana zawsze stawia bieguny obserwatora 3–10 razy szybciej niż bieguny regulatora.", "prawda": false, "wyjasnienie": "Przy realnym szumie czujnika filtr wybrał bieguny tylko ok. 1,4 razy szybsze, blisko minimum błędu estymaty (0,9×). Cały zakres reguły kciuka 3–10× daje większy błąd, bo szybki obserwator wzmacnia szum."}, {"id": "q40-10", "q": 40, "typ": "porownanie", "poziom": 2, "zrodlo": "sekcja 04", "tytul": "Filtr Kalmana a obserwator z alokacji biegunów", "kolumny": ["Alokacja (Luenberger)", "Filtr Kalmana"], "wiersze": [["Skąd wzmocnienie", "z wybranych biegunów", "wyliczone z Q i R"], ["Szum", "nieuwzględniony w projekcie", "uwzględniony wprost"], ["RMS błędu h₁ w przykładzie", "0,0385 (3×), 0,2368 (10×)", "0,0137"], ["Wiedza o własnej dokładności", "brak", "P to kowariancja błędu"]]}, {"id": "q40-11", "q": 40, "typ": "fiszka", "poziom": 3, "zrodlo": "sekcja 07", "pytanie": "Co jest groźniejsze: niedoszacowanie czy przeszacowanie szumu czujnika R?", "odpowiedz": "Niedoszacowanie: filtr za bardzo ufa pomiarom, przepuszcza szum do estymaty i deklaruje fałszywą dokładność. W przykładzie błąd 0,0384 przy deklarowanych 0,0078 i siedem razy więcej ruchu zaworem. Przeszacowanie robi filtr jedynie wolniejszym i mniej efektywnym."}, {"id": "q40-12", "q": 40, "typ": "fakt", "poziom": 2, "zrodlo": "sekcja 03", "tytul": "Filtr zdejmuje szum z toru sprzężenia", "tresc": "Regulator działający na estymacie zamiast na surowym pomiarze dostaje mniej szumu. W przykładzie odchylenie sterowania spadło z 0,0076 do 0,0056, więc zawór mniej się zużywa. Cena: mierzony poziom waha się nieco bardziej, odchylenie wzrosło z 0,0015 do 0,0036."}, {"id": "q40-13", "q": 40, "typ": "pf", "poziom": 1, "zrodlo": "sekcja 03", "twierdzenie": "Filtr Kalmana może odtworzyć wielkość, której w ogóle nie mierzymy.", "prawda": true, "wyjasnienie": "Wystarczy, że układ jest obserwowalny. W przykładzie poziom h₁ odtwarzano z pomiaru samego h₂; rzeczywisty błąd 0,0126 zgadzał się z deklarowanym przez filtr 0,0131."}, {"id": "q40-14", "q": 40, "typ": "dopytka", "poziom": 2, "zrodlo": "sekcja 08", "pytanie": "Gdzie filtr Kalmana pracuje w regulatorze predykcyjnym?", "odpowiedz": "MPC w każdym kroku startuje predykcję od bieżącego stanu, którego zwykle nie mierzymy w całości. Filtr Kalmana dostarcza ten stan, a w wersji rozszerzonej także estymatę zakłócenia, dzięki czemu regulator predykcyjny nie ma uchybu ustalonego przy stałym zakłóceniu."}, {"id": "q40-15", "q": 40, "typ": "dopytka", "poziom": 3, "zrodlo": "uzupełnienie", "pytanie": "Czym filtr Kalmana różni się od zwykłego filtru dolnoprzepustowego?", "odpowiedz": "Filtr dolnoprzepustowy tylko wygładza sygnał i przy okazji go opóźnia, nie wiedząc nic o obiekcie. Filtr Kalmana korzysta z modelu i ze znajomości sterowania, więc odróżnia zmianę wywołaną sterowaniem od szumu, a do tego odtwarza wielkości niemierzone i podaje własną niepewność."}, {"id": "q40-16", "q": 40, "typ": "fiszka", "poziom": 2, "zrodlo": "sekcja 01", "pytanie": "Na czym polega fuzja czujników filtrem Kalmana?", "odpowiedz": "Filtr łączy pomiary z kilku czujników, ważąc każdy według jego niepewności R, np. szybki zaszumiony czujnik z wolnym, ale dokładnym. W przykładzie zbiorników rzadki dokładny pomiar wystarczał sam i fuzja nie dała poprawy, co też jest wynikiem."}];
+const TOPICS = {
+  2:{t:"Metoda najmniejszych kwadratów",h:90},
+  20:{t:"EKF a filtr Kalmana",h:0},
+  21:{t:"Komunikacja w systemach rozproszonych",h:195},
+  27:{t:"PCA w diagnostyce",h:325},
+  31:{t:"Kernel PCA",h:150},
+  40:{t:"Filtr Kalmana w sterowaniu",h:235},
+  44:{t:"Analiza wrażliwości w LP",h:45},
+  47:{t:"Predykat, reguła, klauzula",h:275}
+};
+const PAGES = {2:"pytanie_02_metoda_najmniejszych_kwadratow.html",20:"pytanie_20_ekf.html",21:"pytanie_21_komunikacja.html",27:"pytanie_27_model_pca_diagnostyka.html",31:"pytanie_31_kernel_pca.html",40:"pytanie_40_filtr_kalmana.html",44:"pytanie_44_wrazliwosc.html",47:"pytanie_47_predykat_reguly_klauzule.html"};
+const KIND = {fakt:"Fakt",fiszka:"Fiszka",dopytka:"Komisja dopytuje",pf:"Prawda czy fałsz",luka:"Uzupełnij",porownanie:"Porównanie",kroki:"Ułóż w kolejności",zapamietaj:"Zapamiętaj"};
+const W_SEEN=[5,3.5,2,1,.5,.25], W_NEW=4, MILESTONE=12, KEY="feed-egz-v1";
+
+/* ---------- state ---------- */
+const todayStr=()=>new Date().toISOString().slice(0,10);
+let S={c:{},n:0,streak:0,best:0,day:todayStr(),today:0,on:null,ses:{n:0,ok:0}};
+try{const raw=localStorage.getItem(KEY); if(raw){Object.assign(S,JSON.parse(raw));}}catch(e){}
+if(S.day!==todayStr()){S.day=todayStr();S.today=0;}
+S.ses={n:0,ok:0};
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const allQ=Object.keys(TOPICS).map(Number);
+if(!Array.isArray(S.on)||!S.on.length) S.on=allQ.slice();
+if(!Array.isArray(S.known)) S.known=S.on.slice();
+allQ.forEach(q=>{if(!S.known.includes(q)){S.known.push(q); if(!S.on.includes(q)) S.on.push(q);}});
+
+/* ---------- picking ---------- */
+let lastQ=null, sinceMs=0;
+function pick(){
+  let pool=CARDS.filter(c=>S.on.includes(c.q));
+  if(!pool.length) pool=CARDS;
+  const cool=Math.min(7,pool.length-1);
+  let cand=pool.filter(c=>{const st=S.c[c.id];return !st||S.n-st.l>cool;});
+  if(!cand.length) cand=pool;
+  const other=cand.filter(c=>c.q!==lastQ);
+  if(other.length) cand=other;
+  const w=cand.map(c=>{const st=S.c[c.id];return st&&st.s?W_SEEN[st.b]:W_NEW;});
+  let r=Math.random()*w.reduce((a,b)=>a+b,0);
+  for(let i=0;i<cand.length;i++){r-=w[i]; if(r<=0) return cand[i];}
+  return cand[cand.length-1];
+}
+
+/* ---------- helpers ---------- */
+const el=(tag,cls,html)=>{const e=document.createElement(tag); if(cls) e.className=cls; if(html!=null) e.innerHTML=html; return e;};
+const esc=s=>String(s).replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]));
+const feed=document.getElementById('feed');
+
+function shell(c){
+  const sec=el('section','card'); sec.style.setProperty('--h',TOPICS[c.q].h); sec.dataset.id=c.id;
+  const w=el('div','wrap');
+  w.appendChild(el('div','meta',`<span class="qn">${c.q}</span><span>${esc(TOPICS[c.q].t)}</span>`+(PAGES[c.q]?`<a class="op" href="${PAGES[c.q]}">opracowanie</a>`:'')));
+  w.appendChild(el('div','kind',KIND[c.typ]));
+  const body=el('div','body'); w.appendChild(body); sec.appendChild(w);
+  return {sec,body,w};
+}
+function selfRate(body,c,labels){
+  const a=el('div','act');
+  const no=el('button','',labels?labels[0]:'Jeszcze raz'), yes=el('button','yes',labels?labels[1]:'Umiem');
+  no.onclick=()=>{a.classList.add('rated');rate(c,false);};
+  yes.onclick=()=>{a.classList.add('rated');rate(c,true);};
+  a.append(no,yes); body.appendChild(a); return a;
+}
+function revealBox(body,c,html,cls){
+  const box=el('div','reveal shut'); const ans=el('div','ans '+(cls||''),html); const cover=el('button','cover','Powiedz na głos, potem dotknij');
+  box.append(ans,cover); body.appendChild(box);
+  const act=selfRate(body,c,['Nie umiałem','Umiałem']); act.style.visibility='hidden';
+  cover.onclick=()=>{box.classList.remove('shut'); act.style.visibility='visible';};
+}
+
+/* ---------- renderers ---------- */
+const R={
+  fakt(c,b){b.appendChild(el('h2','',esc(c.tytul))); b.appendChild(el('p','',esc(c.tresc)));
+    if(c.analogia) b.appendChild(el('div','analogy','<b>Obrazowo:</b> '+esc(c.analogia))); selfRate(b,c);},
+  zapamietaj(c,b){b.appendChild(el('div','haslo',esc(c.haslo))); if(c.rozwiniecie) b.appendChild(el('p','',esc(c.rozwiniecie))); selfRate(b,c,['Jeszcze raz','Mam to']);},
+  fiszka(c,b){b.appendChild(el('div','prompt',esc(c.pytanie))); revealBox(b,c,'<p>'+esc(c.odpowiedz)+'</p>');},
+  dopytka(c,b){b.appendChild(el('div','prompt','„'+esc(c.pytanie)+'”')); revealBox(b,c,'<p>'+esc(c.odpowiedz)+'</p>','quote');},
+  porownanie(c,b){b.appendChild(el('h2','',esc(c.tytul)));
+    const g=el('div','cmp'); g.appendChild(el('div','hd',''));
+    c.kolumny.forEach(k=>g.appendChild(el('div','hd',esc(k))));
+    c.wiersze.forEach(r=>{g.appendChild(el('div','rl',esc(r[0]))); g.appendChild(el('div','',esc(r[1]))); g.appendChild(el('div','',esc(r[2])));});
+    b.appendChild(g); selfRate(b,c);},
+  pf(c,b){b.appendChild(el('div','prompt',esc(c.twierdzenie)));
+    const o=el('div','opts'); const why=el('div','why');
+    [['Prawda',true],['Fałsz',false]].forEach(([t,v])=>{const bt=el('button','opt',t); bt.onclick=()=>{
+      const good=v===c.prawda; o.querySelectorAll('button').forEach(x=>x.disabled=true);
+      bt.classList.add(good?'ok':'no');
+      why.innerHTML=`<span class="verdict ${good?'ok':'no'}">${good?'Dobrze.':'Nie tym razem.'}</span> ${c.prawda?'To prawda.':'To fałsz.'} ${esc(c.wyjasnienie)}`;
+      rate(c,good,1300+c.wyjasnienie.length*22);}; o.appendChild(bt);});
+    b.append(o,why);},
+  luka(c,b){const parts=esc(c.zdanie).split('___');
+    const p=el('div','prompt',parts[0]+'<span class="blank">&nbsp;</span>'+(parts[1]||'')); b.appendChild(p);
+    const o=el('div','opts'), why=el('div','why');
+    const order=c.opcje.map((t,i)=>i).sort(()=>Math.random()-.5);
+    order.forEach(i=>{const bt=el('button','opt',esc(c.opcje[i])); bt.onclick=()=>{
+      const good=i===c.poprawna; o.querySelectorAll('button').forEach(x=>x.disabled=true);
+      bt.classList.add(good?'ok':'no'); if(!good) o.children[order.indexOf(c.poprawna)].classList.add('ok');
+      p.querySelector('.blank').textContent=c.opcje[c.poprawna];
+      why.innerHTML=`<span class="verdict ${good?'ok':'no'}">${good?'Dobrze.':'Nie tym razem.'}</span> ${esc(c.wyjasnienie)}`;
+      rate(c,good,1300+c.wyjasnienie.length*22);}; o.appendChild(bt);});
+    b.append(o,why);},
+  kroki(c,b){b.appendChild(el('h2','',esc(c.tytul)));
+    const done=el('ol','done'), pool=el('div','pool'), why=el('div','why');
+    b.append(done,pool,why); let next=0, miss=0;
+    const order=c.kroki.map((t,i)=>i).sort(()=>Math.random()-.5);
+    order.forEach(i=>{const bt=el('button','step',esc(c.kroki[i])); bt.onclick=()=>{
+      if(i===next){bt.remove(); done.appendChild(el('li','',esc(c.kroki[i]))); next++;
+        if(next===c.kroki.length){const good=miss<=1;
+          why.innerHTML=`<span class="verdict ${good?'ok':'no'}">${miss?`Pomyłki: ${miss}.`:'Bez pomyłki.'}</span> ${esc(c.wyjasnienie||'')}`;
+          rate(c,good,1600+(c.wyjasnienie||'').length*22);}}
+      else{miss++; bt.classList.remove('shake'); void bt.offsetWidth; bt.classList.add('shake');}}; pool.appendChild(bt);});
+    b.insertBefore(el('p','hint','Dotykaj kroków od pierwszego do ostatniego.'),done);}
+};
+
+function renderCard(c){const {sec,body}=shell(c); R[c.typ](c,body); return sec;}
+
+function introCard(){
+  const sec=el('section','card'); sec.style.setProperty('--h',150);
+  const w=el('div','wrap'); const b=el('div','body');
+  b.innerHTML=`<div class="big">Przewijaj w górę.</div>
+  <p>Każda karta to jedna rzecz do powiedzenia na obronie. Odpowiadaj na głos, zanim odsłonisz odpowiedź.</p>
+  <p>Karty, których nie umiesz, wracają szybciej. Te opanowane pojawiają się coraz rzadziej, ale nie znikają.</p>
+  <p class="hint" style="text-align:left">Wersja próbna: ${Object.keys(TOPICS).length} pytań, ${CARDS.length} kart.</p>`;
+  w.appendChild(b); sec.appendChild(w); return sec;
+}
+function milestoneCard(){
+  const sec=el('section','card'); sec.style.setProperty('--h',48);
+  const w=el('div','wrap'); const b=el('div','body');
+  const weak=weakest();
+  b.innerHTML=`<div class="big">${S.ses.n} kart za Tobą.</div>
+   <div class="stat"><div><b>${S.ses.ok}</b><span>umiałeś</span></div><div><b>${S.best}</b><span>najdłuższa seria</span></div></div>
+   ${weak?`<p>Najwięcej do powtórki: <b>${weak.q}. ${esc(TOPICS[weak.q].t)}</b> (${weak.pct}% opanowane).</p>`:''}
+   <p class="hint" style="text-align:left">Przewiń dalej, feed się nie kończy.</p>`;
+  w.appendChild(b); sec.appendChild(w); return sec;
+}
+function mastery(q){const cs=CARDS.filter(c=>c.q===q); const m=cs.filter(c=>S.c[c.id]&&S.c[c.id].b>=3).length; return Math.round(100*m/cs.length);}
+function weakest(){let best=null; S.on.forEach(q=>{const p=mastery(q); if(!best||p<best.pct) best={q,pct:p};}); return best;}
+
+/* ---------- feed mechanics ---------- */
+let sinceMile=0;
+function append(k){for(let i=0;i<k;i++){
+  if(sinceMile>=MILESTONE&&S.ses.n>0){feed.appendChild(milestoneCard()); sinceMile=0; continue;}
+  const c=pick(); lastQ=c.q; S.n++; S.c[c.id]=Object.assign({b:0,l:0,s:0},S.c[c.id]||{}); S.c[c.id].l=S.n;
+  feed.appendChild(renderCard(c)); sinceMile++;}
+  save();}
+function rate(c,good,delay){
+  const st=(S.c[c.id]=S.c[c.id]||{b:0,l:S.n,s:0}); st.s=(st.s||0)+1;
+  st.b=good?Math.min(st.b+1,5):0;
+  S.ses.n++; S.today++; if(good){S.ses.ok++; S.streak++; S.best=Math.max(S.best,S.streak);} else S.streak=0;
+  if(navigator.vibrate) try{navigator.vibrate(good?12:[8,40,8])}catch(e){}
+  hud(); save();
+  setTimeout(()=>advance(),delay||420);
+}
+function current(){const i=Math.round(feed.scrollTop/feed.clientHeight); return i;}
+function advance(){const i=current(); const next=feed.children[i+1]; if(!next) append(3);
+  feed.scrollTo({top:(i+1)*feed.clientHeight,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});}
+function hud(){const s=document.getElementById('streak'); s.textContent='🔥 '+S.streak; s.classList.toggle('hot',S.streak>=5);
+  document.getElementById('today').textContent='dziś '+S.today;}
+let ticking=false;
+feed.addEventListener('scroll',()=>{if(ticking) return; ticking=true; requestAnimationFrame(()=>{ticking=false;
+  if(current()>=feed.children.length-3) append(4);});});
+
+/* ---------- filter sheet ---------- */
+const sheet=document.getElementById('sheet'), qlist=document.getElementById('qlist');
+let draft=[];
+function drawList(){qlist.innerHTML='';
+  allQ.forEach(q=>{const on=draft.includes(q); const r=el('button','qrow'+(on?' on':''));
+    r.style.setProperty('--qc',`hsl(${TOPICS[q].h} var(--qs) var(--ql))`);
+    r.innerHTML=`<span class="box">${on?'✓':''}</span><span class="nm"><b>${q}.</b> ${esc(TOPICS[q].t)}</span><span class="bar"><i style="width:${mastery(q)}%"></i></span>`;
+    r.onclick=()=>{draft=on?draft.filter(x=>x!==q):draft.concat(q); drawList();}; qlist.appendChild(r);});}
+document.getElementById('filterBtn').onclick=()=>{draft=S.on.slice(); drawList(); sheet.classList.add('open');};
+sheet.addEventListener('click',e=>{if(e.target===sheet) sheet.classList.remove('open');});
+document.getElementById('allBtn').onclick=()=>{draft=allQ.slice(); drawList();};
+document.getElementById('applyBtn').onclick=()=>{
+  S.on=draft.length?draft:allQ.slice(); sheet.classList.remove('open');
+  const i=current(); while(feed.children.length>i+1) feed.lastChild.remove();
+  append(4); save(); advance();};
+
+/* ---------- start ---------- */
+feed.appendChild(introCard()); append(5); hud();
+</script>
+</body>
+</html>
