@@ -1,0 +1,23 @@
+/* dymki meowli: Opowiedz własnymi słowami */
+.chat{display:flex;gap:14px;align-items:flex-end;margin:18px 0}
+.chat .mw{flex:0 0 76px;position:relative;height:84px}
+.chat .mw img{position:absolute;left:0;bottom:0;width:76px;height:auto}
+.chat .mw .m1{display:none}
+.chat:has(details[open]) .mw .m0{display:none}
+.chat:has(details[open]) .mw .m1{display:block}
+details.bub{position:relative;flex:1;min-width:0;background:var(--card);border:1.5px solid var(--ink);border-radius:14px}
+details.bub::before{content:"";position:absolute;left:-9px;bottom:20px;width:15px;height:15px;background:var(--card);
+  border-left:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);transform:rotate(45deg)}
+details.bub>summary{cursor:pointer;list-style:none;padding:11px 16px;display:flex;gap:4px 10px;align-items:baseline;flex-wrap:wrap}
+details.bub>summary::-webkit-details-marker{display:none}
+details.bub>summary::after{content:"▸";margin-left:auto;color:var(--teal)}
+details.bub[open]>summary::after{content:"▾"}
+details.bub>summary:focus-visible{outline:2px solid var(--teal);outline-offset:2px;border-radius:12px}
+details.bub .tg{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);font-weight:600}
+details.bub .sub{font-size:13.5px;color:var(--mut)}
+details.bub .tx{padding:0 16px 14px}
+details.bub .tx p{margin:0;font-size:16.5px;line-height:1.6}
+details.bub .tx ol{margin:0;padding-left:22px}
+details.bub .tx li{margin:0 0 7px;line-height:1.55}
+@media (max-width:600px){.chat{gap:10px}.chat .mw{flex-basis:52px;height:58px}.chat .mw img{width:52px}details.bub>summary{padding:10px 12px}details.bub .tx{padding:0 12px 12px}}
+@media print{.chat .mw{display:none}details.bub{border-color:#999}}

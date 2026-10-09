@@ -123,7 +123,9 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
 .avatar{float:right;width:64px;height:64px;border-radius:50%;margin:2px 0 10px 18px;
         box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--line)}
 header::after{content:"";display:block;clear:both}
+ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{color:var(--teal)}
 </style>
+<link rel="stylesheet" href="assets/chat.css">
 </head>
 <body>
 <div class="wrap">
@@ -142,37 +144,14 @@ header::after{content:"";display:block;clear:both}
        margin:12px 0 0;padding-top:11px;border-top:1px solid var(--line);line-height:1.65}
 .inter .odczyt b{color:var(--ink);font-weight:500}
 .inter .odczyt.staly3{min-height:104px}
-/*stickybar-start*/
-.topnav{display:none}
-#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(238,241,246,.96);
-  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-#sbar .in{max-width:860px;margin:0 auto;padding:9px 22px 8px}
-#sbar .r1{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
-#sbar a{color:var(--ink);text-decoration:none;text-transform:uppercase;letter-spacing:.1em;white-space:nowrap;
-  border-bottom:1px solid var(--line);padding-bottom:1px}
-#sbar a:hover,#sbar a:focus-visible{border-color:var(--ink);outline:none}
-#sbar .nr{color:var(--mut);white-space:nowrap}
-#sbar .pc{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--teal);font-weight:500;white-space:nowrap}
-#sbar .qt{margin:5px 0 0;font-family:var(--body);font-size:15px;line-height:1.3;font-style:italic;color:var(--ink)}
-#sbar .trk{position:absolute;left:0;right:0;bottom:-1px;height:3px;background:transparent}
-#sbar .trk i{display:block;height:100%;width:0;background:var(--teal)}
-html{scroll-padding-top:var(--sbh,84px)}
-@media (max-width:600px){#sbar .in{padding:8px 16px 7px}#sbar .qt{font-size:14px}}
-@media print{#sbar{display:none}}
-/*stickybar-end*/
 </style>
 
-<nav class="topnav">
-  <a href="index.html">&larr; Repetytorium</a>
-  <span class="here">zagadnienie 34 z 50 &middot; komputerowe systemy sterowania</span>
-</nav>
+<nav class="jm" id="jm" aria-label="Nawigacja"><a class="jc" href="index.html">&larr; Lista</a></nav>
 
 <header>
   <img class="avatar" src="assets/meowl-tabby.png" width="64" height="64" alt="" decoding="async">
-  <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 34</p>
   <h1>Realizacja regulatora predykcyjnego w komputerowym systemie sterowania</h1>
   <p class="quest">Przedstaw jeden z możliwych sposobów realizacji regulatora predykcyjnego w komputerowym systemie sterowania.</p>
-  <p class="src">Komputerowe systemy sterowania i wspomagania decyzji &middot; opracowanie własne; cała struktura — pętla PID w sterowniku, warstwa nadrzędna z MPC, utrata łączności i przełączanie trybów — zasymulowana samodzielnie na obiekcie dwóch zbiorników z zagadnień 6–8</p>
 </header>
 
 <section>
@@ -727,19 +706,29 @@ html{scroll-padding-top:var(--sbh,84px)}
 </section>
 
 <section>
-<h2><span class="num">10</span> Ściąga — odpowiedź w minutę</h2>
+<h2><span class="num">10</span> Opowiedz własnymi słowami</h2>
 <div class="rail"></div>
 
-<div class="box key">
-<span class="lbl">Szkielet wypowiedzi</span>
-<p><strong>1. Wybór realizacji.</strong> Aplikacja na stacji nadrzędnej, pracująca w kaskadzie nad pętlami PID w sterowniku; komunikacja przez OPC UA; MPC co około sekundy, pętle podrzędne co 0,1 s.<br>
-<strong>2. Podział ról.</strong> Sterownik: szybka regulacja, tryby, zachowanie przy utracie łączności. Stacja: model, estymator, zadanie optymalizacji. Warstwa wyżej: cele i limity. Blokady bezpieczeństwa: całkowicie niezależne.<br>
-<strong>3. Dlaczego kaskada.</strong> Szybkie zakłócenia po stronie urządzenia wykonawczego załatwia pętla podrzędna, zanim MPC zdąży je zobaczyć; awaria stacji nie zamraża zaworu, tylko wartość zadaną.<br>
-<strong>4. Cykl próbki.</strong> Odczyt → walidacja danych (jakość, zakres, zamrożony pomiar) → estymacja stanu i zakłócenia → QP → zapis pierwszego kroku → rejestracja planu i aktywnych ograniczeń.<br>
-<strong>5. Niezawodność.</strong> Brak nowego planu → kolejny krok poprzedniego; po kilku próbkach watchdog przełącza w tryb bezpieczny. Plan awaryjny jest za darmo, bo regulator i tak liczy cały ciąg sterowań.<br>
-<strong>6. Tryby.</strong> Ręczny, automatyczny, nadrzędny, doradczy; przejęcie bezuderzeniowe wymaga śledzenia rzeczywistego położenia urządzenia wykonawczego.<br>
-<strong>7. Uruchomienie.</strong> Najpierw pętle podrzędne, potem identyfikacja, strojenie na symulatorze, tryb doradczy, wąskie limity, dopiero pełna praca — i stały nadzór nad modelem.</p>
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-c-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-c-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 30 sekund</span><span class="sub">dla kogoś spoza automatyki</span></summary>
+<div class="tx"><p>„Regulator predykcyjny nie musi sterować zaworem bezpośrednio. Zwykle jest to program na osobnym komputerze, który co sekundę liczy, dokąd ma prowadzić proces, i przekazuje te wartości zadane sterownikowi, a ten szybko pilnuje zaworów. Jest jak kapitan, który wyznacza kurs, podczas gdy sternik na bieżąco koryguje kierownicę. Jeśli komputer z regulatorem przestanie działać, sterownik dalej utrzymuje proces, tylko już nie tak optymalnie. Operator zawsze może przejąć sterowanie.”</p></div></details>
 </div>
+
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-c-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-c-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 2 minuty</span><span class="sub">egzaminacyjna</span></summary>
+<div class="tx"><ol>
+<li><strong>Wybór realizacji:</strong> „Pytanie mówi o jednym z możliwych sposobów, więc wybieram aplikację na stacji nadrzędnej. Alternatywą jest blok funkcyjny w PLC lub DCS dla małych obiektów albo explicit MPC dla obiektów szybkich, ale wariant nadrzędny jest najczęstszy w przemyśle procesowym.”</li>
+<li><strong>Architektura:</strong> „Struktura jest kaskadowa. Stacja liczy co 1 s model, estymatę stanu i zadanie optymalizacji, a wynikiem są wartości zadane dla pętli PID w sterowniku pracujących co 0,1 s. Komunikacja idzie przez OPC UA, a blokady bezpieczeństwa są niezależne i regulator nie może ich obejść.”</li>
+<li><strong>Dlaczego kaskada:</strong> „MPC pracuje co sekundę i nie zdąży zareagować na szybkie zakłócenia, na przykład spadek ciśnienia w zasilaniu. Pętla przepływu usuwa je w ułamku sekundy, a gdyby MPC sterował zaworem wprost, odchyłka poziomu byłaby około siedem razy większa. Kaskada oddziela też awarię stacji od obiektu.”</li>
+<li><strong>Cykl próbki:</strong> „W jednej próbce regulator odczytuje i waliduje dane, czyli sprawdza znacznik czasu, jakość, zakres i zamrożenie pomiaru. Potem estymuje stan i zakłócenie, rozwiązuje zadanie QP, zapisuje pierwszy krok i rejestruje plan. Całość musi się zmieścić w budżecie jednej próbki zawsze, a nie średnio.”</li>
+<li><strong>Niezawodność:</strong> „Gdy nowego planu brak, sterownik wykonuje kolejny krok poprzedniego, bo regulator i tak liczy cały plan, a wykonuje tylko pierwszy krok. Ta strategia degraduje jakość łagodniej niż zamrożenie ostatniego sterowania. Po kilku próbkach bez sygnału życia watchdog przełącza w tryb bezpieczny i zgłasza alarm.”</li>
+<li><strong>Tryby pracy:</strong> „Wyróżniam tryby ręczny, automatyczny, nadrzędny i doradczy. Przejęcie musi być bezuderzeniowe, więc regulator stale śledzi rzeczywiste położenie urządzenia wykonawczego i startuje od jego bieżącej wartości. Operator ma zawsze pierwszeństwo przed regulatorem.”</li>
+<li><strong>Uruchomienie:</strong> „Najpierw porządkuje się pętle podrzędne, potem identyfikacja modelu i strojenie na symulatorze, następnie tryb doradczy i wąskie limity. Na koniec stały nadzór nad modelem przez resztę między pomiarem a prognozą, bo bez niego wdrożenia z czasem przestają działać.”</li>
+</ol></div></details>
+</div>
+
 </section>
 
 <section>
@@ -769,37 +758,18 @@ html{scroll-padding-top:var(--sbh,84px)}
 </section>
 
 <footer>
-Opracowanie własne w konwencji repetytorium, na kanwie typowej praktyki wdrożeniowej sterowania predykcyjnego w systemach DCS/SCADA: struktura kaskadowa nad pętlami regulacji bezpośredniej, komunikacja OPC, cykl pracy aplikacji nadrzędnej, walidacja danych pomiarowych, tryby pracy i przełączanie bezuderzeniowe, zachowanie przy utracie łączności, etapy uruchomienia i nadzór nad modelem.
-Teorię sterowania predykcyjnego omawia zagadnienie 23, hierarchiczny model warstwowy — 32, komunikację w systemach rozproszonych — 21 i 24, budowę systemu zdecentralizowanego — 33, identyfikację modelu — 1 i 2, estymację stanu i nadzór nad zgodnością modelu — 40, opóźnienia — 18.
-Wszystkie liczby policzono samodzielnie: obiekt dwóch zbiorników z zagadnień 6–8 z modelem zaworu i przepływu, pętla PID przepływu co 0,1 s, regulator predykcyjny co 1 s, symulacja obiektu z krokiem 0,05 s; badane scenariusze to spadek ciśnienia w zasilaniu, utrata łączności ze stacją nadrzędną i przełączenie z trybu ręcznego na automatyczny.
-<p class="backfoot"><a href="index.html">&larr; Powrót do listy zagadnień</a></p>
+  <p><strong style="color:var(--ink)">Źródła</strong></p>
+  <ol class="zr">
+<li>Opracowanie własne na kanwie typowej praktyki wdrożeniowej sterowania predykcyjnego w systemach DCS/SCADA: struktura kaskadowa nad pętlami regulacji bezpośredniej, komunikacja OPC, cykl pracy aplikacji nadrzędnej, walidacja danych pomiarowych, tryby pracy i przełączanie bezuderzeniowe, zachowanie przy utracie łączności, etapy uruchomienia i nadzór nad modelem.</li>
+<li>Wszystkie liczby policzono samodzielnie: obiekt dwóch zbiorników z modelem zaworu i przepływu, pętla PID przepływu co 0,1 s, regulator predykcyjny co 1 s, symulacja obiektu z krokiem 0,05 s; badane scenariusze to spadek ciśnienia w zasilaniu, utrata łączności ze stacją nadrzędną i przełączenie z trybu ręcznego na automatyczny.</li>
+</ol>
+
+  <p class="backfoot"><a href="index.html">&larr; Wróć do listy zagadnień</a></p>
 </footer>
 
 </div>
-<!--stickybar-js-start-->
-<script>
-(function(){
-  var q=document.querySelector('.quest'),ey=document.querySelector('.eyebrow'),h=document.querySelector('h1');
-  var m=ey&&ey.textContent.match(/pytanie\s+(\d+)/i), n=m?m[1]:'';
-  var bar=document.createElement('div'); bar.id='sbar'; bar.setAttribute('role','banner');
-  bar.innerHTML='<div class="in"><div class="r1"><a href="index.html">&larr; Lista</a><span class="nr"></span><span class="pc" aria-live="off">0%</span></div><p class="qt"></p></div><div class="trk"><i></i></div>';
-  bar.querySelector('.nr').textContent=n?'Pytanie '+n:'';
-  bar.querySelector('.qt').textContent=(q?q.textContent:(h?h.textContent:'')).trim();
-  document.body.insertBefore(bar,document.body.firstChild);
-  var fill=bar.querySelector('.trk i'),pc=bar.querySelector('.pc'),tick=false;
-  function size(){var hh=bar.offsetHeight;document.documentElement.style.setProperty('--sbh',(hh+12)+'px');document.body.style.paddingTop=hh+'px';}
-  function upd(){tick=false;var d=document.documentElement,max=d.scrollHeight-window.innerHeight;
-    var p=max>0?Math.min(1,Math.max(0,(window.pageYOffset||d.scrollTop)/max)):1;
-    var v=Math.round(p*100);fill.style.width=(p*100)+'%';pc.textContent=v+'%';}
-  function req(){if(!tick){tick=true;requestAnimationFrame(upd);}}
-  window.addEventListener('scroll',req,{passive:true});
-  window.addEventListener('resize',function(){size();req();});
-  window.addEventListener('load',function(){size();upd();});
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){size();upd();});
-  size();upd();
-})();
-</script>
-<!--stickybar-js-end-->
+<script src="assets/pytania.js"></script>
+<script src="assets/nav.js" defer></script>
 <script src="assets/meowl-egg.js" defer></script>
 </body>
 </html>

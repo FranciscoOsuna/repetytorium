@@ -146,7 +146,7 @@ p{margin:0 0 12px;max-width:62ch}
 .mascot{width:30px;height:30px;border-radius:50%;flex:none;object-fit:cover;box-shadow:0 0 0 2px var(--bg),0 0 0 3px var(--line)}
 .mascot.pop{animation:mpop .45s ease}
 @keyframes mpop{40%{transform:scale(1.22) rotate(-6deg)}100%{transform:none}}
-.intro-meowls{display:block;width:100%;max-height:30vh;object-fit:cover;object-position:50% 40%;border-radius:16px;margin:0 0 20px}
+.intro-meowls{display:block;width:100%;max-height:30vh;object-fit:contain;object-position:50% 100%;margin:0 0 20px}
 .feed-egg{position:absolute;left:50%;bottom:0;width:104px;height:66px;margin-left:-52px;overflow:hidden;pointer-events:none;z-index:0}
 .feed-egg img{display:block;width:104px;height:auto;transform:translateY(100%);animation:eggup .8s .5s cubic-bezier(.2,.9,.3,1.25) forwards}
 @keyframes eggup{to{transform:none}}
@@ -292,7 +292,7 @@ function renderCard(c){const {sec,body}=shell(c); R[c.typ](c,body); return sec;}
 function introCard(){
   const sec=el('section','card'); sec.style.setProperty('--h',150);
   const w=el('div','wrap'); const b=el('div','body');
-  b.innerHTML=`<img class="intro-meowls" src="assets/meowl-banner.jpg" alt="">
+  b.innerHTML=`<img class="intro-meowls" src="assets/meowl-banner.png" alt="">
   <div class="big">Przewijaj w górę.</div>
   <p>Każda karta to jedna rzecz do powiedzenia na obronie. Odpowiadaj na głos, zanim odsłonisz odpowiedź.</p>
   <p>Karty, których nie umiesz, wracają szybciej. Te opanowane pojawiają się coraz rzadziej, ale nie znikają.</p>

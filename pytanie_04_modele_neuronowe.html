@@ -118,45 +118,24 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
 .backfoot a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
             color:var(--teal);text-decoration:none;border-bottom:1px solid var(--line)}
 .backfoot a:hover,.backfoot a:focus-visible{border-bottom-color:var(--teal);outline:none}
-/*stickybar-start*/
-.topnav{display:none}
-#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(238,241,246,.96);
-  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-#sbar .in{max-width:860px;margin:0 auto;padding:9px 22px 8px}
-#sbar .r1{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
-#sbar a{color:var(--ink);text-decoration:none;text-transform:uppercase;letter-spacing:.1em;white-space:nowrap;
-  border-bottom:1px solid var(--line);padding-bottom:1px}
-#sbar a:hover,#sbar a:focus-visible{border-color:var(--ink);outline:none}
-#sbar .nr{color:var(--mut);white-space:nowrap}
-#sbar .pc{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--teal);font-weight:500;white-space:nowrap}
-#sbar .qt{margin:5px 0 0;font-family:var(--body);font-size:15px;line-height:1.3;font-style:italic;color:var(--ink)}
-#sbar .trk{position:absolute;left:0;right:0;bottom:-1px;height:3px;background:transparent}
-#sbar .trk i{display:block;height:100%;width:0;background:var(--teal)}
-html{scroll-padding-top:var(--sbh,84px)}
-@media (max-width:600px){#sbar .in{padding:8px 16px 7px}#sbar .qt{font-size:14px}}
-@media print{#sbar{display:none}}
-/*stickybar-end*/
 
 /* ---- meowl przy tytule ---- */
 .avatar{float:right;width:64px;height:64px;border-radius:50%;margin:2px 0 10px 18px;
         box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--line)}
 header::after{content:"";display:block;clear:both}
+ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{color:var(--teal)}
 </style>
+<link rel="stylesheet" href="assets/chat.css">
 </head>
 <body>
 <div class="wrap">
 
-<nav class="topnav">
-  <a href="index.html">&larr; Repetytorium</a>
-  <span class="here">zagadnienie 4 z 50 &middot; modelowanie i identyfikacja</span>
-</nav>
+<nav class="jm" id="jm" aria-label="Nawigacja"><a class="jc" href="index.html">&larr; Lista</a></nav>
 
 <header>
   <img class="avatar" src="assets/meowl-tabby.png" width="64" height="64" alt="" decoding="async">
-  <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 4</p>
   <h1>Modele neuronowe jednokierunkowe i rekurencyjne</h1>
   <p class="quest">Modele neuronowe jednokierunkowe i rekurencyjne — struktury, uczenie relacji wejście–wyjście.</p>
-  <p class="src">Modelowanie i identyfikacja &middot; Duzinkiewicz, Grochowski, Puchalski &middot; opracowanie uzupełnione o kontekst z literatury identyfikacji nieliniowej</p>
 </header>
 
 <section>
@@ -918,20 +897,29 @@ header::after{content:"";display:block;clear:both}
 </section>
 
 <section>
-<h2><span class="num">11</span> Ściąga — plan wypowiedzi</h2>
+<h2><span class="num">11</span> Opowiedz własnymi słowami</h2>
 <div class="rail"></div>
 
-<ol class="steps">
-<li><strong>Czym jest sieć.</strong> Parametryczny aproksymator odwzorowania statycznego; neuron = kombinacja afiniczna + nieliniowość; sieć = złożenie warstw. Bez nieliniowej aktywacji cała sieć redukuje się do jednej warstwy liniowej.</li>
-<li><strong>Struktury jednokierunkowe.</strong> MLP: każdy neuron ukryty to miękki stopień, suma stopni daje dowolny kształt. Twierdzenie o uniwersalnej aproksymacji z dwoma zastrzeżeniami: jest egzystencjalne i obowiązuje tylko na zbiorze zwartym, czyli w zakresie danych.</li>
-<li><strong>Dynamika zewnętrzna.</strong> Sieć statyczna + linie opóźniające: NNFIR, NNARX (regresory z pomiarów, struktura szeregowo-równoległa), NNOE (regresory z wyjść modelu, struktura równoległa), NNARMAX. NNARX uczy się jak model statyczny — to jego główna zaleta.</li>
-<li><strong>Dynamika wewnętrzna.</strong> Sieci rekurencyjne Elmana (kontekst z warstwy ukrytej) i Jordana (kontekst z wyjścia). Pamięć uczona zamiast zadanej — kosztem trudniejszego uczenia i braku gwarancji stabilności.</li>
-<li><strong>Uczenie — sformułowanie.</strong> To samo kryterium kwadratowe co w identyfikacji parametrycznej, ale model nieliniowy względem parametrów: brak rozwiązania zamkniętego, minima lokalne, wiele równoważnych rozwiązań.</li>
-<li><strong>Uczenie — mechanizm.</strong> Propagacja wsteczna to <em>sposób liczenia gradientu</em> (reguła łańcuchowa na grafie), a nie algorytm optymalizacji. Algorytmy: gradient z momentem, SGD/Adam, a dla małych sieci identyfikacyjnych Levenberg–Marquardt. Sieci rekurencyjne: BPTT i teacher forcing.</li>
-<li><strong>Procedura.</strong> Cel → eksperyment z pobudzeniem APRBS → skalowanie danych → wybór rzędów i liczby neuronów → podział danych ciągły w czasie → uczenie z restartami i regularyzacją → walidacja symulacyjna i analiza residuów.</li>
-<li><strong>Ograniczenia.</strong> Kompromis obciążenie–wariancja przy doborze <span class="m" data-tex="H"><svg style="vertical-align: 0;" xmlns="http://www.w3.org/2000/svg" width="2.009ex" height="1.545ex" role="img" focusable="false" viewBox="0 -683 888 683" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-66-TEX-I-1D43B" d="M228 637Q194 637 192 641Q191 643 191 649Q191 673 202 682Q204 683 219 683Q260 681 355 681Q389 681 418 681T463 682T483 682Q499 682 499 672Q499 670 497 658Q492 641 487 638H485Q483 638 480 638T473 638T464 637T455 637Q416 636 405 634T387 623Q384 619 355 500Q348 474 340 442T328 395L324 380Q324 378 469 378H614L615 381Q615 384 646 504Q674 619 674 627T617 637Q594 637 587 639T580 648Q580 650 582 660Q586 677 588 679T604 682Q609 682 646 681T740 680Q802 680 835 681T871 682Q888 682 888 672Q888 645 876 638H874Q872 638 869 638T862 638T853 637T844 637Q805 636 794 634T776 623Q773 618 704 340T634 58Q634 51 638 51Q646 48 692 46H723Q729 38 729 37T726 19Q722 6 716 0H701Q664 2 567 2Q533 2 504 2T458 2T437 1Q420 1 420 10Q420 15 423 24Q428 43 433 45Q437 46 448 46H454Q481 46 514 49Q520 50 522 50T528 55T534 64T540 82T547 110T558 153Q565 181 569 198Q602 330 602 331T457 332H312L279 197Q245 63 245 58Q245 51 253 49T303 46H334Q340 38 340 37T337 19Q333 6 327 0H312Q275 2 178 2Q144 2 115 2T69 2T48 1Q31 1 31 10Q31 12 34 24Q39 43 44 45Q48 46 59 46H65Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Q285 635 228 637Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D43B" xlink:href="#MJX-66-TEX-I-1D43B"></use></g></g></g></svg></span>; brak ekstrapolacji poza zakres danych; brak interpretacji wag; predykcja jednokrokowa nie dowodzi jakości symulacyjnej; stabilność modelu rekurencyjnego trzeba badać osobno.</li>
-<li><strong>Zamknięcie.</strong> Sieć neuronowa to technologia czysto behawioralna — struktura zakładana, parametry z danych. Tam, gdzie część wiedzy jest dostępna, lepszy jest model hybrydowy: fizyka na strukturę, sieć na to, czego fizyka nie zapisuje.</li>
-</ol>
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-a-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-a-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 30 sekund</span><span class="sub">dla kogoś spoza automatyki</span></summary>
+<div class="tx"><p>„Sieć neuronowa to bardzo elastyczny wzór, który uczę na danych, żeby odtwarzał zależność między tym, co podaję na wejście, a tym, co dostaję na wyjściu. Z samej siebie nie ma pamięci, więc żeby opisać obiekt zmieniający się w czasie, podaję jej na wejście kilka ostatnich pomiarów. Można też dodać do środka sieci pętlę z pamięcią. Uczenie polega na kręceniu wagami tak, żeby błąd malał, a gradient mówi, w którą stronę kręcić. Sieć dobrze działa tylko tam, gdzie miała dane. Poza tym zakresem jej odpowiedzi nie mają uzasadnienia.”</p></div></details>
+</div>
+
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-a-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-a-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 2 minuty</span><span class="sub">egzaminacyjna</span></summary>
+<div class="tx"><ol>
+<li><strong>Sieć i neuron:</strong> „Sieć neuronowa jest parametrycznym aproksymatorem odwzorowania statycznego ŷ = g(x, w). Neuron to kombinacja afiniczna i nieliniowość. Aktywacja musi być nieliniowa, bo bez niej nawet stuwarstwowa sieć redukuje się do jednej warstwy liniowej. Jest to technologia black-box, więc wagi nie mają interpretacji fizykalnej.”</li>
+<li><strong>Jednokierunkowe:</strong> „Sieć jednokierunkowa, czyli MLP, to złożenie warstw bez cykli w grafie połączeń. Każdy neuron ukryty jest miękkim stopniem, a suma stopni daje dowolny kształt. Twierdzenie o uniwersalnej aproksymacji ma dwa zastrzeżenia: jest egzystencjalne i obowiązuje tylko na zbiorze zwartym, czyli w zakresie danych.”</li>
+<li><strong>Dynamika zewnętrzna:</strong> „Sieć pozostaje statyczna, a pamięć dają linie opóźniające na wejściu. NNFIR używa tylko wejść. NNARX bierze regresory wyjściowe z pomiarów i uczy się jak model statyczny, jako predyktor jednokrokowy. NNOE bierze je z własnych wyjść modelu, jest rekurencyjny i nadaje się do symulacji. NNARMAX dodatkowo modeluje zakłócenia.”</li>
+<li><strong>Rekurencyjne:</strong> „Dynamikę można wstawić do środka sieci. U Elmana kontekstem jest opóźniony stan warstwy ukrytej, a u Jordana opóźnione wyjście sieci. Pamięć jest wtedy uczona, a nie zadana, ale uczenie jest trudniejsze i nie ma gwarancji stabilności. Zwykle zaczynam od NNARX.”</li>
+<li><strong>Zadanie uczenia:</strong> „Minimalizuję sumę kwadratów błędu wyjścia, jak w pytaniu o metodę najmniejszych kwadratów, ale model jest nieliniowy względem parametrów. Nie ma więc rozwiązania zamkniętego, są minima lokalne i wynik zależy od punktu startowego. Gradient liczę propagacją wsteczną: jest to sposób obliczania gradientu, a nie algorytm optymalizacji.”</li>
+<li><strong>Algorytmy:</strong> „Mogę użyć gradientu prostego, gradientu z momentem, SGD lub Adama dla dużych zbiorów. Dla małych sieci identyfikacyjnych wybieram Levenberga–Marquardta, który wykorzystuje krzywiznę kryterium. W sieciach rekurencyjnych stosuję BPTT, czyli propagację wsteczną w czasie. Występuje też problem zanikającego gradientu.”</li>
+<li><strong>Procedura:</strong> „Cel, eksperyment z pobudzeniem APRBS pokrywającym zakres pracy, skalowanie danych, wybór rzędów i liczby neuronów oraz podział na dane uczące, walidacyjne i testowe. Uczę z restartami, regularyzacją i wczesnym zatrzymaniem. Sprawdzam symulację swobodną i residua. Sieć słabo ekstrapoluje i nie daje interpretacji.”</li>
+</ol></div></details>
+</div>
+
 </section>
 
 <section>
@@ -967,38 +955,18 @@ header::after{content:"";display:block;clear:both}
 </section>
 
 <footer>
-Opracowanie własne w konwencji repetytorium, na kanwie wykładów „Modelowanie i identyfikacja” (K. Duzinkiewicz, M. Grochowski, B. Puchalski)
-i literatury identyfikacji nieliniowej (m.in. Narendra–Parthasarathy, Nørgaard, Nelles).
-Wszystkie wyniki liczbowe w sekcjach 03, 09 i 10 policzono na potrzeby tej strony: sieci o jednej warstwie ukrytej uczone metodą
-Levenberga–Marquardta, obiekt testowy symulowany numerycznie, pobudzenie APRBS.
-<p class="backfoot"><a href="index.html">&larr; Powrót do listy zagadnień</a></p>
+  <p><strong style="color:var(--ink)">Źródła</strong></p>
+  <ol class="zr">
+<li>Opracowanie własne na kanwie wykładów „Modelowanie i identyfikacja” (K. Duzinkiewicz, M. Grochowski, B. Puchalski) i literatury identyfikacji nieliniowej (m.in. Narendra–Parthasarathy, Nørgaard, Nelles).</li>
+<li>Wszystkie wyniki liczbowe w sekcjach 03, 09 i 10 policzono na potrzeby tej strony: sieci o jednej warstwie ukrytej uczone metodą Levenberga–Marquardta, obiekt testowy symulowany numerycznie, pobudzenie APRBS.</li>
+</ol>
+
+  <p class="backfoot"><a href="index.html">&larr; Wróć do listy zagadnień</a></p>
 </footer>
 
 </div>
-<!--stickybar-js-start-->
-<script>
-(function(){
-  var q=document.querySelector('.quest'),ey=document.querySelector('.eyebrow'),h=document.querySelector('h1');
-  var m=ey&&ey.textContent.match(/pytanie\s+(\d+)/i), n=m?m[1]:'';
-  var bar=document.createElement('div'); bar.id='sbar'; bar.setAttribute('role','banner');
-  bar.innerHTML='<div class="in"><div class="r1"><a href="index.html">&larr; Lista</a><span class="nr"></span><span class="pc" aria-live="off">0%</span></div><p class="qt"></p></div><div class="trk"><i></i></div>';
-  bar.querySelector('.nr').textContent=n?'Pytanie '+n:'';
-  bar.querySelector('.qt').textContent=(q?q.textContent:(h?h.textContent:'')).trim();
-  document.body.insertBefore(bar,document.body.firstChild);
-  var fill=bar.querySelector('.trk i'),pc=bar.querySelector('.pc'),tick=false;
-  function size(){var hh=bar.offsetHeight;document.documentElement.style.setProperty('--sbh',(hh+12)+'px');document.body.style.paddingTop=hh+'px';}
-  function upd(){tick=false;var d=document.documentElement,max=d.scrollHeight-window.innerHeight;
-    var p=max>0?Math.min(1,Math.max(0,(window.pageYOffset||d.scrollTop)/max)):1;
-    var v=Math.round(p*100);fill.style.width=(p*100)+'%';pc.textContent=v+'%';}
-  function req(){if(!tick){tick=true;requestAnimationFrame(upd);}}
-  window.addEventListener('scroll',req,{passive:true});
-  window.addEventListener('resize',function(){size();req();});
-  window.addEventListener('load',function(){size();upd();});
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){size();upd();});
-  size();upd();
-})();
-</script>
-<!--stickybar-js-end-->
+<script src="assets/pytania.js"></script>
+<script src="assets/nav.js" defer></script>
 <script src="assets/meowl-egg.js" defer></script>
 </body>
 </html>

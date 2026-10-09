@@ -124,21 +124,17 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
         box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--line)}
 header::after{content:"";display:block;clear:both}
 </style>
+<link rel="stylesheet" href="assets/chat.css">
 </head>
 <body>
 <div class="wrap">
 
-<nav class="topnav">
-  <a href="index.html">&larr; Repetytorium</a>
-  <span class="here">zagadnienie 36 z 50 &middot; systemy wspomagania decyzji</span>
-</nav>
+<nav class="jm" id="jm" aria-label="Nawigacja"><a class="jc" href="index.html">&larr; Lista</a></nav>
 
 <header>
   <img class="avatar" src="assets/meowl-wide.png" width="64" height="64" alt="" decoding="async">
-  <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 36</p>
   <h1>Algorytm Dantziga–Wolfe’a w hierarchicznym systemie wspomagania decyzji</h1>
   <p class="quest">Przedstaw realizację algorytmu Dantzig’a – Wolfe’a w hierarchicznym systemie wspomagania decyzji.</p>
-  <p class="src">Systemy sterowania i wspomagania decyzji &middot; materiał pomocniczy KSSiWD (P. Hirsch, S. Dorawa) &middot; opiera się na 44 (ceny dualne) i 32 (hierarchia), łączy się z 24</p>
 </header>
 
 <style>
@@ -164,24 +160,6 @@ ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{colo
 .check li{padding-left:30px;position:relative}
 .check li::before{content:"☐";position:absolute;left:4px;top:-1px;font-family:var(--mono);color:var(--teal);font-size:17px}
 .luka{display:inline-block;min-width:70px;border-bottom:1.5px solid var(--violet);text-align:center;font-family:var(--mono);font-size:14px;color:var(--violet)}
-/*stickybar-start*/
-.topnav{display:none}
-#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(238,241,246,.96);
-  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-#sbar .in{max-width:860px;margin:0 auto;padding:9px 22px 8px}
-#sbar .r1{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
-#sbar a{color:var(--ink);text-decoration:none;text-transform:uppercase;letter-spacing:.1em;white-space:nowrap;
-  border-bottom:1px solid var(--line);padding-bottom:1px}
-#sbar a:hover,#sbar a:focus-visible{border-color:var(--ink);outline:none}
-#sbar .nr{color:var(--mut);white-space:nowrap}
-#sbar .pc{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--teal);font-weight:500;white-space:nowrap}
-#sbar .qt{margin:5px 0 0;font-family:var(--body);font-size:15px;line-height:1.3;font-style:italic;color:var(--ink)}
-#sbar .trk{position:absolute;left:0;right:0;bottom:-1px;height:3px;background:transparent}
-#sbar .trk i{display:block;height:100%;width:0;background:var(--teal)}
-html{scroll-padding-top:var(--sbh,84px)}
-@media (max-width:600px){#sbar .in{padding:8px 16px 7px}#sbar .qt{font-size:14px}}
-@media print{#sbar{display:none}}
-/*stickybar-end*/
 </style>
 
 <section>
@@ -699,11 +677,16 @@ Kryterium (4) mówi, że oferta daje więcej, niż centrum już przypisuje podsy
 <h2><span class="num">10</span> Opowiedz własnymi słowami</h2>
 <div class="rail"></div>
 
-<details class="fiszka op"><summary>Wersja 30 sekund (dla kogoś spoza automatyki)</summary>
-<p>„Firma ma kilka zakładów i wspólny przydział prądu. Zamiast ściągać wszystkie dane do centrali, centrala ogłasza cenę prądu. Każdy zakład sam układa najlepszy plan przy tej cenie i odsyła go jako ofertę. Centrala składa z ofert plan całej firmy, poprawia cenę i pyta znowu. Gdy żaden zakład nie ma już lepszej oferty, plan jest optymalny dla całej firmy.”</p></details>
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-c-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-c-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 30 sekund</span><span class="sub">dla kogoś spoza automatyki</span></summary>
+<div class="tx"><p>„Firma ma kilka zakładów i wspólny przydział prądu. Zamiast ściągać wszystkie dane do centrali, centrala ogłasza cenę prądu. Każdy zakład sam układa najlepszy plan przy tej cenie i odsyła go jako ofertę. Centrala składa z ofert plan całej firmy, poprawia cenę i pyta znowu. Gdy żaden zakład nie ma już lepszej oferty, plan jest optymalny dla całej firmy.”</p></div></details>
+</div>
 
-<details class="fiszka op"><summary>Wersja 2 minuty (egzaminacyjna, siedem zdań-kotwic)</summary>
-<ol>
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-c-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-c-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 2 minuty</span><span class="sub">egzaminacyjna</span></summary>
+<div class="tx"><ol>
 <li><strong>Zadanie:</strong> „Dekompozycja Dantziga–Wolfe’a dotyczy zadań LP o strukturze blokowej: niezależne podsystemy połączone wspólnymi zasobami.”</li>
 <li><strong>Idea:</strong> „Plan podsystemu zapisuję jako wypukłą kombinację jego wierzchołków — ofert. Każda oferta wnosi do centrum wektor przerzutu AₚXₚⱼ i koszt przerzutu CₚXₚⱼ.”</li>
 <li><strong>Hierarchia:</strong> „Centrum rozwiązuje ograniczone zagadnienie główne i wysyła ceny π, a podsystemy maksymalizują γₚ = Cₚ − πAₚ na swoim zbiorze i odsyłają oferty.”</li>
@@ -711,7 +694,8 @@ Kryterium (4) mówi, że oferta daje więcej, niż centrum już przypisuje podsy
 <li><strong>Fazy:</strong> „Faza I sztuczną bazą szuka rozwiązania dopuszczalnego, faza II optymalizuje, a koniec następuje, gdy żadna kolumna nie spełnia kryteriów. Plan to Σλₚⱼ Xₚⱼ.”</li>
 <li><strong>Przykład:</strong> „Dwa zakłady i 6 jednostek energii: po dwóch rundach cena energii wynosi 1,5, plan to (3, 0) i (0; 1,5), Z = 10,5. Plan zakładu 2 nie jest jego wierzchołkiem.”</li>
 <li><strong>Ocena:</strong> „Małe zadanie centrum, równoległość i autonomia podsystemów, ale wiele iteracji. Warianty A/B różnią się liczbą kolumn dopisywanych w kroku.”</li>
-</ol></details>
+</ol></div></details>
+</div>
 
 <h3>Lista kontrolna przed egzaminem</h3>
 <ul class="check">
@@ -770,37 +754,15 @@ Kryterium (4) mówi, że oferta daje więcej, niż centrum już przypisuje podsy
 <li>P. Hirsch, S. Dorawa, <em>Rozproszone programowanie produkcji z wykorzystaniem metody dekompozycji Dantziga–Wolfe’a. Materiał pomocniczy 1 – część 2: Metoda dekompozycji Dantziga–Wolfe’a</em>, Komputerowe Systemy Sterowania i Wspomagania Decyzji, Politechnika Gdańska, WEiA, styczeń 2016 (plik <code>36_dantzig_wolfe.pdf</code>): oznaczenia, wzory (1)–(11), faza I i II, kryteria (4)–(5), warianty AA–BC.</li>
 <li>G. B. Dantzig, P. Wolfe, Decomposition principle for linear programs, <em>Operations Research</em> 8(1), 1960 — źródło metody; górna granica πb₀ + ΣZₚ(π) według teorii dualności.</li>
 <li>Przykład dwóch zakładów: opracowanie własne. Iteracje policzono ręcznie i sprawdzono własną implementacją algorytmu (zagadnienia główne w <code>scipy.optimize.linprog</code>) oraz rozwiązaniem całego zadania.</li>
+<li>Algorytm i oznaczenia według materiału pomocniczego; przykład dwóch zakładów jest własny — iteracje policzone ręcznie i sprawdzone implementacją algorytmu.</li>
 </ol>
 
-  <p>Repetytorium do egzaminu dyplomowego &middot; ARiSS II stopień &middot; specjalność Systemy sterowania i wspomagania decyzji. Strona oparta na wykładzie wskazanym do tego zagadnienia; elementy spoza wykładu są oznaczone w podpisach. Algorytm i oznaczenia według materiału pomocniczego; przykład dwóch zakładów jest własny — iteracje policzone ręcznie i sprawdzone implementacją algorytmu.</p>
   <p class="backfoot"><a href="index.html">&larr; Wróć do listy zagadnień</a></p>
 </footer>
 
 </div>
-<!--stickybar-js-start-->
-<script>
-(function(){
-  var q=document.querySelector('.quest'),ey=document.querySelector('.eyebrow'),h=document.querySelector('h1');
-  var m=ey&&ey.textContent.match(/pytanie\s+(\d+)/i), n=m?m[1]:'';
-  var bar=document.createElement('div'); bar.id='sbar'; bar.setAttribute('role','banner');
-  bar.innerHTML='<div class="in"><div class="r1"><a href="index.html">&larr; Lista</a><span class="nr"></span><span class="pc" aria-live="off">0%</span></div><p class="qt"></p></div><div class="trk"><i></i></div>';
-  bar.querySelector('.nr').textContent=n?'Pytanie '+n:'';
-  bar.querySelector('.qt').textContent=(q?q.textContent:(h?h.textContent:'')).trim();
-  document.body.insertBefore(bar,document.body.firstChild);
-  var fill=bar.querySelector('.trk i'),pc=bar.querySelector('.pc'),tick=false;
-  function size(){var hh=bar.offsetHeight;document.documentElement.style.setProperty('--sbh',(hh+12)+'px');document.body.style.paddingTop=hh+'px';}
-  function upd(){tick=false;var d=document.documentElement,max=d.scrollHeight-window.innerHeight;
-    var p=max>0?Math.min(1,Math.max(0,(window.pageYOffset||d.scrollTop)/max)):1;
-    var v=Math.round(p*100);fill.style.width=(p*100)+'%';pc.textContent=v+'%';}
-  function req(){if(!tick){tick=true;requestAnimationFrame(upd);}}
-  window.addEventListener('scroll',req,{passive:true});
-  window.addEventListener('resize',function(){size();req();});
-  window.addEventListener('load',function(){size();upd();});
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){size();upd();});
-  size();upd();
-})();
-</script>
-<!--stickybar-js-end-->
+<script src="assets/pytania.js"></script>
+<script src="assets/nav.js" defer></script>
 <script src="assets/meowl-egg.js" defer></script>
 </body>
 </html>

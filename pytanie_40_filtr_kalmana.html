@@ -123,7 +123,9 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
 .avatar{float:right;width:64px;height:64px;border-radius:50%;margin:2px 0 10px 18px;
         box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--line)}
 header::after{content:"";display:block;clear:both}
+ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{color:var(--teal)}
 </style>
+<link rel="stylesheet" href="assets/chat.css">
 </head>
 <body>
 <div class="wrap">
@@ -142,37 +144,14 @@ header::after{content:"";display:block;clear:both}
        margin:12px 0 0;padding-top:11px;border-top:1px solid var(--line);line-height:1.65}
 .inter .odczyt b{color:var(--ink);font-weight:500}
 .inter .odczyt.staly3{min-height:104px}
-/*stickybar-start*/
-.topnav{display:none}
-#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(238,241,246,.96);
-  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-#sbar .in{max-width:860px;margin:0 auto;padding:9px 22px 8px}
-#sbar .r1{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
-#sbar a{color:var(--ink);text-decoration:none;text-transform:uppercase;letter-spacing:.1em;white-space:nowrap;
-  border-bottom:1px solid var(--line);padding-bottom:1px}
-#sbar a:hover,#sbar a:focus-visible{border-color:var(--ink);outline:none}
-#sbar .nr{color:var(--mut);white-space:nowrap}
-#sbar .pc{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--teal);font-weight:500;white-space:nowrap}
-#sbar .qt{margin:5px 0 0;font-family:var(--body);font-size:15px;line-height:1.3;font-style:italic;color:var(--ink)}
-#sbar .trk{position:absolute;left:0;right:0;bottom:-1px;height:3px;background:transparent}
-#sbar .trk i{display:block;height:100%;width:0;background:var(--teal)}
-html{scroll-padding-top:var(--sbh,84px)}
-@media (max-width:600px){#sbar .in{padding:8px 16px 7px}#sbar .qt{font-size:14px}}
-@media print{#sbar{display:none}}
-/*stickybar-end*/
 </style>
 
-<nav class="topnav">
-  <a href="index.html">&larr; Repetytorium</a>
-  <span class="here">zagadnienie 40 z 50 &middot; struktury i algorytmy sterowania</span>
-</nav>
+<nav class="jm" id="jm" aria-label="Nawigacja"><a class="jc" href="index.html">&larr; Lista</a></nav>
 
 <header>
   <img class="avatar" src="assets/meowl-tabby.png" width="64" height="64" alt="" decoding="async">
-  <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 40</p>
   <h1>Filtr Kalmana i jego miejsce w strukturach sterowania</h1>
   <p class="quest">Przedstaw filtr Kalmana i opisz jego zastosowanie w strukturach sterowania.</p>
-  <p class="src">Struktury i algorytmy sterowania &middot; opracowanie własne; wszystkie liczby policzone samodzielnie na obiekcie dwóch zbiorników z zagadnień 6–8, w postaci dyskretnej z okresem 0,05 s, z szumem procesu i szumem czujnika</p>
 </header>
 
 <section>
@@ -909,17 +888,27 @@ html{scroll-padding-top:var(--sbh,84px)}
 </section>
 
 <section>
-<h2><span class="num">08</span> Ściąga — odpowiedź w minutę</h2>
+<h2><span class="num">08</span> Opowiedz własnymi słowami</h2>
 <div class="rail"></div>
 
-<div class="box key">
-<span class="lbl">Szkielet wypowiedzi</span>
-<p><strong>1. Czym jest.</strong> Obserwator stanu dla obiektu z szumem; dwie fazy — predykcja modelem, korekcja pomiarem; wzmocnienie nie jest wybierane, tylko liczone z <span class="m" data-tex="\vec Q"><svg style="vertical-align: -0.437ex;" xmlns="http://www.w3.org/2000/svg" width="1.955ex" height="2.011ex" role="img" focusable="false" viewBox="0 -696 864 889" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-82-TEX-B-1D410" d="M64 339Q64 431 96 502T182 614T295 675T420 696Q469 696 481 695Q620 680 709 589T798 339Q798 255 768 184Q720 77 611 26L600 21Q635 -26 682 -26H696Q769 -26 769 0Q769 7 774 12T787 18Q805 18 805 -7V-13Q803 -64 785 -106T737 -171Q720 -183 697 -191Q687 -193 668 -193Q636 -193 613 -182T575 -144T552 -94T532 -27Q531 -23 530 -16T528 -6T526 -3L512 -5Q499 -7 477 -8T431 -10Q393 -10 382 -9Q238 8 151 97T64 339ZM326 80Q326 113 356 138T430 163Q492 163 542 100L553 86Q554 85 561 91T578 108Q637 179 637 330Q637 430 619 498T548 604Q500 641 425 641Q408 641 390 637T347 623T299 590T259 535Q226 469 226 338Q226 244 246 180T318 79L325 74Q326 74 326 80ZM506 58Q480 112 433 112Q412 112 395 104T378 77Q378 44 431 44Q480 44 506 58Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><use data-c="1D410" xlink:href="#MJX-82-TEX-B-1D410"></use></g></g></g></g></g></svg></span> i <span class="m" data-tex="\vec R"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="1.95ex" height="1.577ex" role="img" focusable="false" viewBox="0 -686 862 697" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-83-TEX-B-1D411" d="M394 0Q370 3 222 3Q75 3 51 0H39V62H147V624H39V686H234Q256 686 299 686T362 687Q479 687 554 669T681 593Q716 550 716 497Q716 390 568 338Q569 337 572 336T577 332Q605 317 623 300T650 258T662 218T668 172Q678 98 689 76Q707 40 748 40Q770 40 780 54T795 88T801 111Q805 117 827 117H831Q846 117 852 113T858 92Q857 78 852 63T834 30T797 1T739 -11Q630 -11 580 12T511 87Q506 104 506 168Q506 170 506 178T507 194Q507 289 438 313Q424 318 356 318H298V62H406V0H394ZM366 369Q459 370 490 381Q548 402 548 476V498V517Q548 578 513 600Q479 624 392 624H358H298V369H366Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><use data-c="1D411" xlink:href="#MJX-83-TEX-B-1D411"></use></g></g></g></g></g></svg></span> tak, by zminimalizować średni kwadrat błędu. Daje też macierz <span class="m" data-tex="\vec P"><svg style="vertical-align: 0;" xmlns="http://www.w3.org/2000/svg" width="1.778ex" height="1.552ex" role="img" focusable="false" viewBox="0 -686 786 686" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-84-TEX-B-1D40F" d="M400 0Q376 3 226 3Q75 3 51 0H39V62H147V624H39V686H253Q435 686 470 685T536 678Q585 668 621 648T675 605T705 557T718 514T721 483T718 451T704 409T673 362T616 322T530 293Q500 288 399 287H304V62H412V0H400ZM553 475Q553 554 537 582T459 622Q451 623 373 624H298V343H372Q457 344 480 350Q527 362 540 390T553 475Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><use data-c="1D40F" xlink:href="#MJX-84-TEX-B-1D40F"></use></g></g></g></g></g></svg></span>, czyli ocenę własnej dokładności.<br>
-<strong>2. Struktura podstawowa.</strong> Sprzężenie od estymaty: filtr wchodzi w miejsce obserwatora Luenbergera i działa tak samo przy alokacji biegunów, jak przy LQR — różnica jest tylko w tym, czy wzmocnienia wybieramy, czy liczymy. Gdy oba są policzone, struktura nazywa się LQG. Filtr potrzebuje pomiaru i sterowania; regulator dostaje estymatę i nie widzi różnicy.<br>
-<strong>3. Zasada separacji.</strong> Bieguny układu rzędu <span class="m" data-tex="2n"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.489ex" height="1.532ex" role="img" focusable="false" viewBox="0 -666 1100 677" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-85-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-85-TEX-I-1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mn"><use data-c="32" xlink:href="#MJX-85-TEX-N-32"></use></g><g data-mml-node="mi" transform="translate(500,0)"><use data-c="1D45B" xlink:href="#MJX-85-TEX-I-1D45B"></use></g></g></g></svg></span> to suma biegunów regulatora i filtru, więc oba projekty prowadzi się osobno. Dotyczy biegunów, nie jakości — wskaźnik rośnie.<br>
-<strong>4. Estymacja zakłóceń.</strong> Rozszerzenie stanu o zakłócenie albo parametr; kompensacja w przód od wielkości, której nikt nie mierzy; stąd też czujniki programowe.<br>
-<strong>5. Diagnostyka.</strong> Innowacja powinna być białym szumem o znanej kowariancji; jeśli przestaje, to obiekt odszedł od modelu — detekcja uszkodzeń, zanim widać je na wyjściu.<br>
-<strong>6. Ograniczenie.</strong> LQR ma gwarantowane zapasy (60°, <span class="m" data-tex="-6"><svg style="vertical-align: -0.186ex;" xmlns="http://www.w3.org/2000/svg" width="2.891ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1278 748" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-86-TEX-N-2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path><path id="MJX-86-TEX-N-36" d="M42 313Q42 476 123 571T303 666Q372 666 402 630T432 550Q432 525 418 510T379 495Q356 495 341 509T326 548Q326 592 373 601Q351 623 311 626Q240 626 194 566Q147 500 147 364L148 360Q153 366 156 373Q197 433 263 433H267Q313 433 348 414Q372 400 396 374T435 317Q456 268 456 210V192Q456 169 451 149Q440 90 387 34T253 -22Q225 -22 199 -14T143 16T92 75T56 172T42 313ZM257 397Q227 397 205 380T171 335T154 278T148 216Q148 133 160 97T198 39Q222 21 251 21Q302 21 329 59Q342 77 347 104T352 209Q352 289 347 316T329 361Q302 397 257 397Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><use data-c="2212" xlink:href="#MJX-86-TEX-N-2212"></use></g><g data-mml-node="mn" transform="translate(778,0)"><use data-c="36" xlink:href="#MJX-86-TEX-N-36"></use></g></g></g></svg></span> dB), LQG <strong>nie dziedziczy ich</strong> — trzeba je sprawdzić, ewentualnie stosować LTR.</p>
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-c-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-c-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 30 sekund</span><span class="sub">dla kogoś spoza automatyki</span></summary>
+<div class="tx"><p>„Filtr Kalmana to sposób na odgadnięcie tego, czego nie da się zmierzyć, gdy zarówno czujnik, jak i model są niedokładne. Program na zmianę przewiduje, co powinno się dziać, i poprawia to przewidywanie pomiarem, a wagę każdego ze źródeł dobiera według tego, jak bardzo mu ufa. Dzięki temu regulator dostaje na przykład poziom w pierwszym zbiorniku, choć mierzony jest tylko drugi. Filtr pozwala też wychwycić, że coś się zepsuło, bo prognozy zaczynają się systematycznie mylić.”</p></div></details>
+</div>
+
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-c-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-c-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 2 minuty</span><span class="sub">egzaminacyjna</span></summary>
+<div class="tx"><ol>
+<li><strong>Czym jest filtr:</strong> „Filtr Kalmana to obserwator stanu dla obiektu z szumem. Pracuje w dwóch fazach, predykcji modelem i korekcji pomiarem. Wzmocnienie L nie jest wybierane, tylko liczone z równania Riccatiego tak, by zminimalizować średni kwadrat błędu estymaty.”</li>
+<li><strong>Strojenie Q i R:</strong> „Wzmocnienie zależy od Q, czyli tego, jak bardzo obiekt odbiega od modelu, oraz od R, czyli ile szumu ma czujnik. Gdy czujnik jest kiepski, filtr zostaje przy modelu, a gdy model jest kiepski, idzie za pomiarem. Filtr zwraca też macierz P, czyli ocenę własnej dokładności.”</li>
+<li><strong>Sprzężenie od estymaty:</strong> „Podstawowe zastosowanie to sprzężenie od estymaty zamiast od niemierzonego stanu. Filtr wchodzi w miejsce obserwatora Luenbergera i dostaje pomiar oraz to samo sterowanie, które poszło do obiektu. Gdy oba wzmocnienia pochodzą z rachunku, struktura nazywa się LQG.”</li>
+<li><strong>Zasada separacji:</strong> „Bieguny układu rzędu 2n są sumą biegunów regulatora i filtru, więc oba projekty prowadzi się osobno. Dotyczy to jednak biegunów, a nie jakości, bo estymata przepuszcza część szumu. Reguła obserwatora 3–10 razy szybszego jest zła przy szumiącym czujniku, a filtr ustawia bieguny niemal w minimum błędu.”</li>
+<li><strong>Zakłócenia i parametry:</strong> „Stan filtru można rozszerzyć o zakłócenie lub parametr. Estymata zakłócenia pozwala je odjąć od sterowania, zanim zepsuje wyjście, a do tego dochodzą czujniki programowe i fuzja czujników. W przykładzie IAE spadło z 13,7 do 0,41, ale tylko gdy ten sam obserwator podawał i stan, i zakłócenie.”</li>
+<li><strong>Diagnostyka:</strong> „Innowacja, czyli różnica między pomiarem a prognozą, powinna być białym szumem o znanej kowariancji. Gdy obiekt odchodzi od modelu, na przykład przy wycieku, innowacja wychodzi poza swój pas, a NIS rośnie. Regulator ukrywa awarię na wyjściu, a innowacja ją pokazuje.”</li>
+<li><strong>Ograniczenia i zastosowania:</strong> „LQR ma gwarantowane zapasy 60° i −6 dB, ale LQG ich nie dziedziczy, więc trzeba je sprawdzić, ewentualnie użyć odzyskiwania pętli LTR. Filtr stosuje się w MPC jako estymator stanu, w napędach bez czujnika prędkości, w nawigacji i w predyktorach dla obiektów z opóźnieniem.”</li>
+</ol></div></details>
 </div>
 
 </section>
@@ -951,37 +940,18 @@ html{scroll-padding-top:var(--sbh,84px)}
 </section>
 
 <footer>
-Opracowanie własne w konwencji repetytorium, na kanwie standardowego wykładu: filtr Kalmana jako obserwator optymalny, zadanie LQG i zasada separacji, obserwator rozszerzony o model zakłócenia, innowacja i jej statystyki, wynik Doyle'a o zapasach stabilności LQG i odzyskiwanie pętli (LTR).
-Zwykły obserwator i sprzężenie od stanu omawiają zagadnienia 6–8, działanie całkujące — 7, filtr rozszerzony dla obiektów nieliniowych — 20, sterowanie predykcyjne — 23 i 34, opóźnienia — 18, sterowanie adaptacyjne — 38.
-Wszystkie liczby policzono samodzielnie: obiekt dwóch zbiorników z zagadnień 6–8 w postaci dyskretnej z okresem 0,05 s, szum procesu na wejściu o odchyleniu 0,05, szum czujnika 0,02, mierzony wyłącznie poziom <span class="m" data-tex="h_2"><svg style="vertical-align: -0.339ex;" xmlns="http://www.w3.org/2000/svg" width="2.291ex" height="1.91ex" role="img" focusable="false" viewBox="0 -694 1012.6 844" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-103-TEX-I-210E" d="M137 683Q138 683 209 688T282 694Q294 694 294 685Q294 674 258 534Q220 386 220 383Q220 381 227 388Q288 442 357 442Q411 442 444 415T478 336Q478 285 440 178T402 50Q403 36 407 31T422 26Q450 26 474 56T513 138Q516 149 519 151T535 153Q555 153 555 145Q555 144 551 130Q535 71 500 33Q466 -10 419 -10H414Q367 -10 346 17T325 74Q325 90 361 192T398 345Q398 404 354 404H349Q266 404 205 306L198 293L164 158Q132 28 127 16Q114 -11 83 -11Q69 -11 59 -2T48 16Q48 30 121 320L195 616Q195 629 188 632T149 637H128Q122 643 122 645T124 664Q129 683 137 683Z"></path><path id="MJX-103-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="210E" xlink:href="#MJX-103-TEX-I-210E"></use></g><g data-mml-node="mn" transform="translate(609,-150) scale(0.707)"><use data-c="32" xlink:href="#MJX-103-TEX-N-32"></use></g></g></g></g></svg></span>; regulator LQR, filtr Kalmana i obserwator rozszerzony wyznaczone z równań Riccatiego, marginesy stabilności policzone na modelu ciągłym.
-<p class="backfoot"><a href="index.html">&larr; Powrót do listy zagadnień</a></p>
+  <p><strong style="color:var(--ink)">Źródła</strong></p>
+  <ol class="zr">
+<li>Opracowanie własne na kanwie standardowego wykładu: filtr Kalmana jako obserwator optymalny, zadanie LQG i zasada separacji, obserwator rozszerzony o model zakłócenia, innowacja i jej statystyki, wynik Doyle'a o zapasach stabilności LQG i odzyskiwanie pętli (LTR).</li>
+<li>Wszystkie liczby policzono samodzielnie: obiekt dwóch zbiorników w postaci dyskretnej z okresem 0,05 s, szum procesu na wejściu o odchyleniu 0,05, szum czujnika 0,02, mierzony wyłącznie poziom <span class="m" data-tex="h_2"><svg style="vertical-align: -0.339ex;" xmlns="http://www.w3.org/2000/svg" width="2.291ex" height="1.91ex" role="img" focusable="false" viewBox="0 -694 1012.6 844" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-103-TEX-I-210E" d="M137 683Q138 683 209 688T282 694Q294 694 294 685Q294 674 258 534Q220 386 220 383Q220 381 227 388Q288 442 357 442Q411 442 444 415T478 336Q478 285 440 178T402 50Q403 36 407 31T422 26Q450 26 474 56T513 138Q516 149 519 151T535 153Q555 153 555 145Q555 144 551 130Q535 71 500 33Q466 -10 419 -10H414Q367 -10 346 17T325 74Q325 90 361 192T398 345Q398 404 354 404H349Q266 404 205 306L198 293L164 158Q132 28 127 16Q114 -11 83 -11Q69 -11 59 -2T48 16Q48 30 121 320L195 616Q195 629 188 632T149 637H128Q122 643 122 645T124 664Q129 683 137 683Z"></path><path id="MJX-103-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="210E" xlink:href="#MJX-103-TEX-I-210E"></use></g><g data-mml-node="mn" transform="translate(609,-150) scale(0.707)"><use data-c="32" xlink:href="#MJX-103-TEX-N-32"></use></g></g></g></g></svg></span>; regulator LQR, filtr Kalmana i obserwator rozszerzony wyznaczone z równań Riccatiego, marginesy stabilności policzone na modelu ciągłym.</li>
+</ol>
+
+  <p class="backfoot"><a href="index.html">&larr; Wróć do listy zagadnień</a></p>
 </footer>
 
 </div>
-<!--stickybar-js-start-->
-<script>
-(function(){
-  var q=document.querySelector('.quest'),ey=document.querySelector('.eyebrow'),h=document.querySelector('h1');
-  var m=ey&&ey.textContent.match(/pytanie\s+(\d+)/i), n=m?m[1]:'';
-  var bar=document.createElement('div'); bar.id='sbar'; bar.setAttribute('role','banner');
-  bar.innerHTML='<div class="in"><div class="r1"><a href="index.html">&larr; Lista</a><span class="nr"></span><span class="pc" aria-live="off">0%</span></div><p class="qt"></p></div><div class="trk"><i></i></div>';
-  bar.querySelector('.nr').textContent=n?'Pytanie '+n:'';
-  bar.querySelector('.qt').textContent=(q?q.textContent:(h?h.textContent:'')).trim();
-  document.body.insertBefore(bar,document.body.firstChild);
-  var fill=bar.querySelector('.trk i'),pc=bar.querySelector('.pc'),tick=false;
-  function size(){var hh=bar.offsetHeight;document.documentElement.style.setProperty('--sbh',(hh+12)+'px');document.body.style.paddingTop=hh+'px';}
-  function upd(){tick=false;var d=document.documentElement,max=d.scrollHeight-window.innerHeight;
-    var p=max>0?Math.min(1,Math.max(0,(window.pageYOffset||d.scrollTop)/max)):1;
-    var v=Math.round(p*100);fill.style.width=(p*100)+'%';pc.textContent=v+'%';}
-  function req(){if(!tick){tick=true;requestAnimationFrame(upd);}}
-  window.addEventListener('scroll',req,{passive:true});
-  window.addEventListener('resize',function(){size();req();});
-  window.addEventListener('load',function(){size();upd();});
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){size();upd();});
-  size();upd();
-})();
-</script>
-<!--stickybar-js-end-->
+<script src="assets/pytania.js"></script>
+<script src="assets/nav.js" defer></script>
 <script src="assets/meowl-egg.js" defer></script>
 </body>
 </html>

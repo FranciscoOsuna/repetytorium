@@ -124,21 +124,17 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
         box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--line)}
 header::after{content:"";display:block;clear:both}
 </style>
+<link rel="stylesheet" href="assets/chat.css">
 </head>
 <body>
 <div class="wrap">
 
-<nav class="topnav">
-  <a href="index.html">&larr; Repetytorium</a>
-  <span class="here">zagadnienie 6 z 50 &middot; teoria sterowania</span>
-</nav>
+<nav class="jm" id="jm" aria-label="Nawigacja"><a class="jc" href="index.html">&larr; Lista</a></nav>
 
 <header>
   <img class="avatar" src="assets/meowl-wide.png" width="64" height="64" alt="" decoding="async">
-  <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 6</p>
   <h1>Sprzężenie od stanu: alokacja biegunów i macierz kompensacji</h1>
   <p class="quest">Sterowanie ze sprzężeniem od stanu – metoda alokacji biegunów i wykorzystanie macierzy kompensacji wzmocnień, metody projektowania.</p>
-  <p class="src">Teoria sterowania &middot; wykłady K. Duzinkiewicza i R. Piotrowskiego „Metoda alokacji biegunów I i II” &middot; sterowalność w 5, całkowanie w 7, obserwatory w 8</p>
 </header>
 
 <style>
@@ -178,24 +174,6 @@ ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{colo
        margin:12px 0 0;padding-top:11px;border-top:1px solid var(--line);line-height:1.65}
 .inter .odczyt b{color:var(--ink);font-weight:500}
 .inter .odczyt.staly2{min-height:80px}
-/*stickybar-start*/
-.topnav{display:none}
-#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(238,241,246,.96);
-  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-#sbar .in{max-width:860px;margin:0 auto;padding:9px 22px 8px}
-#sbar .r1{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
-#sbar a{color:var(--ink);text-decoration:none;text-transform:uppercase;letter-spacing:.1em;white-space:nowrap;
-  border-bottom:1px solid var(--line);padding-bottom:1px}
-#sbar a:hover,#sbar a:focus-visible{border-color:var(--ink);outline:none}
-#sbar .nr{color:var(--mut);white-space:nowrap}
-#sbar .pc{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--teal);font-weight:500;white-space:nowrap}
-#sbar .qt{margin:5px 0 0;font-family:var(--body);font-size:15px;line-height:1.3;font-style:italic;color:var(--ink)}
-#sbar .trk{position:absolute;left:0;right:0;bottom:-1px;height:3px;background:transparent}
-#sbar .trk i{display:block;height:100%;width:0;background:var(--teal)}
-html{scroll-padding-top:var(--sbh,84px)}
-@media (max-width:600px){#sbar .in{padding:8px 16px 7px}#sbar .qt{font-size:14px}}
-@media print{#sbar{display:none}}
-/*stickybar-end*/
 </style>
 
 <section>
@@ -856,18 +834,24 @@ html{scroll-padding-top:var(--sbh,84px)}
 <h2><span class="num">08</span> Opowiedz własnymi słowami</h2>
 <div class="rail"></div>
 
-<details class="fiszka op"><summary>Wersja 30 sekund (dla kogoś spoza automatyki)</summary>
-<p>„Mierzę wszystkie wielkości opisujące stan obiektu, np. położenie i prędkość, i każdą mnożę przez wzmocnienie, a wynik odejmuję od sterowania. Dobierając wzmocnienia, decyduję, jak szybko i jak spokojnie obiekt ma reagować — mogę mu nadać dowolną dynamikę, jeśli tylko da się nim w pełni sterować. Na koniec skaluję wartość zadaną tak, żeby obiekt dochodził dokładnie tam, gdzie chcę.”</p></details>
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-b-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-b-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 30 sekund</span><span class="sub">dla kogoś spoza automatyki</span></summary>
+<div class="tx"><p>„Mierzę wszystkie wielkości opisujące stan obiektu, np. położenie i prędkość, i każdą mnożę przez wzmocnienie, a wynik odejmuję od sterowania. Dobierając wzmocnienia, decyduję, jak szybko i jak spokojnie obiekt ma reagować — mogę mu nadać dowolną dynamikę, jeśli tylko da się nim w pełni sterować. Na koniec skaluję wartość zadaną tak, żeby obiekt dochodził dokładnie tam, gdzie chcę.”</p></div></details>
+</div>
 
-<details class="fiszka op"><summary>Wersja 2 minuty (egzaminacyjna, sześć zdań-kotwic)</summary>
-<ol>
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-b-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-b-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 2 minuty</span><span class="sub">egzaminacyjna</span></summary>
+<div class="tx"><ol>
 <li><strong>Struktura:</strong> „Prawo sterowania u = −Lx + M yᵣ. L realizuje zadanie regulacyjne, a M zadanie śledzące. Układ zamknięty: ẋ = (A − BL)x + BM yᵣ, a dzięki superpozycji oba projektuje się osobno.”</li>
 <li><strong>Alokacja biegunów:</strong> „Dobieram L tak, żeby wartości własne A − BL leżały w zadanych miejscach. Jest to możliwe dla dowolnych miejsc wtedy i tylko wtedy, gdy obiekt jest sterowalny. Zera się nie zmieniają.”</li>
 <li><strong>Metoda bezpośrednia:</strong> „Przyrównuję współczynniki det(sI − A + BL) do współczynników wielomianu z wybranych biegunów. Np. s² + (3 + l₂)s + (4 + l₁) = (s + 6)(s + 8) daje L = [44 11].”</li>
 <li><strong>Kanoniczna i Ackermann:</strong> „W postaci kanonicznej sterowalności lᵢ = pᵢ − aᵢ. Wzór Ackermanna L = q_Cᵀ p(A), gdzie q_Cᵀ to ostatni wiersz odwrotności macierzy sterowalności. Dla jednego wejścia wszystkie metody dają to samo L.”</li>
 <li><strong>Gdzie bieguny:</strong> „Wymagania przekładam na ζ i ωₙ: tłumienie ogranicza przeregulowanie, część rzeczywista czas regulacji. Za daleko w lewo — duże wzmocnienia i sterowanie.”</li>
 <li><strong>M:</strong> „M = [C(BL − A)⁻¹B]⁻¹ — odwrotność wzmocnienia statycznego układu zamkniętego. Jest idealna tylko przy dokładnym modelu; przy niepewności dodaje się całkowanie.”</li>
-</ol></details>
+</ol></div></details>
+</div>
 
 <h3>Lista kontrolna przed egzaminem</h3>
 <ul class="check">
@@ -925,37 +909,15 @@ html{scroll-padding-top:var(--sbh,84px)}
 <li>K. Duzinkiewicz, R. Piotrowski, <em>Teoria sterowania — Sterowanie systemem dynamicznym: metoda alokacji biegunów I</em>, PG WEiA, 28.03.2025 (plik <code>6_cz1_alokacja_biegunów.pdf</code>): sformułowanie dwóch zadań, prawo sterowania u = −Lx + M yᵣ, układ zamknięty ciągły i dyskretny, cechy L, wyprowadzenie M dla p = q i p ≠ q, przykłady 1–4 (metoda bezpośrednia, silnik prądu stałego, masa–tłumik–sprężyna).</li>
 <li>K. Duzinkiewicz, R. Piotrowski, <em>… metoda alokacji biegunów II</em> (plik <code>6_cz2_alokacja_biegunów.pdf</code>): warunek istnienia L, układ niesterowalny i stabilizowalny, metoda bezpośrednia, postać kanoniczna sterowalności (Twierdzenia 1, 3), wzór Ackermanna i twierdzenie Cayleya–Hamiltona (Twierdzenie 2), niezmienność zer (Twierdzenie 4), funkcje place i acker.</li>
 <li>Rachunki własne: sprawdzenie L z przykładów funkcją <code>scipy.signal.place_poles</code>; odwzorowanie obszaru biegunów na płaszczyznę z; odpowiedź skokowa w suwaku (całkowanie RK4).</li>
+<li>Treść i przykłady liczbowe z wykładów (cytaty w cudzysłowach kursywą); wyniki przykładów sprawdzone funkcją place. Suwak odtwarza przykład 4 z wykładu; przyjęcie y = x (położenie) i odpowiedź skokowa to uzupełnienie własne.</li>
 </ol>
 
-  <p>Repetytorium do egzaminu dyplomowego &middot; ARiSS II stopień &middot; specjalność Systemy sterowania i wspomagania decyzji. Strona oparta na wykładzie wskazanym do tego zagadnienia; elementy spoza wykładu są oznaczone w podpisach. Treść i przykłady liczbowe z wykładów (cytaty w cudzysłowach kursywą); wyniki przykładów sprawdzone funkcją place. Suwak odtwarza przykład 4 z wykładu; przyjęcie y = x (położenie) i odpowiedź skokowa to uzupełnienie własne.</p>
   <p class="backfoot"><a href="index.html">&larr; Wróć do listy zagadnień</a></p>
 </footer>
 
 </div>
-<!--stickybar-js-start-->
-<script>
-(function(){
-  var q=document.querySelector('.quest'),ey=document.querySelector('.eyebrow'),h=document.querySelector('h1');
-  var m=ey&&ey.textContent.match(/pytanie\s+(\d+)/i), n=m?m[1]:'';
-  var bar=document.createElement('div'); bar.id='sbar'; bar.setAttribute('role','banner');
-  bar.innerHTML='<div class="in"><div class="r1"><a href="index.html">&larr; Lista</a><span class="nr"></span><span class="pc" aria-live="off">0%</span></div><p class="qt"></p></div><div class="trk"><i></i></div>';
-  bar.querySelector('.nr').textContent=n?'Pytanie '+n:'';
-  bar.querySelector('.qt').textContent=(q?q.textContent:(h?h.textContent:'')).trim();
-  document.body.insertBefore(bar,document.body.firstChild);
-  var fill=bar.querySelector('.trk i'),pc=bar.querySelector('.pc'),tick=false;
-  function size(){var hh=bar.offsetHeight;document.documentElement.style.setProperty('--sbh',(hh+12)+'px');document.body.style.paddingTop=hh+'px';}
-  function upd(){tick=false;var d=document.documentElement,max=d.scrollHeight-window.innerHeight;
-    var p=max>0?Math.min(1,Math.max(0,(window.pageYOffset||d.scrollTop)/max)):1;
-    var v=Math.round(p*100);fill.style.width=(p*100)+'%';pc.textContent=v+'%';}
-  function req(){if(!tick){tick=true;requestAnimationFrame(upd);}}
-  window.addEventListener('scroll',req,{passive:true});
-  window.addEventListener('resize',function(){size();req();});
-  window.addEventListener('load',function(){size();upd();});
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){size();upd();});
-  size();upd();
-})();
-</script>
-<!--stickybar-js-end-->
+<script src="assets/pytania.js"></script>
+<script src="assets/nav.js" defer></script>
 <script src="assets/meowl-egg.js" defer></script>
 </body>
 </html>

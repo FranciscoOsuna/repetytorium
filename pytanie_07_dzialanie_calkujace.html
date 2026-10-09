@@ -124,21 +124,17 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
         box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--line)}
 header::after{content:"";display:block;clear:both}
 </style>
+<link rel="stylesheet" href="assets/chat.css">
 </head>
 <body>
 <div class="wrap">
 
-<nav class="topnav">
-  <a href="index.html">&larr; Repetytorium</a>
-  <span class="here">zagadnienie 7 z 50 &middot; teoria sterowania</span>
-</nav>
+<nav class="jm" id="jm" aria-label="Nawigacja"><a class="jc" href="index.html">&larr; Lista</a></nav>
 
 <header>
   <img class="avatar" src="assets/meowl-tabby.png" width="64" height="64" alt="" decoding="async">
-  <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 7</p>
   <h1>Sprzężenie od stanu z działaniem całkującym</h1>
   <p class="quest">Sterowanie ze sprzężeniem od stanu – metoda alokacji biegunów i wykorzystanie działań całkujących, metody projektowania.</p>
-  <p class="src">Teoria sterowania &middot; wykład K. Duzinkiewicza i R. Piotrowskiego „Metoda alokacji biegunów – zastosowanie działania całkującego” &middot; bliźniak 6; obserwatory w 8</p>
 </header>
 
 <style>
@@ -178,24 +174,6 @@ ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{colo
        margin:12px 0 0;padding-top:11px;border-top:1px solid var(--line);line-height:1.65}
 .inter .odczyt b{color:var(--ink);font-weight:500}
 .inter .odczyt.staly2{min-height:80px}
-/*stickybar-start*/
-.topnav{display:none}
-#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(238,241,246,.96);
-  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-#sbar .in{max-width:860px;margin:0 auto;padding:9px 22px 8px}
-#sbar .r1{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
-#sbar a{color:var(--ink);text-decoration:none;text-transform:uppercase;letter-spacing:.1em;white-space:nowrap;
-  border-bottom:1px solid var(--line);padding-bottom:1px}
-#sbar a:hover,#sbar a:focus-visible{border-color:var(--ink);outline:none}
-#sbar .nr{color:var(--mut);white-space:nowrap}
-#sbar .pc{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--teal);font-weight:500;white-space:nowrap}
-#sbar .qt{margin:5px 0 0;font-family:var(--body);font-size:15px;line-height:1.3;font-style:italic;color:var(--ink)}
-#sbar .trk{position:absolute;left:0;right:0;bottom:-1px;height:3px;background:transparent}
-#sbar .trk i{display:block;height:100%;width:0;background:var(--teal)}
-html{scroll-padding-top:var(--sbh,84px)}
-@media (max-width:600px){#sbar .in{padding:8px 16px 7px}#sbar .qt{font-size:14px}}
-@media print{#sbar{display:none}}
-/*stickybar-end*/
 </style>
 
 <section>
@@ -703,18 +681,24 @@ html{scroll-padding-top:var(--sbh,84px)}
 <h2><span class="num">10</span> Opowiedz własnymi słowami</h2>
 <div class="rail"></div>
 
-<details class="fiszka op"><summary>Wersja 30 sekund (dla kogoś spoza automatyki)</summary>
-<p>„Regulator ze sprzężeniem od stanu ustawia, jak szybko i spokojnie obiekt reaguje, ale wartość, do której dojdzie, zależy od tego, czy dobrze znamy obiekt. Żeby trafić dokładnie, dokładam licznik, który sumuje błąd i dopóki błąd nie zniknie, ciągle dociska sterowanie. Licznik zatrzymuje się tylko przy zerowym błędzie — więc obiekt dochodzi dokładnie do wartości zadanej, nawet gdy model jest nieprecyzyjny albo coś stale przeszkadza.”</p></details>
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-b-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-b-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 30 sekund</span><span class="sub">dla kogoś spoza automatyki</span></summary>
+<div class="tx"><p>„Regulator ze sprzężeniem od stanu ustawia, jak szybko i spokojnie obiekt reaguje, ale wartość, do której dojdzie, zależy od tego, czy dobrze znamy obiekt. Żeby trafić dokładnie, dokładam licznik, który sumuje błąd i dopóki błąd nie zniknie, ciągle dociska sterowanie. Licznik zatrzymuje się tylko przy zerowym błędzie — więc obiekt dochodzi dokładnie do wartości zadanej, nawet gdy model jest nieprecyzyjny albo coś stale przeszkadza.”</p></div></details>
+</div>
 
-<details class="fiszka op"><summary>Wersja 2 minuty (egzaminacyjna, sześć zdań-kotwic)</summary>
-<ol>
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-b-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-b-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 2 minuty</span><span class="sub">egzaminacyjna</span></summary>
+<div class="tx"><ol>
 <li><strong>Problem:</strong> „Przy u = −Lx + M yᵣ macierz M daje jednostkowe wzmocnienie tylko dla dokładnego modelu. Przy błędzie modelu albo stałym zakłóceniu zostaje uchyb ustalony, bo L nie ma działania całkującego.”</li>
 <li><strong>Struktura:</strong> „Na wyjściu komparatora wstawiam q integratorów, η̇ = yᵣ − y. Sterowanie u = −L₁x − L₂η: L₁ od stanu, L₂ od całki uchybu.”</li>
 <li><strong>System rozszerzony:</strong> „Ã = [A 0; −C 0], B̃ = [B; 0], rząd n + q. L̃ = [L₁ L₂] liczę alokacją biegunów jak w zagadnieniu 6: metodą bezpośrednią, kanoniczną albo Ackermannem.”</li>
 <li><strong>Dlaczego działa:</strong> „W równowadze η̇ = 0, więc y = yᵣ. Stałe zakłócenia obciążenia i pomiaru są eliminowane, a przy błędzie modelu uchyb dalej znika, o ile układ pozostaje stabilny.”</li>
 <li><strong>Warunki i bieguny:</strong> „(Ã, B̃) sterowalna ⇔ (A, B) sterowalna, p ≥ q i rząd [A B; C 0] = n + q. Bieguny dobieram np. z wielomianów ITAE — wybieram tylko ωₙ.”</li>
 <li><strong>Przykład i dyskretnie:</strong> „W przykładzie z wykładu L̃ z ITAE (ωₙ = 2) utrzymało stabilność i y → 1 po zmianie modelu. Dyskretnie integrator to sumator ηₖ₊₁ = ηₖ + yᵣ − yₖ, a bieguny przenoszę przez z = e^(λTₛ).”</li>
-</ol></details>
+</ol></div></details>
+</div>
 
 <h3>Lista kontrolna przed egzaminem</h3>
 <ul class="check">
@@ -771,37 +755,15 @@ html{scroll-padding-top:var(--sbh,84px)}
   <ol class="zr">
 <li>K. Duzinkiewicz, R. Piotrowski, <em>Teoria sterowania — Sterowanie systemem dynamicznym: metoda alokacji biegunów – zastosowanie działania całkującego</em>, PG WEiA (plik <code>7_alokacja_i_całkowanie.pdf</code>, 29 stron): zalety i wady macierzy M, system rozszerzony o integratory (przypadek ciągły i dyskretny), warunki sterowalności systemu rozszerzonego, eliminacja stałych zakłóceń, przykład 1 (Ackermann), przykład 2 (postać kanoniczna, kompensacja M, ITAE, test krzepkości), przykład 3 (dyskretyzacja, uwarunkowanie, dwa przypadki biegunów).</li>
 <li>Rachunki własne: wzmocnienia przykładów sprawdzone wzorem Ackermanna i funkcją <code>place_poles</code> (znaki dla u = −L̃[x; η], η̇ = yᵣ − y); odpowiedzi ITAE ze współczynników z wykładu; suwaki — całkowanie RK4.</li>
+<li>Treść i przykłady liczbowe z wykładu (cytaty w cudzysłowach kursywą); wzmocnienia sprawdzone rachunkiem własnym (Ackermann, place). Suwaki odtwarzają test krzepkości z przykładu 2; zakłócenie obciążenia i porównanie z M to uzupełnienie własne.</li>
 </ol>
 
-  <p>Repetytorium do egzaminu dyplomowego &middot; ARiSS II stopień &middot; specjalność Systemy sterowania i wspomagania decyzji. Strona oparta na wykładzie wskazanym do tego zagadnienia; elementy spoza wykładu są oznaczone w podpisach. Treść i przykłady liczbowe z wykładu (cytaty w cudzysłowach kursywą); wzmocnienia sprawdzone rachunkiem własnym (Ackermann, place). Suwaki odtwarzają test krzepkości z przykładu 2; zakłócenie obciążenia i porównanie z M to uzupełnienie własne.</p>
   <p class="backfoot"><a href="index.html">&larr; Wróć do listy zagadnień</a></p>
 </footer>
 
 </div>
-<!--stickybar-js-start-->
-<script>
-(function(){
-  var q=document.querySelector('.quest'),ey=document.querySelector('.eyebrow'),h=document.querySelector('h1');
-  var m=ey&&ey.textContent.match(/pytanie\s+(\d+)/i), n=m?m[1]:'';
-  var bar=document.createElement('div'); bar.id='sbar'; bar.setAttribute('role','banner');
-  bar.innerHTML='<div class="in"><div class="r1"><a href="index.html">&larr; Lista</a><span class="nr"></span><span class="pc" aria-live="off">0%</span></div><p class="qt"></p></div><div class="trk"><i></i></div>';
-  bar.querySelector('.nr').textContent=n?'Pytanie '+n:'';
-  bar.querySelector('.qt').textContent=(q?q.textContent:(h?h.textContent:'')).trim();
-  document.body.insertBefore(bar,document.body.firstChild);
-  var fill=bar.querySelector('.trk i'),pc=bar.querySelector('.pc'),tick=false;
-  function size(){var hh=bar.offsetHeight;document.documentElement.style.setProperty('--sbh',(hh+12)+'px');document.body.style.paddingTop=hh+'px';}
-  function upd(){tick=false;var d=document.documentElement,max=d.scrollHeight-window.innerHeight;
-    var p=max>0?Math.min(1,Math.max(0,(window.pageYOffset||d.scrollTop)/max)):1;
-    var v=Math.round(p*100);fill.style.width=(p*100)+'%';pc.textContent=v+'%';}
-  function req(){if(!tick){tick=true;requestAnimationFrame(upd);}}
-  window.addEventListener('scroll',req,{passive:true});
-  window.addEventListener('resize',function(){size();req();});
-  window.addEventListener('load',function(){size();upd();});
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){size();upd();});
-  size();upd();
-})();
-</script>
-<!--stickybar-js-end-->
+<script src="assets/pytania.js"></script>
+<script src="assets/nav.js" defer></script>
 <script src="assets/meowl-egg.js" defer></script>
 </body>
 </html>

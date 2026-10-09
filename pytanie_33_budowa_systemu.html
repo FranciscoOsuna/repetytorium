@@ -124,21 +124,17 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
         box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--line)}
 header::after{content:"";display:block;clear:both}
 </style>
+<link rel="stylesheet" href="assets/chat.css">
 </head>
 <body>
 <div class="wrap">
 
-<nav class="topnav">
-  <a href="index.html">&larr; Repetytorium</a>
-  <span class="here">zagadnienie 33 z 50 &middot; komputerowe systemy sterowania</span>
-</nav>
+<nav class="jm" id="jm" aria-label="Nawigacja"><a class="jc" href="index.html">&larr; Lista</a></nav>
 
 <header>
   <img class="avatar" src="assets/meowl-wide.png" width="64" height="64" alt="" decoding="async">
-  <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 33</p>
   <h1>Budowa zdecentralizowanego rozproszonego systemu sterowania</h1>
   <p class="quest">Przedstaw proces budowy zdecentralizowanego rozproszonego komputerowego systemu sterowania automatycznego.</p>
-  <p class="src">Komputerowe systemy sterowania i wspomagania decyzji &middot; opracowanie na podstawie literatury i dokumentacji — źródła na dole strony &middot; synteza bloku: 32 (warstwy), 22 (sprzęt), 21 (sieci), 24 (struktury)</p>
 </header>
 
 <style>
@@ -164,24 +160,6 @@ ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{colo
 .check li{padding-left:30px;position:relative}
 .check li::before{content:"☐";position:absolute;left:4px;top:-1px;font-family:var(--mono);color:var(--teal);font-size:17px}
 .luka{display:inline-block;min-width:70px;border-bottom:1.5px solid var(--violet);text-align:center;font-family:var(--mono);font-size:14px;color:var(--violet)}
-/*stickybar-start*/
-.topnav{display:none}
-#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(238,241,246,.96);
-  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-#sbar .in{max-width:860px;margin:0 auto;padding:9px 22px 8px}
-#sbar .r1{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
-#sbar a{color:var(--ink);text-decoration:none;text-transform:uppercase;letter-spacing:.1em;white-space:nowrap;
-  border-bottom:1px solid var(--line);padding-bottom:1px}
-#sbar a:hover,#sbar a:focus-visible{border-color:var(--ink);outline:none}
-#sbar .nr{color:var(--mut);white-space:nowrap}
-#sbar .pc{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--teal);font-weight:500;white-space:nowrap}
-#sbar .qt{margin:5px 0 0;font-family:var(--body);font-size:15px;line-height:1.3;font-style:italic;color:var(--ink)}
-#sbar .trk{position:absolute;left:0;right:0;bottom:-1px;height:3px;background:transparent}
-#sbar .trk i{display:block;height:100%;width:0;background:var(--teal)}
-html{scroll-padding-top:var(--sbh,84px)}
-@media (max-width:600px){#sbar .in{padding:8px 16px 7px}#sbar .qt{font-size:14px}}
-@media print{#sbar{display:none}}
-/*stickybar-end*/
 </style>
 
 <section>
@@ -687,11 +665,16 @@ html{scroll-padding-top:var(--sbh,84px)}
 <h2><span class="num">09</span> Opowiedz własnymi słowami</h2>
 <div class="rail"></div>
 
-<details class="fiszka op"><summary>Wersja 30 sekund (dla kogoś spoza automatyki)</summary>
-<p>„To jak budowa sieci sklepów zamiast jednego wielkiego marketu. Najpierw ustalam, czego potrzeba. Potem dzielę teren na dzielnice tak, żeby każda była w miarę samowystarczalna — a to, co je łączy, załatwiam dostawami między nimi. Każda dzielnica dostaje swojego kierownika i swój sprzęt, a nad nimi jest centrala, która ustala tylko cele. Zanim otworzę sklepy, testuję wszystko na makiecie, potem u dostawcy, a na koniec na miejscu.”</p></details>
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-b-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-b-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 30 sekund</span><span class="sub">dla kogoś spoza automatyki</span></summary>
+<div class="tx"><p>„To jak budowa sieci sklepów zamiast jednego wielkiego marketu. Najpierw ustalam, czego potrzeba. Potem dzielę teren na dzielnice tak, żeby każda była w miarę samowystarczalna — a to, co je łączy, załatwiam dostawami między nimi. Każda dzielnica dostaje swojego kierownika i swój sprzęt, a nad nimi jest centrala, która ustala tylko cele. Zanim otworzę sklepy, testuję wszystko na makiecie, potem u dostawcy, a na koniec na miejscu.”</p></div></details>
+</div>
 
-<details class="fiszka op"><summary>Wersja 2 minuty (egzaminacyjna, siedem zdań-kotwic)</summary>
-<ol>
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-b-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-b-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 2 minuty</span><span class="sub">egzaminacyjna</span></summary>
+<div class="tx"><ol>
 <li><strong>Model procesu:</strong> „Proces budowy opisuje model V: lewe ramię to projekt od wymagań w dół, prawe to składanie i sprawdzanie w górę.”</li>
 <li><strong>Wymagania i analiza:</strong> „Określam cele, ograniczenia i wymagania czasowe, spisuję sygnały i buduję choćby prosty model obiektu.”</li>
 <li><strong>Dekompozycja:</strong> „Dzielę obiekt na podsystemy tak, żeby silne sprzężenia zostały w środku, a słabe na granicach; kryteria to sprzężenia, położenie, technologia i odpowiedzialność.”</li>
@@ -699,7 +682,8 @@ html{scroll-padding-top:var(--sbh,84px)}
 <li><strong>Struktura i regulatory:</strong> „Wybieram strukturę zdecentralizowaną, rozproszoną albo hierarchiczną i projektuję regulatory od dołu, a potem sprawdzam stabilność całości.”</li>
 <li><strong>Realizacja:</strong> „Każdy podsystem dostaje własny węzeł z we/wy przy obiekcie, sieć przenosi tylko dane o sprzężeniach i cele, a każdy węzeł umie pracować sam.”</li>
 <li><strong>Testy:</strong> „Testuję od symulacji do obiektu: moduły, HIL, FAT u dostawcy, SAT i uruchomienie na obiekcie, potem eksploatacja.”</li>
-</ol></details>
+</ol></div></details>
+</div>
 
 <h3>Lista kontrolna przed egzaminem</h3>
 <ul class="check">
@@ -760,37 +744,15 @@ html{scroll-padding-top:var(--sbh,84px)}
 <li>E. H. Bristol, On a new measure of interaction for multivariable process control, IEEE Transactions on Automatic Control 11(1), 1966; <a href="https://en.wikipedia.org/wiki/Relative_gain_array">Relative gain array</a>, Wikipedia.</li>
 <li>Wikipedia: <a href="https://en.wikipedia.org/wiki/V-model">V-model</a>; <a href="https://en.wikipedia.org/wiki/Hardware-in-the-loop_simulation">Hardware-in-the-loop simulation</a>; <a href="https://en.wikipedia.org/wiki/Factory_acceptance_test">Factory acceptance test</a>.</li>
 <li>R. Scattolini, Architectures for distributed and hierarchical Model Predictive Control – A review, Journal of Process Control 19(5), 2009 — por. zagadnienie 24.</li>
+<li>Brak slajdów wykładowych do tego zagadnienia w projekcie — strona powstała z literatury wymienionej wyżej. Liczby w przykładzie są przykładowe, a rachunek własny.</li>
 </ol>
 
-  <p>Repetytorium do egzaminu dyplomowego &middot; ARiSS II stopień &middot; specjalność Systemy sterowania i wspomagania decyzji. Brak slajdów wykładowych do tego zagadnienia w projekcie — strona powstała z literatury wymienionej wyżej. Liczby w przykładzie są przykładowe, a rachunek własny.</p>
   <p class="backfoot"><a href="index.html">&larr; Wróć do listy zagadnień</a></p>
 </footer>
 
 </div>
-<!--stickybar-js-start-->
-<script>
-(function(){
-  var q=document.querySelector('.quest'),ey=document.querySelector('.eyebrow'),h=document.querySelector('h1');
-  var m=ey&&ey.textContent.match(/pytanie\s+(\d+)/i), n=m?m[1]:'';
-  var bar=document.createElement('div'); bar.id='sbar'; bar.setAttribute('role','banner');
-  bar.innerHTML='<div class="in"><div class="r1"><a href="index.html">&larr; Lista</a><span class="nr"></span><span class="pc" aria-live="off">0%</span></div><p class="qt"></p></div><div class="trk"><i></i></div>';
-  bar.querySelector('.nr').textContent=n?'Pytanie '+n:'';
-  bar.querySelector('.qt').textContent=(q?q.textContent:(h?h.textContent:'')).trim();
-  document.body.insertBefore(bar,document.body.firstChild);
-  var fill=bar.querySelector('.trk i'),pc=bar.querySelector('.pc'),tick=false;
-  function size(){var hh=bar.offsetHeight;document.documentElement.style.setProperty('--sbh',(hh+12)+'px');document.body.style.paddingTop=hh+'px';}
-  function upd(){tick=false;var d=document.documentElement,max=d.scrollHeight-window.innerHeight;
-    var p=max>0?Math.min(1,Math.max(0,(window.pageYOffset||d.scrollTop)/max)):1;
-    var v=Math.round(p*100);fill.style.width=(p*100)+'%';pc.textContent=v+'%';}
-  function req(){if(!tick){tick=true;requestAnimationFrame(upd);}}
-  window.addEventListener('scroll',req,{passive:true});
-  window.addEventListener('resize',function(){size();req();});
-  window.addEventListener('load',function(){size();upd();});
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){size();upd();});
-  size();upd();
-})();
-</script>
-<!--stickybar-js-end-->
+<script src="assets/pytania.js"></script>
+<script src="assets/nav.js" defer></script>
 <script src="assets/meowl-egg.js" defer></script>
 </body>
 </html>

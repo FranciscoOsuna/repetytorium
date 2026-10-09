@@ -123,7 +123,9 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
 .avatar{float:right;width:64px;height:64px;border-radius:50%;margin:2px 0 10px 18px;
         box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--line)}
 header::after{content:"";display:block;clear:both}
+ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{color:var(--teal)}
 </style>
+<link rel="stylesheet" href="assets/chat.css">
 </head>
 <body>
 <div class="wrap">
@@ -149,37 +151,14 @@ table.kroki td.krok b{display:block;font-family:var(--disp);font-weight:500;font
 table.kroki td.krok span.op{display:block;font-size:13.5px;color:var(--mut);line-height:1.5}
 table.kroki td.wz{text-align:center;padding:14px 10px}
 table.kroki td.wz .m svg{vertical-align:middle}
-/*stickybar-start*/
-.topnav{display:none}
-#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(238,241,246,.96);
-  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-#sbar .in{max-width:860px;margin:0 auto;padding:9px 22px 8px}
-#sbar .r1{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
-#sbar a{color:var(--ink);text-decoration:none;text-transform:uppercase;letter-spacing:.1em;white-space:nowrap;
-  border-bottom:1px solid var(--line);padding-bottom:1px}
-#sbar a:hover,#sbar a:focus-visible{border-color:var(--ink);outline:none}
-#sbar .nr{color:var(--mut);white-space:nowrap}
-#sbar .pc{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--teal);font-weight:500;white-space:nowrap}
-#sbar .qt{margin:5px 0 0;font-family:var(--body);font-size:15px;line-height:1.3;font-style:italic;color:var(--ink)}
-#sbar .trk{position:absolute;left:0;right:0;bottom:-1px;height:3px;background:transparent}
-#sbar .trk i{display:block;height:100%;width:0;background:var(--teal)}
-html{scroll-padding-top:var(--sbh,84px)}
-@media (max-width:600px){#sbar .in{padding:8px 16px 7px}#sbar .qt{font-size:14px}}
-@media print{#sbar{display:none}}
-/*stickybar-end*/
 </style>
 
-<nav class="topnav">
-  <a href="index.html">&larr; Repetytorium</a>
-  <span class="here">zagadnienie 20 z 50 &middot; przetwarzanie sygnałów</span>
-</nav>
+<nav class="jm" id="jm" aria-label="Nawigacja"><a class="jc" href="index.html">&larr; Lista</a></nav>
 
 <header>
   <img class="avatar" src="assets/meowl-snowy.png" width="64" height="64" alt="" decoding="async">
-  <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 20</p>
   <h1>Rozszerzony filtr Kalmana a filtr Kalmana</h1>
   <p class="quest">Rozszerzony filtr Kalmana a filtr Kalmana – podobieństwa, różnice, zastosowania.</p>
-  <p class="src">Cyfrowe przetwarzanie sygnałów &middot; opracowanie własne; oba filtry zaimplementowane i przeliczone samodzielnie na obiekcie dwóch zbiorników z zagadnień 6–8 — tym razem <strong>bez linearyzacji</strong>, z prawdziwym wypływem grawitacyjnym</p>
 </header>
 
 <section>
@@ -694,17 +673,27 @@ Mimo to <strong>EKF pozostaje standardem przemysłowym</strong>: jest tani, dobr
 </section>
 
 <section>
-<h2><span class="num">09</span> Ściąga — odpowiedź w minutę</h2>
+<h2><span class="num">09</span> Opowiedz własnymi słowami</h2>
 <div class="rail"></div>
 
-<div class="box key">
-<span class="lbl">Szkielet wypowiedzi</span>
-<p><strong>1. Zdanie wiążące.</strong> EKF to nie inna metoda, tylko ten sam filtr Kalmana zastosowany do modelu linearyzowanego na bieżąco wokół własnej estymaty.<br>
-<strong>2. Podobieństwa.</strong> Ta sama pętla predykcja–korekcja, to samo znaczenie <span class="m" data-tex="\vec Q"><svg style="vertical-align: -0.437ex;" xmlns="http://www.w3.org/2000/svg" width="1.955ex" height="2.011ex" role="img" focusable="false" viewBox="0 -696 864 889" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-89-TEX-B-1D410" d="M64 339Q64 431 96 502T182 614T295 675T420 696Q469 696 481 695Q620 680 709 589T798 339Q798 255 768 184Q720 77 611 26L600 21Q635 -26 682 -26H696Q769 -26 769 0Q769 7 774 12T787 18Q805 18 805 -7V-13Q803 -64 785 -106T737 -171Q720 -183 697 -191Q687 -193 668 -193Q636 -193 613 -182T575 -144T552 -94T532 -27Q531 -23 530 -16T528 -6T526 -3L512 -5Q499 -7 477 -8T431 -10Q393 -10 382 -9Q238 8 151 97T64 339ZM326 80Q326 113 356 138T430 163Q492 163 542 100L553 86Q554 85 561 91T578 108Q637 179 637 330Q637 430 619 498T548 604Q500 641 425 641Q408 641 390 637T347 623T299 590T259 535Q226 469 226 338Q226 244 246 180T318 79L325 74Q326 74 326 80ZM506 58Q480 112 433 112Q412 112 395 104T378 77Q378 44 431 44Q480 44 506 58Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><use data-c="1D410" xlink:href="#MJX-89-TEX-B-1D410"></use></g></g></g></g></g></svg></span> i <span class="m" data-tex="\vec R"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="1.95ex" height="1.577ex" role="img" focusable="false" viewBox="0 -686 862 697" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-90-TEX-B-1D411" d="M394 0Q370 3 222 3Q75 3 51 0H39V62H147V624H39V686H234Q256 686 299 686T362 687Q479 687 554 669T681 593Q716 550 716 497Q716 390 568 338Q569 337 572 336T577 332Q605 317 623 300T650 258T662 218T668 172Q678 98 689 76Q707 40 748 40Q770 40 780 54T795 88T801 111Q805 117 827 117H831Q846 117 852 113T858 92Q857 78 852 63T834 30T797 1T739 -11Q630 -11 580 12T511 87Q506 104 506 168Q506 170 506 178T507 194Q507 289 438 313Q424 318 356 318H298V62H406V0H394ZM366 369Q459 370 490 381Q548 402 548 476V498V517Q548 578 513 600Q479 624 392 624H358H298V369H366Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><use data-c="1D411" xlink:href="#MJX-90-TEX-B-1D411"></use></g></g></g></g></g></svg></span>, ta sama rola wzmocnienia, te same wymagania: model i obserwowalność.<br>
-<strong>3. Różnice.</strong> W predykcji i korekcji macierze <span class="m" data-tex="\vec A"><svg style="vertical-align: 0;" xmlns="http://www.w3.org/2000/svg" width="1.966ex" height="1.579ex" role="img" focusable="false" viewBox="0 -698 869 698" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-91-TEX-B-1D400" d="M296 0Q278 3 164 3Q58 3 49 0H40V62H92Q144 62 144 64Q388 682 397 689Q403 698 434 698Q463 698 471 689Q475 686 538 530T663 218L724 64Q724 62 776 62H828V0H817Q796 3 658 3Q509 3 485 0H472V62H517Q561 62 561 63L517 175H262L240 120Q218 65 217 64Q217 62 261 62H306V0H296ZM390 237L492 238L440 365Q390 491 388 491Q287 239 287 237H390Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><use data-c="1D400" xlink:href="#MJX-91-TEX-B-1D400"></use></g></g></g></g></g></svg></span> i <span class="m" data-tex="\vec C"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="1.88ex" height="1.602ex" role="img" focusable="false" viewBox="0 -697 831 708" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-92-TEX-B-1D402" d="M64 343Q64 502 174 599T468 697Q502 697 533 691T586 674T623 655T647 639T657 632L694 663Q703 670 711 677T723 687T730 692T735 695T740 696T746 697Q759 697 762 692T766 668V627V489V449Q766 428 762 424T742 419H732H720Q699 419 697 436Q690 498 657 545Q611 618 532 632Q522 634 496 634Q356 634 286 553Q232 488 232 343T286 133Q355 52 497 52Q597 52 650 112T704 237Q704 248 709 251T729 254H735Q750 254 755 253T763 248T766 234Q766 136 680 63T469 -11Q285 -11 175 86T64 343Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><use data-c="1D402" xlink:href="#MJX-92-TEX-B-1D402"></use></g></g></g></g></g></svg></span> ustępują funkcjom <span class="m" data-tex="\vec f"><svg style="vertical-align: 0;" xmlns="http://www.w3.org/2000/svg" width="1.023ex" height="1.584ex" role="img" focusable="false" viewBox="0 -700 452 700" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-93-TEX-B-1D41F" d="M308 0Q290 3 172 3Q58 3 49 0H40V62H109V382H42V444H109V503L110 562L112 572Q127 625 178 658T316 699Q318 699 330 699T348 700Q381 698 404 687T436 658T449 629T452 606Q452 576 432 557T383 537Q355 537 335 555T314 605Q314 635 328 649H325Q311 649 293 644T253 618T227 560Q226 555 226 498V444H340V382H232V62H318V0H308Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><use data-c="1D41F" xlink:href="#MJX-93-TEX-B-1D41F"></use></g></g></g></g></g></svg></span> i <span class="m" data-tex="\vec h"><svg style="vertical-align: 0;" xmlns="http://www.w3.org/2000/svg" width="1.446ex" height="1.57ex" role="img" focusable="false" viewBox="0 -694 639 694" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-94-TEX-B-1D421" d="M40 686L131 690Q222 694 223 694H229V533L230 372L238 381Q248 394 264 407T317 435T398 450Q428 450 448 447T491 434T529 402T551 346Q553 335 554 198V62H623V0H614Q596 3 489 3Q374 3 365 0H356V62H425V194V275Q425 348 416 373T371 399Q326 399 288 370T238 290Q236 281 235 171V62H304V0H295Q277 3 171 3Q64 3 46 0H37V62H106V332Q106 387 106 453T107 534Q107 593 105 605T91 620Q77 624 50 624H37V686H40Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><use data-c="1D421" xlink:href="#MJX-94-TEX-B-1D421"></use></g></g></g></g></g></svg></span>; w pozostałych krokach — jakobianom <span class="m" data-tex="\vec F"><svg style="vertical-align: 0;" xmlns="http://www.w3.org/2000/svg" width="1.638ex" height="1.538ex" role="img" focusable="false" viewBox="0 -680 724 680" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-95-TEX-B-1D405" d="M425 0L228 3Q63 3 51 0H39V62H147V618H39V680H644V676Q647 670 659 552T675 428V424H613Q613 433 605 477Q599 511 589 535T562 574T530 599T488 612T441 617T387 618H368H304V371H333Q389 373 411 390T437 468V488H499V192H437V212Q436 244 430 263T408 292T378 305T333 309H304V62H439V0H425Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><use data-c="1D405" xlink:href="#MJX-95-TEX-B-1D405"></use></g></g></g></g></g></svg></span> i <span class="m" data-tex="\vec H"><svg style="vertical-align: 0;" xmlns="http://www.w3.org/2000/svg" width="2.036ex" height="1.552ex" role="img" focusable="false" viewBox="0 -686 900 686" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-96-TEX-B-1D407" d="M400 0Q376 3 226 3Q75 3 51 0H39V62H147V624H39V686H51Q75 683 226 683Q376 683 400 686H412V624H304V388H595V624H487V686H499Q523 683 673 683Q824 683 848 686H860V624H752V62H860V0H848Q824 3 674 3Q523 3 499 0H487V62H595V326H304V62H412V0H400Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><use data-c="1D407" xlink:href="#MJX-96-TEX-B-1D407"></use></g></g></g></g></g></svg></span>, liczonym w każdym kroku w punkcie bieżącej estymaty. Skutkiem jest utrata optymalności i gwarancji zbieżności oraz wyższy koszt.<br>
-<strong>4. Co to daje.</strong> Na obiekcie dwóch zbiorników z wypływem pierwiastkowym EKF jest dziewięciokrotnie dokładniejszy, a błąd zwykłego filtru jest <em>obciążeniem</em>, nie szumem. Co gorsza, zwykły filtr zaniża własną niepewność ponad czterokrotnie.<br>
-<strong>5. Zastosowania.</strong> Obiekty nieliniowe i szeroki zakres pracy, nawigacja i fuzja czujników, jednoczesna estymacja stanu i parametrów, a przez nią diagnostyka i sterowanie adaptacyjne.<br>
-<strong>6. Granice.</strong> Brak gwarancji zbieżności; ryzyko rośnie przy silnej nieliniowości, złej estymacie początkowej i zbyt małym <span class="m" data-tex="\vec Q"><svg style="vertical-align: -0.437ex;" xmlns="http://www.w3.org/2000/svg" width="1.955ex" height="2.011ex" role="img" focusable="false" viewBox="0 -696 864 889" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-97-TEX-B-1D410" d="M64 339Q64 431 96 502T182 614T295 675T420 696Q469 696 481 695Q620 680 709 589T798 339Q798 255 768 184Q720 77 611 26L600 21Q635 -26 682 -26H696Q769 -26 769 0Q769 7 774 12T787 18Q805 18 805 -7V-13Q803 -64 785 -106T737 -171Q720 -183 697 -191Q687 -193 668 -193Q636 -193 613 -182T575 -144T552 -94T532 -27Q531 -23 530 -16T528 -6T526 -3L512 -5Q499 -7 477 -8T431 -10Q393 -10 382 -9Q238 8 151 97T64 339ZM326 80Q326 113 356 138T430 163Q492 163 542 100L553 86Q554 85 561 91T578 108Q637 179 637 330Q637 430 619 498T548 604Q500 641 425 641Q408 641 390 637T347 623T299 590T259 535Q226 469 226 338Q226 244 246 180T318 79L325 74Q326 74 326 80ZM506 58Q480 112 433 112Q412 112 395 104T378 77Q378 44 431 44Q480 44 506 58Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><use data-c="1D410" xlink:href="#MJX-97-TEX-B-1D410"></use></g></g></g></g></g></svg></span>. Alternatywy: filtr bezśladowy i cząsteczkowy.</p>
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-b-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-b-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 30 sekund</span><span class="sub">dla kogoś spoza automatyki</span></summary>
+<div class="tx"><p>„Filtr Kalmana to program, który śledzi stan urządzenia, np. poziom wody w niemierzonym zbiorniku, porównując przewidywanie z modelu z tym, co pokazuje czujnik. Zwykły filtr działa dobrze tylko wtedy, gdy obiekt jest liniowy, a woda wypływa ze zbiornika jak pierwiastek z poziomu, więc to założenie się łamie. Filtr rozszerzony to ten sam filtr, który w każdym kroku zastępuje krzywą jej styczną w miejscu, gdzie sam sądzi, że jest obiekt. Na przykładzie dwóch zbiorników jest przez to prawie dziewięć razy dokładniejszy od zwykłego.”</p></div></details>
+</div>
+
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-b-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-b-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 2 minuty</span><span class="sub">egzaminacyjna</span></summary>
+<div class="tx"><ol>
+<li><strong>Zdanie wiążące:</strong> „Filtr rozszerzony to nie inna metoda, tylko ten sam filtr Kalmana zastosowany do modelu nieliniowego, linearyzowanego na bieżąco wokół własnej estymaty. Zwykły filtr jest optymalny w sensie najmniejszego średniego kwadratu pod warunkiem, że obiekt jest liniowy, a szumy gaussowskie.”</li>
+<li><strong>Podobieństwa:</strong> „Oba filtry mają tę samą pętlę predykcja–korekcja i to samo znaczenie Q i R: R to nieufność wobec czujnika, a Q wobec modelu. Wzmocnienie L rozstrzyga spór model kontra pomiar, a oba potrzebują modelu i obserwowalności.”</li>
+<li><strong>Różnice:</strong> „W predykcji stanu i korekcji macierze A i C ustępują funkcjom f i h. W predykcji niepewności, wzmocnieniu i jej aktualizacji stałe macierze A i C zastępują jakobiany F i H, liczone w każdym kroku w punkcie bieżącej estymaty.”</li>
+<li><strong>Linearyzacja:</strong> „Nieliniowy model zastępuję styczną w punkcie, w którym filtr aktualnie widzi obiekt. Dopóki estymata jest blisko prawdy, przybliżenie jest dobre. Gdy odjedzie, zły punkt linearyzacji psuje też ocenę, komu ufać, i EKF może się rozbiec.”</li>
+<li><strong>Efekt na obiekcie:</strong> „Na obiekcie dwóch zbiorników z wypływem pierwiastkowym błąd wynosi 0,126 dla zwykłego filtru i 0,0145 dla rozszerzonego, czyli EKF jest prawie dziewięciokrotnie dokładniejszy. Błąd zwykłego filtru jest obciążeniem, a nie szumem.”</li>
+<li><strong>Utrata gwarancji:</strong> „EKF jest przybliżeniem: nie jest optymalny i nie ma gwarancji zbieżności. Rozbieżność pojawia się przy zbyt małym Q, złej estymacie początkowej lub silnej nieliniowości, więc Q dobiera się z zapasem.”</li>
+<li><strong>Zastosowania:</strong> „Zwykły filtr stosuje się dla obiektów liniowych lub pracujących w wąskim otoczeniu jednego punktu. EKF jest potrzebny dla obiektów nieliniowych o szerokim zakresie pracy, w nawigacji i fuzji czujników oraz do jednoczesnej estymacji stanu i parametrów, np. współczynnika wypływu, co służy diagnostyce.”</li>
+</ol></div></details>
 </div>
 
 </section>
@@ -739,37 +728,18 @@ Mimo to <strong>EKF pozostaje standardem przemysłowym</strong>: jest tani, dobr
 </section>
 
 <footer>
-Opracowanie własne w konwencji repetytorium, na kanwie standardowego wykładu z estymacji stanu: filtr Kalmana w postaci predykcja–korekcja, linearyzacja modelu nieliniowego, jakobiany, utrata optymalności, rozszerzenie stanu o parametr, filtr bezśladowy.
-Filtr Kalmana jako obserwator omawia zagadnienie 8, jego rolę w strukturach sterowania — zagadnienie 40, filtry sygnałowe — zagadnienie 17, diagnostykę na residuach — zagadnienia 27–29.
-Wszystkie liczby policzono samodzielnie: oba filtry zaimplementowano na obiekcie dwóch zbiorników z wypływem grawitacyjnym (prawo Torricellego), z pomiarem poziomu tylko w drugim zbiorniku, szumem czujnika 0,05 i fluktuacjami dopływu 0,02.
-<p class="backfoot"><a href="index.html">&larr; Powrót do listy zagadnień</a></p>
+  <p><strong style="color:var(--ink)">Źródła</strong></p>
+  <ol class="zr">
+<li>Opracowanie własne na kanwie standardowego wykładu z estymacji stanu: filtr Kalmana w postaci predykcja–korekcja, linearyzacja modelu nieliniowego, jakobiany, utrata optymalności, rozszerzenie stanu o parametr, filtr bezśladowy.</li>
+<li>Wszystkie liczby policzono samodzielnie: oba filtry zaimplementowano na obiekcie dwóch zbiorników z wypływem grawitacyjnym (prawo Torricellego), z pomiarem poziomu tylko w drugim zbiorniku, szumem czujnika 0,05 i fluktuacjami dopływu 0,02.</li>
+</ol>
+
+  <p class="backfoot"><a href="index.html">&larr; Wróć do listy zagadnień</a></p>
 </footer>
 
 </div>
-<!--stickybar-js-start-->
-<script>
-(function(){
-  var q=document.querySelector('.quest'),ey=document.querySelector('.eyebrow'),h=document.querySelector('h1');
-  var m=ey&&ey.textContent.match(/pytanie\s+(\d+)/i), n=m?m[1]:'';
-  var bar=document.createElement('div'); bar.id='sbar'; bar.setAttribute('role','banner');
-  bar.innerHTML='<div class="in"><div class="r1"><a href="index.html">&larr; Lista</a><span class="nr"></span><span class="pc" aria-live="off">0%</span></div><p class="qt"></p></div><div class="trk"><i></i></div>';
-  bar.querySelector('.nr').textContent=n?'Pytanie '+n:'';
-  bar.querySelector('.qt').textContent=(q?q.textContent:(h?h.textContent:'')).trim();
-  document.body.insertBefore(bar,document.body.firstChild);
-  var fill=bar.querySelector('.trk i'),pc=bar.querySelector('.pc'),tick=false;
-  function size(){var hh=bar.offsetHeight;document.documentElement.style.setProperty('--sbh',(hh+12)+'px');document.body.style.paddingTop=hh+'px';}
-  function upd(){tick=false;var d=document.documentElement,max=d.scrollHeight-window.innerHeight;
-    var p=max>0?Math.min(1,Math.max(0,(window.pageYOffset||d.scrollTop)/max)):1;
-    var v=Math.round(p*100);fill.style.width=(p*100)+'%';pc.textContent=v+'%';}
-  function req(){if(!tick){tick=true;requestAnimationFrame(upd);}}
-  window.addEventListener('scroll',req,{passive:true});
-  window.addEventListener('resize',function(){size();req();});
-  window.addEventListener('load',function(){size();upd();});
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){size();upd();});
-  size();upd();
-})();
-</script>
-<!--stickybar-js-end-->
+<script src="assets/pytania.js"></script>
+<script src="assets/nav.js" defer></script>
 <script src="assets/meowl-egg.js" defer></script>
 </body>
 </html>

@@ -124,21 +124,17 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
         box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--line)}
 header::after{content:"";display:block;clear:both}
 </style>
+<link rel="stylesheet" href="assets/chat.css">
 </head>
 <body>
 <div class="wrap">
 
-<nav class="topnav">
-  <a href="index.html">&larr; Repetytorium</a>
-  <span class="here">zagadnienie 35 z 50 &middot; systemy wspomagania decyzji</span>
-</nav>
+<nav class="jm" id="jm" aria-label="Nawigacja"><a class="jc" href="index.html">&larr; Lista</a></nav>
 
 <header>
   <img class="avatar" src="assets/meowl-snowy.png" width="64" height="64" alt="" decoding="async">
-  <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 35</p>
   <h1>Zadania SWD i jego współpraca z systemem sterowania</h1>
   <p class="quest">Przedstaw zadania systemu wspomagania decyzji i możliwy model jego współpracy z komputerowym systemem sterowania automatycznego.</p>
-  <p class="src">Systemy sterowania i wspomagania decyzji &middot; materiały T. Ujazdowskiego z Komputerowych Systemów Sterowania i Wspomagania Decyzji (cz. I–III) &middot; opiera się na 42, łączy się z 23, 32, 34</p>
 </header>
 
 <style>
@@ -164,24 +160,6 @@ ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{colo
 .check li{padding-left:30px;position:relative}
 .check li::before{content:"☐";position:absolute;left:4px;top:-1px;font-family:var(--mono);color:var(--teal);font-size:17px}
 .luka{display:inline-block;min-width:70px;border-bottom:1.5px solid var(--violet);text-align:center;font-family:var(--mono);font-size:14px;color:var(--violet)}
-/*stickybar-start*/
-.topnav{display:none}
-#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(238,241,246,.96);
-  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-#sbar .in{max-width:860px;margin:0 auto;padding:9px 22px 8px}
-#sbar .r1{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
-#sbar a{color:var(--ink);text-decoration:none;text-transform:uppercase;letter-spacing:.1em;white-space:nowrap;
-  border-bottom:1px solid var(--line);padding-bottom:1px}
-#sbar a:hover,#sbar a:focus-visible{border-color:var(--ink);outline:none}
-#sbar .nr{color:var(--mut);white-space:nowrap}
-#sbar .pc{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--teal);font-weight:500;white-space:nowrap}
-#sbar .qt{margin:5px 0 0;font-family:var(--body);font-size:15px;line-height:1.3;font-style:italic;color:var(--ink)}
-#sbar .trk{position:absolute;left:0;right:0;bottom:-1px;height:3px;background:transparent}
-#sbar .trk i{display:block;height:100%;width:0;background:var(--teal)}
-html{scroll-padding-top:var(--sbh,84px)}
-@media (max-width:600px){#sbar .in{padding:8px 16px 7px}#sbar .qt{font-size:14px}}
-@media print{#sbar{display:none}}
-/*stickybar-end*/
 </style>
 
 <section>
@@ -790,11 +768,16 @@ html{scroll-padding-top:var(--sbh,84px)}
 <h2><span class="num">10</span> Opowiedz własnymi słowami</h2>
 <div class="rail"></div>
 
-<details class="fiszka op"><summary>Wersja 30 sekund (dla kogoś spoza automatyki)</summary>
-<p>„W ciepłowni sterownik pilnuje, żeby pompy i zawory robiły to, co mają zadane — szybko i bezpiecznie. Ale ile wody pompować i ile pary zużyć, żeby było ciepło i tanio, to już decyzja. Tu pomaga system wspomagania decyzji: bierze dane ze sterownika, liczy na modelu najlepszy wariant i pokazuje go operatorowi na ekranie. Operator zatwierdza, a sterownik wykonuje.”</p></details>
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-c-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-c-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 30 sekund</span><span class="sub">dla kogoś spoza automatyki</span></summary>
+<div class="tx"><p>„W ciepłowni sterownik pilnuje, żeby pompy i zawory robiły to, co mają zadane — szybko i bezpiecznie. Ale ile wody pompować i ile pary zużyć, żeby było ciepło i tanio, to już decyzja. Tu pomaga system wspomagania decyzji: bierze dane ze sterownika, liczy na modelu najlepszy wariant i pokazuje go operatorowi na ekranie. Operator zatwierdza, a sterownik wykonuje.”</p></div></details>
+</div>
 
-<details class="fiszka op"><summary>Wersja 2 minuty (egzaminacyjna, siedem zdań-kotwic)</summary>
-<ol>
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-c-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-c-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 2 minuty</span><span class="sub">egzaminacyjna</span></summary>
+<div class="tx"><ol>
 <li><strong>SWD:</strong> „To zbiór narzędzi komputerowych wspomagających interaktywny proces decyzyjny. W automatyce zawsze automatyzuje część jego etapów.”</li>
 <li><strong>Zadania:</strong> „Pobiera dane z KSS, prognozuje na modelu obiektu, rozwiązuje zadanie optymalizacji, ocenia skutki, prowadzi dialog z operatorem, przekazuje decyzję do KSS i nadzoruje jej skutki.”</li>
 <li><strong>Przykład:</strong> „Na zajęciach był to układ ciepłowniczy: zbiornik powrotny, pompa, bojler z parą; cel 60 °C ± 5%, objętość co najmniej 20%, minimalny koszt.”</li>
@@ -802,7 +785,8 @@ html{scroll-padding-top:var(--sbh,84px)}
 <li><strong>Przebieg:</strong> „SWD odczytuje stan, liczy QP, zapisuje propozycję; HMI ją pokazuje, operator zatwierdza, PLC przepisuje ją do nastaw i realizuje regulatorami.”</li>
 <li><strong>Zaufanie:</strong> „Inżynierowie chcą więcej automatyzacji, operatorzy mniej. W przemyśle dominuje model hybrydowy z suwerenną rolą decydenta, a skrajnością w stronę automatyki jest MPC.”</li>
 <li><strong>Optymalizacja:</strong> „Zadanie QP rozwiązuje quadprog. Trzeba sprawdzić exitflag, a mnożniki Lagrange’a mówią, ile kosztuje każde ograniczenie.”</li>
-</ol></details>
+</ol></div></details>
+</div>
 
 <h3>Lista kontrolna przed egzaminem</h3>
 <ul class="check">
@@ -862,37 +846,15 @@ html{scroll-padding-top:var(--sbh,84px)}
 <li>MathWorks, <em>Optimization Problem (Model Predictive Control Toolbox)</em>, <a href="https://www.mathworks.com/help/mpc/ug/optimization-problem.html">dokumentacja MathWorks</a> — składniki funkcji kosztu MPC (cytowane w cz. III).</li>
 <li>MathWorks, <em>quadprog</em>, <a href="https://www.mathworks.com/help/optim/ug/quadprog.html">dokumentacja MathWorks</a> — znaczenie exitflag i pola lambda.</li>
 <li>K. Duzinkiewicz, R. Piotrowski, <em>Wprowadzenie – pojęcia podstawowe</em>, Struktury i algorytmy wspomagania decyzji, PG 2025 — pojęcia z zagadnienia 42.</li>
+<li>Przykład QP pochodzi z wykładu, rachunek ręczny jest własny; profile na rysunku obiektu odczytano z wykresów z zajęć.</li>
 </ol>
 
-  <p>Repetytorium do egzaminu dyplomowego &middot; ARiSS II stopień &middot; specjalność Systemy sterowania i wspomagania decyzji. Strona oparta na wykładzie wskazanym do tego zagadnienia; elementy spoza wykładu są oznaczone w podpisach. Przykład QP pochodzi z wykładu, rachunek ręczny jest własny; profile na rysunku obiektu odczytano z wykresów z zajęć.</p>
   <p class="backfoot"><a href="index.html">&larr; Wróć do listy zagadnień</a></p>
 </footer>
 
 </div>
-<!--stickybar-js-start-->
-<script>
-(function(){
-  var q=document.querySelector('.quest'),ey=document.querySelector('.eyebrow'),h=document.querySelector('h1');
-  var m=ey&&ey.textContent.match(/pytanie\s+(\d+)/i), n=m?m[1]:'';
-  var bar=document.createElement('div'); bar.id='sbar'; bar.setAttribute('role','banner');
-  bar.innerHTML='<div class="in"><div class="r1"><a href="index.html">&larr; Lista</a><span class="nr"></span><span class="pc" aria-live="off">0%</span></div><p class="qt"></p></div><div class="trk"><i></i></div>';
-  bar.querySelector('.nr').textContent=n?'Pytanie '+n:'';
-  bar.querySelector('.qt').textContent=(q?q.textContent:(h?h.textContent:'')).trim();
-  document.body.insertBefore(bar,document.body.firstChild);
-  var fill=bar.querySelector('.trk i'),pc=bar.querySelector('.pc'),tick=false;
-  function size(){var hh=bar.offsetHeight;document.documentElement.style.setProperty('--sbh',(hh+12)+'px');document.body.style.paddingTop=hh+'px';}
-  function upd(){tick=false;var d=document.documentElement,max=d.scrollHeight-window.innerHeight;
-    var p=max>0?Math.min(1,Math.max(0,(window.pageYOffset||d.scrollTop)/max)):1;
-    var v=Math.round(p*100);fill.style.width=(p*100)+'%';pc.textContent=v+'%';}
-  function req(){if(!tick){tick=true;requestAnimationFrame(upd);}}
-  window.addEventListener('scroll',req,{passive:true});
-  window.addEventListener('resize',function(){size();req();});
-  window.addEventListener('load',function(){size();upd();});
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){size();upd();});
-  size();upd();
-})();
-</script>
-<!--stickybar-js-end-->
+<script src="assets/pytania.js"></script>
+<script src="assets/nav.js" defer></script>
 <script src="assets/meowl-egg.js" defer></script>
 </body>
 </html>

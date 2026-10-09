@@ -124,21 +124,17 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
         box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--line)}
 header::after{content:"";display:block;clear:both}
 </style>
+<link rel="stylesheet" href="assets/chat.css">
 </head>
 <body>
 <div class="wrap">
 
-<nav class="topnav">
-  <a href="index.html">&larr; Repetytorium</a>
-  <span class="here">zagadnienie 46 z 50 &middot; systemy wspomagania decyzji</span>
-</nav>
+<nav class="jm" id="jm" aria-label="Nawigacja"><a class="jc" href="index.html">&larr; Lista</a></nav>
 
 <header>
   <img class="avatar" src="assets/meowl-tabby.png" width="64" height="64" alt="" decoding="async">
-  <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 46</p>
   <h1>Wielocelowe zagadnienia decyzyjne: porządek leksykograficzny</h1>
   <p class="quest">Wielocelowe zagadnienia decyzyjne – algorytmy rozwiązywania z uwzględnieniem przyjętego porządku leksykograficznego.</p>
-  <p class="src">Systemy sterowania i wspomagania decyzji &middot; wykłady K. Duzinkiewicza „Zagadnienia wielocelowe II i III” &middot; bliźniak 45; ten sam przykład co 44 i 45</p>
 </header>
 
 <style>
@@ -164,24 +160,6 @@ ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{colo
 .check li{padding-left:30px;position:relative}
 .check li::before{content:"☐";position:absolute;left:4px;top:-1px;font-family:var(--mono);color:var(--teal);font-size:17px}
 .luka{display:inline-block;min-width:70px;border-bottom:1.5px solid var(--violet);text-align:center;font-family:var(--mono);font-size:14px;color:var(--violet)}
-/*stickybar-start*/
-.topnav{display:none}
-#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(238,241,246,.96);
-  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-#sbar .in{max-width:860px;margin:0 auto;padding:9px 22px 8px}
-#sbar .r1{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
-#sbar a{color:var(--ink);text-decoration:none;text-transform:uppercase;letter-spacing:.1em;white-space:nowrap;
-  border-bottom:1px solid var(--line);padding-bottom:1px}
-#sbar a:hover,#sbar a:focus-visible{border-color:var(--ink);outline:none}
-#sbar .nr{color:var(--mut);white-space:nowrap}
-#sbar .pc{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--teal);font-weight:500;white-space:nowrap}
-#sbar .qt{margin:5px 0 0;font-family:var(--body);font-size:15px;line-height:1.3;font-style:italic;color:var(--ink)}
-#sbar .trk{position:absolute;left:0;right:0;bottom:-1px;height:3px;background:transparent}
-#sbar .trk i{display:block;height:100%;width:0;background:var(--teal)}
-html{scroll-padding-top:var(--sbh,84px)}
-@media (max-width:600px){#sbar .in{padding:8px 16px 7px}#sbar .qt{font-size:14px}}
-@media print{#sbar{display:none}}
-/*stickybar-end*/
 </style>
 
 <section>
@@ -821,11 +799,16 @@ Wynik: x = (12, 26), δ = 8, czyli (62, 102) — każdy cel jest o 8 jednostek o
 <h2><span class="num">11</span> Opowiedz własnymi słowami</h2>
 <div class="rail"></div>
 
-<details class="fiszka op"><summary>Wersja 30 sekund (dla kogoś spoza automatyki)</summary>
-<p>„Zarząd mówi: najważniejszy jest udział w rynku, na drugim miejscu zysk. Ile ważniejszy — tego nie wiemy. Można wtedy liczyć cel po celu: najpierw najlepszy udział, potem najlepszy zysk wśród planów z tym udziałem. Albo skromniej: ustalamy, co nas zadowoli — udział co najmniej 80, zysk co najmniej 50. Najpierw szukamy planów z udziałem 80, a spośród nich takich, które dają też zysk 50. Każdy następny cel dzieli tylko to, co zostało po ważniejszych.”</p></details>
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-c-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-c-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 30 sekund</span><span class="sub">dla kogoś spoza automatyki</span></summary>
+<div class="tx"><p>„Zarząd mówi: najważniejszy jest udział w rynku, na drugim miejscu zysk. Ile ważniejszy — tego nie wiemy. Można wtedy liczyć cel po celu: najpierw najlepszy udział, potem najlepszy zysk wśród planów z tym udziałem. Albo skromniej: ustalamy, co nas zadowoli — udział co najmniej 80, zysk co najmniej 50. Najpierw szukamy planów z udziałem 80, a spośród nich takich, które dają też zysk 50. Każdy następny cel dzieli tylko to, co zostało po ważniejszych.”</p></div></details>
+</div>
 
-<details class="fiszka op"><summary>Wersja 2 minuty (egzaminacyjna, siedem zdań-kotwic)</summary>
-<ol>
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-c-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-c-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 2 minuty</span><span class="sub">egzaminacyjna</span></summary>
+<div class="tx"><ol>
 <li><strong>Porządek:</strong> „Porządek leksykograficzny porównuje cele jak litery w słowniku: najpierw najważniejszy, kolejny tylko przy remisie. Decydent podaje ranking celów, a nie wagi.”</li>
 <li><strong>Metoda 1:</strong> „Optymalizuję najważniejszy cel, zapisuję wynik, potem optymalizuję następny przy warunku, że poprzedni zostaje na optimum — i tak dalej. Wynik jest Pareto-optymalny.”</li>
 <li><strong>Programowanie zadaniowe:</strong> „Cele zamieniam w zadania z poziomami aspiracji, np. zysk ≥ 50. Do każdego dopisuję odchylenia: η — niedobór, ρ — nadwyżka. Niepożądane jest to, które psuje warunek.”</li>
@@ -833,7 +816,8 @@ Wynik: x = (12, 26), δ = 8, czyli (62, 102) — każdy cel jest o 8 jednostek o
 <li><strong>Przykład:</strong> „Przy udziale ≥ 80 ważniejszym od zysku ≥ 50 trzy kroki dają u = (0; 80; 50) → (0; 0; 23⅓) → (0; 0; 0) i plan (10, 20). Zadania są spełnione, ale plan nie jest Pareto-optymalny.”</li>
 <li><strong>Archimedesowe PZ:</strong> „Ma tylko dwa priorytety: twarde ograniczenia i ważoną sumę odchyleń celów. Wagi pozwalają celom się wymieniać, a leksykograficzne PZ nigdy nie poświęci wyższego priorytetu.”</li>
 <li><strong>Aspiracje:</strong> „Poziomy aspiracji pomaga ustalić tabela wypłat: każdy cel optymalizuję osobno i patrzę, ile wtedy wychodzą pozostałe.”</li>
-</ol></details>
+</ol></div></details>
+</div>
 
 <h3>Lista kontrolna przed egzaminem</h3>
 <ul class="check">
@@ -893,37 +877,15 @@ Wynik: x = (12, 26), δ = 8, czyli (62, 102) — każdy cel jest o 8 jednostek o
 <li>K. Duzinkiewicz, <em>Struktury i algorytmy wspomagania decyzji — Zagadnienia wielocelowe III</em>, PG WEiA (plik <code>46_cz2_…pdf</code>): niearchimedesowe (leksykograficzne) PZ z algorytmem sekwencyjnym i przykładem, minimaksowe i rozmyte PZ.</li>
 <li>Wikipedia: <a href="https://en.wikipedia.org/wiki/Lexicographic_optimization">Lexicographic optimization</a> — algorytm sekwencyjny (metoda 1); <a href="https://en.wikipedia.org/wiki/Goal_programming">Goal programming</a> — odchylenia, PZ leksykograficzne (pre-emptive) i ważone, wada: rozwiązania mogą nie być Pareto-efektywne.</li>
 <li>Rachunki własne (sprawdzone <code>scipy.optimize.linprog</code>): wszystkie kroki przykładu, metoda 1 na wariancie z₁′ = 2x₁ + x₂, tabela wypłat, minimaks i rozmyte PZ, porównanie PZ leksykograficznego i archimedesowego przy zadaniach sprzecznych (70 i 110).</li>
+<li>Przykład i wyniki pochodzą z wykładów; porównanie metod w przestrzeni celów, optymalizacja leksykograficzna samych celów i przypadek zadań sprzecznych to rachunki własne, sprawdzone solverem LP.</li>
 </ol>
 
-  <p>Repetytorium do egzaminu dyplomowego &middot; ARiSS II stopień &middot; specjalność Systemy sterowania i wspomagania decyzji. Strona oparta na wykładzie wskazanym do tego zagadnienia; elementy spoza wykładu są oznaczone w podpisach. Przykład i wyniki pochodzą z wykładów; porównanie metod w przestrzeni celów, optymalizacja leksykograficzna samych celów i przypadek zadań sprzecznych to rachunki własne, sprawdzone solverem LP.</p>
   <p class="backfoot"><a href="index.html">&larr; Wróć do listy zagadnień</a></p>
 </footer>
 
 </div>
-<!--stickybar-js-start-->
-<script>
-(function(){
-  var q=document.querySelector('.quest'),ey=document.querySelector('.eyebrow'),h=document.querySelector('h1');
-  var m=ey&&ey.textContent.match(/pytanie\s+(\d+)/i), n=m?m[1]:'';
-  var bar=document.createElement('div'); bar.id='sbar'; bar.setAttribute('role','banner');
-  bar.innerHTML='<div class="in"><div class="r1"><a href="index.html">&larr; Lista</a><span class="nr"></span><span class="pc" aria-live="off">0%</span></div><p class="qt"></p></div><div class="trk"><i></i></div>';
-  bar.querySelector('.nr').textContent=n?'Pytanie '+n:'';
-  bar.querySelector('.qt').textContent=(q?q.textContent:(h?h.textContent:'')).trim();
-  document.body.insertBefore(bar,document.body.firstChild);
-  var fill=bar.querySelector('.trk i'),pc=bar.querySelector('.pc'),tick=false;
-  function size(){var hh=bar.offsetHeight;document.documentElement.style.setProperty('--sbh',(hh+12)+'px');document.body.style.paddingTop=hh+'px';}
-  function upd(){tick=false;var d=document.documentElement,max=d.scrollHeight-window.innerHeight;
-    var p=max>0?Math.min(1,Math.max(0,(window.pageYOffset||d.scrollTop)/max)):1;
-    var v=Math.round(p*100);fill.style.width=(p*100)+'%';pc.textContent=v+'%';}
-  function req(){if(!tick){tick=true;requestAnimationFrame(upd);}}
-  window.addEventListener('scroll',req,{passive:true});
-  window.addEventListener('resize',function(){size();req();});
-  window.addEventListener('load',function(){size();upd();});
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){size();upd();});
-  size();upd();
-})();
-</script>
-<!--stickybar-js-end-->
+<script src="assets/pytania.js"></script>
+<script src="assets/nav.js" defer></script>
 <script src="assets/meowl-egg.js" defer></script>
 </body>
 </html>

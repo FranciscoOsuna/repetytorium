@@ -124,21 +124,17 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
         box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--line)}
 header::after{content:"";display:block;clear:both}
 </style>
+<link rel="stylesheet" href="assets/chat.css">
 </head>
 <body>
 <div class="wrap">
 
-<nav class="topnav">
-  <a href="index.html">&larr; Repetytorium</a>
-  <span class="here">zagadnienie 41 z 50 &middot; struktury i algorytmy sterowania</span>
-</nav>
+<nav class="jm" id="jm" aria-label="Nawigacja"><a class="jc" href="index.html">&larr; Lista</a></nav>
 
 <header>
   <img class="avatar" src="assets/meowl-snowy.png" width="64" height="64" alt="" decoding="async">
-  <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 41</p>
   <h1>Sterowanie inteligentne: dynamiczne sieci neuronowe i systemy Takagi–Sugeno</h1>
   <p class="quest">Przedstaw sterowanie inteligentne z wykorzystaniem dynamicznych sieci neuronowych oraz systemów rozmytych Takagi-Sugeno.</p>
-  <p class="src">Struktury i algorytmy sterowania &middot; wykłady MiI i SSiWD (PG) + źródła zewnętrzne wymienione na dole strony</p>
 </header>
 
 <style>
@@ -158,24 +154,6 @@ header::after{content:"";display:block;clear:both}
 .fiszka p{padding:0 16px 14px 48px;margin:0}
 .zrodlo{font-family:var(--mono);font-size:11.5px;color:var(--mut);display:block;margin-top:6px}
 ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{color:var(--teal)}
-/*stickybar-start*/
-.topnav{display:none}
-#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(238,241,246,.96);
-  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-#sbar .in{max-width:860px;margin:0 auto;padding:9px 22px 8px}
-#sbar .r1{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
-#sbar a{color:var(--ink);text-decoration:none;text-transform:uppercase;letter-spacing:.1em;white-space:nowrap;
-  border-bottom:1px solid var(--line);padding-bottom:1px}
-#sbar a:hover,#sbar a:focus-visible{border-color:var(--ink);outline:none}
-#sbar .nr{color:var(--mut);white-space:nowrap}
-#sbar .pc{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--teal);font-weight:500;white-space:nowrap}
-#sbar .qt{margin:5px 0 0;font-family:var(--body);font-size:15px;line-height:1.3;font-style:italic;color:var(--ink)}
-#sbar .trk{position:absolute;left:0;right:0;bottom:-1px;height:3px;background:transparent}
-#sbar .trk i{display:block;height:100%;width:0;background:var(--teal)}
-html{scroll-padding-top:var(--sbh,84px)}
-@media (max-width:600px){#sbar .in{padding:8px 16px 7px}#sbar .qt{font-size:14px}}
-@media print{#sbar{display:none}}
-/*stickybar-end*/
 </style>
 
 <section>
@@ -1132,7 +1110,7 @@ nierówność jest liniowa względem <span class="m" data-tex="\vec{P}"><svg sty
 </section>
 
 <section>
-<h2><span class="num">11</span> Ściąga — karty i plan wypowiedzi</h2>
+<h2><span class="num">11</span> Ściąga — karty i opowiedz własnymi słowami</h2>
 <div class="rail"></div>
 
 <div class="karty">
@@ -1148,17 +1126,27 @@ nierówność jest liniowa względem <span class="m" data-tex="\vec{P}"><svg sty
 <div class="karta"><span class="kw">Kiedy nie</span><p>Znany model fizyczny, brak danych z zakresu pracy, wymagany dowód stabilności dla sieci.</p></div>
 </div>
 
-<ol class="steps">
-<li><strong>Zdanie otwierające.</strong> „Sterowanie inteligentne to sterowanie, w którym model albo regulator bierze się z danych — sieć neuronowa — albo z reguł — system rozmyty. W obu przypadkach najpierw buduję model obiektu, potem z niego regulator.”</li>
-<li><strong>Dlaczego dynamiczne.</strong> „Obiekt ma pamięć, więc sieć też musi ją mieć: przez linie opóźniające — NARX, NOE — albo przez sprzężenie w środku, jak w sieci Elmana. Uczę w konfiguracji szeregowo-równoległej z pomiarem, używam jako symulatora.”</li>
-<li><strong>Struktury z siecią.</strong> „Sterowanie odwrotne — sieć odwraca obiekt. IMC — model i odwrotność, wraca tylko błąd modelu. Model odniesienia — sieć-regulator uczona przez sieciowy model obiektu.”</li>
-<li><strong>Połączenia z innymi metodami.</strong> „NARMA-L2 to linearyzacja przez sprzężenie zwrotne z f i g nauczonymi przez sieć; najmniej liczenia online. W MPC sieć jest predyktorem, a dla szybkości linearyzuje się ją w każdej próbce — wariant NPL.”</li>
-<li><strong>Takagi–Sugeno.</strong> „Reguła TS ma przesłankę rozmytą, a w konkluzji zwykłą funkcję — najczęściej lokalny model liniowy. Wyjście to średnia ważona konkluzji, więc TS skleja modele liniowe w jeden nieliniowy.”</li>
-<li><strong>Sterowanie z TS.</strong> „Najprościej — wieloobszarowy PID: lokalne regulatory w kilku punktach pracy, a ich sterowania miesza system TS. Formalnie — PDC: regulator ma te same przesłanki co model, w konkluzjach lokalne sprzężenia od stanu, a stabilność sprawdzam wspólną macierzą P przez LMI.”</li>
-<li><strong>Most.</strong> „ANFIS to system TS zapisany jako sieć: przesłanki uczę gradientem, konkluzje metodą najmniejszych kwadratów, bo są liniowe w parametrach.”</li>
-<li><strong>Porównanie i zastosowania.</strong> „Sieć — gdy mam dużo danych i nic nie wiem o strukturze; TS — gdy chcę czytelności, wiedzy eksperta i dowodu stabilności. Zastosowania: neutralizacja pH, zbiorniki nieliniowe, reaktory, lewitacja magnetyczna, robotyka.”</li>
-<li><strong>Zdanie zamykające.</strong> „Krótko: obie metody dają nieliniowy model tam, gdzie fizyka go nie daje — sieć uczy się go z danych, TS składa go z modeli liniowych.”</li>
-</ol>
+
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-c-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-c-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 30 sekund</span><span class="sub">dla kogoś spoza automatyki</span></summary>
+<div class="tx"><p>„Gdy nie znamy równań fizycznych obiektu, możemy zbudować jego model z danych albo z reguł zapisanych przez eksperta. Sieć neuronowa uczy się zależności na zapisanych przebiegach, a system rozmyty składa się z kilku prostych modeli, z których każdy działa w swoim zakresie pracy. Weźmy zbiornik, którego zachowanie zależy od poziomu: dla każdego poziomu mamy osobny prosty regulator, a program płynnie je ze sobą miesza. W obu przypadkach najpierw buduje się model, a dopiero potem regulator.”</p></div></details>
+</div>
+
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-c-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-c-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 2 minuty</span><span class="sub">egzaminacyjna</span></summary>
+<div class="tx"><ol>
+<li><strong>Idea:</strong> „Sterowanie inteligentne to sterowanie, w którym model albo regulator bierze się z danych, czyli z sieci neuronowej, albo z wiedzy zapisanej regułami, czyli z systemu rozmytego. Schemat jest ten sam: najpierw identyfikacja modelu obiektu, potem projekt regulatora na jego podstawie.”</li>
+<li><strong>Sieć dynamiczna:</strong> „Zwykły MLP jest statyczny, a obiekt ma pamięć, więc sieć też musi ją mieć. Pamięć dają linie opóźniające, jak w NARX i NOE, albo sprzężenia wewnętrzne, jak w sieci Elmana. NARX uczę z pomiarem na wejściu, a NOE używam jako symulatora na własnych prognozach.”</li>
+<li><strong>Struktury z siecią:</strong> „Mając sieciowy model obiektu, mogę zbudować sterowanie odwrotne, IMC albo strukturę z modelem odniesienia. W IMC do sprzężenia wraca tylko różnica między obiektem a modelem. W strukturze z modelem odniesienia regulator jest osobną siecią, uczoną przez sieciowy model obiektu.”</li>
+<li><strong>NARMA-L2 i MPC:</strong> „NARMA-L2 to linearyzacja przez sprzężenie zwrotne z f i g nauczonymi przez sieć, sterowanie wylicza się wzorem u = (y_r − f)/g i wymaga to najmniej obliczeń. W sterowaniu predykcyjnym sieć jest predyktorem, a wariant NPL linearyzuje ją w każdej próbce, żeby zadanie stało się kwadratowe.”</li>
+<li><strong>Model Takagi–Sugeno:</strong> „W regule TS przesłanka jest rozmyta, a konkluzja to zwykła funkcja, najczęściej lokalny model liniowy. Wyjście jest średnią ważoną konkluzji, więc TS skleja modele liniowe wagami przynależności w jeden nieliniowy model. Na każdym z nich działa cała teoria liniowa.”</li>
+<li><strong>Regulatory z TS:</strong> „Najprościej stosuje się wieloobszarowy PID, w którym lokalne regulatory PID miesza system TS, bez skoków przy zmianie obszaru. Formalnie stosuje się PDC, czyli regulator o tych samych przesłankach co model i lokalnych sprzężeniach od stanu. Stabilność sprawdza się wspólną macierzą P przez LMI.”</li>
+<li><strong>ANFIS i zastosowania:</strong> „ANFIS to system TS uczony jak sieć, przesłanki gradientem, a konkluzje metodą najmniejszych kwadratów, bo są liniowe w parametrach. Sieć wybieram, gdy mam dużo danych, a TS, gdy liczy się czytelność i dowód stabilności. Zastosowania to neutralizacja pH, zbiorniki, reaktory, lewitacja magnetyczna i robotyka.”</li>
+</ol></div></details>
+</div>
+
 </section>
 
 <section>
@@ -1217,36 +1205,15 @@ nierówność jest liniowa względem <span class="m" data-tex="\vec{P}"><svg sty
 <li>H. O. Wang, K. Tanaka, M. F. Griffin, An approach to fuzzy control of nonlinear systems: stability and design issues, IEEE Trans. Fuzzy Systems 4(1), 1996, 14–23; K. Tanaka, H. O. Wang, <a href="https://onlinelibrary.wiley.com/doi/10.1002/0471224596.ch2">Fuzzy Control Systems Design and Analysis, rozdz. 2: Takagi–Sugeno Fuzzy Model and Parallel Distributed Compensation</a>, Wiley 2001.</li>
 <li><a href="http://www.icicelb.org/ellb/contents/2023/6/elb-14-06-06.pdf">Overview of stability analysis for T-S fuzzy systems</a>, ICIC Express Letters Part B 14(6), 2023 — historia PDC i LMI.</li>
 <li>J.-S. R. Jang, ANFIS: adaptive-network-based fuzzy inference system, IEEE Trans. Systems, Man, and Cybernetics 23(3), 1993, 665–685; <a href="https://en.wikipedia.org/wiki/Adaptive_neuro_fuzzy_inference_system">Adaptive neuro fuzzy inference system</a> (Wikipedia).</li>
+<li>Infografiki narysowane na podstawie źródeł; jedyne liczby na stronie (nastawy PID) pochodzą z wykładu, a krzywe w figurach TS są konstrukcją poglądową.</li>
 </ol>
-  <p>Repetytorium do egzaminu dyplomowego &middot; ARiSS II stopień &middot; specjalność Systemy sterowania i wspomagania decyzji. Infografiki narysowane na podstawie źródeł; jedyne liczby na stronie (nastawy PID) pochodzą z wykładu, a krzywe w figurach TS są konstrukcją poglądową.</p>
+
   <p class="backfoot"><a href="index.html">&larr; Wróć do listy zagadnień</a></p>
 </footer>
 
 </div>
-<!--stickybar-js-start-->
-<script>
-(function(){
-  var q=document.querySelector('.quest'),ey=document.querySelector('.eyebrow'),h=document.querySelector('h1');
-  var m=ey&&ey.textContent.match(/pytanie\s+(\d+)/i), n=m?m[1]:'';
-  var bar=document.createElement('div'); bar.id='sbar'; bar.setAttribute('role','banner');
-  bar.innerHTML='<div class="in"><div class="r1"><a href="index.html">&larr; Lista</a><span class="nr"></span><span class="pc" aria-live="off">0%</span></div><p class="qt"></p></div><div class="trk"><i></i></div>';
-  bar.querySelector('.nr').textContent=n?'Pytanie '+n:'';
-  bar.querySelector('.qt').textContent=(q?q.textContent:(h?h.textContent:'')).trim();
-  document.body.insertBefore(bar,document.body.firstChild);
-  var fill=bar.querySelector('.trk i'),pc=bar.querySelector('.pc'),tick=false;
-  function size(){var hh=bar.offsetHeight;document.documentElement.style.setProperty('--sbh',(hh+12)+'px');document.body.style.paddingTop=hh+'px';}
-  function upd(){tick=false;var d=document.documentElement,max=d.scrollHeight-window.innerHeight;
-    var p=max>0?Math.min(1,Math.max(0,(window.pageYOffset||d.scrollTop)/max)):1;
-    var v=Math.round(p*100);fill.style.width=(p*100)+'%';pc.textContent=v+'%';}
-  function req(){if(!tick){tick=true;requestAnimationFrame(upd);}}
-  window.addEventListener('scroll',req,{passive:true});
-  window.addEventListener('resize',function(){size();req();});
-  window.addEventListener('load',function(){size();upd();});
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){size();upd();});
-  size();upd();
-})();
-</script>
-<!--stickybar-js-end-->
+<script src="assets/pytania.js"></script>
+<script src="assets/nav.js" defer></script>
 <script src="assets/meowl-egg.js" defer></script>
 </body>
 </html>

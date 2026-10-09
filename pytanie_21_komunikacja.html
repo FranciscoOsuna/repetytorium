@@ -124,21 +124,17 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
         box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--line)}
 header::after{content:"";display:block;clear:both}
 </style>
+<link rel="stylesheet" href="assets/chat.css">
 </head>
 <body>
 <div class="wrap">
 
-<nav class="topnav">
-  <a href="index.html">&larr; Repetytorium</a>
-  <span class="here">zagadnienie 21 z 50 &middot; komputerowe systemy sterowania</span>
-</nav>
+<nav class="jm" id="jm" aria-label="Nawigacja"><a class="jc" href="index.html">&larr; Lista</a></nav>
 
 <header>
   <img class="avatar" src="assets/meowl-wide.png" width="64" height="64" alt="" decoding="async">
-  <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 21</p>
   <h1>Systemy komunikacji w rozproszonych systemach sterowania</h1>
   <p class="quest">Systemy komunikacji w rozproszonych systemach sterowania.</p>
-  <p class="src">Komputerowe systemy sterowania i wspomagania decyzji &middot; opracowanie na podstawie literatury i dokumentacji — źródła na dole strony &middot; rozwija sieci z zagadnień 22 i 32; opóźnienie w pętli jak w 18</p>
 </header>
 
 <style>
@@ -164,24 +160,6 @@ ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{colo
 .check li{padding-left:30px;position:relative}
 .check li::before{content:"☐";position:absolute;left:4px;top:-1px;font-family:var(--mono);color:var(--teal);font-size:17px}
 .luka{display:inline-block;min-width:70px;border-bottom:1.5px solid var(--violet);text-align:center;font-family:var(--mono);font-size:14px;color:var(--violet)}
-/*stickybar-start*/
-.topnav{display:none}
-#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(238,241,246,.96);
-  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-#sbar .in{max-width:860px;margin:0 auto;padding:9px 22px 8px}
-#sbar .r1{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
-#sbar a{color:var(--ink);text-decoration:none;text-transform:uppercase;letter-spacing:.1em;white-space:nowrap;
-  border-bottom:1px solid var(--line);padding-bottom:1px}
-#sbar a:hover,#sbar a:focus-visible{border-color:var(--ink);outline:none}
-#sbar .nr{color:var(--mut);white-space:nowrap}
-#sbar .pc{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--teal);font-weight:500;white-space:nowrap}
-#sbar .qt{margin:5px 0 0;font-family:var(--body);font-size:15px;line-height:1.3;font-style:italic;color:var(--ink)}
-#sbar .trk{position:absolute;left:0;right:0;bottom:-1px;height:3px;background:transparent}
-#sbar .trk i{display:block;height:100%;width:0;background:var(--teal)}
-html{scroll-padding-top:var(--sbh,84px)}
-@media (max-width:600px){#sbar .in{padding:8px 16px 7px}#sbar .qt{font-size:14px}}
-@media print{#sbar{display:none}}
-/*stickybar-end*/
 </style>
 
 <section>
@@ -785,11 +763,16 @@ html{scroll-padding-top:var(--sbh,84px)}
 <h2><span class="num">09</span> Opowiedz własnymi słowami</h2>
 <div class="rail"></div>
 
-<details class="fiszka op"><summary>Wersja 30 sekund (dla kogoś spoza automatyki)</summary>
-<p>„W zakładzie urządzenia rozmawiają ze sobą przez sieci. Nie chodzi o to, żeby było szybko jak w internecie, tylko żeby wiadomość zawsze doszła na czas — jak w orkiestrze, gdzie spóźniony dźwięk jest gorszy niż cichy. Dlatego sieć ustala, kto i kiedy mówi: albo dyrygent pyta po kolei, albo wygrywa ważniejszy, albo każdy ma swoje okienko czasu. Im szybsza maszyna, tym krótsze muszą być te okienka.”</p></details>
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-b-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-b-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 30 sekund</span><span class="sub">dla kogoś spoza automatyki</span></summary>
+<div class="tx"><p>„W zakładzie urządzenia rozmawiają ze sobą przez sieci. Nie chodzi o to, żeby było szybko jak w internecie, tylko żeby wiadomość zawsze doszła na czas — jak w orkiestrze, gdzie spóźniony dźwięk jest gorszy niż cichy. Dlatego sieć ustala, kto i kiedy mówi: albo dyrygent pyta po kolei, albo wygrywa ważniejszy, albo każdy ma swoje okienko czasu. Im szybsza maszyna, tym krótsze muszą być te okienka.”</p></div></details>
+</div>
 
-<details class="fiszka op"><summary>Wersja 2 minuty (egzaminacyjna, siedem zdań-kotwic)</summary>
-<ol>
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-b-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-b-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 2 minuty</span><span class="sub">egzaminacyjna</span></summary>
+<div class="tx"><ol>
 <li><strong>Cel:</strong> „Sieć w systemie rozproszonym zastępuje przewody punkt–punkt i musi być przede wszystkim deterministyczna — dane mają dochodzić w znanym czasie.”</li>
 <li><strong>Piramida:</strong> „Na dole IO-Link i AS-i, na poziomie polowym Profibus, Modbus RTU, CAN, na poziomie sterowania Profinet i EtherCAT, na górze Ethernet z OPC UA i MQTT.”</li>
 <li><strong>OSI:</strong> „Sieci polowe używają tylko warstw 1, 2 i 7 — krótsze ramki, szybsze przetwarzanie.”</li>
@@ -797,7 +780,8 @@ html{scroll-padding-top:var(--sbh,84px)}
 <li><strong>Topologia:</strong> „Magistrala i linia — mało kabla; gwiazda — izoluje awarie; pierścień — przeżywa jedną przerwę.”</li>
 <li><strong>Ethernet:</strong> „Przełączniki i full duplex usuwają kolizje, a determinizm dają RT, IRT, EtherCAT i TSN.”</li>
 <li><strong>Skutek dla regulacji:</strong> „Opóźnienie τ zabiera fazę <span class="m" data-tex="\omega_c\tau"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="3.457ex" height="1.359ex" role="img" focusable="false" viewBox="0 -443 1528.2 600.8" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-10-TEX-I-1D714" d="M495 384Q495 406 514 424T555 443Q574 443 589 425T604 364Q604 334 592 278T555 155T483 38T377 -11Q297 -11 267 66Q266 68 260 61Q201 -11 125 -11Q15 -11 15 139Q15 230 56 325T123 434Q135 441 147 436Q160 429 160 418Q160 406 140 379T94 306T62 208Q61 202 61 187Q61 124 85 100T143 76Q201 76 245 129L253 137V156Q258 297 317 297Q348 297 348 261Q348 243 338 213T318 158L308 135Q309 133 310 129T318 115T334 97T358 83T393 76Q456 76 501 148T546 274Q546 305 533 325T508 357T495 384Z"></path><path id="MJX-10-TEX-I-1D450" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path><path id="MJX-10-TEX-I-1D70F" d="M39 284Q18 284 18 294Q18 301 45 338T99 398Q134 425 164 429Q170 431 332 431Q492 431 497 429Q517 424 517 402Q517 388 508 376T485 360Q479 358 389 358T299 356Q298 355 283 274T251 109T233 20Q228 5 215 -4T186 -13Q153 -13 153 20V30L203 192Q214 228 227 272T248 336L254 357Q254 358 208 358Q206 358 197 358T183 359Q105 359 61 295Q56 287 53 286T39 284Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D714" xlink:href="#MJX-10-TEX-I-1D714"></use></g><g data-mml-node="mi" transform="translate(655,-150) scale(0.707)"><use data-c="1D450" xlink:href="#MJX-10-TEX-I-1D450"></use></g></g><g data-mml-node="mi" transform="translate(1011.2,0)"><use data-c="1D70F" xlink:href="#MJX-10-TEX-I-1D70F"></use></g></g></g></svg></span>: Modbus z cyklem 0,16 s wystarczy dla zbiorników, ale serwonapęd potrzebuje EtherCAT z cyklem 100 µs.”</li>
-</ol></details>
+</ol></div></details>
+</div>
 
 <h3>Lista kontrolna przed egzaminem</h3>
 <ul class="check">
@@ -855,37 +839,15 @@ html{scroll-padding-top:var(--sbh,84px)}
 <li>Wikipedia: <a href="https://en.wikipedia.org/wiki/Fieldbus">Fieldbus</a> (definicja, redukcja okablowania, warstwy OSI, IEC 61158/61784); <a href="https://en.wikipedia.org/wiki/Profibus">Profibus</a>; <a href="https://en.wikipedia.org/wiki/Modbus">Modbus</a>; <a href="https://en.wikipedia.org/wiki/CAN_bus">CAN bus</a> (arbitraż); <a href="https://en.wikipedia.org/wiki/Profinet">Profinet</a> (RT, IRT, producent–konsument); <a href="https://en.wikipedia.org/wiki/EtherCAT">EtherCAT</a>; <a href="https://en.wikipedia.org/wiki/Carrier-sense_multiple_access_with_collision_detection">CSMA/CD</a>; <a href="https://en.wikipedia.org/wiki/Time-Sensitive_Networking">Time-Sensitive Networking</a>.</li>
 <li>Normy: IEC 61158 i IEC 61784 (profile sieci polowych), IEEE 802.1 (TSN), IEC 62541 (OPC UA).</li>
 <li>Wpływ opóźnienia na zapas fazy — zagadnienie 18 repetytorium (sterowanie obiektami z opóźnieniem).</li>
+<li>Brak slajdów wykładowych do tego zagadnienia w projekcie — strona powstała z literatury wymienionej wyżej. Liczby w przykładzie są przykładowe, a rachunek własny.</li>
 </ol>
 
-  <p>Repetytorium do egzaminu dyplomowego &middot; ARiSS II stopień &middot; specjalność Systemy sterowania i wspomagania decyzji. Brak slajdów wykładowych do tego zagadnienia w projekcie — strona powstała z literatury wymienionej wyżej. Liczby w przykładzie są przykładowe, a rachunek własny.</p>
   <p class="backfoot"><a href="index.html">&larr; Wróć do listy zagadnień</a></p>
 </footer>
 
 </div>
-<!--stickybar-js-start-->
-<script>
-(function(){
-  var q=document.querySelector('.quest'),ey=document.querySelector('.eyebrow'),h=document.querySelector('h1');
-  var m=ey&&ey.textContent.match(/pytanie\s+(\d+)/i), n=m?m[1]:'';
-  var bar=document.createElement('div'); bar.id='sbar'; bar.setAttribute('role','banner');
-  bar.innerHTML='<div class="in"><div class="r1"><a href="index.html">&larr; Lista</a><span class="nr"></span><span class="pc" aria-live="off">0%</span></div><p class="qt"></p></div><div class="trk"><i></i></div>';
-  bar.querySelector('.nr').textContent=n?'Pytanie '+n:'';
-  bar.querySelector('.qt').textContent=(q?q.textContent:(h?h.textContent:'')).trim();
-  document.body.insertBefore(bar,document.body.firstChild);
-  var fill=bar.querySelector('.trk i'),pc=bar.querySelector('.pc'),tick=false;
-  function size(){var hh=bar.offsetHeight;document.documentElement.style.setProperty('--sbh',(hh+12)+'px');document.body.style.paddingTop=hh+'px';}
-  function upd(){tick=false;var d=document.documentElement,max=d.scrollHeight-window.innerHeight;
-    var p=max>0?Math.min(1,Math.max(0,(window.pageYOffset||d.scrollTop)/max)):1;
-    var v=Math.round(p*100);fill.style.width=(p*100)+'%';pc.textContent=v+'%';}
-  function req(){if(!tick){tick=true;requestAnimationFrame(upd);}}
-  window.addEventListener('scroll',req,{passive:true});
-  window.addEventListener('resize',function(){size();req();});
-  window.addEventListener('load',function(){size();upd();});
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){size();upd();});
-  size();upd();
-})();
-</script>
-<!--stickybar-js-end-->
+<script src="assets/pytania.js"></script>
+<script src="assets/nav.js" defer></script>
 <script src="assets/meowl-egg.js" defer></script>
 </body>
 </html>

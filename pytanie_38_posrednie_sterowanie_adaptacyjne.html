@@ -139,21 +139,17 @@ header::after{content:"";display:block;clear:both}
 .inter .odczyt b{color:var(--ink);font-weight:500}
 .inter .odczyt.staly3{min-height:104px}
 </style>
+<link rel="stylesheet" href="assets/chat.css">
 </head>
 <body>
 <div class="wrap">
 
-<nav class="topnav">
-  <a href="index.html">&larr; Repetytorium</a>
-  <span class="here">zagadnienie 38 z 50 &middot; struktury i algorytmy sterowania</span>
-</nav>
+<nav class="jm" id="jm" aria-label="Nawigacja"><a class="jc" href="index.html">&larr; Lista</a></nav>
 
 <header>
   <img class="avatar" src="assets/meowl-snowy.png" width="64" height="64" alt="" decoding="async">
-  <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 38</p>
   <h1>Pośrednie sterowanie adaptacyjne z modelem identyfikowanym on-line</h1>
   <p class="quest">Opisz technologię i przedstaw obszary zastosowania pośredniego sterowania adaptacyjnego z modelem identyfikowanym on-line.</p>
-  <p class="src">Struktury i algorytmy sterowania &middot; opracowanie własne + źródła zewnętrzne wymienione na dole strony</p>
 </header>
 
 <style>
@@ -173,24 +169,6 @@ header::after{content:"";display:block;clear:both}
 .fiszka p{padding:0 16px 14px 48px;margin:0}
 .zrodlo{font-family:var(--mono);font-size:11.5px;color:var(--mut);display:block;margin-top:6px}
 ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{color:var(--teal)}
-/*stickybar-start*/
-.topnav{display:none}
-#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(238,241,246,.96);
-  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-#sbar .in{max-width:860px;margin:0 auto;padding:9px 22px 8px}
-#sbar .r1{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
-#sbar a{color:var(--ink);text-decoration:none;text-transform:uppercase;letter-spacing:.1em;white-space:nowrap;
-  border-bottom:1px solid var(--line);padding-bottom:1px}
-#sbar a:hover,#sbar a:focus-visible{border-color:var(--ink);outline:none}
-#sbar .nr{color:var(--mut);white-space:nowrap}
-#sbar .pc{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--teal);font-weight:500;white-space:nowrap}
-#sbar .qt{margin:5px 0 0;font-family:var(--body);font-size:15px;line-height:1.3;font-style:italic;color:var(--ink)}
-#sbar .trk{position:absolute;left:0;right:0;bottom:-1px;height:3px;background:transparent}
-#sbar .trk i{display:block;height:100%;width:0;background:var(--teal)}
-html{scroll-padding-top:var(--sbh,84px)}
-@media (max-width:600px){#sbar .in{padding:8px 16px 7px}#sbar .qt{font-size:14px}}
-@media print{#sbar{display:none}}
-/*stickybar-end*/
 </style>
 
 
@@ -1554,7 +1532,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 </section>
 
 <section>
-<h2><span class="num">11</span> Ściąga — karty i plan wypowiedzi</h2>
+<h2><span class="num">11</span> Ściąga — karty i opowiedz własnymi słowami</h2>
 <div class="rail"></div>
 
 <div class="karty">
@@ -1570,18 +1548,27 @@ html{scroll-padding-top:var(--sbh,84px)}
 <div class="karta fz"><span class="kw">Wolno, dużo, niemierzalnie</span><p>Statki, pH, reaktory, papiernie, napędy; najczęściej autostrojenie PID.</p></div>
 </div>
 
-<ol class="steps">
-<li><strong>Zdanie otwierające.</strong> „Pośrednie sterowanie adaptacyjne to regulator projektowany z modelu, tyle że model jest identyfikowany na bieżąco, a projekt powtarzany w każdej próbce. Pośrednie — bo nastawy liczy się przez model.”</li>
-<li><strong>Po co.</strong> „Parametry obiektu zmieniają się z punktem pracy, ze starzeniem i z warunkami. Regulator stały jest dobry w jednym punkcie, odporny — ostrożny wszędzie, adaptacyjny projektuje na przypadek, który akurat jest.”</li>
-<li><strong>Struktura.</strong> „Dwie pętle w dwóch tempach: szybka regulacja i wolna adaptacja, złożona z identyfikatora i syntezy. Identyfikator dostaje sterowanie i pomiar, synteza podaje nowe nastawy.”</li>
-<li><strong>Identyfikator.</strong> „Model liniowy w parametrach, np. ARX, i rekursywna MNK: błąd prognozy razy wzmocnienie poprawia estymaty. Czynnik zapominania daje pamięć około jeden przez jeden minus lambda próbek.”</li>
-<li><strong>Synteza.</strong> „Dowolna metoda z modelu — najczęściej alokacja biegunów: przyrównuję wielomian charakterystyczny do zadanego, jak przy sprzężeniu od stanu, tylko z estymatami. To zasada pewności równoważnej.”</li>
-<li><strong>Kompromis λ.</strong> „Krótka pamięć — szybko, ale szumnie; długa — spokojnie, ale wolno. Pamięć ma obejmować kilka porcji pobudzenia i być krótsza niż czas zmian obiektu.”</li>
-<li><strong>Warunki i zabezpieczenia.</strong> „Potrzebne jest pobudzenie trwałe; bez niego P rośnie wykładniczo, szum przesuwa estymaty i dochodzi do wybuchu estymatora. Zabezpieczenia: strefa martwa, ograniczenie śladu P, projekcja parametrów, nadzór nad syntezą.”</li>
-<li><strong>Rodzina.</strong> „W bezpośrednim — MRAC — koryguje się od razu nastawy. Harmonogramowanie przełącza nastawy według zmierzonego punktu pracy, bez identyfikacji. Autotuning identyfikuje raz.”</li>
-<li><strong>Zastosowania.</strong> „Tam, gdzie zmiany są wolne, duże i niemierzalne: autopiloty statków, neutralizacja pH, reaktory, wymienniki, oczyszczalnie, napędy — i najczęściej autostrojenie PID.”</li>
-<li><strong>Zdanie zamykające.</strong> „Zamiast projektować na najgorszy przypadek, projektuję na ten, który akurat występuje — płacąc tym, że muszę go rozpoznawać.”</li>
-</ol>
+
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-c-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-c-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 30 sekund</span><span class="sub">dla kogoś spoza automatyki</span></summary>
+<div class="tx"><p>„Obiekty z czasem się zmieniają: inaczej zachowuje się zbiornik z wodą przy niskim poziomie, a inaczej przy wysokim, więc regulator nastrojony raz przestaje pasować. W sterowaniu adaptacyjnym program na bieżąco poprawia model obiektu na podstawie każdego nowego pomiaru. Z aktualnego modelu przelicza potem nastawy regulatora, i to w każdej próbce. Jest to jak kierowca, który stale uczy się, jak auto reaguje na gaz, i odpowiednio dociska pedał. Metoda sprawdza się tam, gdzie zmiany są wolne, duże i niemierzalne.”</p></div></details>
+</div>
+
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-c-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-c-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 2 minuty</span><span class="sub">egzaminacyjna</span></summary>
+<div class="tx"><ol>
+<li><strong>Idea:</strong> „Pośredni regulator adaptacyjny to zwykły regulator projektowany z modelu, tyle że model jest identyfikowany na bieżąco, a projekt powtarzany w każdej próbce. Jest pośredni, bo najpierw estymuje się parametry obiektu, a dopiero z nich liczy nastawy. Taka struktura to regulator samostrojący, STR.”</li>
+<li><strong>Po co:</strong> „Parametry obiektu zmieniają się z punktem pracy, z czasem i z warunkami. Regulator stały jest dobry w jednym punkcie, odporny jest ostrożny wszędzie, a adaptacyjny projektuje na przypadek, który akurat występuje. W przykładzie dwóch zbiorników przeregulowanie stałego regulatora zmieniało się od 0 do 38 %.”</li>
+<li><strong>Dwie pętle:</strong> „Struktura to szybka pętla regulacji i nadbudowana nad nią wolna pętla adaptacji, złożona z identyfikatora i syntezy. Identyfikator dostaje sterowanie i zmierzone wyjście, a synteza podmienia nastawy. Dwa tempa są warunkiem, bo parametry mają się zmieniać wolniej niż stan.”</li>
+<li><strong>Identyfikator:</strong> „Używam modelu liniowego względem parametrów, na przykład ARX, i rekursywnej MNK z czynnikiem zapominania λ. W każdej próbce liczę błąd prognozy, wzmocnienie i korektę estymat oraz aktualizuję niepewność P. Pamięć estymatora to około 1/(1 − λ) próbek.”</li>
+<li><strong>Synteza:</strong> „Blokiem syntezy może być dowolna metoda projektowania z modelu, najczęściej alokacja biegunów. Estymaty wstawiam do wzorów tak, jakby były prawdziwymi parametrami, i to jest zasada pewności równoważnej. Trzeba pilnować dzielenia przez estymatę b̂ oraz sytuacji, gdy A i B mają wspólny pierwiastek.”</li>
+<li><strong>Warunki i zabezpieczenia:</strong> „Potrzebne jest pobudzenie trwałe. Bez niego przy zapominaniu P rośnie wykładniczo, a szum przesuwa estymaty, co prowadzi do wybuchu estymatora. Chronią przed tym strefa martwa, ograniczenie śladu P i nadzór nad syntezą. Czynnik λ jest kompromisem między szybkością a szumem estymat.”</li>
+<li><strong>Zastosowania:</strong> „Metoda sprawdza się tam, gdzie zmiany są wolne, duże i niemierzalne: w autopilotach statków, neutralizacji pH, reaktorach, papierniach i napędach. Najczęstszą formą w praktyce jest autostrojenie regulatorów PID. W odróżnieniu od niej bezpośrednie MRAC koryguje nastawy od razu, a harmonogramowanie nie identyfikuje niczego.”</li>
+</ol></div></details>
+</div>
+
 </section>
 
 <section>
@@ -1635,37 +1622,15 @@ html{scroll-padding-top:var(--sbh,84px)}
 <li>C. E. Rohrs, L. Valavani, M. Athans, G. Stein, <a href="https://ntrs.nasa.gov/citations/19850063162">Robustness of continuous-time adaptive control algorithms in the presence of unmodeled dynamics</a>, <em>IEEE Trans. Automatic Control</em> 30(9), 1985.</li>
 <li>A. Vahidi, A. Stefanopoulou, H. Peng, <a href="https://cecas.clemson.edu/~avahidi/wp-content/uploads/2016/11/vsd2004vahidi.pdf">Recursive least squares with forgetting for online estimation of vehicle mass and road grade</a>, <em>Vehicle System Dynamics</em>, 2004 — zapominanie i wzrost macierzy kowariancji przy słabym pobudzeniu.</li>
 <li>Repetytorium: zagadnienie 2 (rekursywna MNK), 5 (sterowalność), 6 (alokacja biegunów), 37, 39, 41.</li>
+<li>Obiekt w symulacjach: dwa zbiorniki z wypływem pierwiastkowym, regulator dyskretny co 2 s, szum pomiaru poziomu 0,2 %; identyfikator — rekursywna MNK z zapominaniem na modelu ARX 2. rzędu z wyrazem wolnym; synteza — alokacja biegunów R–S–T z całkowaniem. Liczby statystyczne to mediany z 8–16 przebiegów.</li>
 </ol>
 
-  <p>Obiekt w symulacjach: dwa zbiorniki z wypływem pierwiastkowym (jak w 37 i 39), regulator dyskretny co 2 s, szum pomiaru poziomu 0,2 %; identyfikator — rekursywna MNK z zapominaniem na modelu ARX 2. rzędu z wyrazem wolnym; synteza — alokacja biegunów R–S–T z całkowaniem. Liczby statystyczne to mediany z 8–16 przebiegów.</p>
   <p class="backfoot"><a href="index.html">&larr; Wróć do listy zagadnień</a></p>
 </footer>
 
 </div>
-<!--stickybar-js-start-->
-<script>
-(function(){
-  var q=document.querySelector('.quest'),ey=document.querySelector('.eyebrow'),h=document.querySelector('h1');
-  var m=ey&&ey.textContent.match(/pytanie\s+(\d+)/i), n=m?m[1]:'';
-  var bar=document.createElement('div'); bar.id='sbar'; bar.setAttribute('role','banner');
-  bar.innerHTML='<div class="in"><div class="r1"><a href="index.html">&larr; Lista</a><span class="nr"></span><span class="pc" aria-live="off">0%</span></div><p class="qt"></p></div><div class="trk"><i></i></div>';
-  bar.querySelector('.nr').textContent=n?'Pytanie '+n:'';
-  bar.querySelector('.qt').textContent=(q?q.textContent:(h?h.textContent:'')).trim();
-  document.body.insertBefore(bar,document.body.firstChild);
-  var fill=bar.querySelector('.trk i'),pc=bar.querySelector('.pc'),tick=false;
-  function size(){var hh=bar.offsetHeight;document.documentElement.style.setProperty('--sbh',(hh+12)+'px');document.body.style.paddingTop=hh+'px';}
-  function upd(){tick=false;var d=document.documentElement,max=d.scrollHeight-window.innerHeight;
-    var p=max>0?Math.min(1,Math.max(0,(window.pageYOffset||d.scrollTop)/max)):1;
-    var v=Math.round(p*100);fill.style.width=(p*100)+'%';pc.textContent=v+'%';}
-  function req(){if(!tick){tick=true;requestAnimationFrame(upd);}}
-  window.addEventListener('scroll',req,{passive:true});
-  window.addEventListener('resize',function(){size();req();});
-  window.addEventListener('load',function(){size();upd();});
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){size();upd();});
-  size();upd();
-})();
-</script>
-<!--stickybar-js-end-->
+<script src="assets/pytania.js"></script>
+<script src="assets/nav.js" defer></script>
 <script src="assets/meowl-egg.js" defer></script>
 </body>
 </html>
