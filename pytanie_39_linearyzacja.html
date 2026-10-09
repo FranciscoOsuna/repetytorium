@@ -4,14 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pytanie 39 — Linearyzacja przez sprzężenie zwrotne</title>
+<link rel="icon" type="image/png" sizes="144x144" href="favicon-144.png?v=2">
+<link rel="icon" href="favicon.ico?v=2" sizes="any">
+<link rel="apple-touch-icon" href="favicon-144.png?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#141C24; --mut:#5C6B77; --line:#C3CDD4;
-  --paper:#E8ECEF; --card:#FCFDFD;
-  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52;
+  --ink:#141C24; --mut:#5C6B77; --line:#CCD2C7;
+  --paper:#EDEEE5; --card:#FDFDFA;
+  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52; --moss:#5E8C3A;
   --disp:"Space Grotesk",system-ui,sans-serif;
   --body:"STIX Two Text","Source Serif 4",Georgia,serif;
   --mono:"IBM Plex Mono",ui-monospace,monospace;
@@ -39,7 +42,7 @@ h2 .num{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--viole
         letter-spacing:.08em;flex:none}
 h3{font-family:var(--disp);font-weight:500;font-size:18.5px;margin:34px 0 8px;letter-spacing:-.01em}
 p{margin:0 0 14px}
-.rail{height:5px;background:linear-gradient(90deg,var(--teal) 0%,var(--violet) 55%,var(--amber) 100%);
+.rail{height:5px;background:linear-gradient(90deg,var(--moss) 0%,var(--teal) 30%,var(--violet) 62%,var(--amber) 100%);
       opacity:.85;margin:0 0 22px;border-radius:2px}
 
 /* ---- figury ---- */
@@ -83,7 +86,7 @@ figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:
 table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15px;background:var(--card)}
 th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
 th{font-family:var(--disp);font-weight:500;font-size:13px;letter-spacing:.02em;
-   background:#F2F5F6;border-bottom:1.5px solid var(--line)}
+   background:#F3F4EE;border-bottom:1.5px solid var(--line)}
 td.n{font-family:var(--mono);font-size:13.5px;white-space:nowrap}
 tr:last-child td{border-bottom:none}
 
@@ -117,7 +120,7 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
 .backfoot a:hover,.backfoot a:focus-visible{border-bottom-color:var(--teal);outline:none}
 /*stickybar-start*/
 .topnav{display:none}
-#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(232,236,239,.96);
+#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(237,238,229,.96);
   -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 #sbar .in{max-width:860px;margin:0 auto;padding:9px 22px 8px}
 #sbar .r1{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
@@ -133,6 +136,11 @@ html{scroll-padding-top:var(--sbh,84px)}
 @media (max-width:600px){#sbar .in{padding:8px 16px 7px}#sbar .qt{font-size:14px}}
 @media print{#sbar{display:none}}
 /*stickybar-end*/
+
+/* ---- meowl przy tytule ---- */
+.avatar{float:right;width:64px;height:64px;border-radius:50%;margin:2px 0 10px 18px;
+        box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--line)}
+header::after{content:"";display:block;clear:both}
 </style>
 </head>
 <body>
@@ -144,6 +152,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 </nav>
 
 <header>
+  <img class="avatar" src="assets/meowl-wide.png" width="64" height="64" alt="" decoding="async">
   <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 39</p>
   <h1>Sterowanie oparte na linearyzacji przez sprzężenie zwrotne</h1>
   <p class="quest">Przedstaw obszary zastosowania i opisz technologię sterowania w oparciu o linearyzację przez sprzężenie zwrotne dla obiektów deterministycznych oraz z niepewnością.</p>
@@ -192,8 +201,8 @@ html{scroll-padding-top:var(--sbh,84px)}
 <svg viewBox="0 0 680 296" class="fig">
 <defs><marker id="arF39" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker><marker id="arvF39" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker></defs>
 <text x="340" y="22" text-anchor="middle" class="bx-t">MODEL LINIOWY TO STYCZNA — A STYCZNA ZGADZA SIĘ TYLKO W JEDNYM PUNKCIE</text>
-<line x1="62" y1="226" x2="340" y2="226" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="62" y1="64" x2="62" y2="226" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="62" y1="226" x2="340" y2="226" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="62" y1="64" x2="62" y2="226" stroke="#CCD2C7" stroke-width="1.2"/>
 <polyline points="62.1,223.5 63.3,217.8 64.4,214.6 65.6,212.2 66.8,210.1 67.9,208.3 69.1,206.6 70.3,205.1 71.4,203.7 72.6,202.3 73.7,201.1 74.9,199.9 76.1,198.7 77.2,197.6 78.4,196.6 79.6,195.5 80.7,194.5 81.9,193.6 83.0,192.6 84.2,191.7 85.4,190.9 86.5,190.0 87.7,189.1 88.9,188.3 90.0,187.5 91.2,186.7 92.4,186.0 93.5,185.2 94.7,184.4 95.8,183.7 97.0,183.0 98.2,182.3 99.3,181.6 100.5,180.9 101.7,180.2 102.8,179.6 104.0,178.9 105.1,178.3 106.3,177.6 107.5,177.0 108.6,176.4 109.8,175.7 111.0,175.1 112.1,174.5 113.3,173.9 114.4,173.4 115.6,172.8 116.8,172.2 117.9,171.6 119.1,171.1 120.3,170.5 121.4,170.0 122.6,169.4 123.7,168.9 124.9,168.3 126.1,167.8 127.2,167.3 128.4,166.8 129.6,166.3 130.7,165.7 131.9,165.2 133.0,164.7 134.2,164.2 135.4,163.7 136.5,163.2 137.7,162.8 138.9,162.3 140.0,161.8 141.2,161.3 142.3,160.8 143.5,160.4 144.7,159.9 145.8,159.4 147.0,159.0 148.2,158.5 149.3,158.1 150.5,157.6 151.6,157.2 152.8,156.7 154.0,156.3 155.1,155.8 156.3,155.4 157.5,155.0 158.6,154.5 159.8,154.1 160.9,153.7 162.1,153.3 163.3,152.8 164.4,152.4 165.6,152.0 166.8,151.6 167.9,151.2 169.1,150.8 170.2,150.4 171.4,150.0 172.6,149.6 173.7,149.2 174.9,148.8 176.1,148.4 177.2,148.0 178.4,147.6 179.6,147.2 180.7,146.8 181.9,146.4 183.0,146.0 184.2,145.6 185.4,145.3 186.5,144.9 187.7,144.5 188.9,144.1 190.0,143.8 191.2,143.4 192.3,143.0 193.5,142.6 194.7,142.3 195.8,141.9 197.0,141.5 198.2,141.2 199.3,140.8 200.5,140.5 201.6,140.1 202.8,139.7 204.0,139.4 205.1,139.0 206.3,138.7 207.5,138.3 208.6,138.0 209.8,137.6 210.9,137.3 212.1,136.9 213.3,136.6 214.4,136.3 215.6,135.9 216.8,135.6 217.9,135.2 219.1,134.9 220.2,134.6 221.4,134.2 222.6,133.9 223.7,133.6 224.9,133.2 226.1,132.9 227.2,132.6 228.4,132.2 229.5,131.9 230.7,131.6 231.9,131.3 233.0,130.9 234.2,130.6 235.4,130.3 236.5,130.0 237.7,129.6 238.8,129.3 240.0,129.0 241.2,128.7 242.3,128.4 243.5,128.1 244.7,127.8 245.8,127.4 247.0,127.1 248.1,126.8 249.3,126.5 250.5,126.2 251.6,125.9 252.8,125.6 254.0,125.3 255.1,125.0 256.3,124.7 257.5,124.4 258.6,124.1 259.8,123.8 260.9,123.5 262.1,123.2 263.3,122.9 264.4,122.6 265.6,122.3 266.8,122.0 267.9,121.7 269.1,121.4 270.2,121.1 271.4,120.8 272.6,120.5 273.7,120.2 274.9,119.9 276.1,119.6 277.2,119.4 278.4,119.1 279.5,118.8 280.7,118.5 281.9,118.2 283.0,117.9 284.2,117.6 285.4,117.4 286.5,117.1 287.7,116.8 288.8,116.5 290.0,116.2 291.2,116.0 292.3,115.7 293.5,115.4 294.7,115.1 295.8,114.8 297.0,114.6 298.1,114.3 299.3,114.0 300.5,113.7 301.6,113.5 302.8,113.2 304.0,112.9 305.1,112.7 306.3,112.4 307.4,112.1 308.6,111.8 309.8,111.6 310.9,111.3 312.1,111.0 313.3,110.8 314.4,110.5 315.6,110.2 316.7,110.0 317.9,109.7 319.1,109.4 320.2,109.2 321.4,108.9 322.6,108.7 323.7,108.4 324.9,108.1 326.0,107.9 327.2,107.6 328.4,107.4 329.5,107.1 330.7,106.8 331.9,106.6 333.0,106.3 334.2,106.1 335.3,105.8 336.5,105.6 337.7,105.3 338.8,105.0 340.0,104.8" fill="none" stroke="#0E6E78" stroke-width="2.4"/>
 <polyline points="65.0,196.3 73.9,192.2 82.7,188.0 91.6,183.9 100.4,179.8 109.3,175.6 118.2,171.5 127.0,167.3 135.9,163.2 144.7,159.1 153.6,154.9 162.4,150.8 171.3,146.6 180.2,142.5 189.0,138.4 197.9,134.2 206.7,130.1 215.6,125.9 224.4,121.8 233.3,117.7 242.2,113.5 251.0,109.4 259.9,105.2 268.7,101.1 277.6,96.9 286.4,92.8 295.3,88.7 304.2,84.5 313.0,80.4 321.9,76.2" fill="none" stroke="#B3641A" stroke-width="1.8" stroke-dasharray="6 4"/>
 <circle cx="122.4" cy="169.5" r="4" fill="#141C24"/>
@@ -201,7 +210,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 <line x1="303.7" y1="113.0" x2="303.7" y2="84.7" stroke="#9C3B52" stroke-width="3"/>
 <text x="62" y="54" text-anchor="start" class="axlab">wielkość, która wchodzi do równań nieliniowo</text>
 <text x="340" y="244" text-anchor="end" class="axlab">zakres pracy obiektu</text>
-<line x1="62.0" y1="226.0" x2="340.0" y2="226.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="62.0" y1="226.0" x2="340.0" y2="226.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="382" y1="78" x2="402" y2="78" stroke="#0E6E78" stroke-width="3"/>
 <text x="410" y="82" text-anchor="start" class="bx-t">prawdziwa charakterystyka</text>
 <text x="410" y="98" text-anchor="start" class="cap">taka, jaką obiekt ma naprawdę</text>
@@ -211,7 +220,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 <line x1="382" y1="170" x2="402" y2="170" stroke="#9C3B52" stroke-width="3"/>
 <text x="410" y="174" text-anchor="start" class="bx-t">błąd przybliżenia</text>
 <text x="410" y="190" text-anchor="start" class="cap">rośnie z odległością od tego punktu</text>
-<rect x="382" y="220" width="258" height="62" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="382" y="220" width="258" height="62" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="382" y="220" width="258" height="3" fill="#5B4B8A"/>
 <text x="395" y="232.8" text-anchor="start" class="bx-t">STĄD DWIE DROGI</text>
 <text x="395" y="251.3" text-anchor="start" class="bx">wiele modeli liniowych, przełączanych</text>
@@ -256,23 +265,23 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="340" y="22" text-anchor="middle" class="bx-t">KASOWANIE NIELINIOWOŚCI W PĘTLI WEWNĘTRZNEJ</text>
 <rect x="254" y="70" width="394" height="118" rx="3" fill="none" stroke="#5B4B8A" stroke-width="1.3" stroke-dasharray="6 4"/>
 <text x="451" y="62" text-anchor="middle" class="cap" style="fill:#5B4B8A">to, co widzi pętla zewnętrzna: łańcuch integratorów</text>
-<circle cx="60" cy="130" r="13" fill="#FCFDFD" stroke="#C3CDD4"/>
+<circle cx="60" cy="130" r="13" fill="#FDFDFA" stroke="#CCD2C7"/>
 <text x="60" y="135" text-anchor="middle" class="bx-t">−</text>
 <text x="14" y="98" text-anchor="start" class="cap">wartość zadana</text>
 <line x1="30" y1="106" x2="51" y2="122" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arF39)"/>
-<rect x="98" y="106" width="132" height="48" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="98" y="106" width="132" height="48" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="98" y="106" width="132" height="3" fill="#0E6E78"/>
 <text x="164.0" y="118.2" text-anchor="middle" class="bx-t">REGULATOR</text>
 <text x="164.0" y="132.7" text-anchor="middle" class="bx-t">LINIOWY</text>
 <text x="164.0" y="151.2" text-anchor="middle" class="bx">alokacja biegunów</text>
 <line x1="73" y1="130" x2="98" y2="130" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arF39)"/>
-<rect x="272" y="96" width="150" height="66" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="272" y="96" width="150" height="66" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="272" y="96" width="150" height="3" fill="#5B4B8A"/>
 <text x="347.0" y="124.5" text-anchor="middle" class="bx-t">KASOWANIE</text>
 <text x="347.0" y="142.9" text-anchor="middle" class="bx">u = (v − α(x)) / β(x)</text>
 <line x1="230" y1="130" x2="272" y2="130" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arF39)"/>
 <text x="243" y="121" text-anchor="middle" class="cap">v</text>
-<rect x="460" y="96" width="154" height="66" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="460" y="96" width="154" height="66" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="460" y="96" width="154" height="3" fill="#5C6B77"/>
 <text x="537.0" y="124.5" text-anchor="middle" class="bx-t">OBIEKT NIELINIOWY</text>
 <text x="537.0" y="142.9" text-anchor="middle" class="bx">y⁽ʳ⁾ = α(x) + β(x)·u</text>
@@ -286,12 +295,12 @@ html{scroll-padding-top:var(--sbh,84px)}
 <path d="M 590 162 L 590 178 L 347 178 L 347 162" fill="none" stroke="#5B4B8A" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#arvF39)"/>
 <circle cx="590" cy="162" r="2.8" fill="#5B4B8A"/>
 <text x="468" y="173" text-anchor="middle" class="cap" style="fill:#5B4B8A">cały stan x</text>
-<rect x="40" y="256" width="290" height="74" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="40" y="256" width="290" height="74" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="40" y="256" width="290" height="3" fill="#B3641A"/>
 <text x="53" y="281.6" text-anchor="start" class="bx-t">SKĄD SIĘ BIORĄ α I β</text>
 <text x="53" y="300.1" text-anchor="start" class="bx">z modelu obiektu — różniczkujemy wyjście,</text>
 <text x="53" y="313.8" text-anchor="start" class="bx">aż po prawej stronie pojawi się sterowanie</text>
-<rect x="350" y="256" width="290" height="74" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="350" y="256" width="290" height="74" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="350" y="256" width="290" height="3" fill="#9C3B52"/>
 <text x="363" y="274.9" text-anchor="start" class="bx-t">CZEGO WYMAGA</text>
 <text x="363" y="293.4" text-anchor="start" class="bx">pomiaru albo estymaty całego stanu</text>
@@ -318,19 +327,19 @@ html{scroll-padding-top:var(--sbh,84px)}
 <svg viewBox="0 0 680 388" class="fig">
 <defs><marker id="arF39" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker><marker id="arvF39" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker></defs>
 <text x="340" y="22" text-anchor="middle" class="bx-t">STOPIEŃ WZGLĘDNY: ILE RAZY TRZEBA RÓŻNICZKOWAĆ, ŻEBY ZOBACZYĆ STEROWANIE</text>
-<rect x="56" y="62" width="104" height="52" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<rect x="56" y="62" width="104" height="52" rx="2" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1"/>
 <rect x="56" y="62" width="104" height="3" fill="#5C6B77"/>
 <text x="108" y="92" text-anchor="middle" class="bx-t">y</text>
 <text x="108" y="130" text-anchor="middle" class="cap" style="fill:#5C6B77">samo wyjście</text>
 <line x1="160" y1="88" x2="224" y2="88" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arF39)"/>
 <text x="192" y="80" text-anchor="middle" class="cap">d/dt</text>
-<rect x="224" y="62" width="104" height="52" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<rect x="224" y="62" width="104" height="52" rx="2" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1"/>
 <rect x="224" y="62" width="104" height="3" fill="#5C6B77"/>
 <text x="276" y="92" text-anchor="middle" class="bx-t">ẏ</text>
 <text x="276" y="130" text-anchor="middle" class="cap" style="fill:#5C6B77">sterowania jeszcze nie ma</text>
 <line x1="328" y1="88" x2="392" y2="88" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arF39)"/>
 <text x="360" y="80" text-anchor="middle" class="cap">d/dt</text>
-<rect x="392" y="62" width="104" height="52" rx="2" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.6"/>
+<rect x="392" y="62" width="104" height="52" rx="2" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.6"/>
 <rect x="392" y="62" width="104" height="3" fill="#0E6E78"/>
 <text x="444" y="92" text-anchor="middle" class="bx-t">ÿ</text>
 <text x="444" y="130" text-anchor="middle" class="cap" style="fill:#0E6E78">sterowanie się pojawia</text>
@@ -338,25 +347,25 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="516" y="102" text-anchor="start" class="cap">tyle wynosi</text>
 <text x="516" y="116" text-anchor="start" class="cap">stopień względny</text>
 <text x="340" y="172" text-anchor="middle" class="bx-t">CO TO ZNACZY DLA RESZTY STANU</text>
-<rect x="62" y="190" width="556" height="96" rx="3" fill="none" stroke="#C3CDD4" stroke-width="1.2"/>
+<rect x="62" y="190" width="556" height="96" rx="3" fill="none" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="72" y="208" text-anchor="start" class="cap">STAN OBIEKTU — n wymiarów</text>
-<rect x="78" y="218" width="244" height="58" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="78" y="218" width="244" height="58" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="78" y="218" width="244" height="3" fill="#0E6E78"/>
 <text x="91" y="235.7" text-anchor="start" class="bx-t">r wymiarów</text>
 <text x="91" y="254.2" text-anchor="start" class="bx">sterowanie ma do nich dostęp;</text>
 <text x="91" y="267.8" text-anchor="start" class="bx">to one tworzą łańcuch integratorów</text>
-<rect x="358" y="218" width="244" height="58" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="358" y="218" width="244" height="58" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="358" y="218" width="244" height="3" fill="#9C3B52"/>
 <text x="371" y="235.7" text-anchor="start" class="bx-t">n − r wymiarów — DYNAMIKA ZEROWA</text>
 <text x="371" y="254.2" text-anchor="start" class="bx">poza zasięgiem sterowania;</text>
 <text x="371" y="267.8" text-anchor="start" class="bx">porusza się własnym ruchem</text>
-<rect x="62" y="300" width="270" height="74" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="62" y="300" width="270" height="74" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="62" y="300" width="270" height="3" fill="#9C3B52"/>
 <text x="75" y="318.9" text-anchor="start" class="bx-t">WARUNEK</text>
 <text x="75" y="337.4" text-anchor="start" class="bx">dynamika zerowa musi być stabilna —</text>
 <text x="75" y="351.0" text-anchor="start" class="bx">inaczej wyjście wygląda dobrze,</text>
 <text x="75" y="364.6" text-anchor="start" class="bx">a stan wewnętrzny ucieka</text>
-<rect x="348" y="300" width="270" height="74" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="348" y="300" width="270" height="74" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="348" y="300" width="270" height="3" fill="#0E6E78"/>
 <text x="361" y="318.9" text-anchor="start" class="bx-t">PRZYPADEK NAJWYGODNIEJSZY</text>
 <text x="361" y="337.4" text-anchor="start" class="bx">gdy r = n, dynamiki zerowej nie ma</text>
@@ -421,21 +430,21 @@ html{scroll-padding-top:var(--sbh,84px)}
 <svg viewBox="0 0 680 362" class="fig">
 <defs><marker id="arF39" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker><marker id="arvF39" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker></defs>
 <text x="340" y="22" text-anchor="middle" class="bx-t">CZTERY SPOSOBY NA TO, CZEGO KASOWANIE NIE SKASOWAŁO</text>
-<rect x="46" y="92" width="132" height="46" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="46" y="92" width="132" height="46" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="46" y="92" width="132" height="3" fill="#0E6E78"/>
 <text x="112.0" y="103.2" text-anchor="middle" class="bx-t">REGULATOR</text>
 <text x="112.0" y="117.7" text-anchor="middle" class="bx-t">LINIOWY</text>
 <text x="112.0" y="136.2" text-anchor="middle" class="bx">wypracowuje v</text>
-<circle cx="222" cy="115" r="13" fill="#FCFDFD" stroke="#C3CDD4"/>
+<circle cx="222" cy="115" r="13" fill="#FDFDFA" stroke="#CCD2C7"/>
 <text x="222" y="120" text-anchor="middle" class="bx-t">+</text>
 <line x1="178" y1="115" x2="209" y2="115" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arF39)"/>
-<rect x="266" y="84" width="138" height="62" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="266" y="84" width="138" height="62" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="266" y="84" width="138" height="3" fill="#5B4B8A"/>
 <text x="335.0" y="103.7" text-anchor="middle" class="bx-t">KASOWANIE</text>
 <text x="335.0" y="122.2" text-anchor="middle" class="bx">u = (v − α) / β</text>
 <text x="335.0" y="135.8" text-anchor="middle" class="bx">α, β z modelu</text>
 <line x1="235" y1="115" x2="266" y2="115" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arF39)"/>
-<rect x="448" y="84" width="150" height="62" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="448" y="84" width="150" height="62" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="448" y="84" width="150" height="3" fill="#5C6B77"/>
 <text x="523.0" y="110.5" text-anchor="middle" class="bx-t">OBIEKT</text>
 <text x="523.0" y="128.9" text-anchor="middle" class="bx">y⁽ʳ⁾ = α(x) + β(x)u</text>
@@ -443,27 +452,27 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="426" y="107" text-anchor="middle" class="cap">u</text>
 <line x1="598" y1="115" x2="650" y2="115" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arF39)"/>
 <text x="650" y="103" text-anchor="end" class="cap">y</text>
-<rect x="46" y="172" width="132" height="56" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="46" y="172" width="132" height="56" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="46" y="172" width="132" height="3" fill="#0E6E78"/>
 <text x="112.0" y="195.4" text-anchor="middle" class="bx-t">1 · CAŁKA</text>
 <text x="112.0" y="213.9" text-anchor="middle" class="bx">w pętli zewnętrznej</text>
 <line x1="112" y1="172" x2="112" y2="138" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arF39)"/>
-<rect x="190" y="172" width="140" height="56" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="190" y="172" width="140" height="56" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="190" y="172" width="140" height="3" fill="#9C3B52"/>
 <text x="260.0" y="195.4" text-anchor="middle" class="bx-t">2 · CZŁON ODPORNY</text>
 <text x="260.0" y="213.9" text-anchor="middle" class="bx">ślizgowy → 37</text>
 <line x1="250" y1="172" x2="228" y2="128" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arF39)"/>
-<rect x="344" y="172" width="140" height="56" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="344" y="172" width="140" height="56" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="344" y="172" width="140" height="3" fill="#B3641A"/>
 <text x="414.0" y="195.4" text-anchor="middle" class="bx-t">3 · ADAPTACJA</text>
 <text x="414.0" y="213.9" text-anchor="middle" class="bx">strojenie α i β → 38</text>
 <line x1="396" y1="172" x2="352" y2="146" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arF39)"/>
-<rect x="498" y="172" width="146" height="56" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="498" y="172" width="146" height="56" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="498" y="172" width="146" height="3" fill="#5B4B8A"/>
 <text x="571.0" y="195.4" text-anchor="middle" class="bx-t">4 · OBSERWATOR</text>
 <text x="571.0" y="213.9" text-anchor="middle" class="bx">estymata reszty → 40</text>
 <path d="M 571 172 L 571 160 L 222 160 L 222 128" fill="none" stroke="#5B4B8A" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#arvF39)"/>
-<rect x="46" y="254" width="598" height="78" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="46" y="254" width="598" height="78" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="46" y="254" width="598" height="3" fill="#5C6B77"/>
 <text x="59" y="274.9" text-anchor="start" class="bx-t">ROZDZIELENIE RÓL</text>
 <text x="59" y="293.4" text-anchor="start" class="bx">1 i 4 poprawiają stan ustalony i wolne odchyłki</text>

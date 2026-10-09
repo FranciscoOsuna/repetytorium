@@ -4,14 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pytanie 14 — Kodowanie i operatory genetyczne</title>
+<link rel="icon" type="image/png" sizes="144x144" href="favicon-144.png?v=2">
+<link rel="icon" href="favicon.ico?v=2" sizes="any">
+<link rel="apple-touch-icon" href="favicon-144.png?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#141C24; --mut:#5C6B77; --line:#C3CDD4;
-  --paper:#E8ECEF; --card:#FCFDFD;
-  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52;
+  --ink:#141C24; --mut:#5C6B77; --line:#CCD2C7;
+  --paper:#EDEEE5; --card:#FDFDFA;
+  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52; --moss:#5E8C3A;
   --disp:"Space Grotesk",system-ui,sans-serif;
   --body:"STIX Two Text","Source Serif 4",Georgia,serif;
   --mono:"IBM Plex Mono",ui-monospace,monospace;
@@ -39,7 +42,7 @@ h2 .num{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--viole
         letter-spacing:.08em;flex:none}
 h3{font-family:var(--disp);font-weight:500;font-size:18.5px;margin:34px 0 8px;letter-spacing:-.01em}
 p{margin:0 0 14px}
-.rail{height:5px;background:linear-gradient(90deg,var(--teal) 0%,var(--violet) 55%,var(--amber) 100%);
+.rail{height:5px;background:linear-gradient(90deg,var(--moss) 0%,var(--teal) 30%,var(--violet) 62%,var(--amber) 100%);
       opacity:.85;margin:0 0 22px;border-radius:2px}
 
 /* ---- figury ---- */
@@ -83,7 +86,7 @@ figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:
 table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15px;background:var(--card)}
 th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
 th{font-family:var(--disp);font-weight:500;font-size:13px;letter-spacing:.02em;
-   background:#F2F5F6;border-bottom:1.5px solid var(--line)}
+   background:#F3F4EE;border-bottom:1.5px solid var(--line)}
 td.n{font-family:var(--mono);font-size:13.5px;white-space:nowrap}
 tr:last-child td{border-bottom:none}
 
@@ -117,7 +120,7 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
 .backfoot a:hover,.backfoot a:focus-visible{border-bottom-color:var(--teal);outline:none}
 /*stickybar-start*/
 .topnav{display:none}
-#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(232,236,239,.96);
+#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(237,238,229,.96);
   -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 #sbar .in{max-width:860px;margin:0 auto;padding:9px 22px 8px}
 #sbar .r1{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
@@ -133,6 +136,11 @@ html{scroll-padding-top:var(--sbh,84px)}
 @media (max-width:600px){#sbar .in{padding:8px 16px 7px}#sbar .qt{font-size:14px}}
 @media print{#sbar{display:none}}
 /*stickybar-end*/
+
+/* ---- meowl przy tytule ---- */
+.avatar{float:right;width:64px;height:64px;border-radius:50%;margin:2px 0 10px 18px;
+        box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--line)}
+header::after{content:"";display:block;clear:both}
 </style>
 </head>
 <body>
@@ -144,6 +152,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 </nav>
 
 <header>
+  <img class="avatar" src="assets/meowl-snowy.png" width="64" height="64" alt="" decoding="async">
   <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 14</p>
   <h1>Kodowanie i operatory genetyczne</h1>
   <p class="quest">Kodowanie i operatory genetyczne w algorytmach genetycznych.</p>
@@ -181,7 +190,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 <svg viewBox="0 0 680 310" class="fig">
 <defs><marker id="arK14" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker><marker id="arvK14" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker></defs>
 <text x="340" y="20" text-anchor="middle" class="bx-t">KODOWANIE — CO ALGORYTM WIDZI, A CO ROZUMIE ZADANIE</text>
-<rect x="20" y="44" width="150" height="76" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="20" y="44" width="150" height="76" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="20" y="44" width="150" height="3" fill="#9C3B52"/>
 <text x="95.0" y="63.1" text-anchor="middle" class="bx-t">FENOTYP</text>
 <text x="95.0" y="81.6" text-anchor="middle" class="bx">rozwiązanie zadania:</text>
@@ -192,50 +201,50 @@ html{scroll-padding-top:var(--sbh,84px)}
 <path d="M 210 100 L 170 100" fill="none" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arK14)"/>
 <text x="190" y="116" text-anchor="middle" class="cap">dekodowanie</text>
 <text x="430" y="58" text-anchor="middle" class="bx-t">GENOTYP — chromosom (tu 8 bitów na zmienną)</text>
-<rect x="220" y="68" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="220" y="68" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="230.0" y="83.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="240" y="68" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="240" y="68" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="250.0" y="83.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="260" y="68" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="260" y="68" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="270.0" y="83.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="280" y="68" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="280" y="68" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="290.0" y="83.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="300" y="68" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="300" y="68" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="310.0" y="83.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="320" y="68" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="320" y="68" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="330.0" y="83.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="340" y="68" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="340" y="68" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="350.0" y="83.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="360" y="68" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="360" y="68" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="370.0" y="83.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="380" y="68" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="380" y="68" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="390.0" y="83.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="400" y="68" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="400" y="68" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="410.0" y="83.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="420" y="68" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="420" y="68" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="430.0" y="83.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="440" y="68" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="440" y="68" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="450.0" y="83.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="460" y="68" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="460" y="68" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="470.0" y="83.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="480" y="68" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="480" y="68" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="490.0" y="83.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="500" y="68" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="500" y="68" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="510.0" y="83.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="520" y="68" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="520" y="68" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="530.0" y="83.0" text-anchor="middle" class="bx-t">0</text>
 <line x1="220" y1="96" x2="378" y2="96" stroke="#0E6E78" stroke-width="2"/>
 <line x1="382" y1="96" x2="540" y2="96" stroke="#B3641A" stroke-width="2"/>
 <text x="300" y="110" text-anchor="middle" class="cap" style="fill:#0E6E78">gen zmiennej x₁</text>
 <text x="460" y="110" text-anchor="middle" class="cap" style="fill:#B3641A">gen zmiennej x₂</text>
 <text x="380" y="128" text-anchor="middle" class="cap">razem: chromosom osobnika, 16 bitów</text>
-<rect x="20" y="152" width="316" height="92" rx="2" fill="#F2F5F6" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="20" y="152" width="316" height="92" rx="2" fill="#F3F4EE" stroke="#CCD2C7" stroke-width="1"/>
 <text x="178.0" y="172.1" text-anchor="middle" class="bx-t">JAK SIĘ DEKODUJE</text>
 <text x="178.0" y="190.6" text-anchor="middle" class="bx">1. bity genu czytamy jako liczbę całkowitą v</text>
 <text x="178.0" y="204.7" text-anchor="middle" class="bx">2. x = x_min + (x_max − x_min) · v / (2ᵇ − 1)</text>
 <text x="178.0" y="218.8" text-anchor="middle" class="bx">przykład: 11000100 = 196, zakres [−5,12; 5,12],</text>
 <text x="178.0" y="232.8" text-anchor="middle" class="bx">8 bitów → x = −5,12 + 10,24 · 196/255 = 2,751</text>
-<rect x="356" y="152" width="304" height="92" rx="2" fill="#F2F5F6" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="356" y="152" width="304" height="92" rx="2" fill="#F3F4EE" stroke="#CCD2C7" stroke-width="1"/>
 <text x="508.0" y="165.0" text-anchor="middle" class="bx-t">ILE BITÓW — TO WYBÓR ROZDZIELCZOŚCI</text>
 <text x="508.0" y="183.5" text-anchor="middle" class="bx">8 bitów → 256 poziomów, krok 0,0402</text>
 <text x="508.0" y="197.6" text-anchor="middle" class="bx">12 bitów → 4096 poziomów, krok 0,0025</text>
@@ -291,100 +300,100 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="232" y="46" text-anchor="middle" class="cap">kod naturalny</text>
 <text x="430" y="46" text-anchor="middle" class="cap">kod Graya</text>
 <text x="96" y="71" text-anchor="middle" class="bx-t">7</text>
-<rect x="176" y="56" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="176" y="56" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="187.0" y="71.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="198" y="56" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="198" y="56" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="209.0" y="71.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="220" y="56" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="220" y="56" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="231.0" y="71.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="242" y="56" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="242" y="56" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="253.0" y="71.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="264" y="56" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="264" y="56" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="275.0" y="71.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="376" y="56" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="376" y="56" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="387.0" y="71.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="398" y="56" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="398" y="56" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="409.0" y="71.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="420" y="56" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="420" y="56" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="431.0" y="71.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="442" y="56" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="442" y="56" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="453.0" y="71.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="464" y="56" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="464" y="56" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="475.0" y="71.0" text-anchor="middle" class="bx-t">0</text>
 <text x="96" y="101" text-anchor="middle" class="bx-t">8</text>
-<rect x="176" y="86" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="176" y="86" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="187.0" y="101.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="198" y="86" width="22" height="22" fill="#9C3B52" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="198" y="86" width="22" height="22" fill="#9C3B52" stroke="#CCD2C7" stroke-width="1"/>
 <text x="209.0" y="101.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="220" y="86" width="22" height="22" fill="#9C3B52" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="220" y="86" width="22" height="22" fill="#9C3B52" stroke="#CCD2C7" stroke-width="1"/>
 <text x="231.0" y="101.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="242" y="86" width="22" height="22" fill="#9C3B52" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="242" y="86" width="22" height="22" fill="#9C3B52" stroke="#CCD2C7" stroke-width="1"/>
 <text x="253.0" y="101.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="264" y="86" width="22" height="22" fill="#9C3B52" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="264" y="86" width="22" height="22" fill="#9C3B52" stroke="#CCD2C7" stroke-width="1"/>
 <text x="275.0" y="101.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="376" y="86" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="376" y="86" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="387.0" y="101.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="398" y="86" width="22" height="22" fill="#0E6E78" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="398" y="86" width="22" height="22" fill="#0E6E78" stroke="#CCD2C7" stroke-width="1"/>
 <text x="409.0" y="101.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="420" y="86" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="420" y="86" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="431.0" y="101.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="442" y="86" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="442" y="86" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="453.0" y="101.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="464" y="86" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="464" y="86" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="475.0" y="101.0" text-anchor="middle" class="bx-t">0</text>
 <text x="96" y="141" text-anchor="middle" class="bx-t">15</text>
-<rect x="176" y="126" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="176" y="126" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="187.0" y="141.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="198" y="126" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="198" y="126" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="209.0" y="141.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="220" y="126" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="220" y="126" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="231.0" y="141.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="242" y="126" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="242" y="126" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="253.0" y="141.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="264" y="126" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="264" y="126" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="275.0" y="141.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="376" y="126" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="376" y="126" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="387.0" y="141.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="398" y="126" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="398" y="126" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="409.0" y="141.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="420" y="126" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="420" y="126" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="431.0" y="141.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="442" y="126" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="442" y="126" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="453.0" y="141.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="464" y="126" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="464" y="126" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="475.0" y="141.0" text-anchor="middle" class="bx-t">0</text>
 <text x="96" y="171" text-anchor="middle" class="bx-t">16</text>
-<rect x="176" y="156" width="22" height="22" fill="#9C3B52" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="176" y="156" width="22" height="22" fill="#9C3B52" stroke="#CCD2C7" stroke-width="1"/>
 <text x="187.0" y="171.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="198" y="156" width="22" height="22" fill="#9C3B52" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="198" y="156" width="22" height="22" fill="#9C3B52" stroke="#CCD2C7" stroke-width="1"/>
 <text x="209.0" y="171.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="220" y="156" width="22" height="22" fill="#9C3B52" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="220" y="156" width="22" height="22" fill="#9C3B52" stroke="#CCD2C7" stroke-width="1"/>
 <text x="231.0" y="171.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="242" y="156" width="22" height="22" fill="#9C3B52" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="242" y="156" width="22" height="22" fill="#9C3B52" stroke="#CCD2C7" stroke-width="1"/>
 <text x="253.0" y="171.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="264" y="156" width="22" height="22" fill="#9C3B52" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="264" y="156" width="22" height="22" fill="#9C3B52" stroke="#CCD2C7" stroke-width="1"/>
 <text x="275.0" y="171.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="376" y="156" width="22" height="22" fill="#0E6E78" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="376" y="156" width="22" height="22" fill="#0E6E78" stroke="#CCD2C7" stroke-width="1"/>
 <text x="387.0" y="171.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="398" y="156" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="398" y="156" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="409.0" y="171.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="420" y="156" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="420" y="156" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="431.0" y="171.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="442" y="156" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="442" y="156" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="453.0" y="171.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="464" y="156" width="22" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="464" y="156" width="22" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="475.0" y="171.0" text-anchor="middle" class="bx-t">0</text>
 <text x="182" y="122" text-anchor="start" class="cap" style="fill:#9C3B52">zmieniają się 4 bity naraz</text>
 <text x="182" y="192" text-anchor="start" class="cap" style="fill:#9C3B52">zmienia się 5 bitów naraz</text>
 <text x="382" y="122" text-anchor="start" class="cap" style="fill:#0E6E78">zmienia się 1 bit</text>
 <text x="382" y="192" text-anchor="start" class="cap" style="fill:#0E6E78">zmienia się 1 bit</text>
-<rect x="20" y="216" width="316" height="80" rx="2" fill="#F2F5F6" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="20" y="216" width="316" height="80" rx="2" fill="#F3F4EE" stroke="#CCD2C7" stroke-width="1"/>
 <text x="178.0" y="230.1" text-anchor="middle" class="bx-t">NA CZYM POLEGA KŁOPOT</text>
 <text x="178.0" y="248.6" text-anchor="middle" class="bx">Sąsiednie liczby bywają odległe</text>
 <text x="178.0" y="262.7" text-anchor="middle" class="bx">w świecie bitów. Mutacja jednego bitu</text>
 <text x="178.0" y="276.8" text-anchor="middle" class="bx">nie potrafi przejść z 7 na 8 — musiałyby</text>
 <text x="178.0" y="290.9" text-anchor="middle" class="bx">zmienić się cztery bity naraz.</text>
-<rect x="356" y="216" width="304" height="80" rx="2" fill="#F2F5F6" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="356" y="216" width="304" height="80" rx="2" fill="#F3F4EE" stroke="#CCD2C7" stroke-width="1"/>
 <text x="508.0" y="230.1" text-anchor="middle" class="bx-t">KOD GRAYA TO NAPRAWIA</text>
 <text x="508.0" y="248.6" text-anchor="middle" class="bx">Sąsiednie liczby różnią się ZAWSZE</text>
 <text x="508.0" y="262.7" text-anchor="middle" class="bx">jednym bitem. Kod naturalny: średnio</text>
@@ -426,221 +435,221 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="340" y="20" text-anchor="middle" class="bx-t">OPERATORY KRZYŻOWANIA — CO Z CZEGO POWSTAJE</text>
 <text x="120.0" y="42" text-anchor="middle" class="bx-t">JEDNOPUNKTOWE</text>
 <text x="30" y="81" text-anchor="end" class="cap" style="fill:#0E6E78">A</text>
-<rect x="40" y="66" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="40" y="66" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="50.0" y="81.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="60" y="66" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="60" y="66" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="70.0" y="81.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="80" y="66" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="80" y="66" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="90.0" y="81.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="100" y="66" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="100" y="66" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="110.0" y="81.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="120" y="66" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="120" y="66" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="130.0" y="81.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="140" y="66" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="140" y="66" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="150.0" y="81.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="160" y="66" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="160" y="66" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="170.0" y="81.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="180" y="66" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="180" y="66" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="190.0" y="81.0" text-anchor="middle" class="bx-t">0</text>
 <text x="30" y="107" text-anchor="end" class="cap" style="fill:#B3641A">B</text>
-<rect x="40" y="92" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="40" y="92" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="50.0" y="107.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="60" y="92" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="60" y="92" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="70.0" y="107.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="80" y="92" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="80" y="92" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="90.0" y="107.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="100" y="92" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="100" y="92" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="110.0" y="107.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="120" y="92" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="120" y="92" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="130.0" y="107.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="140" y="92" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="140" y="92" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="150.0" y="107.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="160" y="92" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="160" y="92" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="170.0" y="107.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="180" y="92" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="180" y="92" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="190.0" y="107.0" text-anchor="middle" class="bx-t">1</text>
 <path d="M 120.0 116 L 120.0 130" fill="none" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arK14)"/>
 <text x="30" y="147" text-anchor="end" class="cap">A′</text>
-<rect x="40" y="132" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="40" y="132" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="50.0" y="147.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="60" y="132" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="60" y="132" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="70.0" y="147.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="80" y="132" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="80" y="132" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="90.0" y="147.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="100" y="132" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="100" y="132" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="110.0" y="147.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="120" y="132" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="120" y="132" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="130.0" y="147.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="140" y="132" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="140" y="132" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="150.0" y="147.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="160" y="132" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="160" y="132" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="170.0" y="147.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="180" y="132" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="180" y="132" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="190.0" y="147.0" text-anchor="middle" class="bx-t">1</text>
 <text x="30" y="173" text-anchor="end" class="cap">B′</text>
-<rect x="40" y="158" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="40" y="158" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="50.0" y="173.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="60" y="158" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="60" y="158" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="70.0" y="173.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="80" y="158" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="80" y="158" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="90.0" y="173.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="100" y="158" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="100" y="158" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="110.0" y="173.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="120" y="158" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="120" y="158" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="130.0" y="173.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="140" y="158" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="140" y="158" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="150.0" y="173.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="160" y="158" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="160" y="158" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="170.0" y="173.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="180" y="158" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="180" y="158" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="190.0" y="173.0" text-anchor="middle" class="bx-t">0</text>
 <text x="120.0" y="198" text-anchor="middle" class="cap">jedno cięcie, wymiana ogonów</text>
 <line x1="100" y1="56" x2="100" y2="184" stroke="#9C3B52" stroke-width="1.6" stroke-dasharray="4 3"/>
 <text x="480.0" y="42" text-anchor="middle" class="bx-t">DWUPUNKTOWE</text>
 <text x="390" y="81" text-anchor="end" class="cap" style="fill:#0E6E78">A</text>
-<rect x="400" y="66" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="400" y="66" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="410.0" y="81.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="420" y="66" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="420" y="66" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="430.0" y="81.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="440" y="66" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="440" y="66" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="450.0" y="81.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="460" y="66" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="460" y="66" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="470.0" y="81.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="480" y="66" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="480" y="66" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="490.0" y="81.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="500" y="66" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="500" y="66" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="510.0" y="81.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="520" y="66" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="520" y="66" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="530.0" y="81.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="540" y="66" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="540" y="66" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="550.0" y="81.0" text-anchor="middle" class="bx-t">0</text>
 <text x="390" y="107" text-anchor="end" class="cap" style="fill:#B3641A">B</text>
-<rect x="400" y="92" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="400" y="92" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="410.0" y="107.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="420" y="92" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="420" y="92" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="430.0" y="107.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="440" y="92" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="440" y="92" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="450.0" y="107.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="460" y="92" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="460" y="92" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="470.0" y="107.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="480" y="92" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="480" y="92" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="490.0" y="107.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="500" y="92" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="500" y="92" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="510.0" y="107.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="520" y="92" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="520" y="92" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="530.0" y="107.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="540" y="92" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="540" y="92" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="550.0" y="107.0" text-anchor="middle" class="bx-t">1</text>
 <path d="M 480.0 116 L 480.0 130" fill="none" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arK14)"/>
 <text x="390" y="147" text-anchor="end" class="cap">A′</text>
-<rect x="400" y="132" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="400" y="132" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="410.0" y="147.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="420" y="132" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="420" y="132" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="430.0" y="147.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="440" y="132" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="440" y="132" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="450.0" y="147.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="460" y="132" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="460" y="132" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="470.0" y="147.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="480" y="132" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="480" y="132" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="490.0" y="147.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="500" y="132" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="500" y="132" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="510.0" y="147.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="520" y="132" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="520" y="132" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="530.0" y="147.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="540" y="132" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="540" y="132" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="550.0" y="147.0" text-anchor="middle" class="bx-t">0</text>
 <text x="390" y="173" text-anchor="end" class="cap">B′</text>
-<rect x="400" y="158" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="400" y="158" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="410.0" y="173.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="420" y="158" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="420" y="158" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="430.0" y="173.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="440" y="158" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="440" y="158" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="450.0" y="173.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="460" y="158" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="460" y="158" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="470.0" y="173.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="480" y="158" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="480" y="158" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="490.0" y="173.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="500" y="158" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="500" y="158" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="510.0" y="173.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="520" y="158" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="520" y="158" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="530.0" y="173.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="540" y="158" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="540" y="158" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="550.0" y="173.0" text-anchor="middle" class="bx-t">1</text>
 <text x="480.0" y="198" text-anchor="middle" class="cap">wymiana środkowego odcinka</text>
 <line x1="440" y1="56" x2="440" y2="184" stroke="#9C3B52" stroke-width="1.6" stroke-dasharray="4 3"/>
 <line x1="500" y1="56" x2="500" y2="184" stroke="#9C3B52" stroke-width="1.6" stroke-dasharray="4 3"/>
 <text x="120.0" y="220" text-anchor="middle" class="bx-t">RÓWNOMIERNE</text>
 <text x="30" y="259" text-anchor="end" class="cap" style="fill:#0E6E78">A</text>
-<rect x="40" y="244" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="40" y="244" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="50.0" y="259.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="60" y="244" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="60" y="244" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="70.0" y="259.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="80" y="244" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="80" y="244" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="90.0" y="259.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="100" y="244" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="100" y="244" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="110.0" y="259.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="120" y="244" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="120" y="244" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="130.0" y="259.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="140" y="244" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="140" y="244" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="150.0" y="259.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="160" y="244" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="160" y="244" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="170.0" y="259.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="180" y="244" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="180" y="244" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="190.0" y="259.0" text-anchor="middle" class="bx-t">0</text>
 <text x="30" y="285" text-anchor="end" class="cap" style="fill:#B3641A">B</text>
-<rect x="40" y="270" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="40" y="270" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="50.0" y="285.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="60" y="270" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="60" y="270" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="70.0" y="285.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="80" y="270" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="80" y="270" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="90.0" y="285.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="100" y="270" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="100" y="270" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="110.0" y="285.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="120" y="270" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="120" y="270" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="130.0" y="285.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="140" y="270" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="140" y="270" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="150.0" y="285.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="160" y="270" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="160" y="270" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="170.0" y="285.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="180" y="270" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="180" y="270" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="190.0" y="285.0" text-anchor="middle" class="bx-t">1</text>
 <path d="M 120.0 294 L 120.0 308" fill="none" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arK14)"/>
 <text x="30" y="325" text-anchor="end" class="cap">A′</text>
-<rect x="40" y="310" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="40" y="310" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="50.0" y="325.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="60" y="310" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="60" y="310" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="70.0" y="325.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="80" y="310" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="80" y="310" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="90.0" y="325.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="100" y="310" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="100" y="310" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="110.0" y="325.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="120" y="310" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="120" y="310" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="130.0" y="325.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="140" y="310" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="140" y="310" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="150.0" y="325.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="160" y="310" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="160" y="310" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="170.0" y="325.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="180" y="310" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="180" y="310" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="190.0" y="325.0" text-anchor="middle" class="bx-t">1</text>
 <text x="30" y="351" text-anchor="end" class="cap">B′</text>
-<rect x="40" y="336" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="40" y="336" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="50.0" y="351.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="60" y="336" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="60" y="336" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="70.0" y="351.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="80" y="336" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="80" y="336" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="90.0" y="351.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="100" y="336" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="100" y="336" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="110.0" y="351.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="120" y="336" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="120" y="336" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="130.0" y="351.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="140" y="336" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="140" y="336" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="150.0" y="351.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="160" y="336" width="20" height="22" fill="#F5E5D4" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="160" y="336" width="20" height="22" fill="#F5E5D4" stroke="#CCD2C7" stroke-width="1"/>
 <text x="170.0" y="351.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="180" y="336" width="20" height="22" fill="#DDEBEC" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="180" y="336" width="20" height="22" fill="#DDEBEC" stroke="#CCD2C7" stroke-width="1"/>
 <text x="190.0" y="351.0" text-anchor="middle" class="bx-t">0</text>
 <text x="120.0" y="376" text-anchor="middle" class="cap">każdy bit losowany osobno, rzut monetą</text>
-<rect x="392" y="222" width="268" height="150" rx="2" fill="#F2F5F6" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="392" y="222" width="268" height="150" rx="2" fill="#F3F4EE" stroke="#CCD2C7" stroke-width="1"/>
 <text x="526.0" y="242.8" text-anchor="middle" class="bx-t">KRZYŻOWANIE ARYTMETYCZNE</text>
 <text x="526.0" y="261.4" text-anchor="middle" class="bx">dla kodowania rzeczywistego:</text>
 <text x="526.0" y="275.5" text-anchor="middle" class="bx">A′ = α·A + (1−α)·B, α losowane</text>
@@ -676,50 +685,50 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="340" y="20" text-anchor="middle" class="bx-t">OPERATORY MUTACJI — JEDYNE ŹRÓDŁO NOWEGO MATERIAŁU</text>
 <text x="160" y="52" text-anchor="middle" class="bx-t">KODOWANIE BINARNE — negacja bitu</text>
 <text x="30" y="87" text-anchor="start" class="cap">przed</text>
-<rect x="96" y="72" width="20" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="96" y="72" width="20" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="106.0" y="87.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="116" y="72" width="20" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="116" y="72" width="20" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="126.0" y="87.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="136" y="72" width="20" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="136" y="72" width="20" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="146.0" y="87.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="156" y="72" width="20" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="156" y="72" width="20" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="166.0" y="87.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="176" y="72" width="20" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="176" y="72" width="20" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="186.0" y="87.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="196" y="72" width="20" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="196" y="72" width="20" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="206.0" y="87.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="216" y="72" width="20" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="216" y="72" width="20" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="226.0" y="87.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="236" y="72" width="20" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="236" y="72" width="20" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="246.0" y="87.0" text-anchor="middle" class="bx-t">0</text>
 <path d="M 206.0 100 L 206.0 114" fill="none" stroke="#9C3B52" stroke-width="1.6" marker-end="url(#arK14)"/>
 <text x="30" y="137" text-anchor="start" class="cap">po</text>
-<rect x="96" y="122" width="20" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="96" y="122" width="20" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="106.0" y="137.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="116" y="122" width="20" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="116" y="122" width="20" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="126.0" y="137.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="136" y="122" width="20" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="136" y="122" width="20" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="146.0" y="137.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="156" y="122" width="20" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="156" y="122" width="20" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="166.0" y="137.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="176" y="122" width="20" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="176" y="122" width="20" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="186.0" y="137.0" text-anchor="middle" class="bx-t">0</text>
-<rect x="196" y="122" width="20" height="22" fill="#9C3B52" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="196" y="122" width="20" height="22" fill="#9C3B52" stroke="#CCD2C7" stroke-width="1"/>
 <text x="206.0" y="137.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="216" y="122" width="20" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="216" y="122" width="20" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="226.0" y="137.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="236" y="122" width="20" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="236" y="122" width="20" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="246.0" y="137.0" text-anchor="middle" class="bx-t">0</text>
 <text x="196" y="166" text-anchor="middle" class="cap">każdy bit niezależnie, z prawdopodobieństwem pm ≈ 1/L</text>
 <text x="500" y="52" text-anchor="middle" class="bx-t">KODOWANIE RZECZYWISTE — mutacja gaussowska</text>
-<line x1="360" y1="112" x2="656" y2="112" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="372" y1="108" x2="372" y2="116" stroke="#C3CDD4" stroke-width="1"/>
-<line x1="418" y1="108" x2="418" y2="116" stroke="#C3CDD4" stroke-width="1"/>
-<line x1="464" y1="108" x2="464" y2="116" stroke="#C3CDD4" stroke-width="1"/>
-<line x1="510" y1="108" x2="510" y2="116" stroke="#C3CDD4" stroke-width="1"/>
-<line x1="556" y1="108" x2="556" y2="116" stroke="#C3CDD4" stroke-width="1"/>
-<line x1="602" y1="108" x2="602" y2="116" stroke="#C3CDD4" stroke-width="1"/>
-<line x1="648" y1="108" x2="648" y2="116" stroke="#C3CDD4" stroke-width="1"/>
+<line x1="360" y1="112" x2="656" y2="112" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="372" y1="108" x2="372" y2="116" stroke="#CCD2C7" stroke-width="1"/>
+<line x1="418" y1="108" x2="418" y2="116" stroke="#CCD2C7" stroke-width="1"/>
+<line x1="464" y1="108" x2="464" y2="116" stroke="#CCD2C7" stroke-width="1"/>
+<line x1="510" y1="108" x2="510" y2="116" stroke="#CCD2C7" stroke-width="1"/>
+<line x1="556" y1="108" x2="556" y2="116" stroke="#CCD2C7" stroke-width="1"/>
+<line x1="602" y1="108" x2="602" y2="116" stroke="#CCD2C7" stroke-width="1"/>
+<line x1="648" y1="108" x2="648" y2="116" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="464" cy="112" r="4.5" fill="#141C24"/>
 <text x="464" y="100" text-anchor="middle" class="cap">gen przed</text>
 <circle cx="540" cy="112" r="4.5" fill="#9C3B52"/>
@@ -728,41 +737,41 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="508" y="166" text-anchor="middle" class="cap">nowa wartość = stara + szum o odchyleniu σ</text>
 <text x="190" y="210" text-anchor="middle" class="bx-t">KODOWANIE PERMUTACYJNE — zamiana i odwrócenie</text>
 <text x="30" y="245" text-anchor="start" class="cap">przed</text>
-<rect x="96" y="230" width="26" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="96" y="230" width="26" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="109.0" y="245.0" text-anchor="middle" class="bx-t">2</text>
-<rect x="122" y="230" width="26" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="122" y="230" width="26" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="135.0" y="245.0" text-anchor="middle" class="bx-t">4</text>
-<rect x="148" y="230" width="26" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="148" y="230" width="26" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="161.0" y="245.0" text-anchor="middle" class="bx-t">5</text>
-<rect x="174" y="230" width="26" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="174" y="230" width="26" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="187.0" y="245.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="200" y="230" width="26" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="200" y="230" width="26" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="213.0" y="245.0" text-anchor="middle" class="bx-t">3</text>
 <text x="30" y="285" text-anchor="start" class="cap">zamiana</text>
-<rect x="96" y="270" width="26" height="22" fill="#9C3B52" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="96" y="270" width="26" height="22" fill="#9C3B52" stroke="#CCD2C7" stroke-width="1"/>
 <text x="109.0" y="285.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="122" y="270" width="26" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="122" y="270" width="26" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="135.0" y="285.0" text-anchor="middle" class="bx-t">4</text>
-<rect x="148" y="270" width="26" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="148" y="270" width="26" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="161.0" y="285.0" text-anchor="middle" class="bx-t">5</text>
-<rect x="174" y="270" width="26" height="22" fill="#9C3B52" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="174" y="270" width="26" height="22" fill="#9C3B52" stroke="#CCD2C7" stroke-width="1"/>
 <text x="187.0" y="285.0" text-anchor="middle" class="bx-t">2</text>
-<rect x="200" y="270" width="26" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="200" y="270" width="26" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="213.0" y="285.0" text-anchor="middle" class="bx-t">3</text>
 <text x="30" y="325" text-anchor="start" class="cap">odwrócenie</text>
-<rect x="96" y="310" width="26" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="96" y="310" width="26" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="109.0" y="325.0" text-anchor="middle" class="bx-t">2</text>
-<rect x="122" y="310" width="26" height="22" fill="#9C3B52" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="122" y="310" width="26" height="22" fill="#9C3B52" stroke="#CCD2C7" stroke-width="1"/>
 <text x="135.0" y="325.0" text-anchor="middle" class="bx-t">1</text>
-<rect x="148" y="310" width="26" height="22" fill="#9C3B52" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="148" y="310" width="26" height="22" fill="#9C3B52" stroke="#CCD2C7" stroke-width="1"/>
 <text x="161.0" y="325.0" text-anchor="middle" class="bx-t">5</text>
-<rect x="174" y="310" width="26" height="22" fill="#9C3B52" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="174" y="310" width="26" height="22" fill="#9C3B52" stroke="#CCD2C7" stroke-width="1"/>
 <text x="187.0" y="325.0" text-anchor="middle" class="bx-t">4</text>
-<rect x="200" y="310" width="26" height="22" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="200" y="310" width="26" height="22" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="213.0" y="325.0" text-anchor="middle" class="bx-t">3</text>
 <text x="196" y="352" text-anchor="middle" class="cap">zamiana: przestawiamy dwa geny; odwrócenie:</text>
 <text x="196" y="366" text-anchor="middle" class="cap">obracamy odcinek. Zwykła negacja zepsułaby permutację.</text>
-<rect x="392" y="206" width="268" height="152" rx="2" fill="#F2F5F6" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="392" y="206" width="268" height="152" rx="2" fill="#F3F4EE" stroke="#CCD2C7" stroke-width="1"/>
 <text x="526.0" y="220.8" text-anchor="middle" class="bx-t">DLACZEGO MUTACJA JEST NIEZBĘDNA</text>
 <text x="526.0" y="239.3" text-anchor="middle" class="bx">Krzyżowanie tylko przestawia bity,</text>
 <text x="526.0" y="253.4" text-anchor="middle" class="bx">które już są w populacji. Jeżeli na</text>

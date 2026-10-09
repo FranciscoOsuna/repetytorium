@@ -4,14 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pytanie 32 — Hierarchiczny warstwowy model systemu sterowania</title>
+<link rel="icon" type="image/png" sizes="144x144" href="favicon-144.png?v=2">
+<link rel="icon" href="favicon.ico?v=2" sizes="any">
+<link rel="apple-touch-icon" href="favicon-144.png?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#141C24; --mut:#5C6B77; --line:#C3CDD4;
-  --paper:#E8ECEF; --card:#FCFDFD;
-  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52;
+  --ink:#141C24; --mut:#5C6B77; --line:#CCD2C7;
+  --paper:#EDEEE5; --card:#FDFDFA;
+  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52; --moss:#5E8C3A;
   --disp:"Space Grotesk",system-ui,sans-serif;
   --body:"STIX Two Text","Source Serif 4",Georgia,serif;
   --mono:"IBM Plex Mono",ui-monospace,monospace;
@@ -39,7 +42,7 @@ h2 .num{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--viole
         letter-spacing:.08em;flex:none}
 h3{font-family:var(--disp);font-weight:500;font-size:18.5px;margin:34px 0 8px;letter-spacing:-.01em}
 p{margin:0 0 14px}
-.rail{height:5px;background:linear-gradient(90deg,var(--teal) 0%,var(--violet) 55%,var(--amber) 100%);
+.rail{height:5px;background:linear-gradient(90deg,var(--moss) 0%,var(--teal) 30%,var(--violet) 62%,var(--amber) 100%);
       opacity:.85;margin:0 0 22px;border-radius:2px}
 
 /* ---- figury ---- */
@@ -83,7 +86,7 @@ figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:
 table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15px;background:var(--card)}
 th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
 th{font-family:var(--disp);font-weight:500;font-size:13px;letter-spacing:.02em;
-   background:#F2F5F6;border-bottom:1.5px solid var(--line)}
+   background:#F3F4EE;border-bottom:1.5px solid var(--line)}
 td.n{font-family:var(--mono);font-size:13.5px;white-space:nowrap}
 tr:last-child td{border-bottom:none}
 
@@ -115,6 +118,11 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
 .backfoot a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
             color:var(--teal);text-decoration:none;border-bottom:1px solid var(--line)}
 .backfoot a:hover,.backfoot a:focus-visible{border-bottom-color:var(--teal);outline:none}
+
+/* ---- meowl przy tytule ---- */
+.avatar{float:right;width:64px;height:64px;border-radius:50%;margin:2px 0 10px 18px;
+        box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--line)}
+header::after{content:"";display:block;clear:both}
 </style>
 </head>
 <body>
@@ -126,6 +134,7 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
 </nav>
 
 <header>
+  <img class="avatar" src="assets/meowl-snowy.png" width="64" height="64" alt="" decoding="async">
   <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 32</p>
   <h1>Hierarchiczny warstwowy model komputerowego systemu sterowania</h1>
   <p class="quest">Przedstaw hierarchiczny warstwowy model komputerowego systemu sterowania, scharakteryzuj poszczególne warstwy tego modelu i zaproponuj jego realizację sprzętowo-programową.</p>
@@ -157,7 +166,7 @@ ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{colo
 .luka{display:inline-block;min-width:70px;border-bottom:1.5px solid var(--violet);text-align:center;font-family:var(--mono);font-size:14px;color:var(--violet)}
 /*stickybar-start*/
 .topnav{display:none}
-#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(232,236,239,.96);
+#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(237,238,229,.96);
   -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 #sbar .in{max-width:860px;margin:0 auto;padding:9px 22px 8px}
 #sbar .r1{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
@@ -195,58 +204,58 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="340.0" y="77.0" text-anchor="middle" class="bx">wyższa wysyła niższej wartości zadane, niższa odsyła wyższej pomiary i stan</text>
 <text x="186.0" y="114.0" text-anchor="middle" class="bx-t" style="fill:#141C24">① MODEL I ② WARSTWY</text>
 <text x="556.0" y="114.0" text-anchor="middle" class="bx-t" style="fill:#141C24">③ REALIZACJA</text>
-<rect x="14.0" y="126.0" width="348.0" height="58.0" rx="4" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.3"/>
+<rect x="14.0" y="126.0" width="348.0" height="58.0" rx="4" fill="#FDFDFA" stroke="#9C3B52" stroke-width="1.3"/>
 <rect x="14.0" y="126.0" width="6.0" height="58.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <circle cx="38.0" cy="146.0" r="10" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <text x="38.0" y="150.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">4</text>
 <text x="54.0" y="150.0" text-anchor="start" class="bx-t" style="fill:#9C3B52;font-size:11.5px">PLANOWANIE I ZARZĄDZANIE</text>
 <text x="54.0" y="170.0" text-anchor="start" class="bx">co, ile i kiedy produkować</text>
 <text x="352.0" y="150.0" text-anchor="end" class="cap" style="fill:#9C3B52">dni – tygodnie</text>
-<rect x="448.0" y="126.0" width="218.0" height="58.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="448.0" y="126.0" width="218.0" height="58.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="448.0" y="126.0" width="218.0" height="3.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <text x="557.0" y="152.0" text-anchor="middle" class="bx-t" style="font-size:11px">ERP</text>
 <text x="557.0" y="170.0" text-anchor="middle" class="bx">serwer biznesowy</text>
 <path d="M 366.0 155.0 L 444.0 155.0" fill="none" stroke="#9C3B52" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arF32a0)"/>
-<rect x="14.0" y="192.0" width="348.0" height="58.0" rx="4" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.3"/>
+<rect x="14.0" y="192.0" width="348.0" height="58.0" rx="4" fill="#FDFDFA" stroke="#B3641A" stroke-width="1.3"/>
 <rect x="14.0" y="192.0" width="6.0" height="58.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
 <circle cx="38.0" cy="212.0" r="10" fill="#B3641A" stroke="none" stroke-width="1"/>
 <text x="38.0" y="216.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">3</text>
 <text x="54.0" y="216.0" text-anchor="start" class="bx-t" style="fill:#B3641A;font-size:11.5px">OPTYMALIZACJA PUNKTU PRACY</text>
 <text x="54.0" y="236.0" text-anchor="start" class="bx">najlepsze ekonomicznie wartości zadane</text>
 <text x="352.0" y="216.0" text-anchor="end" class="cap" style="fill:#B3641A">godziny</text>
-<rect x="448.0" y="192.0" width="218.0" height="58.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="448.0" y="192.0" width="218.0" height="58.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="448.0" y="192.0" width="218.0" height="3.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
 <text x="557.0" y="218.0" text-anchor="middle" class="bx-t" style="font-size:11px">serwer optymalizacji</text>
 <text x="557.0" y="236.0" text-anchor="middle" class="bx">MES, archiwum (historian)</text>
 <path d="M 366.0 221.0 L 444.0 221.0" fill="none" stroke="#B3641A" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arF32a1)"/>
-<rect x="14.0" y="258.0" width="348.0" height="58.0" rx="4" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<rect x="14.0" y="258.0" width="348.0" height="58.0" rx="4" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.3"/>
 <rect x="14.0" y="258.0" width="6.0" height="58.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
 <circle cx="38.0" cy="278.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
 <text x="38.0" y="282.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">2</text>
 <text x="54.0" y="282.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:11.5px">STEROWANIE NADRZĘDNE</text>
 <text x="54.0" y="302.0" text-anchor="start" class="bx">ograniczenia, sprzężenia (np. MPC)</text>
 <text x="352.0" y="282.0" text-anchor="end" class="cap" style="fill:#5B4B8A">sekundy – minuty</text>
-<rect x="448.0" y="258.0" width="218.0" height="58.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="448.0" y="258.0" width="218.0" height="58.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="448.0" y="258.0" width="218.0" height="3.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
 <text x="557.0" y="284.0" text-anchor="middle" class="bx-t" style="font-size:11px">stacja MPC + SCADA/HMI</text>
 <text x="557.0" y="302.0" text-anchor="middle" class="bx">PC przemysłowy, OPC UA</text>
 <path d="M 366.0 287.0 L 444.0 287.0" fill="none" stroke="#5B4B8A" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arF32a2)"/>
-<rect x="14.0" y="324.0" width="348.0" height="58.0" rx="4" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="14.0" y="324.0" width="348.0" height="58.0" rx="4" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.3"/>
 <rect x="14.0" y="324.0" width="6.0" height="58.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <circle cx="38.0" cy="344.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <text x="38.0" y="348.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">1</text>
 <text x="54.0" y="348.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:11.5px">STEROWANIE BEZPOŚREDNIE</text>
 <text x="54.0" y="368.0" text-anchor="start" class="bx">regulacja PID, logika, blokady</text>
 <text x="352.0" y="348.0" text-anchor="end" class="cap" style="fill:#0E6E78">10 ms – 1 s</text>
-<rect x="448.0" y="324.0" width="218.0" height="58.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="448.0" y="324.0" width="218.0" height="58.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="448.0" y="324.0" width="218.0" height="3.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <text x="557.0" y="350.0" text-anchor="middle" class="bx-t" style="font-size:11px">sterownik PLC / DCS</text>
 <text x="557.0" y="368.0" text-anchor="middle" class="bx">cykl 10–100 ms, IEC 61131-3</text>
 <path d="M 366.0 353.0 L 444.0 353.0" fill="none" stroke="#0E6E78" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arF32a3)"/>
-<rect x="14.0" y="390.0" width="348.0" height="44.0" rx="4" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="390.0" width="348.0" height="44.0" rx="4" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="188.0" y="409.0" text-anchor="middle" class="bx-t" style="font-size:11px">OBIEKT: proces + czujniki + elementy wykonawcze</text>
 <text x="188.0" y="425.0" text-anchor="middle" class="bx">np. dwa zbiorniki: poziomomierze, zawór, pompa</text>
-<rect x="448.0" y="390.0" width="218.0" height="44.0" rx="4" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="448.0" y="390.0" width="218.0" height="44.0" rx="4" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="557.0" y="409.0" text-anchor="middle" class="bx-t" style="font-size:11px">urządzenia polowe</text>
 <text x="557.0" y="425.0" text-anchor="middle" class="bx">4–20 mA, HART, Profinet, IO-Link</text>
 <path d="M 366.0 412.0 L 444.0 412.0" fill="none" stroke="#5C6B77" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arF32a4)"/>
@@ -267,14 +276,14 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">TEN SAM PODZIAŁ ZNASZ Z JAZDY SAMOCHODEM</text>
 <text x="170.0" y="52.0" text-anchor="middle" class="bx-t" style="fill:#5C6B77">SAMOCHÓD</text>
 <text x="520.0" y="52.0" text-anchor="middle" class="bx-t" style="fill:#5C6B77">INSTALACJA PRZEMYSŁOWA</text>
-<rect x="14.0" y="66.0" width="312.0" height="80.0" rx="4" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.2"/>
+<rect x="14.0" y="66.0" width="312.0" height="80.0" rx="4" fill="#FDFDFA" stroke="#9C3B52" stroke-width="1.2"/>
 <rect x="14.0" y="66.0" width="6.0" height="80.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <text x="34.0" y="90.0" text-anchor="start" class="bx-t" style="fill:#9C3B52">nawigacja</text>
 <text x="34.0" y="110.0" text-anchor="start" class="bx">wybiera trasę</text>
 <text x="34.0" y="130.0" text-anchor="start" class="cap" style="font-style:italic">nie wie, jak trzymać kierownicę</text>
 <rect x="192.0" y="76.0" width="124.0" height="24.0" rx="12" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.12"/>
 <text x="254.0" y="92.0" text-anchor="middle" class="cap" style="fill:#9C3B52">raz na podróż</text>
-<rect x="354.0" y="66.0" width="312.0" height="80.0" rx="4" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.2"/>
+<rect x="354.0" y="66.0" width="312.0" height="80.0" rx="4" fill="#FDFDFA" stroke="#9C3B52" stroke-width="1.2"/>
 <rect x="354.0" y="66.0" width="6.0" height="80.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <text x="374.0" y="90.0" text-anchor="start" class="bx-t" style="fill:#9C3B52">planowanie</text>
 <text x="374.0" y="110.0" text-anchor="start" class="bx">plan produkcji: co i ile</text>
@@ -282,14 +291,14 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="340.0" y="111.0" text-anchor="middle" class="bx-t" style="fill:#5C6B77;font-size:16px">=</text>
 <path d="M 120.0 148.0 L 120.0 174.0" fill="none" stroke="#9C3B52" stroke-width="1.6" marker-end="url(#arF32c0)"/>
 <path d="M 460.0 148.0 L 460.0 174.0" fill="none" stroke="#9C3B52" stroke-width="1.6" marker-end="url(#arF32c0)"/>
-<rect x="14.0" y="176.0" width="312.0" height="80.0" rx="4" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.2"/>
+<rect x="14.0" y="176.0" width="312.0" height="80.0" rx="4" fill="#FDFDFA" stroke="#B3641A" stroke-width="1.2"/>
 <rect x="14.0" y="176.0" width="6.0" height="80.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
 <text x="34.0" y="200.0" text-anchor="start" class="bx-t" style="fill:#B3641A">kierowca</text>
 <text x="34.0" y="220.0" text-anchor="start" class="bx">wybiera pas i prędkość</text>
 <text x="34.0" y="240.0" text-anchor="start" class="cap" style="font-style:italic">nie liczy trasy od nowa</text>
 <rect x="192.0" y="186.0" width="124.0" height="24.0" rx="12" fill="#B3641A" stroke="none" stroke-width="1" opacity="0.12"/>
 <text x="254.0" y="202.0" text-anchor="middle" class="cap" style="fill:#B3641A">co kilka sekund</text>
-<rect x="354.0" y="176.0" width="312.0" height="80.0" rx="4" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.2"/>
+<rect x="354.0" y="176.0" width="312.0" height="80.0" rx="4" fill="#FDFDFA" stroke="#B3641A" stroke-width="1.2"/>
 <rect x="354.0" y="176.0" width="6.0" height="80.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
 <text x="374.0" y="200.0" text-anchor="start" class="bx-t" style="fill:#B3641A">optymalizacja + nadrzędne</text>
 <text x="374.0" y="220.0" text-anchor="start" class="bx">najlepsze wartości zadane</text>
@@ -297,14 +306,14 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="340.0" y="221.0" text-anchor="middle" class="bx-t" style="fill:#5C6B77;font-size:16px">=</text>
 <path d="M 120.0 258.0 L 120.0 284.0" fill="none" stroke="#B3641A" stroke-width="1.6" marker-end="url(#arF32c1)"/>
 <path d="M 460.0 258.0 L 460.0 284.0" fill="none" stroke="#B3641A" stroke-width="1.6" marker-end="url(#arF32c1)"/>
-<rect x="14.0" y="286.0" width="312.0" height="80.0" rx="4" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.2"/>
+<rect x="14.0" y="286.0" width="312.0" height="80.0" rx="4" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.2"/>
 <rect x="14.0" y="286.0" width="6.0" height="80.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <text x="34.0" y="310.0" text-anchor="start" class="bx-t" style="fill:#0E6E78">tempomat, ABS</text>
 <text x="34.0" y="330.0" text-anchor="start" class="bx">trzyma zadaną prędkość</text>
 <text x="34.0" y="350.0" text-anchor="start" class="cap" style="font-style:italic">nie wie, dokąd jedziemy</text>
 <rect x="192.0" y="296.0" width="124.0" height="24.0" rx="12" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.12"/>
 <text x="254.0" y="312.0" text-anchor="middle" class="cap" style="fill:#0E6E78">co ułamek sekundy</text>
-<rect x="354.0" y="286.0" width="312.0" height="80.0" rx="4" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.2"/>
+<rect x="354.0" y="286.0" width="312.0" height="80.0" rx="4" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.2"/>
 <rect x="354.0" y="286.0" width="6.0" height="80.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <text x="374.0" y="310.0" text-anchor="start" class="bx-t" style="fill:#0E6E78">sterowanie bezpośrednie</text>
 <text x="374.0" y="330.0" text-anchor="start" class="bx">regulator PID trzyma przepływ</text>
@@ -331,7 +340,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 <svg viewBox="0 0 680 560" class="fig">
 <defs><marker id="arF32d0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9C3B52"/></marker><marker id="arF32d1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker><marker id="arF32d2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B3641A"/></marker><marker id="arF32d3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker><marker id="arF32d4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0E6E78"/></marker><marker id="arF32d5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#141C24"/></marker></defs>
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">HIERARCHICZNY WARSTWOWY MODEL SYSTEMU STEROWANIA</text>
-<rect x="92.0" y="42.0" width="496.0" height="70.0" rx="4" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.4"/>
+<rect x="92.0" y="42.0" width="496.0" height="70.0" rx="4" fill="#FDFDFA" stroke="#9C3B52" stroke-width="1.4"/>
 <rect x="92.0" y="42.0" width="496.0" height="4.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <circle cx="112.0" cy="66.0" r="10" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <text x="112.0" y="70.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">4</text>
@@ -344,7 +353,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="122.0" y="131.0" text-anchor="start" class="cap" style="fill:#9C3B52">plan produkcji</text>
 <path d="M 568.0 140.0 L 568.0 114.0" fill="none" stroke="#5C6B77" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arF32d1)"/>
 <text x="558.0" y="131.0" text-anchor="end" class="cap">raporty, realizacja planu</text>
-<rect x="92.0" y="142.0" width="496.0" height="70.0" rx="4" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.4"/>
+<rect x="92.0" y="142.0" width="496.0" height="70.0" rx="4" fill="#FDFDFA" stroke="#B3641A" stroke-width="1.4"/>
 <rect x="92.0" y="142.0" width="496.0" height="4.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
 <circle cx="112.0" cy="166.0" r="10" fill="#B3641A" stroke="none" stroke-width="1"/>
 <text x="112.0" y="170.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">3</text>
@@ -357,7 +366,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="122.0" y="231.0" text-anchor="start" class="cap" style="fill:#B3641A">wartości zadane (ekonomiczne)</text>
 <path d="M 568.0 240.0 L 568.0 214.0" fill="none" stroke="#5C6B77" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arF32d1)"/>
 <text x="558.0" y="231.0" text-anchor="end" class="cap">stan, aktywne ograniczenia</text>
-<rect x="92.0" y="242.0" width="496.0" height="70.0" rx="4" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.4"/>
+<rect x="92.0" y="242.0" width="496.0" height="70.0" rx="4" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.4"/>
 <rect x="92.0" y="242.0" width="496.0" height="4.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
 <circle cx="112.0" cy="266.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
 <text x="112.0" y="270.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">2</text>
@@ -370,7 +379,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="122.0" y="331.0" text-anchor="start" class="cap" style="fill:#5B4B8A">wartości zadane regulatorów</text>
 <path d="M 568.0 340.0 L 568.0 314.0" fill="none" stroke="#5C6B77" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arF32d1)"/>
 <text x="558.0" y="331.0" text-anchor="end" class="cap">pomiary, stan pętli</text>
-<rect x="92.0" y="342.0" width="496.0" height="70.0" rx="4" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.4"/>
+<rect x="92.0" y="342.0" width="496.0" height="70.0" rx="4" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.4"/>
 <rect x="92.0" y="342.0" width="496.0" height="4.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <circle cx="112.0" cy="366.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <text x="112.0" y="370.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">1</text>
@@ -383,16 +392,16 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="122.0" y="431.0" text-anchor="start" class="cap" style="fill:#0E6E78">sygnały sterujące u</text>
 <path d="M 568.0 440.0 L 568.0 414.0" fill="none" stroke="#5C6B77" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arF32d1)"/>
 <text x="558.0" y="431.0" text-anchor="end" class="cap">pomiary y</text>
-<rect x="92.0" y="442.0" width="496.0" height="64.0" rx="4" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="92.0" y="442.0" width="496.0" height="64.0" rx="4" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="108.0" y="468.0" text-anchor="start" class="bx-t">OBIEKT</text>
 <text x="108.0" y="486.0" text-anchor="start" class="bx">proces, czujniki, elementy wykonawcze</text>
 <path d="M 358.0 443.0 L 379.1 443.0" fill="none" stroke="#0E6E78" stroke-width="1.6"/>
 <polygon points="364.2,439.9 364.2,446.1 370.4,443.0 364.2,439.9" fill="#0E6E78"/>
 <polygon points="376.6,439.9 376.6,446.1 370.4,443.0" fill="#0E6E78"/>
-<rect x="376.6" y="446.7" width="21.1" height="23.6" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="376.6" y="446.7" width="21.1" height="23.6" rx="1" fill="#FDFDFA" stroke="#141C24" stroke-width="1.2"/>
 <rect x="377.2" y="456.6" width="19.8" height="13.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
 <path d="M 397.7 467.8 L 407.6 467.8 L 407.6 472.7" fill="none" stroke="#0E6E78" stroke-width="1.4"/>
-<rect x="401.4" y="472.7" width="21.1" height="21.1" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="401.4" y="472.7" width="21.1" height="21.1" rx="1" fill="#FDFDFA" stroke="#141C24" stroke-width="1.2"/>
 <rect x="402.0" y="482.6" width="19.8" height="10.5" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
 <path d="M 422.5 491.3 L 434.9 491.3" fill="none" stroke="#0E6E78" stroke-width="1.4" marker-end="url(#arF32d4)"/>
 <path d="M 40.0 492.0 L 40.0 48.0" fill="none" stroke="#141C24" stroke-width="1.4" marker-end="url(#arF32d5)"/>
@@ -452,18 +461,18 @@ html{scroll-padding-top:var(--sbh,84px)}
 <defs><marker id="arF32e0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0E6E78"/></marker><marker id="arF32e1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker></defs>
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">DLACZEGO LEPSZA REGULACJA DAJE WIĘCEJ PRODUKTU: ODSUNIĘCIE OD OGRANICZENIA</text>
 <clipPath id="cF32e1"><rect x="76" y="60" width="574" height="150"/></clipPath>
-<line x1="76.0" y1="210.0" x2="650.0" y2="210.0" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="76.0" y1="60.0" x2="76.0" y2="210.0" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="72.0" y1="189.2" x2="76.0" y2="189.2" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="76.0" y1="210.0" x2="650.0" y2="210.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="76.0" y1="60.0" x2="76.0" y2="210.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="72.0" y1="189.2" x2="76.0" y2="189.2" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="76.0" y1="189.2" x2="650.0" y2="189.2" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="68.0" y="193.2" text-anchor="end" class="tick">0,55</text>
-<line x1="72.0" y1="147.5" x2="76.0" y2="147.5" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="72.0" y1="147.5" x2="76.0" y2="147.5" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="76.0" y1="147.5" x2="650.0" y2="147.5" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="68.0" y="151.5" text-anchor="end" class="tick">0,57</text>
-<line x1="72.0" y1="105.8" x2="76.0" y2="105.8" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="72.0" y1="105.8" x2="76.0" y2="105.8" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="76.0" y1="105.8" x2="650.0" y2="105.8" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="68.0" y="109.8" text-anchor="end" class="tick">0,59</text>
-<line x1="72.0" y1="64.2" x2="76.0" y2="64.2" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="72.0" y1="64.2" x2="76.0" y2="64.2" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="76.0" y1="64.2" x2="650.0" y2="64.2" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="68.0" y="68.2" text-anchor="end" class="tick">0,61</text>
 <text x="76.0" y="50.0" text-anchor="start" class="axlab">produkcja q = 0,3·√h₂</text>
@@ -482,23 +491,23 @@ html{scroll-padding-top:var(--sbh,84px)}
 <circle cx="503.0" cy="99.1" r="5" fill="#5B4B8A" stroke="none" stroke-width="1"/>
 <text x="495.0" y="90.1" text-anchor="end" class="cap" style="fill:#5B4B8A">MPC: q = 0,593</text>
 <clipPath id="cF32e31"><rect x="76" y="250" width="574" height="150"/></clipPath>
-<line x1="76.0" y1="400.0" x2="650.0" y2="400.0" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="76.0" y1="250.0" x2="76.0" y2="400.0" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="146.0" y1="400.0" x2="146.0" y2="404.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="76.0" y1="400.0" x2="650.0" y2="400.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="76.0" y1="250.0" x2="76.0" y2="400.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="146.0" y1="400.0" x2="146.0" y2="404.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="146.0" y="416.0" text-anchor="middle" class="tick">3,4</text>
-<line x1="216.0" y1="400.0" x2="216.0" y2="404.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="216.0" y1="400.0" x2="216.0" y2="404.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="216.0" y="416.0" text-anchor="middle" class="tick">3,5</text>
-<line x1="286.0" y1="400.0" x2="286.0" y2="404.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="286.0" y1="400.0" x2="286.0" y2="404.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="286.0" y="416.0" text-anchor="middle" class="tick">3,6</text>
-<line x1="356.0" y1="400.0" x2="356.0" y2="404.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="356.0" y1="400.0" x2="356.0" y2="404.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="356.0" y="416.0" text-anchor="middle" class="tick">3,7</text>
-<line x1="426.0" y1="400.0" x2="426.0" y2="404.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="426.0" y1="400.0" x2="426.0" y2="404.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="426.0" y="416.0" text-anchor="middle" class="tick">3,8</text>
-<line x1="496.0" y1="400.0" x2="496.0" y2="404.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="496.0" y1="400.0" x2="496.0" y2="404.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="496.0" y="416.0" text-anchor="middle" class="tick">3,9</text>
-<line x1="566.0" y1="400.0" x2="566.0" y2="404.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="566.0" y1="400.0" x2="566.0" y2="404.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="566.0" y="416.0" text-anchor="middle" class="tick">4,0</text>
-<line x1="636.0" y1="400.0" x2="636.0" y2="404.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="636.0" y1="400.0" x2="636.0" y2="404.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="636.0" y="416.0" text-anchor="middle" class="tick">4,1</text>
 <text x="363.0" y="434.0" text-anchor="middle" class="axlab">poziom h₂ [m]</text>
 <text x="76.0" y="240.0" text-anchor="start" class="axlab">jak często poziom ma daną wartość</text>
@@ -551,27 +560,27 @@ html{scroll-padding-top:var(--sbh,84px)}
 <line x1="560.1" y1="50.0" x2="560.1" y2="300.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <line x1="608.0" y1="50.0" x2="608.0" y2="300.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <line x1="643.9" y1="50.0" x2="643.9" y2="300.0" stroke="#E3E8EB" stroke-width="0.8"/>
-<line x1="150.0" y1="300.0" x2="660.0" y2="300.0" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="150.0" y1="50.0" x2="150.0" y2="300.0" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="167.1" y1="300.0" x2="167.1" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="150.0" y1="300.0" x2="660.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="150.0" y1="50.0" x2="150.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="167.1" y1="300.0" x2="167.1" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="167.1" y="316.0" text-anchor="middle" class="tick">10 ms</text>
-<line x1="223.7" y1="300.0" x2="223.7" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="223.7" y1="300.0" x2="223.7" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="223.7" y="316.0" text-anchor="middle" class="tick">0,1 s</text>
-<line x1="280.4" y1="300.0" x2="280.4" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="280.4" y1="300.0" x2="280.4" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="280.4" y="316.0" text-anchor="middle" class="tick">1 s</text>
-<line x1="337.1" y1="300.0" x2="337.1" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="337.1" y1="300.0" x2="337.1" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="337.1" y="316.0" text-anchor="middle" class="tick">10 s</text>
-<line x1="381.2" y1="300.0" x2="381.2" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="381.2" y1="300.0" x2="381.2" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="381.2" y="316.0" text-anchor="middle" class="tick">1 min</text>
-<line x1="437.8" y1="300.0" x2="437.8" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="437.8" y1="300.0" x2="437.8" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="437.8" y="316.0" text-anchor="middle" class="tick">10 min</text>
-<line x1="481.9" y1="300.0" x2="481.9" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="481.9" y1="300.0" x2="481.9" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="481.9" y="316.0" text-anchor="middle" class="tick">1 h</text>
-<line x1="560.1" y1="300.0" x2="560.1" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="560.1" y1="300.0" x2="560.1" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="560.1" y="316.0" text-anchor="middle" class="tick">1 doba</text>
-<line x1="608.0" y1="300.0" x2="608.0" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="608.0" y1="300.0" x2="608.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="608.0" y="316.0" text-anchor="middle" class="tick">tydz.</text>
-<line x1="643.9" y1="300.0" x2="643.9" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="643.9" y1="300.0" x2="643.9" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="643.9" y="316.0" text-anchor="middle" class="tick">mies.</text>
 <text x="405.0" y="334.0" text-anchor="middle" class="axlab">okres podejmowania decyzji</text>
 <rect x="560.1" y="66.0" width="83.8" height="26.0" rx="4" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.85"/>
@@ -612,60 +621,60 @@ html{scroll-padding-top:var(--sbh,84px)}
 <svg viewBox="0 0 680 350" class="fig">
 <defs><marker id="arF32g0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B3641A"/></marker><marker id="arF32g1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker><marker id="arF32g2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0E6E78"/></marker><marker id="arF32g3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9C3B52"/></marker></defs>
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">DWA RODZAJE HIERARCHII: WARSTWY (FUNKCJA, CZAS) I POZIOMY (PRZESTRZEŃ)</text>
-<rect x="14.0" y="40.0" width="318.0" height="300.0" rx="6" fill="#F7F8F9" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="40.0" width="318.0" height="300.0" rx="6" fill="#F7F8F9" stroke="#CCD2C7" stroke-width="1"/>
 <text x="173.0" y="62.0" text-anchor="middle" class="bx-t">WIELOWARSTWOWA (multilayer)</text>
 <text x="173.0" y="78.0" text-anchor="middle" class="cap">jeden obiekt, zadania podzielone</text>
 <text x="173.0" y="92.0" text-anchor="middle" class="cap">według funkcji i tempa</text>
-<rect x="60.0" y="108.0" width="226.0" height="40.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="60.0" y="108.0" width="226.0" height="40.0" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="60.0" y="108.0" width="226.0" height="3.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
 <text x="173.0" y="132.0" text-anchor="middle" class="bx-t">optymalizacja</text>
 <path d="M 173.0 148.0 L 173.0 162.0" fill="none" stroke="#B3641A" stroke-width="1.5" marker-end="url(#arF32g0)"/>
-<rect x="60.0" y="164.0" width="226.0" height="40.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="60.0" y="164.0" width="226.0" height="40.0" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="60.0" y="164.0" width="226.0" height="3.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
 <text x="173.0" y="188.0" text-anchor="middle" class="bx-t">sterowanie nadrzędne</text>
 <path d="M 173.0 204.0 L 173.0 218.0" fill="none" stroke="#5B4B8A" stroke-width="1.5" marker-end="url(#arF32g1)"/>
-<rect x="60.0" y="220.0" width="226.0" height="40.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="60.0" y="220.0" width="226.0" height="40.0" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="60.0" y="220.0" width="226.0" height="3.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <text x="173.0" y="244.0" text-anchor="middle" class="bx-t">sterowanie bezpośrednie</text>
 <path d="M 173.0 260.0 L 173.0 276.0" fill="none" stroke="#0E6E78" stroke-width="1.5" marker-end="url(#arF32g2)"/>
-<rect x="60.0" y="278.0" width="226.0" height="40.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="60.0" y="278.0" width="226.0" height="40.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <path d="M 118.0 270.0 L 135.0 270.0" fill="none" stroke="#0E6E78" stroke-width="1.6"/>
 <polygon points="123.0,267.5 123.0,272.5 128.0,270.0 123.0,267.5" fill="#0E6E78"/>
 <polygon points="133.0,267.5 133.0,272.5 128.0,270.0" fill="#0E6E78"/>
-<rect x="133.0" y="273.0" width="17.0" height="19.0" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="133.0" y="273.0" width="17.0" height="19.0" rx="1" fill="#FDFDFA" stroke="#141C24" stroke-width="1.2"/>
 <rect x="133.5" y="281.0" width="16.0" height="10.5" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
 <path d="M 150.0 290.0 L 158.0 290.0 L 158.0 294.0" fill="none" stroke="#0E6E78" stroke-width="1.4"/>
-<rect x="153.0" y="294.0" width="17.0" height="17.0" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="153.0" y="294.0" width="17.0" height="17.0" rx="1" fill="#FDFDFA" stroke="#141C24" stroke-width="1.2"/>
 <rect x="153.5" y="302.0" width="16.0" height="8.5" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
 <path d="M 170.0 309.0 L 180.0 309.0" fill="none" stroke="#0E6E78" stroke-width="1.4" marker-end="url(#arF32g2)"/>
 <text x="236.0" y="302.0" text-anchor="middle" class="bx-t">obiekt</text>
-<rect x="348.0" y="40.0" width="318.0" height="300.0" rx="6" fill="#F7F8F9" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="348.0" y="40.0" width="318.0" height="300.0" rx="6" fill="#F7F8F9" stroke="#CCD2C7" stroke-width="1"/>
 <text x="507.0" y="62.0" text-anchor="middle" class="bx-t">WIELOPOZIOMOWA (multilevel)</text>
 <text x="507.0" y="78.0" text-anchor="middle" class="cap">obiekt podzielony na podsystemy,</text>
 <text x="507.0" y="92.0" text-anchor="middle" class="cap">nad nimi koordynator</text>
-<rect x="422.0" y="108.0" width="170.0" height="40.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="422.0" y="108.0" width="170.0" height="40.0" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="422.0" y="108.0" width="170.0" height="3.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <text x="507.0" y="132.0" text-anchor="middle" class="bx-t">koordynator</text>
-<rect x="364.0" y="196.0" width="86.0" height="40.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="364.0" y="196.0" width="86.0" height="40.0" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="364.0" y="196.0" width="86.0" height="3.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <text x="407.0" y="220.0" text-anchor="middle" class="bx-t" style="font-size:11px">regulator 1</text>
 <path d="M 467.0 150.0 L 407.0 194.0" fill="none" stroke="#9C3B52" stroke-width="1.3" marker-end="url(#arF32g3)"/>
 <path d="M 407.0 238.0 L 407.0 276.0" fill="none" stroke="#0E6E78" stroke-width="1.3" marker-end="url(#arF32g2)"/>
-<rect x="364.0" y="278.0" width="86.0" height="40.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="364.0" y="278.0" width="86.0" height="40.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="407.0" y="302.0" text-anchor="middle" class="bx" style="font-size:10.5px">podsystem 1</text>
-<rect x="470.0" y="196.0" width="86.0" height="40.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="470.0" y="196.0" width="86.0" height="40.0" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="470.0" y="196.0" width="86.0" height="3.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <text x="513.0" y="220.0" text-anchor="middle" class="bx-t" style="font-size:11px">regulator 2</text>
 <path d="M 507.0 150.0 L 513.0 194.0" fill="none" stroke="#9C3B52" stroke-width="1.3" marker-end="url(#arF32g3)"/>
 <path d="M 513.0 238.0 L 513.0 276.0" fill="none" stroke="#0E6E78" stroke-width="1.3" marker-end="url(#arF32g2)"/>
-<rect x="470.0" y="278.0" width="86.0" height="40.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="470.0" y="278.0" width="86.0" height="40.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="513.0" y="302.0" text-anchor="middle" class="bx" style="font-size:10.5px">podsystem 2</text>
-<rect x="576.0" y="196.0" width="86.0" height="40.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="576.0" y="196.0" width="86.0" height="40.0" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="576.0" y="196.0" width="86.0" height="3.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <text x="619.0" y="220.0" text-anchor="middle" class="bx-t" style="font-size:11px">regulator 3</text>
 <path d="M 547.0 150.0 L 619.0 194.0" fill="none" stroke="#9C3B52" stroke-width="1.3" marker-end="url(#arF32g3)"/>
 <path d="M 619.0 238.0 L 619.0 276.0" fill="none" stroke="#0E6E78" stroke-width="1.3" marker-end="url(#arF32g2)"/>
-<rect x="576.0" y="278.0" width="86.0" height="40.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="576.0" y="278.0" width="86.0" height="40.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="619.0" y="302.0" text-anchor="middle" class="bx" style="font-size:10.5px">podsystem 3</text>
 <line x1="452.0" y1="298.0" x2="468.0" y2="298.0" stroke="#9C3B52" stroke-width="1.3" stroke-dasharray="3 3"/>
 <line x1="558.0" y1="298.0" x2="574.0" y2="298.0" stroke="#9C3B52" stroke-width="1.3" stroke-dasharray="3 3"/>
@@ -705,7 +714,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="100.0" y="494.0" text-anchor="end" class="bx-t" style="fill:#0E6E78;font-size:10.5px">sieć polowa</text>
 <text x="100.0" y="508.0" text-anchor="end" class="cap">Profinet,</text>
 <text x="100.0" y="521.0" text-anchor="end" class="cap">4–20 mA</text>
-<rect x="170.0" y="62.0" width="200.0" height="44.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="170.0" y="62.0" width="200.0" height="44.0" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="170.0" y="62.0" width="200.0" height="3.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <text x="270.0" y="82.0" text-anchor="middle" class="bx-t" style="font-size:11px">ERP</text>
 <text x="270.0" y="97.0" text-anchor="middle" class="bx">plan, zamówienia, koszty</text>
@@ -713,37 +722,37 @@ html{scroll-padding-top:var(--sbh,84px)}
 <rect x="540.0" y="107.0" width="116.0" height="22.0" rx="3" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.9"/>
 <text x="598.0" y="122.0" text-anchor="middle" class="cap" style="fill:#FFFFFF">zapora / DMZ</text>
 <line x1="652.0" y1="129.0" x2="652.0" y2="236.0" stroke="#9C3B52" stroke-width="1.4"/>
-<rect x="130.0" y="158.0" width="170.0" height="58.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="130.0" y="158.0" width="170.0" height="58.0" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="130.0" y="158.0" width="170.0" height="3.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
 <text x="215.0" y="179.0" text-anchor="middle" class="bx-t" style="font-size:11px">serwer optymalizacji</text>
 <text x="215.0" y="194.0" text-anchor="middle" class="bx">RTO: model statyczny,</text>
 <text x="215.0" y="208.0" text-anchor="middle" class="bx">solver, co 15–60 min</text>
 <line x1="215.0" y1="216.0" x2="215.0" y2="236.0" stroke="#B3641A" stroke-width="1.4"/>
-<rect x="320.0" y="158.0" width="150.0" height="58.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="320.0" y="158.0" width="150.0" height="58.0" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="320.0" y="158.0" width="150.0" height="3.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
 <text x="395.0" y="179.0" text-anchor="middle" class="bx-t" style="font-size:11px">MES</text>
 <text x="395.0" y="194.0" text-anchor="middle" class="bx">realizacja planu,</text>
 <text x="395.0" y="208.0" text-anchor="middle" class="bx">raporty, receptury</text>
 <line x1="395.0" y1="216.0" x2="395.0" y2="236.0" stroke="#B3641A" stroke-width="1.4"/>
-<rect x="484.0" y="158.0" width="156.0" height="58.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="484.0" y="158.0" width="156.0" height="58.0" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="484.0" y="158.0" width="156.0" height="3.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
 <text x="562.0" y="179.0" text-anchor="middle" class="bx-t" style="font-size:11px">historian</text>
 <text x="562.0" y="194.0" text-anchor="middle" class="bx">archiwum pomiarów</text>
 <text x="562.0" y="208.0" text-anchor="middle" class="bx">(baza szeregów czas.)</text>
 <line x1="562.0" y1="216.0" x2="562.0" y2="236.0" stroke="#B3641A" stroke-width="1.4"/>
-<rect x="124.0" y="282.0" width="170.0" height="70.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="124.0" y="282.0" width="170.0" height="70.0" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="124.0" y="282.0" width="170.0" height="3.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
 <text x="209.0" y="309.0" text-anchor="middle" class="bx-t" style="font-size:11px">stacja MPC</text>
 <text x="209.0" y="324.0" text-anchor="middle" class="bx">PC przemysłowy,</text>
 <text x="209.0" y="338.0" text-anchor="middle" class="bx">okres 1 s, klient OPC UA</text>
 <line x1="209.0" y1="352.0" x2="209.0" y2="376.0" stroke="#5B4B8A" stroke-width="1.4"/>
-<rect x="310.0" y="282.0" width="170.0" height="70.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="310.0" y="282.0" width="170.0" height="70.0" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="310.0" y="282.0" width="170.0" height="3.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
 <text x="395.0" y="309.0" text-anchor="middle" class="bx-t" style="font-size:11px">SCADA / HMI</text>
 <text x="395.0" y="324.0" text-anchor="middle" class="bx">operator, alarmy,</text>
 <text x="395.0" y="338.0" text-anchor="middle" class="bx">trendy (np. WinCC)</text>
 <line x1="395.0" y1="352.0" x2="395.0" y2="376.0" stroke="#5B4B8A" stroke-width="1.4"/>
-<rect x="496.0" y="282.0" width="160.0" height="70.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="496.0" y="282.0" width="160.0" height="70.0" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="496.0" y="282.0" width="160.0" height="3.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
 <text x="576.0" y="309.0" text-anchor="middle" class="bx-t" style="font-size:11px">stacja inżynierska</text>
 <text x="576.0" y="324.0" text-anchor="middle" class="bx">programowanie PLC</text>
@@ -751,40 +760,40 @@ html{scroll-padding-top:var(--sbh,84px)}
 <line x1="576.0" y1="352.0" x2="576.0" y2="376.0" stroke="#5B4B8A" stroke-width="1.4"/>
 <line x1="210.0" y1="282.0" x2="210.0" y2="236.0" stroke="#5B4B8A" stroke-width="1.4" stroke-dasharray="4 3"/>
 <line x1="395.0" y1="282.0" x2="395.0" y2="236.0" stroke="#5B4B8A" stroke-width="1.4" stroke-dasharray="4 3"/>
-<rect x="150.0" y="418.0" width="230.0" height="60.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="150.0" y="418.0" width="230.0" height="60.0" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="150.0" y="418.0" width="230.0" height="3.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <text x="265.0" y="440.0" text-anchor="middle" class="bx-t" style="font-size:11px">sterownik PLC</text>
 <text x="265.0" y="455.0" text-anchor="middle" class="bx">PID, logika, sekwencje, blokady;</text>
 <text x="265.0" y="469.0" text-anchor="middle" class="bx">cykl 10–100 ms, IEC 61131-3</text>
 <line x1="265.0" y1="418.0" x2="265.0" y2="376.0" stroke="#0E6E78" stroke-width="1.4"/>
-<rect x="400.0" y="418.0" width="250.0" height="60.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="400.0" y="418.0" width="250.0" height="60.0" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="400.0" y="418.0" width="250.0" height="3.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <text x="525.0" y="440.0" text-anchor="middle" class="bx-t" style="font-size:11px">sterownik bezpieczeństwa (SIS)</text>
 <text x="525.0" y="455.0" text-anchor="middle" class="bx">niezależny od PLC: odcięcie</text>
 <text x="525.0" y="469.0" text-anchor="middle" class="bx">pompy przy przelewie</text>
 <line x1="525.0" y1="418.0" x2="525.0" y2="376.0" stroke="#9C3B52" stroke-width="1.4"/>
 <line x1="265.0" y1="478.0" x2="265.0" y2="496.0" stroke="#0E6E78" stroke-width="1.4"/>
-<rect x="124.0" y="536.0" width="96.0" height="44.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="124.0" y="536.0" width="96.0" height="44.0" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="124.0" y="536.0" width="96.0" height="3.0" rx="0" fill="#5C6B77" stroke="none" stroke-width="1"/>
 <text x="172.0" y="556.0" text-anchor="middle" class="bx-t" style="font-size:11px">LT h₁, h₂</text>
 <text x="172.0" y="571.0" text-anchor="middle" class="bx">poziomomierze</text>
 <line x1="172.0" y1="536.0" x2="172.0" y2="496.0" stroke="#5C6B77" stroke-width="1.4"/>
-<rect x="232.0" y="536.0" width="96.0" height="44.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="232.0" y="536.0" width="96.0" height="44.0" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="232.0" y="536.0" width="96.0" height="3.0" rx="0" fill="#5C6B77" stroke="none" stroke-width="1"/>
 <text x="280.0" y="556.0" text-anchor="middle" class="bx-t" style="font-size:11px">FT</text>
 <text x="280.0" y="571.0" text-anchor="middle" class="bx">przepływomierz</text>
 <line x1="280.0" y1="536.0" x2="280.0" y2="496.0" stroke="#5C6B77" stroke-width="1.4"/>
-<rect x="340.0" y="536.0" width="96.0" height="44.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="340.0" y="536.0" width="96.0" height="44.0" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="340.0" y="536.0" width="96.0" height="3.0" rx="0" fill="#5C6B77" stroke="none" stroke-width="1"/>
 <text x="388.0" y="556.0" text-anchor="middle" class="bx-t" style="font-size:11px">zawór</text>
 <text x="388.0" y="571.0" text-anchor="middle" class="bx">z pozycjonerem</text>
 <line x1="388.0" y1="536.0" x2="388.0" y2="496.0" stroke="#5C6B77" stroke-width="1.4"/>
-<rect x="448.0" y="536.0" width="96.0" height="44.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="448.0" y="536.0" width="96.0" height="44.0" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="448.0" y="536.0" width="96.0" height="3.0" rx="0" fill="#5C6B77" stroke="none" stroke-width="1"/>
 <text x="496.0" y="556.0" text-anchor="middle" class="bx-t" style="font-size:11px">pompa</text>
 <text x="496.0" y="571.0" text-anchor="middle" class="bx">z falownikiem</text>
 <line x1="496.0" y1="536.0" x2="496.0" y2="496.0" stroke="#5C6B77" stroke-width="1.4"/>
-<rect x="556.0" y="536.0" width="96.0" height="44.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="556.0" y="536.0" width="96.0" height="44.0" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="556.0" y="536.0" width="96.0" height="3.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <text x="604.0" y="556.0" text-anchor="middle" class="bx-t" style="font-size:11px">LSH</text>
 <text x="604.0" y="571.0" text-anchor="middle" class="bx">sygn. przelewu</text>
@@ -823,7 +832,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="150.0" y="50.0" text-anchor="middle" class="bx-t" style="fill:#5C6B77">awaria warstwy</text>
 <text x="395.0" y="50.0" text-anchor="middle" class="bx-t" style="fill:#5C6B77">co przejmuje, co robi reszta</text>
 <text x="604.0" y="50.0" text-anchor="middle" class="bx-t" style="fill:#5C6B77">koszt</text>
-<rect x="14.0" y="64.0" width="652.0" height="60.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="64.0" width="652.0" height="60.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="14.0" y="64.0" width="6.0" height="60.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <circle cx="40.0" cy="86.0" r="10" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <text x="40.0" y="90.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">4</text>
@@ -833,7 +842,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="262.0" y="90.0" text-anchor="start" class="bx">zakład pracuje według ostatniego planu</text>
 <rect x="560.0" y="86.0" width="90.0" height="12.0" rx="6" fill="#E3E8EB" stroke="none" stroke-width="1"/>
 <rect x="560.0" y="86.0" width="10.8" height="12.0" rx="6" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.322"/>
-<rect x="14.0" y="136.0" width="652.0" height="60.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="136.0" width="652.0" height="60.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="14.0" y="136.0" width="6.0" height="60.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
 <circle cx="40.0" cy="158.0" r="10" fill="#B3641A" stroke="none" stroke-width="1"/>
 <text x="40.0" y="162.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">3</text>
@@ -843,7 +852,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="262.0" y="162.0" text-anchor="start" class="bx">MPC trzyma ostatnie wartości zadane</text>
 <rect x="560.0" y="158.0" width="90.0" height="12.0" rx="6" fill="#E3E8EB" stroke="none" stroke-width="1"/>
 <rect x="560.0" y="158.0" width="27.0" height="12.0" rx="6" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.43"/>
-<rect x="14.0" y="208.0" width="652.0" height="60.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="208.0" width="652.0" height="60.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="14.0" y="208.0" width="6.0" height="60.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
 <circle cx="40.0" cy="230.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
 <text x="40.0" y="234.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">2</text>
@@ -854,7 +863,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="262.0" y="251.0" text-anchor="start" class="bx">bez skoku (bezuderzeniowo), operator czuwa</text>
 <rect x="560.0" y="230.0" width="90.0" height="12.0" rx="6" fill="#E3E8EB" stroke="none" stroke-width="1"/>
 <rect x="560.0" y="230.0" width="54.0" height="12.0" rx="6" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.61"/>
-<rect x="14.0" y="280.0" width="652.0" height="60.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="280.0" width="652.0" height="60.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="14.0" y="280.0" width="6.0" height="60.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <circle cx="40.0" cy="302.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <text x="40.0" y="306.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">1</text>
@@ -880,7 +889,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 <svg viewBox="0 0 680 470" class="fig">
 <defs><marker id="arF32k0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0E6E78"/></marker><marker id="arF32k1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker><marker id="arF32k2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker><marker id="arF32k3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B3641A"/></marker><marker id="arF32k4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9C3B52"/></marker><marker id="arF32k5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#141C24"/></marker></defs>
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">NARYSUJ NA TABLICY W 6 RUCHACH</text>
-<rect x="14.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="32.0" cy="58.0" r="10" fill="#5C6B77" stroke="none" stroke-width="1"/>
 <text x="32.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">1</text>
 <text x="48.0" y="56.0" text-anchor="start" class="bx-t">obiekt:</text>
@@ -888,14 +897,14 @@ html{scroll-padding-top:var(--sbh,84px)}
 <path d="M 52.0 165.0 L 73.1 165.0" fill="none" stroke="#0E6E78" stroke-width="1.6"/>
 <polygon points="58.2,161.9 58.2,168.1 64.4,165.0 58.2,161.9" fill="#0E6E78"/>
 <polygon points="70.6,161.9 70.6,168.1 64.4,165.0" fill="#0E6E78"/>
-<rect x="70.6" y="168.7" width="21.1" height="23.6" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="70.6" y="168.7" width="21.1" height="23.6" rx="1" fill="#FDFDFA" stroke="#141C24" stroke-width="1.2"/>
 <rect x="71.2" y="178.6" width="19.8" height="13.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
 <path d="M 91.7 189.8 L 101.6 189.8 L 101.6 194.7" fill="none" stroke="#0E6E78" stroke-width="1.4"/>
-<rect x="95.4" y="194.7" width="21.1" height="21.1" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="95.4" y="194.7" width="21.1" height="21.1" rx="1" fill="#FDFDFA" stroke="#141C24" stroke-width="1.2"/>
 <rect x="96.0" y="204.6" width="19.8" height="10.5" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
 <path d="M 116.5 213.3 L 128.9 213.3" fill="none" stroke="#0E6E78" stroke-width="1.4" marker-end="url(#arF32k0)"/>
 <text x="184.0" y="230.0" text-anchor="end" class="cap">obiekt</text>
-<rect x="236.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="236.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="254.0" cy="58.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <text x="254.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">2</text>
 <text x="270.0" y="56.0" text-anchor="start" class="bx-t">warstwa 1: PLC</text>
@@ -903,18 +912,18 @@ html{scroll-padding-top:var(--sbh,84px)}
 <path d="M 274.0 165.0 L 295.1 165.0" fill="none" stroke="#0E6E78" stroke-width="1.6"/>
 <polygon points="280.2,161.9 280.2,168.1 286.4,165.0 280.2,161.9" fill="#0E6E78"/>
 <polygon points="292.6,161.9 292.6,168.1 286.4,165.0" fill="#0E6E78"/>
-<rect x="292.6" y="168.7" width="21.1" height="23.6" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="292.6" y="168.7" width="21.1" height="23.6" rx="1" fill="#FDFDFA" stroke="#141C24" stroke-width="1.2"/>
 <rect x="293.2" y="178.6" width="19.8" height="13.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
 <path d="M 313.7 189.8 L 323.6 189.8 L 323.6 194.7" fill="none" stroke="#0E6E78" stroke-width="1.4"/>
-<rect x="317.4" y="194.7" width="21.1" height="21.1" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="317.4" y="194.7" width="21.1" height="21.1" rx="1" fill="#FDFDFA" stroke="#141C24" stroke-width="1.2"/>
 <rect x="318.0" y="204.6" width="19.8" height="10.5" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
 <path d="M 338.5 213.3 L 350.9 213.3" fill="none" stroke="#0E6E78" stroke-width="1.4" marker-end="url(#arF32k0)"/>
 <text x="406.0" y="230.0" text-anchor="end" class="cap">obiekt</text>
-<rect x="270.0" y="145.0" width="140.0" height="16.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="270.0" y="145.0" width="140.0" height="16.0" rx="3" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.3"/>
 <text x="340.0" y="157.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:10px">PLC · PID</text>
 <path d="M 284.0 161.0 L 284.0 163.0" fill="none" stroke="#0E6E78" stroke-width="1.1" marker-end="url(#arF32k0)"/>
 <path d="M 332.0 210.0 L 332.0 163.0" fill="none" stroke="#5C6B77" stroke-width="1.0" stroke-dasharray="3 2" marker-end="url(#arF32k1)"/>
-<rect x="458.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="458.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="476.0" cy="58.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
 <text x="476.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">3</text>
 <text x="492.0" y="56.0" text-anchor="start" class="bx-t">warstwa 2: MPC</text>
@@ -922,21 +931,21 @@ html{scroll-padding-top:var(--sbh,84px)}
 <path d="M 496.0 165.0 L 517.1 165.0" fill="none" stroke="#0E6E78" stroke-width="1.6"/>
 <polygon points="502.2,161.9 502.2,168.1 508.4,165.0 502.2,161.9" fill="#0E6E78"/>
 <polygon points="514.6,161.9 514.6,168.1 508.4,165.0" fill="#0E6E78"/>
-<rect x="514.6" y="168.7" width="21.1" height="23.6" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="514.6" y="168.7" width="21.1" height="23.6" rx="1" fill="#FDFDFA" stroke="#141C24" stroke-width="1.2"/>
 <rect x="515.2" y="178.6" width="19.8" height="13.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
 <path d="M 535.7 189.8 L 545.6 189.8 L 545.6 194.7" fill="none" stroke="#0E6E78" stroke-width="1.4"/>
-<rect x="539.4" y="194.7" width="21.1" height="21.1" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="539.4" y="194.7" width="21.1" height="21.1" rx="1" fill="#FDFDFA" stroke="#141C24" stroke-width="1.2"/>
 <rect x="540.0" y="204.6" width="19.8" height="10.5" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
 <path d="M 560.5 213.3 L 572.9 213.3" fill="none" stroke="#0E6E78" stroke-width="1.4" marker-end="url(#arF32k0)"/>
 <text x="628.0" y="230.0" text-anchor="end" class="cap">obiekt</text>
-<rect x="492.0" y="145.0" width="140.0" height="16.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="492.0" y="145.0" width="140.0" height="16.0" rx="3" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.3"/>
 <text x="562.0" y="157.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:10px">PLC · PID</text>
 <path d="M 506.0 161.0 L 506.0 163.0" fill="none" stroke="#0E6E78" stroke-width="1.1" marker-end="url(#arF32k0)"/>
 <path d="M 554.0 210.0 L 554.0 163.0" fill="none" stroke="#5C6B77" stroke-width="1.0" stroke-dasharray="3 2" marker-end="url(#arF32k1)"/>
-<rect x="492.0" y="124.0" width="140.0" height="16.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<rect x="492.0" y="124.0" width="140.0" height="16.0" rx="3" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.3"/>
 <text x="562.0" y="136.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:10px">MPC</text>
 <path d="M 522.0 140.0 L 522.0 145.0" fill="none" stroke="#5B4B8A" stroke-width="1.1" marker-end="url(#arF32k2)"/>
-<rect x="14.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="32.0" cy="272.0" r="10" fill="#B3641A" stroke="none" stroke-width="1"/>
 <text x="32.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">4</text>
 <text x="48.0" y="270.0" text-anchor="start" class="bx-t">warstwa 3:</text>
@@ -944,24 +953,24 @@ html{scroll-padding-top:var(--sbh,84px)}
 <path d="M 52.0 379.0 L 73.1 379.0" fill="none" stroke="#0E6E78" stroke-width="1.6"/>
 <polygon points="58.2,375.9 58.2,382.1 64.4,379.0 58.2,375.9" fill="#0E6E78"/>
 <polygon points="70.6,375.9 70.6,382.1 64.4,379.0" fill="#0E6E78"/>
-<rect x="70.6" y="382.7" width="21.1" height="23.6" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="70.6" y="382.7" width="21.1" height="23.6" rx="1" fill="#FDFDFA" stroke="#141C24" stroke-width="1.2"/>
 <rect x="71.2" y="392.6" width="19.8" height="13.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
 <path d="M 91.7 403.8 L 101.6 403.8 L 101.6 408.7" fill="none" stroke="#0E6E78" stroke-width="1.4"/>
-<rect x="95.4" y="408.7" width="21.1" height="21.1" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="95.4" y="408.7" width="21.1" height="21.1" rx="1" fill="#FDFDFA" stroke="#141C24" stroke-width="1.2"/>
 <rect x="96.0" y="418.6" width="19.8" height="10.5" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
 <path d="M 116.5 427.3 L 128.9 427.3" fill="none" stroke="#0E6E78" stroke-width="1.4" marker-end="url(#arF32k0)"/>
 <text x="184.0" y="444.0" text-anchor="end" class="cap">obiekt</text>
-<rect x="48.0" y="359.0" width="140.0" height="16.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="48.0" y="359.0" width="140.0" height="16.0" rx="3" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.3"/>
 <text x="118.0" y="371.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:10px">PLC · PID</text>
 <path d="M 62.0 375.0 L 62.0 377.0" fill="none" stroke="#0E6E78" stroke-width="1.1" marker-end="url(#arF32k0)"/>
 <path d="M 110.0 424.0 L 110.0 377.0" fill="none" stroke="#5C6B77" stroke-width="1.0" stroke-dasharray="3 2" marker-end="url(#arF32k1)"/>
-<rect x="48.0" y="338.0" width="140.0" height="16.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<rect x="48.0" y="338.0" width="140.0" height="16.0" rx="3" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.3"/>
 <text x="118.0" y="350.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:10px">MPC</text>
 <path d="M 78.0 354.0 L 78.0 359.0" fill="none" stroke="#5B4B8A" stroke-width="1.1" marker-end="url(#arF32k2)"/>
-<rect x="48.0" y="317.0" width="140.0" height="16.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.3"/>
+<rect x="48.0" y="317.0" width="140.0" height="16.0" rx="3" fill="#FDFDFA" stroke="#B3641A" stroke-width="1.3"/>
 <text x="118.0" y="329.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:10px">optymalizacja</text>
 <path d="M 78.0 333.0 L 78.0 338.0" fill="none" stroke="#B3641A" stroke-width="1.1" marker-end="url(#arF32k3)"/>
-<rect x="236.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="236.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="254.0" cy="272.0" r="10" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <text x="254.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">5</text>
 <text x="270.0" y="270.0" text-anchor="start" class="bx-t">warstwa 4:</text>
@@ -969,29 +978,29 @@ html{scroll-padding-top:var(--sbh,84px)}
 <path d="M 274.0 379.0 L 295.1 379.0" fill="none" stroke="#0E6E78" stroke-width="1.6"/>
 <polygon points="280.2,375.9 280.2,382.1 286.4,379.0 280.2,375.9" fill="#0E6E78"/>
 <polygon points="292.6,375.9 292.6,382.1 286.4,379.0" fill="#0E6E78"/>
-<rect x="292.6" y="382.7" width="21.1" height="23.6" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="292.6" y="382.7" width="21.1" height="23.6" rx="1" fill="#FDFDFA" stroke="#141C24" stroke-width="1.2"/>
 <rect x="293.2" y="392.6" width="19.8" height="13.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
 <path d="M 313.7 403.8 L 323.6 403.8 L 323.6 408.7" fill="none" stroke="#0E6E78" stroke-width="1.4"/>
-<rect x="317.4" y="408.7" width="21.1" height="21.1" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="317.4" y="408.7" width="21.1" height="21.1" rx="1" fill="#FDFDFA" stroke="#141C24" stroke-width="1.2"/>
 <rect x="318.0" y="418.6" width="19.8" height="10.5" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
 <path d="M 338.5 427.3 L 350.9 427.3" fill="none" stroke="#0E6E78" stroke-width="1.4" marker-end="url(#arF32k0)"/>
 <text x="406.0" y="444.0" text-anchor="end" class="cap">obiekt</text>
-<rect x="270.0" y="359.0" width="140.0" height="16.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="270.0" y="359.0" width="140.0" height="16.0" rx="3" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.3"/>
 <text x="340.0" y="371.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:10px">PLC · PID</text>
 <path d="M 284.0 375.0 L 284.0 377.0" fill="none" stroke="#0E6E78" stroke-width="1.1" marker-end="url(#arF32k0)"/>
 <path d="M 332.0 424.0 L 332.0 377.0" fill="none" stroke="#5C6B77" stroke-width="1.0" stroke-dasharray="3 2" marker-end="url(#arF32k1)"/>
-<rect x="270.0" y="338.0" width="140.0" height="16.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<rect x="270.0" y="338.0" width="140.0" height="16.0" rx="3" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.3"/>
 <text x="340.0" y="350.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:10px">MPC</text>
 <path d="M 300.0 354.0 L 300.0 359.0" fill="none" stroke="#5B4B8A" stroke-width="1.1" marker-end="url(#arF32k2)"/>
-<rect x="270.0" y="317.0" width="140.0" height="16.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.3"/>
+<rect x="270.0" y="317.0" width="140.0" height="16.0" rx="3" fill="#FDFDFA" stroke="#B3641A" stroke-width="1.3"/>
 <text x="340.0" y="329.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:10px">optymalizacja</text>
 <path d="M 300.0 333.0 L 300.0 338.0" fill="none" stroke="#B3641A" stroke-width="1.1" marker-end="url(#arF32k3)"/>
-<rect x="270.0" y="296.0" width="140.0" height="16.0" rx="3" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.3"/>
+<rect x="270.0" y="296.0" width="140.0" height="16.0" rx="3" fill="#FDFDFA" stroke="#9C3B52" stroke-width="1.3"/>
 <text x="340.0" y="308.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:10px">planowanie</text>
 <path d="M 300.0 312.0 L 300.0 317.0" fill="none" stroke="#9C3B52" stroke-width="1.1" marker-end="url(#arF32k4)"/>
 <path d="M 260.0 300.0 L 260.0 372.0" fill="none" stroke="#141C24" stroke-width="1.3" marker-end="url(#arF32k5)"/>
 <path d="M 420.0 372.0 L 420.0 300.0" fill="none" stroke="#5C6B77" stroke-width="1.1" stroke-dasharray="3 2" marker-end="url(#arF32k1)"/>
-<rect x="458.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="458.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="476.0" cy="272.0" r="10" fill="#141C24" stroke="none" stroke-width="1"/>
 <text x="476.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">6</text>
 <text x="492.0" y="270.0" text-anchor="start" class="bx-t">z boku: okresy</text>
@@ -999,24 +1008,24 @@ html{scroll-padding-top:var(--sbh,84px)}
 <path d="M 484.0 379.0 L 505.1 379.0" fill="none" stroke="#0E6E78" stroke-width="1.6"/>
 <polygon points="490.2,375.9 490.2,382.1 496.4,379.0 490.2,375.9" fill="#0E6E78"/>
 <polygon points="502.6,375.9 502.6,382.1 496.4,379.0" fill="#0E6E78"/>
-<rect x="502.6" y="382.7" width="21.1" height="23.6" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="502.6" y="382.7" width="21.1" height="23.6" rx="1" fill="#FDFDFA" stroke="#141C24" stroke-width="1.2"/>
 <rect x="503.2" y="392.6" width="19.8" height="13.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
 <path d="M 523.7 403.8 L 533.6 403.8 L 533.6 408.7" fill="none" stroke="#0E6E78" stroke-width="1.4"/>
-<rect x="527.4" y="408.7" width="21.1" height="21.1" rx="1" fill="#FCFDFD" stroke="#141C24" stroke-width="1.2"/>
+<rect x="527.4" y="408.7" width="21.1" height="21.1" rx="1" fill="#FDFDFA" stroke="#141C24" stroke-width="1.2"/>
 <rect x="528.0" y="418.6" width="19.8" height="10.5" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.25"/>
 <path d="M 548.5 427.3 L 560.9 427.3" fill="none" stroke="#0E6E78" stroke-width="1.4" marker-end="url(#arF32k0)"/>
 <text x="594.0" y="444.0" text-anchor="end" class="cap">obiekt</text>
-<rect x="480.0" y="359.0" width="118.0" height="16.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="480.0" y="359.0" width="118.0" height="16.0" rx="3" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.3"/>
 <text x="539.0" y="371.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:10px">PLC · PID</text>
 <path d="M 494.0 375.0 L 494.0 377.0" fill="none" stroke="#0E6E78" stroke-width="1.1" marker-end="url(#arF32k0)"/>
 <path d="M 542.0 424.0 L 542.0 377.0" fill="none" stroke="#5C6B77" stroke-width="1.0" stroke-dasharray="3 2" marker-end="url(#arF32k1)"/>
-<rect x="480.0" y="338.0" width="118.0" height="16.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<rect x="480.0" y="338.0" width="118.0" height="16.0" rx="3" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.3"/>
 <text x="539.0" y="350.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:10px">MPC</text>
 <path d="M 510.0 354.0 L 510.0 359.0" fill="none" stroke="#5B4B8A" stroke-width="1.1" marker-end="url(#arF32k2)"/>
-<rect x="480.0" y="317.0" width="118.0" height="16.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.3"/>
+<rect x="480.0" y="317.0" width="118.0" height="16.0" rx="3" fill="#FDFDFA" stroke="#B3641A" stroke-width="1.3"/>
 <text x="539.0" y="329.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:10px">optymalizacja</text>
 <path d="M 510.0 333.0 L 510.0 338.0" fill="none" stroke="#B3641A" stroke-width="1.1" marker-end="url(#arF32k3)"/>
-<rect x="480.0" y="296.0" width="118.0" height="16.0" rx="3" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.3"/>
+<rect x="480.0" y="296.0" width="118.0" height="16.0" rx="3" fill="#FDFDFA" stroke="#9C3B52" stroke-width="1.3"/>
 <text x="539.0" y="308.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:10px">planowanie</text>
 <path d="M 510.0 312.0 L 510.0 317.0" fill="none" stroke="#9C3B52" stroke-width="1.1" marker-end="url(#arF32k4)"/>
 <path d="M 470.0 300.0 L 470.0 372.0" fill="none" stroke="#141C24" stroke-width="1.3" marker-end="url(#arF32k5)"/>

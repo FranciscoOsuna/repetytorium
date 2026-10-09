@@ -4,14 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pytanie 1 — Technologie modelowania oparte o wiedzę i o dane</title>
+<link rel="icon" type="image/png" sizes="144x144" href="favicon-144.png?v=2">
+<link rel="icon" href="favicon.ico?v=2" sizes="any">
+<link rel="apple-touch-icon" href="favicon-144.png?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#141C24; --mut:#5C6B77; --line:#C3CDD4;
-  --paper:#E8ECEF; --card:#FCFDFD;
-  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52;
+  --ink:#141C24; --mut:#5C6B77; --line:#CCD2C7;
+  --paper:#EDEEE5; --card:#FDFDFA;
+  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52; --moss:#5E8C3A;
   --disp:"Space Grotesk",system-ui,sans-serif;
   --body:"STIX Two Text","Source Serif 4",Georgia,serif;
   --mono:"IBM Plex Mono",ui-monospace,monospace;
@@ -39,7 +42,7 @@ h2 .num{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--viole
         letter-spacing:.08em;flex:none}
 h3{font-family:var(--disp);font-weight:500;font-size:18.5px;margin:34px 0 8px;letter-spacing:-.01em}
 p{margin:0 0 14px}
-.rail{height:5px;background:linear-gradient(90deg,var(--teal) 0%,var(--violet) 55%,var(--amber) 100%);
+.rail{height:5px;background:linear-gradient(90deg,var(--moss) 0%,var(--teal) 30%,var(--violet) 62%,var(--amber) 100%);
       opacity:.85;margin:0 0 22px;border-radius:2px}
 
 /* ---- figury ---- */
@@ -83,7 +86,7 @@ figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:
 table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15px;background:var(--card)}
 th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
 th{font-family:var(--disp);font-weight:500;font-size:13px;letter-spacing:.02em;
-   background:#F2F5F6;border-bottom:1.5px solid var(--line)}
+   background:#F3F4EE;border-bottom:1.5px solid var(--line)}
 td.n{font-family:var(--mono);font-size:13.5px;white-space:nowrap}
 tr:last-child td{border-bottom:none}
 
@@ -117,7 +120,7 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
 .backfoot a:hover,.backfoot a:focus-visible{border-bottom-color:var(--teal);outline:none}
 /*stickybar-start*/
 .topnav{display:none}
-#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(232,236,239,.96);
+#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(237,238,229,.96);
   -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 #sbar .in{max-width:860px;margin:0 auto;padding:9px 22px 8px}
 #sbar .r1{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
@@ -133,6 +136,11 @@ html{scroll-padding-top:var(--sbh,84px)}
 @media (max-width:600px){#sbar .in{padding:8px 16px 7px}#sbar .qt{font-size:14px}}
 @media print{#sbar{display:none}}
 /*stickybar-end*/
+
+/* ---- meowl przy tytule ---- */
+.avatar{float:right;width:64px;height:64px;border-radius:50%;margin:2px 0 10px 18px;
+        box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--line)}
+header::after{content:"";display:block;clear:both}
 </style>
 </head>
 <body>
@@ -144,6 +152,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 </nav>
 
 <header>
+  <img class="avatar" src="assets/meowl-tabby.png" width="64" height="64" alt="" decoding="async">
   <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 1</p>
   <h1>Technologie modelowania oparte o wiedzę i oparte o dane</h1>
   <p class="quest">Technologie modelowania oparte o wiedzę i oparte o dane — podaj charakterystykę, wskaż związki, przedstaw kroki budowy modeli.</p>
@@ -233,31 +242,31 @@ html{scroll-padding-top:var(--sbh,84px)}
 <svg viewBox="0 0 680 324" class="fig">
 <defs><marker id="arS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker><marker id="arvS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker></defs>
 <defs><linearGradient id="gradS" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#FFFFFF"/><stop offset="45%" stop-color="#B9C2C8"/><stop offset="100%" stop-color="#141C24"/></linearGradient></defs>
-<rect x="20" y="8" width="640" height="12" rx="2" fill="url(#gradS)" stroke="#C3CDD4"/>
+<rect x="20" y="8" width="640" height="12" rx="2" fill="url(#gradS)" stroke="#CCD2C7"/>
 <text x="22" y="36" text-anchor="start" class="cap">white-box</text>
 <text x="340" y="36" text-anchor="middle" class="cap">gray-box</text>
 <text x="658" y="36" text-anchor="end" class="cap">black-box</text>
-<rect x="20" y="48" width="142" height="104" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="20" y="48" width="142" height="104" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="20" y="48" width="142" height="3" fill="#0E6E78"/>
 <text x="91.0" y="89.2" text-anchor="middle" class="bx-t">co jest znane</text>
 <text x="91.0" y="107.7" text-anchor="middle" class="bx">prawa fizyczne znane</text>
 <text x="91.0" y="121.8" text-anchor="middle" class="bx">parametry znane</text>
 <line x1="91.0" y1="154" x2="91.0" y2="172" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arS)"/>
-<rect x="20" y="174" width="142" height="78" rx="2" fill="#F2F5F6" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="20" y="174" width="142" height="78" rx="2" fill="#F3F4EE" stroke="#CCD2C7" stroke-width="1"/>
 <text x="91.0" y="209.4" text-anchor="middle" class="bx">liniowe / nieliniowe</text>
 <text x="91.0" y="223.5" text-anchor="middle" class="bx">równania różniczkowe</text>
-<rect x="186" y="48" width="142" height="104" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="186" y="48" width="142" height="104" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="186" y="48" width="142" height="3" fill="#0E6E78"/>
 <text x="257.0" y="82.1" text-anchor="middle" class="bx-t">co jest znane</text>
 <text x="257.0" y="100.6" text-anchor="middle" class="bx">prawa fizyczne znane</text>
 <text x="257.0" y="114.7" text-anchor="middle" class="bx">parametry nieznane</text>
 <text x="257.0" y="128.8" text-anchor="middle" class="bx">sygnały mierzalne</text>
 <line x1="257.0" y1="154" x2="257.0" y2="172" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arS)"/>
-<rect x="186" y="174" width="142" height="78" rx="2" fill="#F2F5F6" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="186" y="174" width="142" height="78" rx="2" fill="#F3F4EE" stroke="#CCD2C7" stroke-width="1"/>
 <text x="257.0" y="202.3" text-anchor="middle" class="bx">równania różniczkowe</text>
 <text x="257.0" y="216.4" text-anchor="middle" class="bx">z estymacją</text>
 <text x="257.0" y="230.5" text-anchor="middle" class="bx">parametrów</text>
-<rect x="352" y="48" width="142" height="104" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="352" y="48" width="142" height="104" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="352" y="48" width="142" height="3" fill="#5B4B8A"/>
 <text x="423.0" y="61.0" text-anchor="middle" class="bx-t">co jest znane</text>
 <text x="423.0" y="79.5" text-anchor="middle" class="bx">reguły fizyczne</text>
@@ -267,19 +276,19 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="423.0" y="135.8" text-anchor="middle" class="bx">sygnały we/wy</text>
 <text x="423.0" y="149.9" text-anchor="middle" class="bx">mierzalne</text>
 <line x1="423.0" y1="154" x2="423.0" y2="172" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arS)"/>
-<rect x="352" y="174" width="142" height="78" rx="2" fill="#F2F5F6" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="352" y="174" width="142" height="78" rx="2" fill="#F3F4EE" stroke="#CCD2C7" stroke-width="1"/>
 <text x="423.0" y="195.3" text-anchor="middle" class="bx">modele neuronowe</text>
 <text x="423.0" y="209.4" text-anchor="middle" class="bx">i rozmyte z</text>
 <text x="423.0" y="223.5" text-anchor="middle" class="bx">estymacją</text>
 <text x="423.0" y="237.6" text-anchor="middle" class="bx">parametrów</text>
-<rect x="518" y="48" width="142" height="104" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="518" y="48" width="142" height="104" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="518" y="48" width="142" height="3" fill="#B3641A"/>
 <text x="589.0" y="82.1" text-anchor="middle" class="bx-t">co jest znane</text>
 <text x="589.0" y="100.6" text-anchor="middle" class="bx">struktura modelu</text>
 <text x="589.0" y="114.7" text-anchor="middle" class="bx">założona</text>
 <text x="589.0" y="128.8" text-anchor="middle" class="bx">sygnały mierzalne</text>
 <line x1="589.0" y1="154" x2="589.0" y2="172" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arS)"/>
-<rect x="518" y="174" width="142" height="78" rx="2" fill="#F2F5F6" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="518" y="174" width="142" height="78" rx="2" fill="#F3F4EE" stroke="#CCD2C7" stroke-width="1"/>
 <text x="589.0" y="195.3" text-anchor="middle" class="bx">odpowiedź impulsowa,</text>
 <text x="589.0" y="209.4" text-anchor="middle" class="bx">skokowa</text>
 <text x="589.0" y="223.5" text-anchor="middle" class="bx">(transmitancje),</text>
@@ -336,42 +345,42 @@ html{scroll-padding-top:var(--sbh,84px)}
 <figure>
 <svg viewBox="0 0 680 386" class="fig">
 <defs><marker id="arP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker><marker id="arvP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker></defs>
-<rect x="190" y="6" width="300" height="34" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="190" y="6" width="300" height="34" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="190" y="6" width="300" height="3" fill="#5B4B8A"/>
 <text x="340.0" y="26.2" text-anchor="middle" class="bx-t">Wiedza aprioryczna o systemie</text>
 <line x1="190" y1="23" x2="128" y2="23" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arP)"/>
 <line x1="490" y1="23" x2="552" y2="23" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arP)"/>
 <text x="128" y="58" text-anchor="middle" class="cap" style="fill:#0E6E78">ŚCIEŻKA B — fenomenologiczna</text>
 <text x="552" y="58" text-anchor="middle" class="cap" style="fill:#B3641A">ŚCIEŻKA A — behawioralna</text>
-<rect x="20" y="70" width="216" height="66" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="20" y="70" width="216" height="66" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="20" y="70" width="216" height="3" fill="#0E6E78"/>
 <text x="33" y="85.1" text-anchor="start" class="bx-t">Prawa i zależności</text>
 <text x="33" y="103.6" text-anchor="start" class="bx">1. równania równowagi</text>
 <text x="33" y="117.7" text-anchor="start" class="bx">2. równania spójności</text>
 <text x="33" y="131.8" text-anchor="start" class="bx">3. zależności wiążące</text>
 <line x1="128" y1="136" x2="128" y2="154" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arP)"/>
-<rect x="20" y="156" width="216" height="46" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="20" y="156" width="216" height="46" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="128.0" y="175.2" text-anchor="middle" class="bx-t">Model fenomenologiczny</text>
 <text x="128.0" y="193.7" text-anchor="middle" class="bx">struktura + parametry</text>
 <line x1="128" y1="202" x2="128" y2="220" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arP)"/>
 <text x="134" y="215" text-anchor="start" class="cap">upraszczanie</text>
-<rect x="20" y="222" width="216" height="46" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="20" y="222" width="216" height="46" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="128.0" y="241.2" text-anchor="middle" class="bx-t">Uproszczony model</text>
 <text x="128.0" y="259.7" text-anchor="middle" class="bx">struktura + parametry</text>
-<rect x="444" y="70" width="216" height="40" rx="2" fill="#F2F5F6" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="444" y="70" width="216" height="40" rx="2" fill="#F3F4EE" stroke="#CCD2C7" stroke-width="1"/>
 <text x="552.0" y="93.2" text-anchor="middle" class="bx-t">Czy struktura jest znana?</text>
 <line x1="552" y1="110" x2="552" y2="128" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arP)"/>
-<rect x="444" y="130" width="216" height="40" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="444" y="130" width="216" height="40" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="444" y="130" width="216" height="3" fill="#B3641A"/>
 <text x="552.0" y="146.2" text-anchor="middle" class="bx-t">Eksperyment</text>
 <text x="552.0" y="164.7" text-anchor="middle" class="bx">plan wejść, pomiary</text>
 <line x1="552" y1="170" x2="552" y2="188" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arP)"/>
-<rect x="444" y="190" width="216" height="44" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="444" y="190" width="216" height="44" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="552.0" y="201.2" text-anchor="middle" class="bx-t">Identyfikacja</text>
 <text x="552.0" y="219.7" text-anchor="middle" class="bx">parametryczna /</text>
 <text x="552.0" y="233.8" text-anchor="middle" class="bx">nieparametryczna</text>
 <line x1="552" y1="234" x2="552" y2="252" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arP)"/>
-<rect x="444" y="254" width="216" height="44" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="444" y="254" width="216" height="44" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="552.0" y="265.1" text-anchor="middle" class="bx-t">Model behawioralny</text>
 <text x="552.0" y="283.6" text-anchor="middle" class="bx">parametryczny /</text>
 <text x="552.0" y="297.8" text-anchor="middle" class="bx">nieparametryczny</text>
@@ -383,10 +392,10 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="340" y="114" text-anchor="middle" class="cap" style="fill:#5B4B8A">określa strukturę</text>
 <path d="M 128 268 C 128 300, 200 300, 300 306" fill="none" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arP)"/>
 <path d="M 552 298 C 552 306, 480 306, 380 306" fill="none" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arP)"/>
-<rect x="268" y="290" width="144" height="32" rx="2" fill="#F2F5F6" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="268" y="290" width="144" height="32" rx="2" fill="#F3F4EE" stroke="#CCD2C7" stroke-width="1"/>
 <text x="340.0" y="309.2" text-anchor="middle" class="bx-t">Porównanie</text>
 <line x1="340" y1="322" x2="340" y2="340" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arP)"/>
-<rect x="240" y="342" width="200" height="34" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="240" y="342" width="200" height="34" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="240" y="342" width="200" height="3" fill="#9C3B52"/>
 <text x="340.0" y="362.2" text-anchor="middle" class="bx-t">Model wynikowy</text>
 </svg>
@@ -416,38 +425,38 @@ html{scroll-padding-top:var(--sbh,84px)}
 <figure>
 <svg viewBox="0 0 680 440" class="fig">
 <defs><marker id="arE" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker><marker id="arvE" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker></defs>
-<rect x="150" y="10" width="380" height="36" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="150" y="10" width="380" height="36" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="150" y="10" width="380" height="3" fill="#0E6E78"/>
 <text x="340.0" y="31.2" text-anchor="middle" class="bx-t">1.  Sformułowanie celów i założeń</text>
 <line x1="340" y1="46" x2="340" y2="62" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arE)"/>
-<rect x="150" y="62" width="380" height="36" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="150" y="62" width="380" height="36" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="150" y="62" width="380" height="3" fill="#0E6E78"/>
 <text x="340.0" y="83.2" text-anchor="middle" class="bx-t">2.  Budowa bazy wiedzy i bazy danych</text>
 <line x1="340" y1="98" x2="340" y2="114" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arE)"/>
-<rect x="150" y="114" width="380" height="36" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="150" y="114" width="380" height="36" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="150" y="114" width="380" height="3" fill="#5B4B8A"/>
 <text x="340.0" y="135.2" text-anchor="middle" class="bx-t">3.  Wybór kategorii modelu</text>
 <line x1="340" y1="150" x2="340" y2="166" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arE)"/>
-<rect x="150" y="166" width="380" height="36" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="150" y="166" width="380" height="36" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="150" y="166" width="380" height="3" fill="#5B4B8A"/>
 <text x="340.0" y="187.2" text-anchor="middle" class="bx-t">4.  Określenie struktury — budowa modelu</text>
 <line x1="340" y1="202" x2="340" y2="218" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arE)"/>
-<rect x="150" y="218" width="380" height="36" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="150" y="218" width="380" height="36" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="150" y="218" width="380" height="3" fill="#5B4B8A"/>
 <text x="340.0" y="239.2" text-anchor="middle" class="bx-t">5.  Identyfikacja modelu</text>
 <line x1="340" y1="254" x2="340" y2="270" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arE)"/>
-<rect x="150" y="270" width="380" height="36" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="150" y="270" width="380" height="36" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="150" y="270" width="380" height="3" fill="#B3641A"/>
 <text x="340.0" y="291.2" text-anchor="middle" class="bx-t">6.  Algorytmizacja obliczeń</text>
 <line x1="340" y1="306" x2="340" y2="322" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arE)"/>
-<rect x="150" y="322" width="380" height="36" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="150" y="322" width="380" height="36" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="150" y="322" width="380" height="3" fill="#B3641A"/>
 <text x="340.0" y="343.2" text-anchor="middle" class="bx-t">7.  Weryfikacja modelu</text>
 <line x1="340" y1="374" x2="340" y2="390" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arE)"/>
-<rect x="190" y="392" width="300" height="34" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="190" y="392" width="300" height="34" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="190" y="392" width="300" height="3" fill="#9C3B52"/>
 <text x="340.0" y="412.2" text-anchor="middle" class="bx-t">Model zweryfikowany  →  zastosowanie</text>
-<rect x="10" y="62" width="126" height="62" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="10" y="62" width="126" height="62" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="10" y="62" width="126" height="3" fill="#0E6E78"/>
 <text x="73.0" y="68.0" text-anchor="middle" class="bx-t">Baza wiedzy</text>
 <text x="73.0" y="86.5" text-anchor="middle" class="bx">teorie, prawa,</text>
@@ -455,7 +464,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="73.0" y="114.7" text-anchor="middle" class="bx">empiryczna,</text>
 <text x="73.0" y="128.8" text-anchor="middle" class="bx">hipotezy</text>
 <line x1="136" y1="93" x2="150" y2="80" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arE)"/>
-<rect x="544" y="62" width="126" height="62" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="544" y="62" width="126" height="62" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="544" y="62" width="126" height="3" fill="#B3641A"/>
 <text x="607.0" y="82.2" text-anchor="middle" class="bx-t">Baza danych</text>
 <text x="607.0" y="100.7" text-anchor="middle" class="bx">dane</text>
@@ -545,40 +554,40 @@ html{scroll-padding-top:var(--sbh,84px)}
 <defs><marker id="arU" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker><marker id="arvU" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker></defs>
 <text x="180" y="16" text-anchor="middle" class="cap" style="fill:#B3641A">MODELE NIELINIOWE</text>
 <text x="500" y="16" text-anchor="middle" class="cap" style="fill:#0E6E78">MODELE LINIOWE</text>
-<rect x="20" y="26" width="320" height="46" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="20" y="26" width="320" height="46" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="20" y="26" width="320" height="3" fill="#B3641A"/>
 <text x="180.0" y="52.2" text-anchor="middle" class="bx-t">Cząstkowe równania różniczkowe</text>
-<rect x="360" y="26" width="300" height="46" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="360" y="26" width="300" height="46" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="360" y="26" width="300" height="3" fill="#0E6E78"/>
 <text x="510.0" y="52.2" text-anchor="middle" class="bx-t">Cząstkowe równania różniczkowe</text>
 <line x1="340" y1="49" x2="358" y2="49" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arU)"/>
 <line x1="180" y1="72" x2="180" y2="102" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arU)"/>
 <line x1="510" y1="72" x2="510" y2="102" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arU)"/>
 <text x="340" y="94" text-anchor="middle" class="cap">aproksymacja równaniami o parametrach skupionych</text>
-<rect x="20" y="116" width="320" height="46" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="20" y="116" width="320" height="46" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="20" y="116" width="320" height="3" fill="#B3641A"/>
 <text x="180.0" y="142.2" text-anchor="middle" class="bx-t">Zwyczajne równania różniczkowe rzędu n</text>
-<rect x="360" y="116" width="300" height="46" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="360" y="116" width="300" height="46" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="360" y="116" width="300" height="3" fill="#0E6E78"/>
 <text x="510.0" y="142.2" text-anchor="middle" class="bx-t">Zwyczajne równania różniczkowe rzędu n</text>
 <line x1="340" y1="139" x2="358" y2="139" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arU)"/>
 <line x1="180" y1="162" x2="180" y2="192" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arU)"/>
 <line x1="510" y1="162" x2="510" y2="192" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arU)"/>
 <text x="340" y="184" text-anchor="middle" class="cap">redukcja rzędu</text>
-<rect x="20" y="206" width="320" height="46" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="20" y="206" width="320" height="46" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="20" y="206" width="320" height="3" fill="#B3641A"/>
 <text x="180.0" y="232.2" text-anchor="middle" class="bx-t">Zwyczajne równania różniczkowe rzędu &lt; n</text>
-<rect x="360" y="206" width="300" height="46" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="360" y="206" width="300" height="46" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="360" y="206" width="300" height="3" fill="#0E6E78"/>
 <text x="510.0" y="232.2" text-anchor="middle" class="bx-t">Zwyczajne równania różniczkowe rzędu &lt; n</text>
 <line x1="340" y1="229" x2="358" y2="229" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arU)"/>
 <line x1="180" y1="252" x2="180" y2="282" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arU)"/>
 <line x1="510" y1="252" x2="510" y2="282" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arU)"/>
 <text x="340" y="274" text-anchor="middle" class="cap">przyrównanie pochodnych do zera</text>
-<rect x="20" y="296" width="320" height="46" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="20" y="296" width="320" height="46" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="20" y="296" width="320" height="3" fill="#B3641A"/>
 <text x="180.0" y="322.2" text-anchor="middle" class="bx-t">Równania algebraiczne</text>
-<rect x="360" y="296" width="300" height="46" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="360" y="296" width="300" height="46" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="360" y="296" width="300" height="3" fill="#0E6E78"/>
 <text x="510.0" y="322.2" text-anchor="middle" class="bx-t">Równania algebraiczne</text>
 <line x1="340" y1="319" x2="358" y2="319" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arU)"/>
@@ -599,48 +608,48 @@ html{scroll-padding-top:var(--sbh,84px)}
 <figure>
 <svg viewBox="0 0 680 560" class="fig">
 <defs><marker id="arI" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker><marker id="arvI" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker></defs>
-<rect x="20" y="6" width="300" height="44" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="20" y="6" width="300" height="44" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="20" y="6" width="300" height="3" fill="#0E6E78"/>
 <text x="170.0" y="24.2" text-anchor="middle" class="bx-t">Cel identyfikacji</text>
 <text x="170.0" y="42.7" text-anchor="middle" class="bx">zasoby czasowe i finansowe</text>
-<rect x="360" y="6" width="300" height="44" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="360" y="6" width="300" height="44" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="360" y="6" width="300" height="3" fill="#0E6E78"/>
 <text x="510.0" y="24.2" text-anchor="middle" class="bx-t">Wiedza aprioryczna</text>
 <text x="510.0" y="42.7" text-anchor="middle" class="bx">prawa fizyczne, wstępne eksperymenty</text>
 <path d="M 170 50 C 170 66, 250 66, 330 70" fill="none" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arI)"/>
 <path d="M 510 50 C 510 66, 430 66, 350 70" fill="none" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arI)"/>
-<rect x="190" y="72" width="300" height="44" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="190" y="72" width="300" height="44" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="190" y="72" width="300" height="3" fill="#B3641A"/>
 <text x="340.0" y="90.2" text-anchor="middle" class="bx-t">Planowanie pomiarów</text>
 <text x="340.0" y="108.7" text-anchor="middle" class="bx">sygnały testowe, próbkowanie, czas pomiaru</text>
 <line x1="340" y1="116" x2="340" y2="132" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arI)"/>
-<rect x="190" y="132" width="300" height="44" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="190" y="132" width="300" height="44" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="190" y="132" width="300" height="3" fill="#B3641A"/>
 <text x="340.0" y="157.2" text-anchor="middle" class="bx-t">Zadanie sygnałów i zebranie wyników</text>
 <line x1="340" y1="176" x2="340" y2="192" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arI)"/>
-<rect x="190" y="192" width="300" height="44" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="190" y="192" width="300" height="44" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="190" y="192" width="300" height="3" fill="#B3641A"/>
 <text x="340.0" y="210.2" text-anchor="middle" class="bx-t">Sprawdzenie i przetwarzanie danych</text>
 <text x="340.0" y="228.7" text-anchor="middle" class="bx">filtracja, trendy, wartości oddalone</text>
 <line x1="340" y1="236" x2="340" y2="252" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arI)"/>
-<rect x="190" y="252" width="300" height="44" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="190" y="252" width="300" height="44" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="190" y="252" width="300" height="3" fill="#B3641A"/>
 <text x="340.0" y="270.2" text-anchor="middle" class="bx-t">Założenie / określenie struktury modelu</text>
 <text x="340.0" y="288.7" text-anchor="middle" class="bx">rząd, opóźnienie, klasa modelu</text>
 <line x1="340" y1="296" x2="340" y2="312" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arI)"/>
-<rect x="190" y="312" width="300" height="44" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="190" y="312" width="300" height="44" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="190" y="312" width="300" height="3" fill="#B3641A"/>
 <text x="340.0" y="330.2" text-anchor="middle" class="bx-t">Zastosowanie metody identyfikacji</text>
 <text x="340.0" y="348.7" text-anchor="middle" class="bx">estymacja parametrów, np. MNK — min J(p)</text>
 <line x1="340" y1="356" x2="340" y2="372" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arI)"/>
-<rect x="190" y="372" width="300" height="38" rx="2" fill="#F2F5F6" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="190" y="372" width="300" height="38" rx="2" fill="#F3F4EE" stroke="#CCD2C7" stroke-width="1"/>
 <text x="340.0" y="394.2" text-anchor="middle" class="bx-t">Model parametryczny / nieparametryczny</text>
 <line x1="340" y1="410" x2="340" y2="426" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arI)"/>
-<polygon points="340,428 452,462 340,496 228,462" fill="#FCFDFD" stroke="#C3CDD4"/>
+<polygon points="340,428 452,462 340,496 228,462" fill="#FDFDFA" stroke="#CCD2C7"/>
 <text x="340" y="466" text-anchor="middle" class="bx-t">Weryfikacja modelu</text>
 <line x1="340" y1="496" x2="340" y2="514" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arI)"/>
 <text x="348" y="510" text-anchor="start" class="cap">TAK</text>
-<rect x="240" y="516" width="200" height="34" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="240" y="516" width="200" height="34" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="240" y="516" width="200" height="3" fill="#9C3B52"/>
 <text x="340.0" y="536.2" text-anchor="middle" class="bx-t">Model wynikowy</text>
 <path d="M 452 462 C 560 462, 570 200, 500 92" fill="none" stroke="#5B4B8A" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#arvI)"/>
@@ -686,29 +695,29 @@ html{scroll-padding-top:var(--sbh,84px)}
 <figure>
 <svg viewBox="0 0 680 250" class="fig">
 <defs><marker id="arW" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker><marker id="arvW" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker></defs>
-<rect x="20" y="62" width="130" height="40" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="20" y="62" width="130" height="40" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="20" y="62" width="130" height="3" fill="#5B4B8A"/>
 <text x="85.0" y="85.2" text-anchor="middle" class="bx-t">Wielkości</text>
 <text x="85.0" y="99.8" text-anchor="middle" class="bx-t">wejściowe</text>
 <line x1="150" y1="82" x2="196" y2="40" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arW)"/>
 <line x1="150" y1="82" x2="196" y2="150" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arW)"/>
-<rect x="198" y="16" width="180" height="48" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="198" y="16" width="180" height="48" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="198" y="16" width="180" height="3" fill="#0E6E78"/>
 <text x="288.0" y="36.2" text-anchor="middle" class="bx-t">SYSTEM</text>
 <text x="288.0" y="54.7" text-anchor="middle" class="bx">rzeczywisty obiekt</text>
-<rect x="198" y="126" width="180" height="48" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="198" y="126" width="180" height="48" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="198" y="126" width="180" height="3" fill="#B3641A"/>
 <text x="288.0" y="146.2" text-anchor="middle" class="bx-t">MODEL</text>
 <text x="288.0" y="164.7" text-anchor="middle" class="bx">reprezentacja systemu</text>
-<rect x="198" y="200" width="180" height="34" rx="2" fill="#F2F5F6" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="198" y="200" width="180" height="34" rx="2" fill="#F3F4EE" stroke="#CCD2C7" stroke-width="1"/>
 <text x="288.0" y="220.2" text-anchor="middle" class="bx-t">Model zakłóceń</text>
-<rect x="20" y="200" width="130" height="34" rx="2" fill="#F2F5F6" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="20" y="200" width="130" height="34" rx="2" fill="#F3F4EE" stroke="#CCD2C7" stroke-width="1"/>
 <text x="85.0" y="220.2" text-anchor="middle" class="bx-t">Zakłócenia</text>
 <line x1="150" y1="217" x2="196" y2="217" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arW)"/>
 <line x1="288" y1="200" x2="288" y2="176" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arW)"/>
 <line x1="378" y1="40" x2="448" y2="84" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arW)"/>
 <line x1="378" y1="150" x2="448" y2="106" stroke="#5C6B77" stroke-width="1.4" marker-end="url(#arW)"/>
-<rect x="450" y="60" width="156" height="70" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="450" y="60" width="156" height="70" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="450" y="60" width="156" height="3" fill="#9C3B52"/>
 <text x="528.0" y="84.2" text-anchor="middle" class="bx-t">Kryteria zgodności</text>
 <text x="528.0" y="102.7" text-anchor="middle" class="bx">testy zgodności</text>
@@ -738,25 +747,25 @@ html{scroll-padding-top:var(--sbh,84px)}
 
 <figure>
 <svg viewBox="0 0 680 300" class="fig">
-<line x1="62" y1="244" x2="648" y2="244" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="62" y1="34" x2="62" y2="244" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="34.1" y1="244" x2="34.1" y2="248" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="62" y1="244" x2="648" y2="244" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="62" y1="34" x2="62" y2="244" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="34.1" y1="244" x2="34.1" y2="248" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="34.1" y="261" text-anchor="middle" class="tick">0</text>
-<line x1="173.6" y1="244" x2="173.6" y2="248" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="173.6" y1="244" x2="173.6" y2="248" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="173.6" y="261" text-anchor="middle" class="tick">2</text>
-<line x1="313.1" y1="244" x2="313.1" y2="248" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="313.1" y1="244" x2="313.1" y2="248" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="313.1" y="261" text-anchor="middle" class="tick">4</text>
-<line x1="452.7" y1="244" x2="452.7" y2="248" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="452.7" y1="244" x2="452.7" y2="248" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="452.7" y="261" text-anchor="middle" class="tick">6</text>
-<line x1="592.2" y1="244" x2="592.2" y2="248" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="592.2" y1="244" x2="592.2" y2="248" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="592.2" y="261" text-anchor="middle" class="tick">8</text>
-<line x1="58" y1="244.0" x2="62" y2="244.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="58" y1="244.0" x2="62" y2="244.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="54" y="248.0" text-anchor="end" class="tick">0</text>
-<line x1="58" y1="174.0" x2="62" y2="174.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="58" y1="174.0" x2="62" y2="174.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="54" y="178.0" text-anchor="end" class="tick">4</text>
-<line x1="58" y1="104.0" x2="62" y2="104.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="58" y1="104.0" x2="62" y2="104.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="54" y="108.0" text-anchor="end" class="tick">8</text>
-<line x1="58" y1="34.0" x2="62" y2="34.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="58" y1="34.0" x2="62" y2="34.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="54" y="38.0" text-anchor="end" class="tick">12</text>
 <text x="648" y="278" text-anchor="end" class="axlab">u</text>
 <text x="22" y="24" class="axlab">y</text>
@@ -795,29 +804,29 @@ html{scroll-padding-top:var(--sbh,84px)}
 
 <figure>
 <svg viewBox="0 0 680 250" class="fig">
-<line x1="62" y1="210" x2="648" y2="210" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="62" y1="30" x2="62" y2="210" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="62.0" y1="210" x2="62.0" y2="214" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="62" y1="210" x2="648" y2="210" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="62" y1="30" x2="62" y2="210" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="62.0" y1="210" x2="62.0" y2="214" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="62.0" y="227" text-anchor="middle" class="tick">0</text>
-<line x1="159.7" y1="210" x2="159.7" y2="214" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="159.7" y1="210" x2="159.7" y2="214" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="159.7" y="227" text-anchor="middle" class="tick">5</text>
-<line x1="257.3" y1="210" x2="257.3" y2="214" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="257.3" y1="210" x2="257.3" y2="214" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="257.3" y="227" text-anchor="middle" class="tick">10</text>
-<line x1="355.0" y1="210" x2="355.0" y2="214" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="355.0" y1="210" x2="355.0" y2="214" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="355.0" y="227" text-anchor="middle" class="tick">15</text>
-<line x1="452.7" y1="210" x2="452.7" y2="214" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="452.7" y1="210" x2="452.7" y2="214" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="452.7" y="227" text-anchor="middle" class="tick">20</text>
-<line x1="550.3" y1="210" x2="550.3" y2="214" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="550.3" y1="210" x2="550.3" y2="214" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="550.3" y="227" text-anchor="middle" class="tick">25</text>
-<line x1="648.0" y1="210" x2="648.0" y2="214" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="648.0" y1="210" x2="648.0" y2="214" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="648.0" y="227" text-anchor="middle" class="tick">30</text>
-<line x1="58" y1="210.0" x2="62" y2="210.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="58" y1="210.0" x2="62" y2="210.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="54" y="214.0" text-anchor="end" class="tick">0</text>
-<line x1="58" y1="143.3" x2="62" y2="143.3" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="58" y1="143.3" x2="62" y2="143.3" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="54" y="147.3" text-anchor="end" class="tick">0.5</text>
-<line x1="58" y1="76.7" x2="62" y2="76.7" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="58" y1="76.7" x2="62" y2="76.7" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="54" y="80.7" text-anchor="end" class="tick">1</text>
-<line x1="62" y1="76.7" x2="648" y2="76.7" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 4"/>
+<line x1="62" y1="76.7" x2="648" y2="76.7" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="3 4"/>
 <text x="648" y="242" text-anchor="end" class="axlab">t [s]</text>
 <text x="22" y="24" class="axlab">y(t)</text>
 <polygon points="62.0,210.0 65.9,204.0 69.9,198.2 73.8,192.7 77.7,187.3 81.7,182.3 85.6,177.4 89.5,172.7 93.5,168.2 97.4,163.9 101.3,159.8 105.3,155.8 109.2,152.0 113.1,148.4 117.1,144.9 121.0,141.5 124.9,138.3 128.9,135.2 132.8,132.3 136.7,129.4 140.7,126.7 144.6,124.1 148.5,121.6 152.5,119.2 156.4,116.9 160.3,114.7 164.3,112.6 168.2,110.6 172.1,108.6 176.1,106.8 180.0,105.0 183.9,103.3 187.9,101.6 191.8,100.1 195.7,98.6 199.7,97.1 203.6,95.7 207.5,94.4 211.4,93.1 215.4,91.9 219.3,90.7 223.2,89.6 227.2,88.5 231.1,87.5 235.0,86.5 239.0,85.5 242.9,84.6 246.8,83.8 250.8,82.9 254.7,82.1 258.6,81.3 262.6,80.6 266.5,79.9 270.4,79.2 274.4,78.6 278.3,77.9 282.2,77.3 286.2,76.8 290.1,76.2 294.0,75.7 298.0,75.2 301.9,74.7 305.8,74.2 309.8,73.8 313.7,73.3 317.6,72.9 321.6,72.5 325.5,72.2 329.4,71.8 333.4,71.4 337.3,71.1 341.2,70.8 345.2,70.5 349.1,70.2 353.0,69.9 357.0,69.6 360.9,69.4 364.8,69.1 368.8,68.9 372.7,68.7 376.6,68.4 380.6,68.2 384.5,68.0 388.4,67.8 392.4,67.7 396.3,67.5 400.2,67.3 404.2,67.1 408.1,67.0 412.0,66.8 416.0,66.7 419.9,66.6 423.8,66.4 427.8,66.3 431.7,66.2 435.6,66.1 439.6,65.9 443.5,65.8 447.4,65.7 451.4,65.6 455.3,65.5 459.2,65.5 463.2,65.4 467.1,65.3 471.0,65.2 475.0,65.1 478.9,65.1 482.8,65.0 486.8,64.9 490.7,64.8 494.6,64.8 498.6,64.7 502.5,64.7 506.4,64.6 510.3,64.6 514.3,64.5 518.2,64.5 522.1,64.4 526.1,64.4 530.0,64.3 533.9,64.3 537.9,64.2 541.8,64.2 545.7,64.2 549.7,64.1 553.6,64.1 557.5,64.1 561.5,64.0 565.4,64.0 569.3,64.0 573.3,64.0 577.2,63.9 581.1,63.9 585.1,63.9 589.0,63.9 592.9,63.8 596.9,63.8 600.8,63.8 604.7,63.8 608.7,63.8 612.6,63.7 616.5,63.7 620.5,63.7 624.4,63.7 628.3,63.7 632.3,63.7 636.2,63.7 640.1,63.6 644.1,63.6 648.0,63.6 648.0,91.9 644.1,91.9 640.1,92.0 636.2,92.0 632.3,92.1 628.3,92.1 624.4,92.2 620.5,92.3 616.5,92.3 612.6,92.4 608.7,92.5 604.7,92.5 600.8,92.6 596.9,92.7 592.9,92.8 589.0,92.8 585.1,92.9 581.1,93.0 577.2,93.1 573.3,93.2 569.3,93.3 565.4,93.3 561.5,93.4 557.5,93.5 553.6,93.6 549.7,93.7 545.7,93.8 541.8,94.0 537.9,94.1 533.9,94.2 530.0,94.3 526.1,94.4 522.1,94.6 518.2,94.7 514.3,94.8 510.3,95.0 506.4,95.1 502.5,95.2 498.6,95.4 494.6,95.5 490.7,95.7 486.8,95.9 482.8,96.0 478.9,96.2 475.0,96.4 471.0,96.5 467.1,96.7 463.2,96.9 459.2,97.1 455.3,97.3 451.4,97.5 447.4,97.7 443.5,98.0 439.6,98.2 435.6,98.4 431.7,98.7 427.8,98.9 423.8,99.2 419.9,99.4 416.0,99.7 412.0,100.0 408.1,100.2 404.2,100.5 400.2,100.8 396.3,101.1 392.4,101.5 388.4,101.8 384.5,102.1 380.6,102.5 376.6,102.8 372.7,103.2 368.8,103.5 364.8,103.9 360.9,104.3 357.0,104.7 353.0,105.2 349.1,105.6 345.2,106.0 341.2,106.5 337.3,106.9 333.4,107.4 329.4,107.9 325.5,108.4 321.6,109.0 317.6,109.5 313.7,110.0 309.8,110.6 305.8,111.2 301.9,111.8 298.0,112.4 294.0,113.0 290.1,113.7 286.2,114.4 282.2,115.1 278.3,115.8 274.4,116.5 270.4,117.3 266.5,118.0 262.6,118.8 258.6,119.6 254.7,120.5 250.8,121.3 246.8,122.2 242.9,123.2 239.0,124.1 235.0,125.1 231.1,126.1 227.2,127.1 223.2,128.1 219.3,129.2 215.4,130.3 211.4,131.5 207.5,132.6 203.6,133.9 199.7,135.1 195.7,136.4 191.8,137.7 187.9,139.0 183.9,140.4 180.0,141.9 176.1,143.3 172.1,144.8 168.2,146.4 164.3,148.0 160.3,149.6 156.4,151.3 152.5,153.1 148.5,154.9 144.6,156.7 140.7,158.6 136.7,160.5 132.8,162.5 128.9,164.6 124.9,166.7 121.0,168.9 117.1,171.1 113.1,173.4 109.2,175.8 105.3,178.2 101.3,180.7 97.4,183.3 93.5,185.9 89.5,188.7 85.6,191.5 81.7,194.3 77.7,197.3 73.8,200.3 69.9,203.5 65.9,206.7 62.0,210.0" fill="#5B4B8A" opacity="0.16"/>

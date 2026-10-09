@@ -4,14 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pytanie 30 — Mechanizmy samoorganizacji sieci neuronowych</title>
+<link rel="icon" type="image/png" sizes="144x144" href="favicon-144.png?v=2">
+<link rel="icon" href="favicon.ico?v=2" sizes="any">
+<link rel="apple-touch-icon" href="favicon-144.png?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#141C24; --mut:#5C6B77; --line:#C3CDD4;
-  --paper:#E8ECEF; --card:#FCFDFD;
-  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52;
+  --ink:#141C24; --mut:#5C6B77; --line:#CCD2C7;
+  --paper:#EDEEE5; --card:#FDFDFA;
+  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52; --moss:#5E8C3A;
   --disp:"Space Grotesk",system-ui,sans-serif;
   --body:"STIX Two Text","Source Serif 4",Georgia,serif;
   --mono:"IBM Plex Mono",ui-monospace,monospace;
@@ -39,7 +42,7 @@ h2 .num{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--viole
         letter-spacing:.08em;flex:none}
 h3{font-family:var(--disp);font-weight:500;font-size:18.5px;margin:34px 0 8px;letter-spacing:-.01em}
 p{margin:0 0 14px}
-.rail{height:5px;background:linear-gradient(90deg,var(--teal) 0%,var(--violet) 55%,var(--amber) 100%);
+.rail{height:5px;background:linear-gradient(90deg,var(--moss) 0%,var(--teal) 30%,var(--violet) 62%,var(--amber) 100%);
       opacity:.85;margin:0 0 22px;border-radius:2px}
 
 /* ---- figury ---- */
@@ -83,7 +86,7 @@ figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:
 table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15px;background:var(--card)}
 th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
 th{font-family:var(--disp);font-weight:500;font-size:13px;letter-spacing:.02em;
-   background:#F2F5F6;border-bottom:1.5px solid var(--line)}
+   background:#F3F4EE;border-bottom:1.5px solid var(--line)}
 td.n{font-family:var(--mono);font-size:13.5px;white-space:nowrap}
 tr:last-child td{border-bottom:none}
 
@@ -115,6 +118,11 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
 .backfoot a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
             color:var(--teal);text-decoration:none;border-bottom:1px solid var(--line)}
 .backfoot a:hover,.backfoot a:focus-visible{border-bottom-color:var(--teal);outline:none}
+
+/* ---- meowl przy tytule ---- */
+.avatar{float:right;width:64px;height:64px;border-radius:50%;margin:2px 0 10px 18px;
+        box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--line)}
+header::after{content:"";display:block;clear:both}
 </style>
 </head>
 <body>
@@ -126,6 +134,7 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
 </nav>
 
 <header>
+  <img class="avatar" src="assets/meowl-wide.png" width="64" height="64" alt="" decoding="async">
   <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 30</p>
   <h1>Mechanizmy samoorganizacji sieci neuronowych</h1>
   <p class="quest">Wymień i opisz podstawowe mechanizmy samoorganizacji sieci neuronowych samoorganizujących.</p>
@@ -173,7 +182,7 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
 .inter button[disabled]{opacity:.45;cursor:default}
 /*stickybar-start*/
 .topnav{display:none}
-#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(232,236,239,.96);
+#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(237,238,229,.96);
   -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 #sbar .in{max-width:860px;margin:0 auto;padding:9px 22px 8px}
 #sbar .r1{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
@@ -215,103 +224,103 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="340" y="20" text-anchor="middle" class="bx-t">KAŻDY NEURON MA DWA POŁOŻENIA NARAZ</text>
 <text x="60" y="48" text-anchor="start" class="axlab" style="fill:#0E6E78">1. MIEJSCE NA SIATCE — sztywne</text>
 <text x="392" y="48" text-anchor="start" class="axlab" style="fill:#5B4B8A">2. WEKTOR WAG — punkt w danych</text>
-<line x1="87" y1="74" x2="99" y2="74" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="76" y1="85" x2="76" y2="97" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="121" y1="74" x2="133" y2="74" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="110" y1="85" x2="110" y2="97" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="155" y1="74" x2="167" y2="74" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="144" y1="85" x2="144" y2="97" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="189" y1="74" x2="201" y2="74" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="178" y1="85" x2="178" y2="97" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="223" y1="74" x2="235" y2="74" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="212" y1="85" x2="212" y2="97" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="246" y1="85" x2="246" y2="97" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="87" y1="108" x2="99" y2="108" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="76" y1="119" x2="76" y2="131" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="121" y1="108" x2="133" y2="108" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="110" y1="119" x2="110" y2="131" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="155" y1="108" x2="167" y2="108" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="144" y1="119" x2="144" y2="131" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="189" y1="108" x2="201" y2="108" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="178" y1="119" x2="178" y2="131" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="223" y1="108" x2="235" y2="108" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="212" y1="119" x2="212" y2="131" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="246" y1="119" x2="246" y2="131" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="87" y1="142" x2="99" y2="142" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="76" y1="153" x2="76" y2="165" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="121" y1="142" x2="133" y2="142" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="110" y1="153" x2="110" y2="165" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="155" y1="142" x2="167" y2="142" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="144" y1="153" x2="144" y2="165" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="189" y1="142" x2="201" y2="142" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="178" y1="153" x2="178" y2="165" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="223" y1="142" x2="235" y2="142" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="212" y1="153" x2="212" y2="165" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="246" y1="153" x2="246" y2="165" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="87" y1="176" x2="99" y2="176" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="76" y1="187" x2="76" y2="199" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="121" y1="176" x2="133" y2="176" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="110" y1="187" x2="110" y2="199" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="155" y1="176" x2="167" y2="176" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="144" y1="187" x2="144" y2="199" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="189" y1="176" x2="201" y2="176" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="178" y1="187" x2="178" y2="199" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="223" y1="176" x2="235" y2="176" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="212" y1="187" x2="212" y2="199" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="246" y1="187" x2="246" y2="199" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="87" y1="210" x2="99" y2="210" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="76" y1="221" x2="76" y2="233" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="121" y1="210" x2="133" y2="210" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="110" y1="221" x2="110" y2="233" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="155" y1="210" x2="167" y2="210" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="144" y1="221" x2="144" y2="233" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="189" y1="210" x2="201" y2="210" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="178" y1="221" x2="178" y2="233" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="223" y1="210" x2="235" y2="210" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="212" y1="221" x2="212" y2="233" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="246" y1="221" x2="246" y2="233" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="87" y1="244" x2="99" y2="244" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="121" y1="244" x2="133" y2="244" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="155" y1="244" x2="167" y2="244" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="189" y1="244" x2="201" y2="244" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="223" y1="244" x2="235" y2="244" stroke="#C3CDD4" stroke-width="1.2"/>
-<circle id="p30g0" cx="76" cy="74" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g1" cx="110" cy="74" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g2" cx="144" cy="74" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g3" cx="178" cy="74" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g4" cx="212" cy="74" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g5" cx="246" cy="74" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g6" cx="76" cy="108" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g7" cx="110" cy="108" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g8" cx="144" cy="108" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g9" cx="178" cy="108" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g10" cx="212" cy="108" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g11" cx="246" cy="108" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g12" cx="76" cy="142" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g13" cx="110" cy="142" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g14" cx="144" cy="142" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g15" cx="178" cy="142" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g16" cx="212" cy="142" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g17" cx="246" cy="142" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g18" cx="76" cy="176" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g19" cx="110" cy="176" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g20" cx="144" cy="176" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g21" cx="178" cy="176" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g22" cx="212" cy="176" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g23" cx="246" cy="176" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g24" cx="76" cy="210" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g25" cx="110" cy="210" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g26" cx="144" cy="210" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g27" cx="178" cy="210" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g28" cx="212" cy="210" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g29" cx="246" cy="210" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g30" cx="76" cy="244" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g31" cx="110" cy="244" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g32" cx="144" cy="244" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g33" cx="178" cy="244" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g34" cx="212" cy="244" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30g35" cx="246" cy="244" r="10" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<rect x="392" y="66" width="256" height="226" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1"/>
+<line x1="87" y1="74" x2="99" y2="74" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="76" y1="85" x2="76" y2="97" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="121" y1="74" x2="133" y2="74" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="110" y1="85" x2="110" y2="97" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="155" y1="74" x2="167" y2="74" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="144" y1="85" x2="144" y2="97" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="189" y1="74" x2="201" y2="74" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="178" y1="85" x2="178" y2="97" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="223" y1="74" x2="235" y2="74" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="212" y1="85" x2="212" y2="97" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="246" y1="85" x2="246" y2="97" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="87" y1="108" x2="99" y2="108" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="76" y1="119" x2="76" y2="131" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="121" y1="108" x2="133" y2="108" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="110" y1="119" x2="110" y2="131" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="155" y1="108" x2="167" y2="108" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="144" y1="119" x2="144" y2="131" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="189" y1="108" x2="201" y2="108" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="178" y1="119" x2="178" y2="131" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="223" y1="108" x2="235" y2="108" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="212" y1="119" x2="212" y2="131" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="246" y1="119" x2="246" y2="131" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="87" y1="142" x2="99" y2="142" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="76" y1="153" x2="76" y2="165" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="121" y1="142" x2="133" y2="142" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="110" y1="153" x2="110" y2="165" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="155" y1="142" x2="167" y2="142" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="144" y1="153" x2="144" y2="165" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="189" y1="142" x2="201" y2="142" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="178" y1="153" x2="178" y2="165" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="223" y1="142" x2="235" y2="142" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="212" y1="153" x2="212" y2="165" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="246" y1="153" x2="246" y2="165" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="87" y1="176" x2="99" y2="176" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="76" y1="187" x2="76" y2="199" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="121" y1="176" x2="133" y2="176" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="110" y1="187" x2="110" y2="199" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="155" y1="176" x2="167" y2="176" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="144" y1="187" x2="144" y2="199" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="189" y1="176" x2="201" y2="176" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="178" y1="187" x2="178" y2="199" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="223" y1="176" x2="235" y2="176" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="212" y1="187" x2="212" y2="199" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="246" y1="187" x2="246" y2="199" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="87" y1="210" x2="99" y2="210" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="76" y1="221" x2="76" y2="233" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="121" y1="210" x2="133" y2="210" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="110" y1="221" x2="110" y2="233" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="155" y1="210" x2="167" y2="210" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="144" y1="221" x2="144" y2="233" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="189" y1="210" x2="201" y2="210" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="178" y1="221" x2="178" y2="233" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="223" y1="210" x2="235" y2="210" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="212" y1="221" x2="212" y2="233" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="246" y1="221" x2="246" y2="233" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="87" y1="244" x2="99" y2="244" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="121" y1="244" x2="133" y2="244" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="155" y1="244" x2="167" y2="244" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="189" y1="244" x2="201" y2="244" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="223" y1="244" x2="235" y2="244" stroke="#CCD2C7" stroke-width="1.2"/>
+<circle id="p30g0" cx="76" cy="74" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g1" cx="110" cy="74" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g2" cx="144" cy="74" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g3" cx="178" cy="74" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g4" cx="212" cy="74" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g5" cx="246" cy="74" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g6" cx="76" cy="108" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g7" cx="110" cy="108" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g8" cx="144" cy="108" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g9" cx="178" cy="108" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g10" cx="212" cy="108" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g11" cx="246" cy="108" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g12" cx="76" cy="142" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g13" cx="110" cy="142" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g14" cx="144" cy="142" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g15" cx="178" cy="142" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g16" cx="212" cy="142" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g17" cx="246" cy="142" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g18" cx="76" cy="176" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g19" cx="110" cy="176" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g20" cx="144" cy="176" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g21" cx="178" cy="176" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g22" cx="212" cy="176" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g23" cx="246" cy="176" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g24" cx="76" cy="210" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g25" cx="110" cy="210" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g26" cx="144" cy="210" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g27" cx="178" cy="210" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g28" cx="212" cy="210" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g29" cx="246" cy="210" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g30" cx="76" cy="244" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g31" cx="110" cy="244" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g32" cx="144" cy="244" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g33" cx="178" cy="244" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g34" cx="212" cy="244" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30g35" cx="246" cy="244" r="10" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<rect x="392" y="66" width="256" height="226" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1"/>
 <clipPath id="clF30I"><rect x="392" y="66" width="256" height="226"/></clipPath>
 <g clip-path="url(#clF30I)">
 <circle cx="594.1" cy="110.7" r="1.5" fill="#5C6B77" opacity="0.45"/>
@@ -489,54 +498,54 @@ html{scroll-padding-top:var(--sbh,84px)}
 <circle cx="417.7" cy="150.9" r="1.5" fill="#5C6B77" opacity="0.45"/>
 <circle cx="512.8" cy="121.7" r="1.5" fill="#5C6B77" opacity="0.45"/>
 <circle cx="570.7" cy="108.9" r="1.5" fill="#5C6B77" opacity="0.45"/>
-<polyline points="588.6,119.5 600.3,140.3 606.5,165.3 607.3,189.6 599.3,212.8 596.5,231.5" fill="none" stroke="#C3CDD4" stroke-width="1.2"/>
-<polyline points="588.6,119.5 569.6,112.3 540.1,104.8 507.5,100.8 480.9,110.9 456.2,114.6" fill="none" stroke="#C3CDD4" stroke-width="1.2"/>
-<polyline points="569.6,112.3 574.2,135.3 584.3,161.1 584.9,192.6 574.6,222.5 575.1,243.0" fill="none" stroke="#C3CDD4" stroke-width="1.2"/>
-<polyline points="600.3,140.3 574.2,135.3 541.1,127.4 505.5,123.6 471.7,132.9 446.2,134.0" fill="none" stroke="#C3CDD4" stroke-width="1.2"/>
-<polyline points="540.1,104.8 541.1,127.4 550.6,153.1 545.9,209.0 541.0,236.1 546.4,256.8" fill="none" stroke="#C3CDD4" stroke-width="1.2"/>
-<polyline points="606.5,165.3 584.3,161.1 550.6,153.1 486.7,154.5 455.1,161.9 431.7,159.6" fill="none" stroke="#C3CDD4" stroke-width="1.2"/>
-<polyline points="507.5,100.8 505.5,123.6 486.7,154.5 487.0,208.6 505.3,239.1 512.1,262.3" fill="none" stroke="#C3CDD4" stroke-width="1.2"/>
-<polyline points="607.3,189.6 584.9,192.6 545.9,209.0 487.0,208.6 452.8,193.5 430.1,188.6" fill="none" stroke="#C3CDD4" stroke-width="1.2"/>
-<polyline points="480.9,110.9 471.7,132.9 455.1,161.9 452.8,193.5 467.5,227.7 480.8,252.9" fill="none" stroke="#C3CDD4" stroke-width="1.2"/>
-<polyline points="599.3,212.8 574.6,222.5 541.0,236.1 505.3,239.1 467.5,227.7 439.7,218.1" fill="none" stroke="#C3CDD4" stroke-width="1.2"/>
-<polyline points="456.2,114.6 446.2,134.0 431.7,159.6 430.1,188.6 439.7,218.1 452.2,241.3" fill="none" stroke="#C3CDD4" stroke-width="1.2"/>
-<polyline points="596.5,231.5 575.1,243.0 546.4,256.8 512.1,262.3 480.8,252.9 452.2,241.3" fill="none" stroke="#C3CDD4" stroke-width="1.2"/>
-<circle id="p30d0" cx="588.6" cy="119.5" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d1" cx="600.3" cy="140.3" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d2" cx="606.5" cy="165.3" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d3" cx="607.3" cy="189.6" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d4" cx="599.3" cy="212.8" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d5" cx="596.5" cy="231.5" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d6" cx="569.6" cy="112.3" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d7" cx="574.2" cy="135.3" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d8" cx="584.3" cy="161.1" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d9" cx="584.9" cy="192.6" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d10" cx="574.6" cy="222.5" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d11" cx="575.1" cy="243.0" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d12" cx="540.1" cy="104.8" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d13" cx="541.1" cy="127.4" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d14" cx="550.6" cy="153.1" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d15" cx="545.9" cy="209.0" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d16" cx="541.0" cy="236.1" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d17" cx="546.4" cy="256.8" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d18" cx="507.5" cy="100.8" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d19" cx="505.5" cy="123.6" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d20" cx="486.7" cy="154.5" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d21" cx="487.0" cy="208.6" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d22" cx="505.3" cy="239.1" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d23" cx="512.1" cy="262.3" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d24" cx="480.9" cy="110.9" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d25" cx="471.7" cy="132.9" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d26" cx="455.1" cy="161.9" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d27" cx="452.8" cy="193.5" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d28" cx="467.5" cy="227.7" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d29" cx="480.8" cy="252.9" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d30" cx="456.2" cy="114.6" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d31" cx="446.2" cy="134.0" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d32" cx="431.7" cy="159.6" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d33" cx="430.1" cy="188.6" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d34" cx="439.7" cy="218.1" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
-<circle id="p30d35" cx="452.2" cy="241.3" r="4" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1.6"/>
+<polyline points="588.6,119.5 600.3,140.3 606.5,165.3 607.3,189.6 599.3,212.8 596.5,231.5" fill="none" stroke="#CCD2C7" stroke-width="1.2"/>
+<polyline points="588.6,119.5 569.6,112.3 540.1,104.8 507.5,100.8 480.9,110.9 456.2,114.6" fill="none" stroke="#CCD2C7" stroke-width="1.2"/>
+<polyline points="569.6,112.3 574.2,135.3 584.3,161.1 584.9,192.6 574.6,222.5 575.1,243.0" fill="none" stroke="#CCD2C7" stroke-width="1.2"/>
+<polyline points="600.3,140.3 574.2,135.3 541.1,127.4 505.5,123.6 471.7,132.9 446.2,134.0" fill="none" stroke="#CCD2C7" stroke-width="1.2"/>
+<polyline points="540.1,104.8 541.1,127.4 550.6,153.1 545.9,209.0 541.0,236.1 546.4,256.8" fill="none" stroke="#CCD2C7" stroke-width="1.2"/>
+<polyline points="606.5,165.3 584.3,161.1 550.6,153.1 486.7,154.5 455.1,161.9 431.7,159.6" fill="none" stroke="#CCD2C7" stroke-width="1.2"/>
+<polyline points="507.5,100.8 505.5,123.6 486.7,154.5 487.0,208.6 505.3,239.1 512.1,262.3" fill="none" stroke="#CCD2C7" stroke-width="1.2"/>
+<polyline points="607.3,189.6 584.9,192.6 545.9,209.0 487.0,208.6 452.8,193.5 430.1,188.6" fill="none" stroke="#CCD2C7" stroke-width="1.2"/>
+<polyline points="480.9,110.9 471.7,132.9 455.1,161.9 452.8,193.5 467.5,227.7 480.8,252.9" fill="none" stroke="#CCD2C7" stroke-width="1.2"/>
+<polyline points="599.3,212.8 574.6,222.5 541.0,236.1 505.3,239.1 467.5,227.7 439.7,218.1" fill="none" stroke="#CCD2C7" stroke-width="1.2"/>
+<polyline points="456.2,114.6 446.2,134.0 431.7,159.6 430.1,188.6 439.7,218.1 452.2,241.3" fill="none" stroke="#CCD2C7" stroke-width="1.2"/>
+<polyline points="596.5,231.5 575.1,243.0 546.4,256.8 512.1,262.3 480.8,252.9 452.2,241.3" fill="none" stroke="#CCD2C7" stroke-width="1.2"/>
+<circle id="p30d0" cx="588.6" cy="119.5" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d1" cx="600.3" cy="140.3" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d2" cx="606.5" cy="165.3" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d3" cx="607.3" cy="189.6" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d4" cx="599.3" cy="212.8" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d5" cx="596.5" cy="231.5" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d6" cx="569.6" cy="112.3" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d7" cx="574.2" cy="135.3" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d8" cx="584.3" cy="161.1" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d9" cx="584.9" cy="192.6" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d10" cx="574.6" cy="222.5" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d11" cx="575.1" cy="243.0" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d12" cx="540.1" cy="104.8" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d13" cx="541.1" cy="127.4" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d14" cx="550.6" cy="153.1" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d15" cx="545.9" cy="209.0" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d16" cx="541.0" cy="236.1" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d17" cx="546.4" cy="256.8" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d18" cx="507.5" cy="100.8" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d19" cx="505.5" cy="123.6" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d20" cx="486.7" cy="154.5" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d21" cx="487.0" cy="208.6" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d22" cx="505.3" cy="239.1" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d23" cx="512.1" cy="262.3" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d24" cx="480.9" cy="110.9" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d25" cx="471.7" cy="132.9" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d26" cx="455.1" cy="161.9" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d27" cx="452.8" cy="193.5" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d28" cx="467.5" cy="227.7" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d29" cx="480.8" cy="252.9" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d30" cx="456.2" cy="114.6" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d31" cx="446.2" cy="134.0" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d32" cx="431.7" cy="159.6" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d33" cx="430.1" cy="188.6" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d34" cx="439.7" cy="218.1" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
+<circle id="p30d35" cx="452.2" cy="241.3" r="4" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1.6"/>
 <line id="p30lin" x1="0" y1="0" x2="0" y2="0" stroke="#9C3B52" stroke-width="1.6" stroke-dasharray="3 2" opacity="0"/>
 <circle id="p30pt" cx="-50" cy="-50" r="4.5" fill="#9C3B52"/>
 </g>
@@ -555,9 +564,9 @@ html{scroll-padding-top:var(--sbh,84px)}
   function dy(py){ return ax.y1 - (py-ax.Y0)/(ax.Y1-ax.Y0)*(ax.y1-ax.y0); }
   function czysc(){
     for (var k = 0; k < G*G; k++) {
-      E('p30g'+k).setAttribute('fill', '#FFFFFF'); E('p30g'+k).setAttribute('stroke', '#C3CDD4');
+      E('p30g'+k).setAttribute('fill', '#FFFFFF'); E('p30g'+k).setAttribute('stroke', '#CCD2C7');
       E('p30g'+k).setAttribute('r', 10);
-      E('p30d'+k).setAttribute('fill', '#FFFFFF'); E('p30d'+k).setAttribute('stroke', '#C3CDD4');
+      E('p30d'+k).setAttribute('fill', '#FFFFFF'); E('p30d'+k).setAttribute('stroke', '#CCD2C7');
       E('p30d'+k).setAttribute('r', 4);
     }
   }
@@ -934,8 +943,8 @@ Zauważmy też, co robi sztywna siatka z danymi w kształcie pierścienia: <stro
 <rect id="p30u142" x="582" y="275" width="19" height="19" fill="#CCCCCC"/>
 <rect id="p30c143" x="271" y="275" width="19" height="19" fill="#CCCCCC"/>
 <rect id="p30u143" x="601" y="275" width="19" height="19" fill="#CCCCCC"/>
-<rect x="62" y="66" width="228" height="228" fill="none" stroke="#C3CDD4" stroke-width="1"/>
-<rect x="392" y="66" width="228" height="228" fill="none" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="62" y="66" width="228" height="228" fill="none" stroke="#CCD2C7" stroke-width="1"/>
+<rect x="392" y="66" width="228" height="228" fill="none" stroke="#CCD2C7" stroke-width="1"/>
 <circle id="p30m0" cx="185.5" cy="94.5" r="7" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0"/>
 <text id="p30n0" x="185.5" y="98.0" text-anchor="middle" class="cap" style="fill:#FFFFFF" opacity="0">1</text>
 <circle id="p30m1" cx="261.5" cy="94.5" r="7" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0"/>
@@ -954,23 +963,23 @@ Zauważmy też, co robi sztywna siatka z danymi w kształcie pierścienia: <stro
 <text id="p30n7" x="90.5" y="98.0" text-anchor="middle" class="cap" style="fill:#FFFFFF" opacity="0">8</text>
 <circle id="p30m8" cx="261.5" cy="265.5" r="7" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0"/>
 <text id="p30n8" x="261.5" y="269.0" text-anchor="middle" class="cap" style="fill:#FFFFFF" opacity="0">9</text>
-<rect x="62" y="309" width="13" height="13" fill="#d91f26" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="62" y="309" width="13" height="13" fill="#d91f26" stroke="#CCD2C7" stroke-width="1"/>
 <text x="81" y="320" text-anchor="start" class="cap">1</text>
-<rect x="126" y="309" width="13" height="13" fill="#f2991a" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="126" y="309" width="13" height="13" fill="#f2991a" stroke="#CCD2C7" stroke-width="1"/>
 <text x="145" y="320" text-anchor="start" class="cap">2</text>
-<rect x="190" y="309" width="13" height="13" fill="#f2e633" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="190" y="309" width="13" height="13" fill="#f2e633" stroke="#CCD2C7" stroke-width="1"/>
 <text x="209" y="320" text-anchor="start" class="cap">3</text>
-<rect x="254" y="309" width="13" height="13" fill="#33a640" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="254" y="309" width="13" height="13" fill="#33a640" stroke="#CCD2C7" stroke-width="1"/>
 <text x="273" y="320" text-anchor="start" class="cap">4</text>
-<rect x="318" y="309" width="13" height="13" fill="#1a73b2" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="318" y="309" width="13" height="13" fill="#1a73b2" stroke="#CCD2C7" stroke-width="1"/>
 <text x="337" y="320" text-anchor="start" class="cap">5</text>
-<rect x="382" y="309" width="13" height="13" fill="#593399" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="382" y="309" width="13" height="13" fill="#593399" stroke="#CCD2C7" stroke-width="1"/>
 <text x="401" y="320" text-anchor="start" class="cap">6</text>
-<rect x="446" y="309" width="13" height="13" fill="#8c5933" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="446" y="309" width="13" height="13" fill="#8c5933" stroke="#CCD2C7" stroke-width="1"/>
 <text x="465" y="320" text-anchor="start" class="cap">7</text>
-<rect x="510" y="309" width="13" height="13" fill="#1a1a1f" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="510" y="309" width="13" height="13" fill="#1a1a1f" stroke="#CCD2C7" stroke-width="1"/>
 <text x="529" y="320" text-anchor="start" class="cap">8</text>
-<rect x="574" y="309" width="13" height="13" fill="#ebebf0" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="574" y="309" width="13" height="13" fill="#ebebf0" stroke="#CCD2C7" stroke-width="1"/>
 <text x="593" y="320" text-anchor="start" class="cap">9</text>
 <text x="62" y="340" text-anchor="start" class="cap">ciemne pola U-macierzy to neurony mocno różne od sąsiadów — czyli granice między skupiskami</text>
 </svg>
@@ -1108,7 +1117,7 @@ Widać też obie fazy uczenia: na początku duży promień ciągnie wielkie obsz
 <defs><marker id="arF30" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker><marker id="arvF30" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker></defs>
 <text x="340" y="20" text-anchor="middle" class="bx-t">SAMOORGANIZACJA — ŁAŃCUCH 40 NEURONÓW UKŁADA SIĘ WZDŁUŻ DANYCH</text>
 <clipPath id="cpF301"><rect x="20" y="56" width="118" height="116"/></clipPath>
-<rect x="20" y="56" width="118" height="116" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="20" y="56" width="118" height="116" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1"/>
 <g clip-path="url(#cpF301)">
 <circle cx="25.4" cy="163.5" r="1.5" fill="#5C6B77" opacity="0.5"/>
 <circle cx="25.8" cy="163.5" r="1.5" fill="#5C6B77" opacity="0.5"/>
@@ -2054,7 +2063,7 @@ Widać też obie fazy uczenia: na początku duży promień ciągnie wielkie obsz
 </g>
 <text x="79.0" y="48" text-anchor="middle" class="cap" style="fill:#5B4B8A">start — wagi losowe</text>
 <clipPath id="cpF302"><rect x="150" y="56" width="118" height="116"/></clipPath>
-<rect x="150" y="56" width="118" height="116" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="150" y="56" width="118" height="116" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1"/>
 <g clip-path="url(#cpF302)">
 <circle cx="155.4" cy="163.5" r="1.5" fill="#5C6B77" opacity="0.5"/>
 <circle cx="155.8" cy="163.5" r="1.5" fill="#5C6B77" opacity="0.5"/>
@@ -3000,7 +3009,7 @@ Widać też obie fazy uczenia: na początku duży promień ciągnie wielkie obsz
 </g>
 <text x="209.0" y="48" text-anchor="middle" class="cap" style="fill:#5B4B8A">po 2 epokach</text>
 <clipPath id="cpF303"><rect x="280" y="56" width="118" height="116"/></clipPath>
-<rect x="280" y="56" width="118" height="116" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="280" y="56" width="118" height="116" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1"/>
 <g clip-path="url(#cpF303)">
 <circle cx="285.4" cy="163.5" r="1.5" fill="#5C6B77" opacity="0.5"/>
 <circle cx="285.8" cy="163.5" r="1.5" fill="#5C6B77" opacity="0.5"/>
@@ -3946,7 +3955,7 @@ Widać też obie fazy uczenia: na początku duży promień ciągnie wielkie obsz
 </g>
 <text x="339.0" y="48" text-anchor="middle" class="cap" style="fill:#5B4B8A">po 20 epokach</text>
 <clipPath id="cpF304"><rect x="410" y="56" width="118" height="116"/></clipPath>
-<rect x="410" y="56" width="118" height="116" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="410" y="56" width="118" height="116" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1"/>
 <g clip-path="url(#cpF304)">
 <circle cx="415.4" cy="163.5" r="1.5" fill="#5C6B77" opacity="0.5"/>
 <circle cx="415.8" cy="163.5" r="1.5" fill="#5C6B77" opacity="0.5"/>
@@ -4892,7 +4901,7 @@ Widać też obie fazy uczenia: na początku duży promień ciągnie wielkie obsz
 </g>
 <text x="469.0" y="48" text-anchor="middle" class="cap" style="fill:#5B4B8A">po 40 epokach</text>
 <clipPath id="cpF305"><rect x="540" y="56" width="118" height="116"/></clipPath>
-<rect x="540" y="56" width="118" height="116" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="540" y="56" width="118" height="116" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1"/>
 <g clip-path="url(#cpF305)">
 <circle cx="545.4" cy="163.5" r="1.5" fill="#5C6B77" opacity="0.5"/>
 <circle cx="545.8" cy="163.5" r="1.5" fill="#5C6B77" opacity="0.5"/>
@@ -5837,7 +5846,7 @@ Widać też obie fazy uczenia: na początku duży promień ciągnie wielkie obsz
 <circle cx="647.7" cy="66.3" r="2.6" fill="#5B4B8A"/>
 </g>
 <text x="599.0" y="48" text-anchor="middle" class="cap" style="fill:#5B4B8A">po 60 epokach</text>
-<rect x="20" y="200" width="640" height="78.8" rx="2" fill="#F2F5F6" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="20" y="200" width="640" height="78.8" rx="2" fill="#F3F4EE" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="20" y="200" width="640" height="3" fill="#5B4B8A"/>
 <text x="33" y="220.5" text-anchor="start" class="bx-t">CO SIĘ DZIEJE</text>
 <text x="33" y="239.0" text-anchor="start" class="bx">Na starcie wagi są losowe — łańcuch jest splątanym kłębkiem. Najpierw ściąga się</text>
@@ -5852,7 +5861,7 @@ Widać też obie fazy uczenia: na początku duży promień ciągnie wielkie obsz
 <defs><marker id="arF30" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker><marker id="arvF30" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker></defs>
 <text x="340" y="20" text-anchor="middle" class="bx-t">PROMIEŃ SĄSIEDZTWA — TRZY NASTAWY, TRZY WYNIKI</text>
 <clipPath id="cpF306"><rect x="24" y="58" width="196" height="142"/></clipPath>
-<rect x="24" y="58" width="196" height="142" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="24" y="58" width="196" height="142" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1"/>
 <g clip-path="url(#cpF306)">
 <circle cx="33.0" cy="189.6" r="1.5" fill="#5C6B77" opacity="0.5"/>
 <circle cx="33.6" cy="189.5" r="1.5" fill="#5C6B77" opacity="0.5"/>
@@ -6800,7 +6809,7 @@ Widać też obie fazy uczenia: na początku duży promień ciągnie wielkie obsz
 <text x="122" y="216" text-anchor="middle" class="cap">błąd kwantyzacji  0,093</text>
 <text x="122" y="230" text-anchor="middle" class="cap">błąd topograficzny  49 %</text>
 <clipPath id="cpF307"><rect x="240" y="58" width="196" height="142"/></clipPath>
-<rect x="240" y="58" width="196" height="142" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="240" y="58" width="196" height="142" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1"/>
 <g clip-path="url(#cpF307)">
 <circle cx="249.0" cy="189.6" r="1.5" fill="#5C6B77" opacity="0.5"/>
 <circle cx="249.6" cy="189.5" r="1.5" fill="#5C6B77" opacity="0.5"/>
@@ -7748,7 +7757,7 @@ Widać też obie fazy uczenia: na początku duży promień ciągnie wielkie obsz
 <text x="338" y="216" text-anchor="middle" class="cap">błąd kwantyzacji  0,105</text>
 <text x="338" y="230" text-anchor="middle" class="cap">błąd topograficzny  7 %</text>
 <clipPath id="cpF308"><rect x="456" y="58" width="196" height="142"/></clipPath>
-<rect x="456" y="58" width="196" height="142" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="456" y="58" width="196" height="142" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1"/>
 <g clip-path="url(#cpF308)">
 <circle cx="465.0" cy="189.6" r="1.5" fill="#5C6B77" opacity="0.5"/>
 <circle cx="465.6" cy="189.5" r="1.5" fill="#5C6B77" opacity="0.5"/>
@@ -8695,7 +8704,7 @@ Widać też obie fazy uczenia: na początku duży promień ciągnie wielkie obsz
 <text x="554.0" y="50" text-anchor="middle" class="cap" style="fill:#B3641A">za duży  σ: 13 → 6</text>
 <text x="554" y="216" text-anchor="middle" class="cap">błąd kwantyzacji  0,265</text>
 <text x="554" y="230" text-anchor="middle" class="cap">błąd topograficzny  0 %</text>
-<rect x="20" y="250" width="640" height="121.1" rx="2" fill="#F2F5F6" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="20" y="250" width="640" height="121.1" rx="2" fill="#F3F4EE" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="20" y="250" width="640" height="3" fill="#5B4B8A"/>
 <text x="33" y="270.5" text-anchor="start" class="bx-t">DLACZEGO PROMIEŃ MUSI MALEĆ</text>
 <text x="33" y="289.0" text-anchor="start" class="bx">Mały od początku: każdy neuron uczy się sam, sąsiedzi na siatce lądują w różnych miejscach —</text>
@@ -8742,7 +8751,7 @@ Widać też obie fazy uczenia: na początku duży promień ciągnie wielkie obsz
 <defs><marker id="arF30" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker><marker id="arvF30" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker></defs>
 <text x="340" y="20" text-anchor="middle" class="bx-t">MARTWE NEURONY — I DWA SPOSOBY, ŻEBY ICH NIE BYŁO</text>
 <clipPath id="cpF309"><rect x="24" y="58" width="196" height="142"/></clipPath>
-<rect x="24" y="58" width="196" height="142" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="24" y="58" width="196" height="142" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1"/>
 <g clip-path="url(#cpF309)">
 <circle cx="29.7" cy="193.4" r="1.5" fill="#5C6B77" opacity="0.5"/>
 <circle cx="30.2" cy="193.4" r="1.5" fill="#5C6B77" opacity="0.5"/>
@@ -9714,7 +9723,7 @@ Widać też obie fazy uczenia: na początku duży promień ciągnie wielkie obsz
 <text x="122" y="216" text-anchor="middle" class="cap" style="fill:#9C3B52">martwe neurony  24 / 40</text>
 <text x="122" y="230" text-anchor="middle" class="cap">błąd kwantyzacji  0,149</text>
 <clipPath id="cpF3010"><rect x="240" y="58" width="196" height="142"/></clipPath>
-<rect x="240" y="58" width="196" height="142" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="240" y="58" width="196" height="142" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1"/>
 <g clip-path="url(#cpF3010)">
 <circle cx="245.7" cy="193.4" r="1.5" fill="#5C6B77" opacity="0.5"/>
 <circle cx="246.2" cy="193.4" r="1.5" fill="#5C6B77" opacity="0.5"/>
@@ -10670,7 +10679,7 @@ Widać też obie fazy uczenia: na początku duży promień ciągnie wielkie obsz
 <text x="338" y="216" text-anchor="middle" class="cap" style="fill:#9C3B52">martwe neurony  8 / 40</text>
 <text x="338" y="230" text-anchor="middle" class="cap">błąd kwantyzacji  0,111</text>
 <clipPath id="cpF3011"><rect x="456" y="58" width="196" height="142"/></clipPath>
-<rect x="456" y="58" width="196" height="142" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="456" y="58" width="196" height="142" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1"/>
 <g clip-path="url(#cpF3011)">
 <circle cx="461.7" cy="193.4" r="1.5" fill="#5C6B77" opacity="0.5"/>
 <circle cx="462.2" cy="193.4" r="1.5" fill="#5C6B77" opacity="0.5"/>
@@ -11617,7 +11626,7 @@ Widać też obie fazy uczenia: na początku duży promień ciągnie wielkie obsz
 <text x="554.0" y="50" text-anchor="middle" class="cap" style="fill:#0E6E78">WTM — zwycięzca i sąsiedzi</text>
 <text x="554" y="216" text-anchor="middle" class="cap" style="fill:#0E6E78">martwe neurony  0 / 40</text>
 <text x="554" y="230" text-anchor="middle" class="cap">błąd kwantyzacji  0,105</text>
-<rect x="20" y="250" width="640" height="121.1" rx="2" fill="#F2F5F6" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="20" y="250" width="640" height="121.1" rx="2" fill="#F3F4EE" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="20" y="250" width="640" height="3" fill="#9C3B52"/>
 <text x="33" y="270.5" text-anchor="start" class="bx-t">CZERWONE KÓŁKA TO NEURONY, KTÓRE NIE WYGRAŁY ANI RAZU</text>
 <text x="33" y="289.0" text-anchor="start" class="bx">Przy czystym WTA neuron wylosowany daleko od danych nigdy nie wygrywa, więc nigdy się nie uczy — 24</text>
@@ -11656,25 +11665,25 @@ Widać też obie fazy uczenia: na początku duży promień ciągnie wielkie obsz
 <svg viewBox="0 0 680 356" class="fig">
 <defs><marker id="arF30" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker><marker id="arvF30" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker></defs>
 <text x="340" y="20" text-anchor="middle" class="bx-t">JAK MIERZYĆ JAKOŚĆ MAPY — I PO CO ONA JEST</text>
-<line x1="70" y1="168" x2="300" y2="168" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="70" y1="56" x2="70" y2="168" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="70.0" y1="168" x2="70.0" y2="172" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="70" y1="168" x2="300" y2="168" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="70" y1="56" x2="70" y2="168" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="70.0" y1="168" x2="70.0" y2="172" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="70.0" y="184" text-anchor="middle" class="tick">0</text>
-<line x1="144.2" y1="168" x2="144.2" y2="172" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="144.2" y1="168" x2="144.2" y2="172" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="144.2" y="184" text-anchor="middle" class="tick">20</text>
-<line x1="218.4" y1="168" x2="218.4" y2="172" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="218.4" y1="168" x2="218.4" y2="172" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="218.4" y="184" text-anchor="middle" class="tick">40</text>
-<line x1="292.6" y1="168" x2="292.6" y2="172" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="292.6" y1="168" x2="292.6" y2="172" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="292.6" y="184" text-anchor="middle" class="tick">60</text>
-<line x1="66" y1="168.0" x2="70" y2="168.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="66" y1="168.0" x2="70" y2="168.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="62" y="172.0" text-anchor="end" class="tick">0.0</text>
-<line x1="66" y1="141.3" x2="70" y2="141.3" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="66" y1="141.3" x2="70" y2="141.3" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="62" y="145.3" text-anchor="end" class="tick">0.1</text>
-<line x1="66" y1="114.7" x2="70" y2="114.7" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="66" y1="114.7" x2="70" y2="114.7" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="62" y="118.7" text-anchor="end" class="tick">0.2</text>
-<line x1="66" y1="88.0" x2="70" y2="88.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="66" y1="88.0" x2="70" y2="88.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="62" y="92.0" text-anchor="end" class="tick">0.3</text>
-<line x1="66" y1="61.3" x2="70" y2="61.3" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="66" y1="61.3" x2="70" y2="61.3" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="62" y="65.3" text-anchor="end" class="tick">0.4</text>
 <polyline points="73.7,66.2 77.4,113.7 81.1,129.2 88.5,135.4 99.7,136.9 114.5,137.7 136.8,139.1 162.7,139.2 199.8,139.6 236.9,139.8 292.6,140.1" fill="none" stroke="#0E6E78" stroke-width="2.2"/>
 <polyline points="73.7,168.0 77.4,126.5 81.1,137.8 88.5,158.8 99.7,156.4 114.5,155.6 136.8,151.4 162.7,153.8 199.8,152.9 236.9,150.5 292.6,147.6" fill="none" stroke="#9C3B52" stroke-width="2.2" stroke-dasharray="4 3"/>
@@ -11686,7 +11695,7 @@ Widać też obie fazy uczenia: na początku duży promień ciągnie wielkie obsz
 <text x="58" y="216" text-anchor="start" class="cap" style="fill:#0E6E78">kwantyzacji — jak blisko danych</text>
 <line x1="30" y1="229" x2="50" y2="229" stroke="#9C3B52" stroke-width="2.4" stroke-dasharray="4 3"/>
 <text x="58" y="233" text-anchor="start" class="cap" style="fill:#9C3B52">topograficzny — czy mapa nie jest splątana</text>
-<rect x="400" y="56" width="140" height="140" fill="#FFFFFF" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="400" y="56" width="140" height="140" fill="#FFFFFF" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="441.3" cy="154.7" r="1.3" fill="#5C6B77" opacity="0.45"/>
 <circle cx="478.8" cy="70.1" r="1.3" fill="#5C6B77" opacity="0.45"/>
 <circle cx="501.1" cy="125.0" r="1.3" fill="#5C6B77" opacity="0.45"/>
@@ -12006,7 +12015,7 @@ Widać też obie fazy uczenia: na początku duży promień ciągnie wielkie obsz
 <text x="470" y="48" text-anchor="middle" class="cap" style="fill:#0E6E78">siatka 8 × 8 na chmurze</text>
 <text x="470" y="210" text-anchor="middle" class="cap">ta sama zasada, inny</text>
 <text x="470" y="224" text-anchor="middle" class="cap">kształt sąsiedztwa</text>
-<rect x="556" y="56" width="104" height="140" rx="2" fill="#F2F5F6" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="556" y="56" width="104" height="140" rx="2" fill="#F3F4EE" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="556" y="56" width="104" height="3" fill="#0E6E78"/>
 <text x="608.0" y="73.8" text-anchor="middle" class="bx-t">MAPA KOŃCOWA</text>
 <text x="608.0" y="92.3" text-anchor="middle" class="bx">błąd</text>
@@ -12017,7 +12026,7 @@ Widać też obie fazy uczenia: na początku duży promień ciągnie wielkie obsz
 <text x="608.0" y="160.3" text-anchor="middle" class="bx">8 %</text>
 <text x="608.0" y="173.9" text-anchor="middle" class="bx">martwe neurony</text>
 <text x="608.0" y="187.5" text-anchor="middle" class="bx">0 / 40</text>
-<rect x="20" y="250" width="640" height="92.9" rx="2" fill="#F2F5F6" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="20" y="250" width="640" height="92.9" rx="2" fill="#F3F4EE" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="20" y="250" width="640" height="3" fill="#B3641A"/>
 <text x="33" y="270.5" text-anchor="start" class="bx-t">ZASTOSOWANIE: MAPA OBSZARU PRACY OBIEKTU</text>
 <text x="33" y="289.0" text-anchor="start" class="bx">Mapa nauczona na danych ze sprawnego obiektu dwóch zbiorników opisuje jego normalny obszar pracy.</text>

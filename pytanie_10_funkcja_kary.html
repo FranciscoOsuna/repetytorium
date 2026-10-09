@@ -4,14 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pytanie 10 — Metoda funkcji kary</title>
+<link rel="icon" type="image/png" sizes="144x144" href="favicon-144.png?v=2">
+<link rel="icon" href="favicon.ico?v=2" sizes="any">
+<link rel="apple-touch-icon" href="favicon-144.png?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#141C24; --mut:#5C6B77; --line:#C3CDD4;
-  --paper:#E8ECEF; --card:#FCFDFD;
-  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52;
+  --ink:#141C24; --mut:#5C6B77; --line:#CCD2C7;
+  --paper:#EDEEE5; --card:#FDFDFA;
+  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52; --moss:#5E8C3A;
   --disp:"Space Grotesk",system-ui,sans-serif;
   --body:"STIX Two Text","Source Serif 4",Georgia,serif;
   --mono:"IBM Plex Mono",ui-monospace,monospace;
@@ -39,7 +42,7 @@ h2 .num{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--viole
         letter-spacing:.08em;flex:none}
 h3{font-family:var(--disp);font-weight:500;font-size:18.5px;margin:34px 0 8px;letter-spacing:-.01em}
 p{margin:0 0 14px}
-.rail{height:5px;background:linear-gradient(90deg,var(--teal) 0%,var(--violet) 55%,var(--amber) 100%);
+.rail{height:5px;background:linear-gradient(90deg,var(--moss) 0%,var(--teal) 30%,var(--violet) 62%,var(--amber) 100%);
       opacity:.85;margin:0 0 22px;border-radius:2px}
 
 /* ---- figury ---- */
@@ -83,7 +86,7 @@ figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:
 table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15px;background:var(--card)}
 th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
 th{font-family:var(--disp);font-weight:500;font-size:13px;letter-spacing:.02em;
-   background:#F2F5F6;border-bottom:1.5px solid var(--line)}
+   background:#F3F4EE;border-bottom:1.5px solid var(--line)}
 td.n{font-family:var(--mono);font-size:13.5px;white-space:nowrap}
 tr:last-child td{border-bottom:none}
 
@@ -115,6 +118,11 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
 .backfoot a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
             color:var(--teal);text-decoration:none;border-bottom:1px solid var(--line)}
 .backfoot a:hover,.backfoot a:focus-visible{border-bottom-color:var(--teal);outline:none}
+
+/* ---- meowl przy tytule ---- */
+.avatar{float:right;width:64px;height:64px;border-radius:50%;margin:2px 0 10px 18px;
+        box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--line)}
+header::after{content:"";display:block;clear:both}
 </style>
 </head>
 <body>
@@ -126,6 +134,7 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
 </nav>
 
 <header>
+  <img class="avatar" src="assets/meowl-tabby.png" width="64" height="64" alt="" decoding="async">
   <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 10</p>
   <h1>Metoda funkcji kary w zagadnieniach optymalizacyjnych</h1>
   <p class="quest">Przedstaw zastosowanie metody funkcji kary w zagadnieniach optymalizacyjnych.</p>
@@ -171,7 +180,7 @@ ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{colo
 .inter .odczyt.staly2{min-height:80px}
 /*stickybar-start*/
 .topnav{display:none}
-#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(232,236,239,.96);
+#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(237,238,229,.96);
   -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 #sbar .in{max-width:860px;margin:0 auto;padding:9px 22px 8px}
 #sbar .r1{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
@@ -279,7 +288,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 <g clip-path="url(#cF10a3)"><ellipse cx="144.0" cy="202.0" rx="21.0" ry="21.0" fill="none" stroke="#5C6B77" stroke-width="0.9" stroke-dasharray="4 3"/><ellipse cx="144.0" cy="202.0" rx="42.0" ry="42.0" fill="none" stroke="#5C6B77" stroke-width="0.9" stroke-dasharray="4 3"/><ellipse cx="144.0" cy="202.0" rx="63.0" ry="63.0" fill="none" stroke="#5C6B77" stroke-width="0.9" stroke-dasharray="4 3"/><ellipse cx="144.0" cy="202.0" rx="84.0" ry="84.0" fill="none" stroke="#5C6B77" stroke-width="0.9" stroke-dasharray="4 3"/></g>
 <circle cx="144.0" cy="202.0" r="4" fill="#5C6B77" stroke="none" stroke-width="1"/>
 <polygon points="144.0,194.0 146.1,199.1 151.6,199.5 147.4,203.1 148.7,208.5 144.0,205.6 139.3,208.5 140.6,203.1 136.4,199.5 141.9,199.1" fill="#141C24"/>
-<text x="144.0" y="226.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9px;paint-order:stroke;stroke:#FCFDFD;stroke-width:4px;stroke-linejoin:round">x* = minimum bez ograniczeń</text>
+<text x="144.0" y="226.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9px;paint-order:stroke;stroke:#FDFDFA;stroke-width:4px;stroke-linejoin:round">x* = minimum bez ograniczeń</text>
 <text x="68.4" y="269.2" text-anchor="start" class="cap" style="fill:#0E6E78;font-size:9px">obszar dopuszczalny</text>
 <text x="495.0" y="46.0" text-anchor="middle" class="bx-t" style="fill:#B3641A;font-size:11px">na brzegu obszaru</text>
 <text x="495.0" y="62.0" text-anchor="middle" class="cap" style="font-size:9px">ograniczenie x₁ + x₂ ≤ 5 aktywne</text>
@@ -326,7 +335,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 <g clip-path="url(#cF10a51)"><polyline points="390.0,76.0 600.0,286.0" fill="none" stroke="#B3641A" stroke-width="2" stroke-linejoin="round"/></g>
 <g clip-path="url(#cF10a51)"><ellipse cx="537.0" cy="139.0" rx="21.0" ry="21.0" fill="none" stroke="#5C6B77" stroke-width="0.9" stroke-dasharray="4 3"/><ellipse cx="537.0" cy="139.0" rx="42.0" ry="42.0" fill="none" stroke="#5C6B77" stroke-width="0.9" stroke-dasharray="4 3"/><ellipse cx="537.0" cy="139.0" rx="63.0" ry="63.0" fill="none" stroke="#5C6B77" stroke-width="0.9" stroke-dasharray="4 3"/><ellipse cx="537.0" cy="139.0" rx="84.0" ry="84.0" fill="none" stroke="#5C6B77" stroke-width="0.9" stroke-dasharray="4 3"/><ellipse cx="537.0" cy="139.0" rx="59.4" ry="59.4" fill="none" stroke="#9C3B52" stroke-width="1.6"/></g>
 <circle cx="537.0" cy="139.0" r="4" fill="#5C6B77" stroke="none" stroke-width="1"/>
-<text x="537.0" y="129.0" text-anchor="middle" class="cap" style="fill:#5C6B77;font-size:8.5px;paint-order:stroke;stroke:#FCFDFD;stroke-width:4px;stroke-linejoin:round">min bez ograniczeń</text>
+<text x="537.0" y="129.0" text-anchor="middle" class="cap" style="fill:#5C6B77;font-size:8.5px;paint-order:stroke;stroke:#FDFDFA;stroke-width:4px;stroke-linejoin:round">min bez ograniczeń</text>
 <polygon points="495.0,173.0 497.1,178.1 502.6,178.5 498.4,182.1 499.7,187.5 495.0,184.6 490.3,187.5 491.6,182.1 487.4,178.5 492.9,178.1" fill="#9C3B52"/>
 <text x="485.0" y="185.0" text-anchor="end" class="bx-t" style="fill:#9C3B52;font-size:10.5px">x*</text>
 <text x="398.4" y="269.2" text-anchor="start" class="cap" style="fill:#0E6E78;font-size:9px">obszar dopuszczalny</text>
@@ -536,55 +545,55 @@ html{scroll-padding-top:var(--sbh,84px)}
 <svg viewBox="0 0 680 490" class="fig">
 <defs><marker id="arF10c0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#141C24"/></marker></defs>
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">ALGORYTM METODY FUNKCJI KARY (PRZY USTALONEJ POSTACI KARY)</text>
-<ellipse cx="150" cy="62" rx="52" ry="16" fill="#FCFDFD" stroke="#141C24" stroke-width="1.3"/>
+<ellipse cx="150" cy="62" rx="52" ry="16" fill="#FDFDFA" stroke="#141C24" stroke-width="1.3"/>
 <text x="150.0" y="66.0" text-anchor="middle" class="bx-t" style="font-size:10.5px">START</text>
-<rect x="38.0" y="96.0" width="224.0" height="50.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.5"/>
+<rect x="38.0" y="96.0" width="224.0" height="50.0" rx="3" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.5"/>
 <text x="150.0" y="117.0" text-anchor="middle" class="bx-t" style="font-size:9.5px">wybierz postać kary,</text>
 <text x="150.0" y="134.0" text-anchor="middle" class="cap" style="font-size:9px">r₁, x⁽⁰⁾, ε, c;  k = 1</text>
-<rect x="38.0" y="176.0" width="224.0" height="50.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.5"/>
+<rect x="38.0" y="176.0" width="224.0" height="50.0" rx="3" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.5"/>
 <text x="150.0" y="197.0" text-anchor="middle" class="bx-t" style="font-size:9.5px">minimalizuj T(x, rₖ) = f(x) + φ(x, rₖ)</text>
 <text x="150.0" y="214.0" text-anchor="middle" class="cap" style="font-size:9px">bez ograniczeń, start z x⁽ᵏ⁻¹⁾ → x⁽ᵏ⁾</text>
 <path d="M 150.0 78.0 L 150.0 94.0" fill="none" stroke="#141C24" stroke-width="1.2" marker-end="url(#arF10c0)"/>
 <path d="M 150.0 146.0 L 150.0 174.0" fill="none" stroke="#141C24" stroke-width="1.2" marker-end="url(#arF10c0)"/>
-<polygon points="150.0,243.0 250.0,278.0 150.0,313.0 50.0,278.0" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.3"/>
+<polygon points="150.0,243.0 250.0,278.0 150.0,313.0 50.0,278.0" fill="#FDFDFA" stroke="#9C3B52" stroke-width="1.3"/>
 <text x="150.0" y="275.0" text-anchor="middle" class="bx-t" style="font-size:10px">warunek stopu</text>
 <text x="150.0" y="290.0" text-anchor="middle" class="bx-t" style="font-size:10px">spełniony?</text>
 <path d="M 150.0 226.0 L 150.0 242.0" fill="none" stroke="#141C24" stroke-width="1.2" marker-end="url(#arF10c0)"/>
 <path d="M 250.0 278.0 L 300.0 278.0 L 300.0 330.0" fill="none" stroke="#141C24" stroke-width="1.2" marker-end="url(#arF10c0)"/>
 <text x="262.0" y="270.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9px">TAK</text>
-<rect x="240.0" y="332.0" width="120.0" height="36.0" rx="3" fill="#FCFDFD" stroke="#141C24" stroke-width="1"/>
+<rect x="240.0" y="332.0" width="120.0" height="36.0" rx="3" fill="#FDFDFA" stroke="#141C24" stroke-width="1"/>
 <text x="300.0" y="355.0" text-anchor="middle" class="bx-t" style="font-size:10.5px">x* ≈ x⁽ᵏ⁾</text>
 <path d="M 300.0 368.0 L 300.0 392.0" fill="none" stroke="#141C24" stroke-width="1.2" marker-end="url(#arF10c0)"/>
-<ellipse cx="300" cy="408" rx="46" ry="15" fill="#FCFDFD" stroke="#141C24" stroke-width="1.3"/>
+<ellipse cx="300" cy="408" rx="46" ry="15" fill="#FDFDFA" stroke="#141C24" stroke-width="1.3"/>
 <text x="300.0" y="412.0" text-anchor="middle" class="bx-t" style="font-size:10px">KONIEC</text>
 <path d="M 150.0 313.0 L 150.0 338.0" fill="none" stroke="#141C24" stroke-width="1.2" marker-end="url(#arF10c0)"/>
 <text x="158.0" y="330.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9px">NIE</text>
-<rect x="60.0" y="340.0" width="160.0" height="50.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.5"/>
+<rect x="60.0" y="340.0" width="160.0" height="50.0" rx="3" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.5"/>
 <text x="140.0" y="361.0" text-anchor="middle" class="bx-t" style="font-size:10.5px">rₖ₊₁ = c · rₖ</text>
 <text x="140.0" y="378.0" text-anchor="middle" class="cap" style="font-size:9px">k = k + 1</text>
 <path d="M 60.0 365.0 L 22.0 365.0 L 22.0 201.0 L 36.0 201.0" fill="none" stroke="#141C24" stroke-width="1.2" marker-end="url(#arF10c0)"/>
-<rect x="400.0" y="96.0" width="266.0" height="70.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="400.0" y="96.0" width="266.0" height="70.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="412.0" y="113.0" text-anchor="start" class="bx-t" style="font-size:10px">Krok 1</text>
 <text x="412.0" y="130.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9px">postać: wewnętrzna, zewnętrzna albo mieszana;</text>
 <text x="412.0" y="146.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9px">c &gt; 1 — kara zewnętrzna rośnie;</text>
 <text x="412.0" y="162.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9px">0 &lt; c &lt; 1 — waga bariery maleje</text>
-<rect x="400.0" y="176.0" width="266.0" height="70.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="400.0" y="176.0" width="266.0" height="70.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="412.0" y="193.0" text-anchor="start" class="bx-t" style="font-size:10px">Krok 2 — serce metody</text>
 <text x="412.0" y="210.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9px">zwykła optymalizacja bez ograniczeń</text>
 <text x="412.0" y="226.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9px">(gradientowa, Newton, simpleks…);</text>
 <text x="412.0" y="242.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9px">start z poprzedniego wyniku</text>
-<rect x="400.0" y="262.0" width="266.0" height="70.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="400.0" y="262.0" width="266.0" height="70.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="412.0" y="279.0" text-anchor="start" class="bx-t" style="font-size:10px">Warunki stopu (k ≥ 2)</text>
 <text x="412.0" y="296.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9px">1. ‖x⁽ᵏ⁾ − x⁽ᵏ⁻¹⁾‖ ≤ ε</text>
 <text x="412.0" y="312.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9px">2. |T(x⁽ᵏ⁾, rₖ) − T(x⁽ᵏ⁻¹⁾, rₖ₋₁)| ≤ ε</text>
 <text x="412.0" y="328.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9px">3. kara w x⁽ᵏ⁾ ≤ ε</text>
-<rect x="400.0" y="346.0" width="266.0" height="54.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="400.0" y="346.0" width="266.0" height="54.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="412.0" y="363.0" text-anchor="start" class="bx-t" style="font-size:10px">Wynik</text>
 <text x="412.0" y="380.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9px">ciąg x*(r₁), x*(r₂), … dąży do x*:</text>
 <text x="412.0" y="396.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9px">lim ‖x*(r) − x*‖ = 0 dla r → ∞</text>
-<line x1="264.0" y1="121.0" x2="398.0" y2="121.0" stroke="#C3CDD4" stroke-width="0.9" stroke-dasharray="3 3"/>
-<line x1="264.0" y1="201.0" x2="398.0" y2="201.0" stroke="#C3CDD4" stroke-width="0.9" stroke-dasharray="3 3"/>
-<line x1="250.0" y1="288.0" x2="398.0" y2="296.0" stroke="#C3CDD4" stroke-width="0.9" stroke-dasharray="3 3"/>
+<line x1="264.0" y1="121.0" x2="398.0" y2="121.0" stroke="#CCD2C7" stroke-width="0.9" stroke-dasharray="3 3"/>
+<line x1="264.0" y1="201.0" x2="398.0" y2="201.0" stroke="#CCD2C7" stroke-width="0.9" stroke-dasharray="3 3"/>
+<line x1="250.0" y1="288.0" x2="398.0" y2="296.0" stroke="#CCD2C7" stroke-width="0.9" stroke-dasharray="3 3"/>
 <text x="340.0" y="462.0" text-anchor="middle" class="cap" style="font-size:9px">Układ jak na schemacie blokowym z wykładu; kroki 1–5 wg slajdu „Algorytm”.</text>
 </svg>
 <figcaption>Schemat blokowy algorytmu przy ustalonej postaci kary. Pętla zewnętrzna zmienia tylko r. Pętla wewnętrzna (krok 2) to dowolna metoda optymalizacji bez ograniczeń.</figcaption>
@@ -689,19 +698,19 @@ Ten sam nawias stoi w obu równaniach, więc po podzieleniu wychodzi <span class
 <circle cx="159.0" cy="248.0" r="4" fill="#5C6B77" stroke="none" stroke-width="1"/>
 <text x="153.0" y="263.0" text-anchor="end" class="cap" style="font-size:8.5px">min bez ograniczeń</text>
 <polygon points="229.7,155.1 231.8,160.2 237.3,160.7 233.1,164.3 234.4,169.6 229.7,166.7 225.0,169.6 226.3,164.3 222.1,160.7 227.6,160.2" fill="#141C24"/>
-<text x="248.1" y="106.1" text-anchor="start" class="cap" style="fill:#141C24;font-size:9.5px;paint-order:stroke;stroke:#FCFDFD;stroke-width:4px;stroke-linejoin:round">x* = (15/14; 9/7)</text>
+<text x="248.1" y="106.1" text-anchor="start" class="cap" style="fill:#141C24;font-size:9.5px;paint-order:stroke;stroke:#FDFDFA;stroke-width:4px;stroke-linejoin:round">x* = (15/14; 9/7)</text>
 <circle id="p10x" cx="0" cy="0" r="5.5" fill="#9C3B52" stroke="#FFFFFF" stroke-width="1.5"/>
-<rect x="404.0" y="50.0" width="262.0" height="297.0" rx="5" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="404.0" y="50.0" width="262.0" height="297.0" rx="5" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="418.0" y="74.0" text-anchor="start" class="cap" style="fill:#9C3B52;font-size:9px">poziomice φ(x, r) wokół jego minimum</text>
 <text x="418.0" y="93.0" text-anchor="start" class="cap" style="fill:#9C3B52;font-size:9px">● x*(r) — minimum φ (bez ograniczeń)</text>
 <text x="418.0" y="112.0" text-anchor="start" class="cap" style="fill:#B3641A;font-size:9px">ograniczenie 2x₁ + 3x₂ = 6</text>
 <text x="418.0" y="131.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9px">★ x* — minimum z ograniczeniem</text>
 <text x="418.0" y="150.0" text-anchor="start" class="cap" style="fill:#5C6B77;font-size:9px">- - droga x*(r) przy rosnącym r</text>
 <text x="418.0" y="186.0" text-anchor="start" class="cap" style="font-size:8.5px">NARUSZENIE OGRANICZENIA |g(x*(r))|</text>
-<rect x="418.0" y="194.0" width="234.0" height="14.0" rx="2" fill="#F3F5F7" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="418.0" y="194.0" width="234.0" height="14.0" rx="2" fill="#F3F5F7" stroke="#CCD2C7" stroke-width="1"/>
 <rect id="p10bar" x="418" y="194" width="0" height="14" fill="#9C3B52" rx="2"/>
 <text x="418.0" y="236.0" text-anchor="start" class="cap" style="font-size:8.5px">UWARUNKOWANIE λmax/λmin</text>
-<rect x="418.0" y="244.0" width="234.0" height="14.0" rx="2" fill="#F3F5F7" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="418.0" y="244.0" width="234.0" height="14.0" rx="2" fill="#F3F5F7" stroke="#CCD2C7" stroke-width="1"/>
 <rect id="p10cnd" x="418" y="244" width="0" height="14" fill="#5B4B8A" rx="2"/>
 <text x="418.0" y="286.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9px">większe r → bliżej x*,</text>
 <text x="418.0" y="302.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9px">ale poziomice coraz bardziej</text>
@@ -786,7 +795,7 @@ Ten sam nawias stoi w obu równaniach, więc po podzieleniu wychodzi <span class
 <svg viewBox="0 0 680 470" class="fig">
 <defs><marker id="arF10f0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#141C24"/></marker></defs>
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">NARYSUJ NA TABLICY W 6 RUCHACH</text>
-<rect x="14.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="32.0" cy="58.0" r="10" fill="#B3641A" stroke="none" stroke-width="1"/>
 <text x="32.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">1</text>
 <text x="48.0" y="56.0" text-anchor="start" class="bx-t">zadanie</text>
@@ -820,7 +829,7 @@ Ten sam nawias stoi w obu równaniach, więc po podzieleniu wychodzi <span class
 <g clip-path="url(#cF10f6)"><polyline points="58.0,90.0 188.0,220.0" fill="none" stroke="#B3641A" stroke-width="1.6" stroke-linejoin="round"/></g>
 <g clip-path="url(#cF10f6)"><ellipse cx="149.0" cy="129.0" rx="18.2" ry="18.2" fill="none" stroke="#5C6B77" stroke-width="0.8" stroke-dasharray="3 3"/><ellipse cx="149.0" cy="129.0" rx="36.8" ry="36.8" fill="none" stroke="#5C6B77" stroke-width="0.8" stroke-dasharray="3 3"/></g>
 <polygon points="123.0,149.0 124.6,152.8 128.7,153.1 125.6,155.8 126.5,159.9 123.0,157.7 119.5,159.9 120.4,155.8 117.3,153.1 121.4,152.8" fill="#9C3B52"/>
-<rect x="236.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="236.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="254.0" cy="58.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
 <text x="254.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">2</text>
 <text x="270.0" y="56.0" text-anchor="start" class="bx-t">pomysł</text>
@@ -833,7 +842,7 @@ Ten sam nawias stoi w obu równaniach, więc po podzieleniu wychodzi <span class
 <g clip-path="url(#cF10f40)"><polyline points="267.8,77.8 268.2,79.3 268.6,80.7 269.0,82.2 269.5,83.6 269.9,85.0 270.3,86.4 270.7,87.7 271.1,89.1 271.5,90.4 271.9,91.7 272.3,92.9 272.7,94.2 273.2,95.4 273.6,96.6 274.0,97.8 274.4,99.0 274.8,100.1 275.2,101.2 275.6,102.3 276.0,103.4 276.4,104.5 276.9,105.5 277.3,106.5 277.7,107.5 278.1,108.5 278.5,109.4 278.9,110.3 279.3,111.3 279.7,112.1 280.1,113.0 280.6,113.8 281.0,114.7 281.4,115.5 281.8,116.2 282.2,117.0 282.6,117.7 283.0,118.4 283.4,119.1 283.8,119.8 284.3,120.5 284.7,121.2 285.1,121.8 285.5,122.5 285.9,123.2 286.3,123.8 286.7,124.5 287.1,125.1 287.5,125.8 287.9,126.5 288.4,127.1 288.8,127.8 289.2,128.4 289.6,129.1 290.0,129.7 290.4,130.3 290.8,131.0 291.2,131.6 291.6,132.2 292.1,132.9 292.5,133.5 292.9,134.1 293.3,134.8 293.7,135.4 294.1,136.0 294.5,136.6 294.9,137.2 295.3,137.8 295.8,138.4 296.2,139.1 296.6,139.7 297.0,140.3 297.4,140.9 297.8,141.5 298.2,142.1 298.6,142.6 299.0,143.2 299.5,143.8 299.9,144.4 300.3,145.0 300.7,145.6 301.1,146.2 301.5,146.7 301.9,147.3 302.3,147.9 302.7,148.4 303.2,149.0 303.6,149.6 304.0,150.1 304.4,150.7 304.8,151.3 305.2,151.8 305.6,152.4 306.0,152.9 306.4,153.5 306.9,154.0 307.3,154.5 307.7,155.1 308.1,155.6 308.5,156.2 308.9,156.7 309.3,157.2 309.7,157.7 310.1,158.3 310.6,158.8 311.0,159.3 311.4,159.8 311.8,160.4 312.2,160.9 312.6,161.4 313.0,161.9 313.4,162.4 313.8,162.9 314.3,163.4 314.7,163.9 315.1,164.4 315.5,164.9 315.9,165.4 316.3,165.9 316.7,166.4 317.1,166.9 317.5,167.3 318.0,167.8 318.4,168.3 318.8,168.8 319.2,169.2 319.6,169.7 320.0,170.2 320.4,170.6 320.8,171.1 321.2,171.6 321.7,172.0 322.1,172.5 322.5,172.9 322.9,173.4 323.3,173.8 323.7,174.3 324.1,174.7 324.5,175.2 324.9,175.6 325.4,176.1 325.8,176.5 326.2,176.9 326.6,177.4 327.0,177.8 327.4,178.2 327.8,178.6 328.2,179.1 328.6,179.5 329.1,179.9 329.5,180.3 329.9,180.7 330.3,181.1 330.7,181.5 331.1,181.9 331.5,182.3 331.9,182.7 332.3,183.1 332.8,183.5 333.2,183.9 333.6,184.3 334.0,184.7 334.4,185.1 334.8,185.5 335.2,185.8 335.6,186.2 336.0,186.6 336.5,187.0 336.9,187.3 337.3,187.7 337.7,188.1 338.1,188.4 338.5,188.8 338.9,189.2 339.3,189.5 339.7,189.9 340.2,190.2 340.6,190.6 341.0,190.9 341.4,191.3 341.8,191.6 342.2,192.0 342.6,192.3 343.0,192.6 343.4,193.0 343.8,193.3 344.3,193.6 344.7,193.9 345.1,194.3 345.5,194.6 345.9,194.9 346.3,195.2 346.7,195.5 347.1,195.8 347.5,196.2 348.0,196.5 348.4,196.8 348.8,197.1 349.2,197.4 349.6,197.7 350.0,198.0 350.4,198.2 350.8,198.5 351.2,198.8 351.7,199.1 352.1,199.4 352.5,199.7 352.9,200.0 353.3,200.2 353.7,200.5 354.1,200.8 354.5,201.0 354.9,201.2 355.4,201.4 355.8,201.6 356.2,201.7 356.6,201.9 357.0,202.0 357.4,202.1 357.8,202.1 358.2,202.2 358.6,202.2 359.1,202.2 359.5,202.2 359.9,202.2 360.3,202.1 360.7,202.0 361.1,201.9 361.5,201.8 361.9,201.6 362.3,201.5 362.8,201.3 363.2,201.1 363.6,200.8 364.0,200.6 364.4,200.3 364.8,200.0 365.2,199.7 365.6,199.4 366.0,199.0 366.5,198.6 366.9,198.2 367.3,197.8 367.7,197.3 368.1,196.9 368.5,196.4 368.9,195.9 369.3,195.3 369.7,194.8 370.2,194.2 370.6,193.6 371.0,193.0 371.4,192.3 371.8,191.7 372.2,191.0 372.6,190.3 373.0,189.6 373.4,188.8 373.9,188.1 374.3,187.3 374.7,186.4 375.1,185.6 375.5,184.8 375.9,183.9 376.3,183.0 376.7,182.1 377.1,181.1 377.6,180.2 378.0,179.2 378.4,178.2 378.8,177.1 379.2,176.1 379.6,175.0 380.0,173.9 380.4,172.8 380.8,171.7 381.3,170.5 381.7,169.4 382.1,168.2 382.5,166.9 382.9,165.7 383.3,164.4 383.7,163.1 384.1,161.8 384.5,160.5 385.0,159.2 385.4,157.8 385.8,156.4 386.2,155.0 386.6,153.6 387.0,152.1 387.4,150.6 387.8,149.1 388.2,147.6 388.7,146.1 389.1,144.5 389.5,142.9 389.9,141.3 390.3,139.7 390.7,138.0 391.1,136.4 391.5,134.7 391.9,133.0 392.4,131.2 392.8,129.5 393.2,127.7 393.6,125.9 394.0,124.1 394.4,122.2 394.8,120.4 395.2,118.5 395.6,116.6 396.1,114.6 396.5,112.7 396.9,110.7 397.3,108.7 397.7,106.7 398.1,104.7 398.5,102.6 398.9,100.5 399.3,98.4 399.7,96.3 400.2,94.2 400.6,92.0 401.0,89.8 401.4,87.6 401.8,85.4 402.2,83.1 402.6,80.9 403.0,78.6" fill="none" stroke="#5B4B8A" stroke-width="2" stroke-linejoin="round"/></g>
 <text x="340.0" y="234.0" text-anchor="middle" class="cap" style="font-size:9px">f + kara = T</text>
 <polygon points="353.7,195.5 355.0,198.7 358.5,199.0 355.9,201.2 356.7,204.5 353.7,202.8 350.8,204.5 351.6,201.2 349.0,199.0 352.4,198.7" fill="#141C24"/>
-<rect x="458.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="458.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="476.0" cy="58.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <text x="476.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">3</text>
 <text x="492.0" y="56.0" text-anchor="start" class="bx-t">wewnętrzna</text>
@@ -846,7 +855,7 @@ Ten sam nawias stoi w obu równaniach, więc po podzieleniu wychodzi <span class
 <g clip-path="url(#cF10f53)"><polyline points="513.2,79.3 513.6,82.2 514.1,84.9 514.5,87.4 514.9,89.7 515.3,91.9 515.7,94.0 516.1,95.9 516.5,97.8 516.9,99.5 517.3,101.1 517.8,102.7 518.2,104.2 518.6,105.7 519.0,107.1 519.4,108.4 519.8,109.7 520.2,111.0 520.6,112.2 521.0,113.3 521.5,114.5 521.9,115.6 522.3,116.6 522.7,117.7 523.1,118.7 523.5,119.7 523.9,120.7 524.3,121.6 524.7,122.5 525.2,123.4 525.6,124.3 526.0,125.2 526.4,126.0 526.8,126.8 527.2,127.6 527.6,128.4 528.0,129.2 528.4,130.0 528.9,130.8 529.3,131.5 529.7,132.2 530.1,132.9 530.5,133.6 530.9,134.3 531.3,135.0 531.7,135.7 532.1,136.3 532.6,137.0 533.0,137.6 533.4,138.3 533.8,138.9 534.2,139.5 534.6,140.1 535.0,140.7 535.4,141.3 535.8,141.9 536.3,142.4 536.7,143.0 537.1,143.5 537.5,144.1 537.9,144.6 538.3,145.1 538.7,145.6 539.1,146.1 539.5,146.6 540.0,147.1 540.4,147.6 540.8,148.1 541.2,148.6 541.6,149.0 542.0,149.5 542.4,149.9 542.8,150.4 543.2,150.8 543.7,151.2 544.1,151.6 544.5,152.0 544.9,152.4 545.3,152.8 545.7,153.2 546.1,153.5 546.5,153.9 546.9,154.3 547.4,154.6 547.8,154.9 548.2,155.2 548.6,155.6 549.0,155.9 549.4,156.1 549.8,156.4 550.2,156.7 550.6,157.0 551.1,157.2 551.5,157.4 551.9,157.7 552.3,157.9 552.7,158.1 553.1,158.3 553.5,158.4 553.9,158.6 554.3,158.7 554.8,158.8 555.2,159.0 555.6,159.0 556.0,159.1 556.4,159.2 556.8,159.2 557.2,159.2 557.6,159.2 558.0,159.2 558.5,159.1 558.9,159.0 559.3,158.9 559.7,158.7 560.1,158.6 560.5,158.3 560.9,158.1 561.3,157.8 561.7,157.4 562.2,157.1 562.6,156.6 563.0,156.1 563.4,155.6 563.8,154.9 564.2,154.2 564.6,153.4 565.0,152.5 565.4,151.6 565.8,150.5 566.3,149.2 566.7,147.9 567.1,146.3 567.5,144.6 567.9,142.6 568.3,140.4 568.7,137.8 569.1,134.9 569.5,131.6 570.0,127.7 570.4,123.2 570.8,117.9 571.2,111.5 571.6,103.8 572.0,94.3 572.4,82.4" fill="none" stroke="#0E6E78" stroke-width="1.2" stroke-linejoin="round"/></g>
 <g clip-path="url(#cF10f53)"><polyline points="506.7,83.7 507.1,93.6 507.5,99.7 507.9,104.1 508.3,107.4 508.7,110.0 509.1,112.2 509.5,114.1 509.9,115.7 510.4,117.2 510.8,118.6 511.2,119.8 511.6,121.0 512.0,122.1 512.4,123.1 512.8,124.1 513.2,125.1 513.6,126.0 514.1,126.9 514.5,127.7 514.9,128.6 515.3,129.4 515.7,130.2 516.1,131.0 516.5,131.8 516.9,132.5 517.3,133.3 517.8,134.0 518.2,134.7 518.6,135.4 519.0,136.1 519.4,136.8 519.8,137.5 520.2,138.2 520.6,138.8 521.0,139.5 521.5,140.2 521.9,140.8 522.3,141.4 522.7,142.1 523.1,142.7 523.5,143.3 523.9,144.0 524.3,144.6 524.7,145.2 525.2,145.8 525.6,146.4 526.0,147.0 526.4,147.6 526.8,148.2 527.2,148.8 527.6,149.4 528.0,149.9 528.4,150.5 528.9,151.1 529.3,151.7 529.7,152.2 530.1,152.8 530.5,153.3 530.9,153.9 531.3,154.4 531.7,155.0 532.1,155.5 532.6,156.1 533.0,156.6 533.4,157.1 533.8,157.7 534.2,158.2 534.6,158.7 535.0,159.2 535.4,159.8 535.8,160.3 536.3,160.8 536.7,161.3 537.1,161.8 537.5,162.3 537.9,162.8 538.3,163.3 538.7,163.8 539.1,164.3 539.5,164.7 540.0,165.2 540.4,165.7 540.8,166.2 541.2,166.7 541.6,167.1 542.0,167.6 542.4,168.1 542.8,168.5 543.2,169.0 543.7,169.4 544.1,169.9 544.5,170.3 544.9,170.8 545.3,171.2 545.7,171.7 546.1,172.1 546.5,172.5 546.9,172.9 547.4,173.4 547.8,173.8 548.2,174.2 548.6,174.6 549.0,175.0 549.4,175.5 549.8,175.9 550.2,176.3 550.6,176.7 551.1,177.1 551.5,177.4 551.9,177.8 552.3,178.2 552.7,178.6 553.1,179.0 553.5,179.3 553.9,179.7 554.3,180.1 554.8,180.4 555.2,180.8 555.6,181.2 556.0,181.5 556.4,181.8 556.8,182.2 557.2,182.5 557.6,182.8 558.0,183.2 558.5,183.5 558.9,183.8 559.3,184.1 559.7,184.4 560.1,184.7 560.5,185.0 560.9,185.3 561.3,185.6 561.7,185.8 562.2,186.1 562.6,186.3 563.0,186.6 563.4,186.8 563.8,187.0 564.2,187.2 564.6,187.4 565.0,187.6 565.4,187.8 565.8,187.9 566.3,188.1 566.7,188.2 567.1,188.3 567.5,188.3 567.9,188.4 568.3,188.4 568.7,188.3 569.1,188.2 569.5,188.1 570.0,187.9 570.4,187.6 570.8,187.2 571.2,186.6 571.6,185.9 572.0,185.0 572.4,183.8 572.8,182.1 573.2,179.7 573.7,176.4 574.1,171.1 574.5,162.2 574.9,144.1" fill="none" stroke="#0E6E78" stroke-width="2" stroke-linejoin="round"/></g>
 <polygon points="575.7,195.5 577.0,198.7 580.5,199.0 577.9,201.2 578.7,204.5 575.7,202.8 572.8,204.5 573.6,201.2 571.0,199.0 574.4,198.7" fill="#141C24"/>
-<rect x="14.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="32.0" cy="272.0" r="10" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <text x="32.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">4</text>
 <text x="48.0" y="270.0" text-anchor="start" class="bx-t">zewnętrzna</text>
@@ -859,21 +868,21 @@ Ten sam nawias stoi w obu równaniach, więc po podzieleniu wychodzi <span class
 <g clip-path="url(#cF10f66)"><polyline points="41.3,291.2 41.7,292.2 42.1,293.3 42.5,294.3 42.9,295.3 43.3,296.3 43.8,297.3 44.2,298.3 44.6,299.2 45.0,300.2 45.4,301.2 45.8,302.1 46.2,303.1 46.6,304.0 47.0,304.9 47.5,305.9 47.9,306.8 48.3,307.7 48.7,308.6 49.1,309.5 49.5,310.4 49.9,311.3 50.3,312.2 50.7,313.0 51.2,313.9 51.6,314.7 52.0,315.6 52.4,316.4 52.8,317.3 53.2,318.1 53.6,318.9 54.0,319.7 54.4,320.5 54.9,321.3 55.3,322.1 55.7,322.9 56.1,323.7 56.5,324.5 56.9,325.2 57.3,326.0 57.7,326.7 58.1,327.5 58.6,328.2 59.0,328.9 59.4,329.6 59.8,330.3 60.2,331.1 60.6,331.8 61.0,332.4 61.4,333.1 61.8,333.8 62.3,334.5 62.7,335.2 63.1,335.8 63.5,336.5 63.9,337.2 64.3,337.8 64.7,338.5 65.1,339.1 65.5,339.8 65.9,340.5 66.4,341.1 66.8,341.8 67.2,342.4 67.6,343.1 68.0,343.7 68.4,344.3 68.8,345.0 69.2,345.6 69.6,346.2 70.1,346.9 70.5,347.5 70.9,348.1 71.3,348.8 71.7,349.4 72.1,350.0 72.5,350.6 72.9,351.2 73.3,351.8 73.8,352.4 74.2,353.1 74.6,353.7 75.0,354.3 75.4,354.9 75.8,355.5 76.2,356.1 76.6,356.6 77.0,357.2 77.5,357.8 77.9,358.4 78.3,359.0 78.7,359.6 79.1,360.2 79.5,360.7 79.9,361.3 80.3,361.9 80.7,362.4 81.2,363.0 81.6,363.6 82.0,364.1 82.4,364.7 82.8,365.3 83.2,365.8 83.6,366.4 84.0,366.9 84.4,367.5 84.9,368.0 85.3,368.5 85.7,369.1 86.1,369.6 86.5,370.2 86.9,370.7 87.3,371.2 87.7,371.7 88.1,372.3 88.6,372.8 89.0,373.3 89.4,373.8 89.8,374.4 90.2,374.9 90.6,375.4 91.0,375.9 91.4,376.4 91.8,376.9 92.3,377.4 92.7,377.9 93.1,378.4 93.5,378.9 93.9,379.4 94.3,379.9 94.7,380.4 95.1,380.9 95.5,381.3 96.0,381.8 96.4,382.3 96.8,382.8 97.2,383.2 97.6,383.7 98.0,384.2 98.4,384.6 98.8,385.1 99.2,385.6 99.7,386.0 100.1,386.5 100.5,386.9 100.9,387.4 101.3,387.8 101.7,388.3 102.1,388.7 102.5,389.2 102.9,389.6 103.4,390.1 103.8,390.5 104.2,390.9 104.6,391.4 105.0,391.8 105.4,392.2 105.8,392.6 106.2,393.1 106.6,393.5 107.1,393.9 107.5,394.3 107.9,394.7 108.3,395.1 108.7,395.5 109.1,395.9 109.5,396.3 109.9,396.7 110.3,397.1 110.8,397.5 111.2,397.9 111.6,398.3 112.0,398.7 112.4,399.1 112.8,399.5 113.2,399.8 113.6,400.2 114.0,400.6 114.5,401.0 114.9,401.3 115.3,401.7 115.7,402.1 116.1,402.4 116.5,402.8 116.9,403.2 117.3,403.5 117.7,403.9 118.2,404.2 118.6,404.6 119.0,404.9 119.4,405.3 119.8,405.6 120.2,406.0 120.6,406.3 121.0,406.6 121.4,407.0 121.8,407.3 122.3,407.6 122.7,407.9 123.1,408.3 123.5,408.6 123.9,408.9 124.3,409.2 124.7,409.5 125.1,409.8 125.5,410.2 126.0,410.5 126.4,410.8 126.8,411.1 127.2,411.4 127.6,411.7 128.0,412.0 128.4,412.2 128.8,412.5 129.2,412.8 129.7,413.1 130.1,413.4 130.5,413.7 130.9,414.0 131.3,414.2 131.7,414.5 132.1,414.8 132.5,415.0 132.9,415.3 133.4,415.5 133.8,415.8 134.2,416.0 134.6,416.2 135.0,416.4 135.4,416.7 135.8,416.9 136.2,417.1 136.6,417.2 137.1,417.4 137.5,417.6 137.9,417.8 138.3,417.9 138.7,418.1 139.1,418.2 139.5,418.4 139.9,418.5 140.3,418.6 140.8,418.8 141.2,418.9 141.6,419.0 142.0,419.1 142.4,419.2 142.8,419.2 143.2,419.3 143.6,419.4 144.0,419.4 144.5,419.5 144.9,419.5 145.3,419.6 145.7,419.6 146.1,419.6 146.5,419.7 146.9,419.7 147.3,419.7 147.7,419.7 148.2,419.7 148.6,419.6 149.0,419.6 149.4,419.6 149.8,419.5 150.2,419.5 150.6,419.4 151.0,419.4 151.4,419.3 151.9,419.2 152.3,419.2 152.7,419.1 153.1,419.0 153.5,418.9 153.9,418.8 154.3,418.6 154.7,418.5 155.1,418.4 155.6,418.2 156.0,418.1 156.4,417.9 156.8,417.8 157.2,417.6 157.6,417.4 158.0,417.2 158.4,417.1 158.8,416.9 159.3,416.7 159.7,416.4 160.1,416.2 160.5,416.0 160.9,415.8 161.3,415.5 161.7,415.3 162.1,415.0 162.5,414.8 163.0,414.5 163.4,414.2 163.8,413.9 164.2,413.7 164.6,413.4 165.0,413.1 165.4,412.7 165.8,412.4 166.2,412.1 166.7,411.8 167.1,411.4 167.5,411.1 167.9,410.7 168.3,410.4 168.7,410.0 169.1,409.6 169.5,409.2 169.9,408.8 170.4,408.4 170.8,408.0 171.2,407.6 171.6,407.2 172.0,406.8 172.4,406.4 172.8,405.9 173.2,405.5 173.6,405.0 174.1,404.5 174.5,404.1 174.9,403.6 175.3,403.1 175.7,402.6 176.1,402.1 176.5,401.6 176.9,401.1 177.3,400.6 177.7,400.1 178.2,399.5 178.6,399.0 179.0,398.5 179.4,397.9 179.8,397.3 180.2,396.8 180.6,396.2 181.0,395.6 181.4,395.0 181.9,394.4 182.3,393.8 182.7,393.2 183.1,392.6 183.5,392.0 183.9,391.3 184.3,390.7 184.7,390.0 185.1,389.4 185.6,388.7 186.0,388.1 186.4,387.4 186.8,386.7 187.2,386.0 187.6,385.3 188.0,384.6 188.4,383.9 188.8,383.2 189.3,382.4 189.7,381.7 190.1,381.0 190.5,380.2 190.9,379.5 191.3,378.7 191.7,377.9 192.1,377.2 192.5,376.4 193.0,375.6 193.4,374.8 193.8,374.0 194.2,373.2 194.6,372.3 195.0,371.5 195.4,370.7 195.8,369.8 196.2,369.0 196.7,368.1 197.1,367.3 197.5,366.4 197.9,365.5 198.3,364.7 198.7,363.8 199.1,362.9 199.5,362.0 199.9,361.0 200.4,360.1 200.8,359.2 201.2,358.3 201.6,357.3 202.0,356.4" fill="none" stroke="#9C3B52" stroke-width="1.2" stroke-linejoin="round"/></g>
 <g clip-path="url(#cF10f66)"><polyline points="48.3,290.6 48.7,292.6 49.1,294.5 49.5,296.4 49.9,298.2 50.3,300.0 50.7,301.7 51.2,303.5 51.6,305.1 52.0,306.8 52.4,308.4 52.8,309.9 53.2,311.4 53.6,312.9 54.0,314.3 54.4,315.7 54.9,317.1 55.3,318.4 55.7,319.6 56.1,320.9 56.5,322.0 56.9,323.2 57.3,324.3 57.7,325.4 58.1,326.4 58.6,327.4 59.0,328.3 59.4,329.2 59.8,330.1 60.2,330.9 60.6,331.7 61.0,332.4 61.4,333.1 61.8,333.8 62.3,334.5 62.7,335.2 63.1,335.8 63.5,336.5 63.9,337.2 64.3,337.8 64.7,338.5 65.1,339.1 65.5,339.8 65.9,340.5 66.4,341.1 66.8,341.8 67.2,342.4 67.6,343.1 68.0,343.7 68.4,344.3 68.8,345.0 69.2,345.6 69.6,346.2 70.1,346.9 70.5,347.5 70.9,348.1 71.3,348.8 71.7,349.4 72.1,350.0 72.5,350.6 72.9,351.2 73.3,351.8 73.8,352.4 74.2,353.1 74.6,353.7 75.0,354.3 75.4,354.9 75.8,355.5 76.2,356.1 76.6,356.6 77.0,357.2 77.5,357.8 77.9,358.4 78.3,359.0 78.7,359.6 79.1,360.2 79.5,360.7 79.9,361.3 80.3,361.9 80.7,362.4 81.2,363.0 81.6,363.6 82.0,364.1 82.4,364.7 82.8,365.3 83.2,365.8 83.6,366.4 84.0,366.9 84.4,367.5 84.9,368.0 85.3,368.5 85.7,369.1 86.1,369.6 86.5,370.2 86.9,370.7 87.3,371.2 87.7,371.7 88.1,372.3 88.6,372.8 89.0,373.3 89.4,373.8 89.8,374.4 90.2,374.9 90.6,375.4 91.0,375.9 91.4,376.4 91.8,376.9 92.3,377.4 92.7,377.9 93.1,378.4 93.5,378.9 93.9,379.4 94.3,379.9 94.7,380.4 95.1,380.9 95.5,381.3 96.0,381.8 96.4,382.3 96.8,382.8 97.2,383.2 97.6,383.7 98.0,384.2 98.4,384.6 98.8,385.1 99.2,385.6 99.7,386.0 100.1,386.5 100.5,386.9 100.9,387.4 101.3,387.8 101.7,388.3 102.1,388.7 102.5,389.2 102.9,389.6 103.4,390.1 103.8,390.5 104.2,390.9 104.6,391.4 105.0,391.8 105.4,392.2 105.8,392.6 106.2,393.1 106.6,393.5 107.1,393.9 107.5,394.3 107.9,394.7 108.3,395.1 108.7,395.5 109.1,395.9 109.5,396.3 109.9,396.7 110.3,397.1 110.8,397.5 111.2,397.9 111.6,398.3 112.0,398.7 112.4,399.1 112.8,399.5 113.2,399.8 113.6,400.2 114.0,400.6 114.5,401.0 114.9,401.3 115.3,401.7 115.7,402.1 116.1,402.4 116.5,402.8 116.9,403.2 117.3,403.5 117.7,403.9 118.2,404.2 118.6,404.6 119.0,404.9 119.4,405.3 119.8,405.6 120.2,406.0 120.6,406.3 121.0,406.6 121.4,407.0 121.8,407.3 122.3,407.6 122.7,407.9 123.1,408.3 123.5,408.6 123.9,408.9 124.3,409.2 124.7,409.5 125.1,409.8 125.5,410.2 126.0,410.5 126.4,410.8 126.8,411.1 127.2,411.4 127.6,411.7 128.0,412.0 128.4,412.2 128.8,412.5 129.2,412.8 129.7,413.1 130.1,413.4 130.5,413.7 130.9,414.0 131.3,414.2 131.7,414.5 132.1,414.8 132.5,415.0 132.9,415.1 133.4,415.3 133.8,415.4 134.2,415.4 134.6,415.4 135.0,415.4 135.4,415.3 135.8,415.2 136.2,415.0 136.6,414.8 137.1,414.6 137.5,414.3 137.9,414.0 138.3,413.7 138.7,413.3 139.1,412.8 139.5,412.3 139.9,411.8 140.3,411.3 140.8,410.7 141.2,410.0 141.6,409.3 142.0,408.6 142.4,407.9 142.8,407.1 143.2,406.2 143.6,405.3 144.0,404.4 144.5,403.4 144.9,402.4 145.3,401.4 145.7,400.3 146.1,399.2 146.5,398.0 146.9,396.8 147.3,395.6 147.7,394.3 148.2,392.9 148.6,391.6 149.0,390.2 149.4,388.7 149.8,387.2 150.2,385.7 150.6,384.1 151.0,382.5 151.4,380.8 151.9,379.1 152.3,377.4 152.7,375.6 153.1,373.8 153.5,372.0 153.9,370.1 154.3,368.1 154.7,366.1 155.1,364.1 155.6,362.1 156.0,360.0 156.4,357.8 156.8,355.6 157.2,353.4 157.6,351.2 158.0,348.9 158.4,346.5 158.8,344.1 159.3,341.7 159.7,339.2 160.1,336.7 160.5,334.2 160.9,331.6 161.3,329.0 161.7,326.3 162.1,323.6 162.5,320.8 163.0,318.1 163.4,315.2 163.8,312.4 164.2,309.4 164.6,306.5 165.0,303.5 165.4,300.5 165.8,297.4 166.2,294.3 166.7,291.1" fill="none" stroke="#9C3B52" stroke-width="2" stroke-linejoin="round"/></g>
 <polygon points="131.7,409.5 133.0,412.7 136.5,413.0 133.9,415.2 134.7,418.5 131.7,416.8 128.8,418.5 129.6,415.2 127.0,413.0 130.4,412.7" fill="#141C24"/>
-<rect x="236.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="236.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="254.0" cy="272.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
 <text x="254.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">5</text>
 <text x="270.0" y="270.0" text-anchor="start" class="bx-t">algorytm</text>
 <text x="270.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">r rośnie, ciąg zadań</text>
-<rect x="278.0" y="308.0" width="124.0" height="26.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1"/>
+<rect x="278.0" y="308.0" width="124.0" height="26.0" rx="3" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1"/>
 <text x="340.0" y="325.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9.5px">min T(x, r₁)</text>
 <path d="M 340.0 335.0 L 340.0 346.0" fill="none" stroke="#141C24" stroke-width="1" marker-end="url(#arF10f0)"/>
-<rect x="278.0" y="348.0" width="124.0" height="26.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1"/>
+<rect x="278.0" y="348.0" width="124.0" height="26.0" rx="3" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1"/>
 <text x="340.0" y="365.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9.5px">min T(x, r₂)</text>
 <path d="M 340.0 375.0 L 340.0 386.0" fill="none" stroke="#141C24" stroke-width="1" marker-end="url(#arF10f0)"/>
-<rect x="278.0" y="388.0" width="124.0" height="26.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1"/>
+<rect x="278.0" y="388.0" width="124.0" height="26.0" rx="3" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1"/>
 <text x="340.0" y="405.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9.5px">min T(x, r₃) …</text>
 <text x="340.0" y="440.0" text-anchor="middle" class="cap" style="font-size:9px">r₁ &lt; r₂ &lt; r₃, start z poprzedniego</text>
-<rect x="458.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="458.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="476.0" cy="272.0" r="10" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <text x="476.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">6</text>
 <text x="492.0" y="270.0" text-anchor="start" class="bx-t">przykład</text>

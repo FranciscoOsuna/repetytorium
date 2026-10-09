@@ -4,14 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pytanie 21 — Systemy komunikacji w rozproszonych systemach sterowania</title>
+<link rel="icon" type="image/png" sizes="144x144" href="favicon-144.png?v=2">
+<link rel="icon" href="favicon.ico?v=2" sizes="any">
+<link rel="apple-touch-icon" href="favicon-144.png?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#141C24; --mut:#5C6B77; --line:#C3CDD4;
-  --paper:#E8ECEF; --card:#FCFDFD;
-  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52;
+  --ink:#141C24; --mut:#5C6B77; --line:#CCD2C7;
+  --paper:#EDEEE5; --card:#FDFDFA;
+  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52; --moss:#5E8C3A;
   --disp:"Space Grotesk",system-ui,sans-serif;
   --body:"STIX Two Text","Source Serif 4",Georgia,serif;
   --mono:"IBM Plex Mono",ui-monospace,monospace;
@@ -39,7 +42,7 @@ h2 .num{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--viole
         letter-spacing:.08em;flex:none}
 h3{font-family:var(--disp);font-weight:500;font-size:18.5px;margin:34px 0 8px;letter-spacing:-.01em}
 p{margin:0 0 14px}
-.rail{height:5px;background:linear-gradient(90deg,var(--teal) 0%,var(--violet) 55%,var(--amber) 100%);
+.rail{height:5px;background:linear-gradient(90deg,var(--moss) 0%,var(--teal) 30%,var(--violet) 62%,var(--amber) 100%);
       opacity:.85;margin:0 0 22px;border-radius:2px}
 
 /* ---- figury ---- */
@@ -83,7 +86,7 @@ figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:
 table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15px;background:var(--card)}
 th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
 th{font-family:var(--disp);font-weight:500;font-size:13px;letter-spacing:.02em;
-   background:#F2F5F6;border-bottom:1.5px solid var(--line)}
+   background:#F3F4EE;border-bottom:1.5px solid var(--line)}
 td.n{font-family:var(--mono);font-size:13.5px;white-space:nowrap}
 tr:last-child td{border-bottom:none}
 
@@ -115,6 +118,11 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
 .backfoot a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
             color:var(--teal);text-decoration:none;border-bottom:1px solid var(--line)}
 .backfoot a:hover,.backfoot a:focus-visible{border-bottom-color:var(--teal);outline:none}
+
+/* ---- meowl przy tytule ---- */
+.avatar{float:right;width:64px;height:64px;border-radius:50%;margin:2px 0 10px 18px;
+        box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--line)}
+header::after{content:"";display:block;clear:both}
 </style>
 </head>
 <body>
@@ -126,6 +134,7 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
 </nav>
 
 <header>
+  <img class="avatar" src="assets/meowl-wide.png" width="64" height="64" alt="" decoding="async">
   <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 21</p>
   <h1>Systemy komunikacji w rozproszonych systemach sterowania</h1>
   <p class="quest">Systemy komunikacji w rozproszonych systemach sterowania.</p>
@@ -157,7 +166,7 @@ ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{colo
 .luka{display:inline-block;min-width:70px;border-bottom:1.5px solid var(--violet);text-align:center;font-family:var(--mono);font-size:14px;color:var(--violet)}
 /*stickybar-start*/
 .topnav{display:none}
-#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(232,236,239,.96);
+#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(237,238,229,.96);
   -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 #sbar .in{max-width:860px;margin:0 auto;padding:9px 22px 8px}
 #sbar .r1{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
@@ -268,10 +277,10 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="254.0" y="64.0" text-anchor="middle" class="cap">np. Profibus, Modbus RTU</text>
 <rect x="184.0" y="74.0" width="140.0" height="26.0" rx="3" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.18"/>
 <text x="254.0" y="91.0" text-anchor="middle" class="cap" style="fill:#141C24">7 aplikacji</text>
-<rect x="184.0" y="104.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
-<rect x="184.0" y="134.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
-<rect x="184.0" y="164.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
-<rect x="184.0" y="194.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="184.0" y="104.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="184.0" y="134.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="184.0" y="164.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="184.0" y="194.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="3 3"/>
 <rect x="184.0" y="224.0" width="140.0" height="26.0" rx="3" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.18"/>
 <text x="254.0" y="241.0" text-anchor="middle" class="cap" style="fill:#141C24">2 łącza danych</text>
 <rect x="184.0" y="254.0" width="140.0" height="26.0" rx="3" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.18"/>
@@ -280,10 +289,10 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="418.0" y="64.0" text-anchor="middle" class="cap">dane cykliczne</text>
 <rect x="348.0" y="74.0" width="140.0" height="26.0" rx="3" fill="#B3641A" stroke="none" stroke-width="1" opacity="0.18"/>
 <text x="418.0" y="91.0" text-anchor="middle" class="cap" style="fill:#141C24">7 aplikacji</text>
-<rect x="348.0" y="104.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
-<rect x="348.0" y="134.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
-<rect x="348.0" y="164.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
-<rect x="348.0" y="194.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="348.0" y="104.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="348.0" y="134.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="348.0" y="164.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="348.0" y="194.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="3 3"/>
 <rect x="348.0" y="224.0" width="140.0" height="26.0" rx="3" fill="#B3641A" stroke="none" stroke-width="1" opacity="0.18"/>
 <text x="418.0" y="241.0" text-anchor="middle" class="cap" style="fill:#141C24">2 łącza danych</text>
 <rect x="348.0" y="254.0" width="140.0" height="26.0" rx="3" fill="#B3641A" stroke="none" stroke-width="1" opacity="0.18"/>
@@ -292,8 +301,8 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="582.0" y="64.0" text-anchor="middle" class="cap">dane acykliczne</text>
 <rect x="512.0" y="74.0" width="140.0" height="26.0" rx="3" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.18"/>
 <text x="582.0" y="91.0" text-anchor="middle" class="cap" style="fill:#141C24">7 aplikacji</text>
-<rect x="512.0" y="104.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
-<rect x="512.0" y="134.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="512.0" y="104.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="512.0" y="134.0" width="140.0" height="26.0" rx="3" fill="none" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="3 3"/>
 <rect x="512.0" y="164.0" width="140.0" height="26.0" rx="3" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.18"/>
 <text x="582.0" y="181.0" text-anchor="middle" class="cap" style="fill:#141C24">4 transportowa</text>
 <rect x="512.0" y="194.0" width="140.0" height="26.0" rx="3" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.18"/>
@@ -325,24 +334,24 @@ html{scroll-padding-top:var(--sbh,84px)}
 <svg viewBox="0 0 680 470" class="fig">
 <defs><marker id="arF21c0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B3641A"/></marker><marker id="arF21c1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker></defs>
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">KTO MA PRAWO NADAWAĆ? SZEŚĆ METOD DOSTĘPU DO MEDIUM</text>
-<rect x="14.0" y="40.0" width="212.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="40.0" width="212.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="26.0" y="60.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:11px">MASTER–SLAVE</text>
 <text x="26.0" y="218.0" text-anchor="start" class="cap" style="fill:#141C24">nadaje tylko zapytany</text>
 <text x="26.0" y="233.0" text-anchor="start" class="cap">Modbus RTU, Profibus DP</text>
 <rect x="140.0" y="48.0" width="78.0" height="18.0" rx="9" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.14"/>
 <text x="179.0" y="61.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:8.5px">przewidywalna</text>
-<rect x="90.0" y="74.0" width="60.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<rect x="90.0" y="74.0" width="60.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.2"/>
 <text x="120.0" y="89.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">master</text>
 <line x1="34.0" y1="120.0" x2="206.0" y2="120.0" stroke="#5C6B77" stroke-width="2"/>
 <line x1="120.0" y1="96.0" x2="120.0" y2="120.0" stroke="#5C6B77" stroke-width="1.4"/>
 <line x1="54.0" y1="120.0" x2="54.0" y2="132.0" stroke="#5C6B77" stroke-width="1.4"/>
-<rect x="32.0" y="132.0" width="44.0" height="20.0" rx="3" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<rect x="32.0" y="132.0" width="44.0" height="20.0" rx="3" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1"/>
 <text x="54.0" y="146.0" text-anchor="middle" class="cap">S1</text>
 <line x1="120.0" y1="120.0" x2="120.0" y2="132.0" stroke="#5C6B77" stroke-width="1.4"/>
-<rect x="98.0" y="132.0" width="44.0" height="20.0" rx="3" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<rect x="98.0" y="132.0" width="44.0" height="20.0" rx="3" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1"/>
 <text x="120.0" y="146.0" text-anchor="middle" class="cap">S2</text>
 <line x1="186.0" y1="120.0" x2="186.0" y2="132.0" stroke="#5C6B77" stroke-width="1.4"/>
-<rect x="164.0" y="132.0" width="44.0" height="20.0" rx="3" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<rect x="164.0" y="132.0" width="44.0" height="20.0" rx="3" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1"/>
 <text x="186.0" y="146.0" text-anchor="middle" class="cap">S3</text>
 <rect x="28.0" y="168.0" width="29.0" height="18.0" rx="2" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.3"/>
 <text x="42.5" y="181.0" text-anchor="middle" class="cap" style="font-size:8px">M→S1</text>
@@ -357,76 +366,76 @@ html{scroll-padding-top:var(--sbh,84px)}
 <rect x="183.0" y="168.0" width="29.0" height="18.0" rx="2" fill="#5C6B77" stroke="none" stroke-width="1" opacity="0.3"/>
 <text x="197.5" y="181.0" text-anchor="middle" class="cap" style="font-size:8px">S3→M</text>
 <text x="26.0" y="202.0" text-anchor="start" class="cap">pytanie → odpowiedź, po kolei</text>
-<rect x="236.0" y="40.0" width="212.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="236.0" y="40.0" width="212.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="248.0" y="60.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:11px">ZNACZNIK (token)</text>
 <text x="248.0" y="218.0" text-anchor="start" class="cap" style="fill:#141C24">nadaje ten, kto ma znacznik</text>
 <text x="248.0" y="233.0" text-anchor="start" class="cap">Profibus — między masterami</text>
 <rect x="362.0" y="48.0" width="78.0" height="18.0" rx="9" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.14"/>
 <text x="401.0" y="61.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:8.5px">przewidywalna</text>
-<circle cx="342.0" cy="140.0" r="56" fill="none" stroke="#C3CDD4" stroke-width="1.4" stroke-dasharray="4 3"/>
-<rect x="322.0" y="75.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<circle cx="342.0" cy="140.0" r="56" fill="none" stroke="#CCD2C7" stroke-width="1.4" stroke-dasharray="4 3"/>
+<rect x="322.0" y="75.0" width="40.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.2"/>
 <text x="342.0" y="90.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">M1</text>
-<rect x="378.0" y="129.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<rect x="378.0" y="129.0" width="40.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.2"/>
 <text x="398.0" y="144.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">M2</text>
-<rect x="322.0" y="179.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<rect x="322.0" y="179.0" width="40.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.2"/>
 <text x="342.0" y="194.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">M3</text>
-<rect x="266.0" y="129.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<rect x="266.0" y="129.0" width="40.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.2"/>
 <text x="286.0" y="144.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">M4</text>
 <circle cx="382.0" cy="100.0" r="7" fill="#B3641A" stroke="none" stroke-width="1"/>
 <text x="394.0" y="96.0" text-anchor="start" class="cap" style="fill:#B3641A;font-size:9px">znacznik</text>
 <path d="M 386.0 106.0 L 392.0 116.0" fill="none" stroke="#B3641A" stroke-width="1.4" marker-end="url(#arF21c0)"/>
-<rect x="458.0" y="40.0" width="212.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="458.0" y="40.0" width="212.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="470.0" y="60.0" text-anchor="start" class="bx-t" style="fill:#9C3B52;font-size:11px">CSMA/CD</text>
 <text x="470.0" y="218.0" text-anchor="start" class="cap" style="fill:#141C24">kolizja → losowe czekanie</text>
 <text x="470.0" y="233.0" text-anchor="start" class="cap">klasyczny Ethernet z hubem</text>
 <rect x="584.0" y="48.0" width="78.0" height="18.0" rx="9" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.14"/>
 <text x="623.0" y="61.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:8.5px">losowa</text>
 <line x1="478.0" y1="130.0" x2="650.0" y2="130.0" stroke="#5C6B77" stroke-width="2"/>
-<rect x="486.0" y="86.0" width="44.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<rect x="486.0" y="86.0" width="44.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1"/>
 <text x="508.0" y="101.0" text-anchor="middle" class="cap">A</text>
 <line x1="508.0" y1="108.0" x2="508.0" y2="130.0" stroke="#5C6B77" stroke-width="1.4"/>
-<rect x="598.0" y="86.0" width="44.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<rect x="598.0" y="86.0" width="44.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1"/>
 <text x="620.0" y="101.0" text-anchor="middle" class="cap">B</text>
 <line x1="620.0" y1="108.0" x2="620.0" y2="130.0" stroke="#5C6B77" stroke-width="1.4"/>
 <polygon points="564.0,114.0 570.0,114.0 566.0,122.0 572.0,122.0 562.0,136.0 565.0,125.0 559.0,125.0" fill="#9C3B52"/>
 <text x="564.0" y="154.0" text-anchor="middle" class="cap" style="fill:#9C3B52">A i B nadają naraz → kolizja</text>
 <text x="564.0" y="170.0" text-anchor="middle" class="cap">obaj czekają losowo i ponawiają</text>
 <text x="564.0" y="190.0" text-anchor="middle" class="cap" style="fill:#9C3B52">czas dostarczenia nieznany</text>
-<rect x="14.0" y="254.0" width="212.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="254.0" width="212.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="26.0" y="274.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:11px">ARBITRAŻ BITOWY</text>
 <text x="26.0" y="432.0" text-anchor="start" class="cap" style="fill:#141C24">niższy identyfikator wygrywa</text>
 <text x="26.0" y="447.0" text-anchor="start" class="cap">CAN, CANopen</text>
 <rect x="140.0" y="262.0" width="78.0" height="18.0" rx="9" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.14"/>
 <text x="179.0" y="275.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:8.5px">przewidywalna</text>
 <text x="26.0" y="308.0" text-anchor="start" class="cap" style="fill:#5B4B8A;font-size:9.5px">węzeł A, ID 0110…</text>
-<rect x="138.0" y="296.0" width="18.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1"/>
+<rect x="138.0" y="296.0" width="18.0" height="18.0" rx="2" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1"/>
 <text x="147.0" y="309.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">0</text>
-<rect x="158.0" y="296.0" width="18.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1"/>
+<rect x="158.0" y="296.0" width="18.0" height="18.0" rx="2" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1"/>
 <text x="167.0" y="309.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">1</text>
 <rect x="178.0" y="296.0" width="18.0" height="18.0" rx="2" fill="#F3E4E8" stroke="#5B4B8A" stroke-width="1"/>
 <text x="187.0" y="309.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">1</text>
 <rect x="198.0" y="296.0" width="18.0" height="18.0" rx="2" fill="#F3E4E8" stroke="#5B4B8A" stroke-width="1"/>
 <text x="207.0" y="309.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">0</text>
 <text x="26.0" y="344.0" text-anchor="start" class="cap" style="fill:#B3641A;font-size:9.5px">węzeł B, ID 0101…</text>
-<rect x="138.0" y="332.0" width="18.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#B3641A" stroke-width="1"/>
+<rect x="138.0" y="332.0" width="18.0" height="18.0" rx="2" fill="#FDFDFA" stroke="#B3641A" stroke-width="1"/>
 <text x="147.0" y="345.0" text-anchor="middle" class="cap" style="fill:#B3641A">0</text>
-<rect x="158.0" y="332.0" width="18.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#B3641A" stroke-width="1"/>
+<rect x="158.0" y="332.0" width="18.0" height="18.0" rx="2" fill="#FDFDFA" stroke="#B3641A" stroke-width="1"/>
 <text x="167.0" y="345.0" text-anchor="middle" class="cap" style="fill:#B3641A">1</text>
-<rect x="178.0" y="332.0" width="18.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#B3641A" stroke-width="1"/>
+<rect x="178.0" y="332.0" width="18.0" height="18.0" rx="2" fill="#FDFDFA" stroke="#B3641A" stroke-width="1"/>
 <text x="187.0" y="345.0" text-anchor="middle" class="cap" style="fill:#B3641A">0</text>
-<rect x="198.0" y="332.0" width="18.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#B3641A" stroke-width="1"/>
+<rect x="198.0" y="332.0" width="18.0" height="18.0" rx="2" fill="#FDFDFA" stroke="#B3641A" stroke-width="1"/>
 <text x="207.0" y="345.0" text-anchor="middle" class="cap" style="fill:#B3641A">1</text>
 <text x="26.0" y="380.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9.5px">na magistrali</text>
-<rect x="138.0" y="368.0" width="18.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#141C24" stroke-width="1"/>
+<rect x="138.0" y="368.0" width="18.0" height="18.0" rx="2" fill="#FDFDFA" stroke="#141C24" stroke-width="1"/>
 <text x="147.0" y="381.0" text-anchor="middle" class="cap" style="fill:#141C24">0</text>
-<rect x="158.0" y="368.0" width="18.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#141C24" stroke-width="1"/>
+<rect x="158.0" y="368.0" width="18.0" height="18.0" rx="2" fill="#FDFDFA" stroke="#141C24" stroke-width="1"/>
 <text x="167.0" y="381.0" text-anchor="middle" class="cap" style="fill:#141C24">1</text>
-<rect x="178.0" y="368.0" width="18.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#141C24" stroke-width="1"/>
+<rect x="178.0" y="368.0" width="18.0" height="18.0" rx="2" fill="#FDFDFA" stroke="#141C24" stroke-width="1"/>
 <text x="187.0" y="381.0" text-anchor="middle" class="cap" style="fill:#141C24">0</text>
-<rect x="198.0" y="368.0" width="18.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#141C24" stroke-width="1"/>
+<rect x="198.0" y="368.0" width="18.0" height="18.0" rx="2" fill="#FDFDFA" stroke="#141C24" stroke-width="1"/>
 <text x="207.0" y="381.0" text-anchor="middle" class="cap" style="fill:#141C24">1</text>
 <text x="26.0" y="414.0" text-anchor="start" class="cap" style="fill:#9C3B52;font-size:9px">bit 3: B daje 0 → A milknie</text>
-<rect x="236.0" y="254.0" width="212.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="236.0" y="254.0" width="212.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="248.0" y="274.0" text-anchor="start" class="bx-t" style="fill:#B3641A;font-size:11px">OKNA CZASOWE</text>
 <text x="248.0" y="432.0" text-anchor="start" class="cap" style="fill:#141C24">każdy ma zarezerwowane okno</text>
 <text x="248.0" y="447.0" text-anchor="start" class="cap">Profinet IRT, TSN</text>
@@ -444,21 +453,21 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="432.0" y="384.0" text-anchor="end" class="cap">czas</text>
 <text x="248.0" y="404.0" text-anchor="start" class="cap" style="font-size:9px">pomarańczowe: zarezerwowane dla</text>
 <text x="248.0" y="416.0" text-anchor="start" class="cap" style="font-size:9px">danych krytycznych; szare: TCP/IP</text>
-<rect x="458.0" y="254.0" width="212.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="458.0" y="254.0" width="212.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="470.0" y="274.0" text-anchor="start" class="bx-t" style="fill:#B3641A;font-size:11px">RAMKA W LOCIE</text>
 <text x="470.0" y="432.0" text-anchor="start" class="cap" style="fill:#141C24">jedna ramka przez wszystkich</text>
 <text x="470.0" y="447.0" text-anchor="start" class="cap">EtherCAT</text>
 <rect x="584.0" y="262.0" width="78.0" height="18.0" rx="9" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.14"/>
 <text x="623.0" y="275.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:8.5px">przewidywalna</text>
-<rect x="472.0" y="302.0" width="50.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.2"/>
+<rect x="472.0" y="302.0" width="50.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#B3641A" stroke-width="1.2"/>
 <text x="497.0" y="317.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9.5px">master</text>
-<rect x="538.0" y="302.0" width="26.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<rect x="538.0" y="302.0" width="26.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1"/>
 <text x="551.0" y="317.0" text-anchor="middle" class="cap" style="font-size:9px">S1</text>
-<rect x="570.0" y="302.0" width="26.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<rect x="570.0" y="302.0" width="26.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1"/>
 <text x="583.0" y="317.0" text-anchor="middle" class="cap" style="font-size:9px">S2</text>
-<rect x="602.0" y="302.0" width="26.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<rect x="602.0" y="302.0" width="26.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1"/>
 <text x="615.0" y="317.0" text-anchor="middle" class="cap" style="font-size:9px">S3</text>
-<rect x="634.0" y="302.0" width="26.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<rect x="634.0" y="302.0" width="26.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1"/>
 <text x="647.0" y="317.0" text-anchor="middle" class="cap" style="font-size:9px">S4</text>
 <path d="M 522.0 334.0 L 658.0 334.0" fill="none" stroke="#B3641A" stroke-width="1.6" marker-end="url(#arF21c0)"/>
 <path d="M 658.0 348.0 L 522.0 348.0" fill="none" stroke="#B3641A" stroke-width="1.6" marker-end="url(#arF21c0)"/>
@@ -486,58 +495,58 @@ html{scroll-padding-top:var(--sbh,84px)}
 <figure>
 <svg viewBox="0 0 680 260" class="fig">
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">TOPOLOGIE SIECI</text>
-<rect x="14.0" y="40.0" width="154.0" height="210.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="40.0" width="154.0" height="210.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="91.0" y="60.0" text-anchor="middle" class="bx-t" style="fill:#B3641A;font-size:11.5px">magistrala</text>
 <line x1="28.0" y1="124.0" x2="154.0" y2="124.0" stroke="#5C6B77" stroke-width="2.2"/>
 <line x1="42.0" y1="124.0" x2="42.0" y2="102.0" stroke="#5C6B77" stroke-width="1.2"/>
-<rect x="32.0" y="86.0" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="32.0" y="86.0" width="20.0" height="16.0" rx="2" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1.2"/>
 <line x1="75.0" y1="124.0" x2="75.0" y2="146.0" stroke="#5C6B77" stroke-width="1.2"/>
-<rect x="65.0" y="146.0" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="65.0" y="146.0" width="20.0" height="16.0" rx="2" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1.2"/>
 <line x1="108.0" y1="124.0" x2="108.0" y2="102.0" stroke="#5C6B77" stroke-width="1.2"/>
-<rect x="98.0" y="86.0" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="98.0" y="86.0" width="20.0" height="16.0" rx="2" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1.2"/>
 <line x1="141.0" y1="124.0" x2="141.0" y2="146.0" stroke="#5C6B77" stroke-width="1.2"/>
-<rect x="131.0" y="146.0" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="131.0" y="146.0" width="20.0" height="16.0" rx="2" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1.2"/>
 <text x="91.0" y="190.0" text-anchor="middle" class="cap" style="fill:#141C24">prosta, tania; przerwa</text>
 <text x="91.0" y="204.0" text-anchor="middle" class="cap" style="fill:#141C24">kabla dzieli sieć</text>
 <text x="91.0" y="230.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9.5px">Profibus, CAN, Modbus RTU</text>
-<rect x="180.0" y="40.0" width="154.0" height="210.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="180.0" y="40.0" width="154.0" height="210.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="257.0" y="60.0" text-anchor="middle" class="bx-t" style="fill:#B3641A;font-size:11.5px">gwiazda</text>
 <line x1="257.0" y1="124.0" x2="305.0" y2="124.0" stroke="#5C6B77" stroke-width="1.2"/>
-<rect x="295.0" y="116.0" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="295.0" y="116.0" width="20.0" height="16.0" rx="2" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1.2"/>
 <line x1="257.0" y1="124.0" x2="281.0" y2="160.4" stroke="#5C6B77" stroke-width="1.2"/>
-<rect x="271.0" y="152.4" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="271.0" y="152.4" width="20.0" height="16.0" rx="2" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1.2"/>
 <line x1="257.0" y1="124.0" x2="233.0" y2="160.4" stroke="#5C6B77" stroke-width="1.2"/>
-<rect x="223.0" y="152.4" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="223.0" y="152.4" width="20.0" height="16.0" rx="2" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1.2"/>
 <line x1="257.0" y1="124.0" x2="209.0" y2="124.0" stroke="#5C6B77" stroke-width="1.2"/>
-<rect x="199.0" y="116.0" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="199.0" y="116.0" width="20.0" height="16.0" rx="2" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1.2"/>
 <line x1="257.0" y1="124.0" x2="233.0" y2="87.6" stroke="#5C6B77" stroke-width="1.2"/>
-<rect x="223.0" y="79.6" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="223.0" y="79.6" width="20.0" height="16.0" rx="2" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1.2"/>
 <line x1="257.0" y1="124.0" x2="281.0" y2="87.6" stroke="#5C6B77" stroke-width="1.2"/>
-<rect x="271.0" y="79.6" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
-<rect x="243.0" y="114.0" width="28.0" height="20.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.4"/>
+<rect x="271.0" y="79.6" width="20.0" height="16.0" rx="2" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="243.0" y="114.0" width="28.0" height="20.0" rx="3" fill="#FDFDFA" stroke="#B3641A" stroke-width="1.4"/>
 <text x="257.0" y="128.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9px">sw</text>
 <text x="257.0" y="190.0" text-anchor="middle" class="cap" style="fill:#141C24">awaria łącza odcina</text>
 <text x="257.0" y="204.0" text-anchor="middle" class="cap" style="fill:#141C24">jedno urządzenie</text>
 <text x="257.0" y="230.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9.5px">Ethernet ze switchem</text>
-<rect x="346.0" y="40.0" width="154.0" height="210.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="346.0" y="40.0" width="154.0" height="210.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="423.0" y="60.0" text-anchor="middle" class="bx-t" style="fill:#B3641A;font-size:11.5px">pierścień</text>
 <ellipse cx="423.0" cy="124.0" rx="50" ry="40" fill="none" stroke="#5C6B77" stroke-width="2"/>
-<rect x="413.0" y="76.0" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
-<rect x="460.6" y="103.6" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
-<rect x="442.4" y="148.4" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
-<rect x="383.6" y="148.4" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
-<rect x="365.4" y="103.6" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="413.0" y="76.0" width="20.0" height="16.0" rx="2" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="460.6" y="103.6" width="20.0" height="16.0" rx="2" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="442.4" y="148.4" width="20.0" height="16.0" rx="2" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="383.6" y="148.4" width="20.0" height="16.0" rx="2" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="365.4" y="103.6" width="20.0" height="16.0" rx="2" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1.2"/>
 <text x="423.0" y="190.0" text-anchor="middle" class="cap" style="fill:#141C24">jedna przerwa nie</text>
 <text x="423.0" y="204.0" text-anchor="middle" class="cap" style="fill:#141C24">przerywa komunikacji</text>
 <text x="423.0" y="230.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9.5px">Profinet MRP, EtherCAT</text>
-<rect x="512.0" y="40.0" width="154.0" height="210.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="512.0" y="40.0" width="154.0" height="210.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="589.0" y="60.0" text-anchor="middle" class="bx-t" style="fill:#B3641A;font-size:11.5px">linia</text>
 <line x1="530.0" y1="124.0" x2="648.0" y2="124.0" stroke="#5C6B77" stroke-width="2"/>
-<rect x="524.0" y="116.0" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
-<rect x="551.5" y="116.0" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
-<rect x="579.0" y="116.0" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
-<rect x="606.5" y="116.0" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
-<rect x="634.0" y="116.0" width="20.0" height="16.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="524.0" y="116.0" width="20.0" height="16.0" rx="2" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="551.5" y="116.0" width="20.0" height="16.0" rx="2" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="579.0" y="116.0" width="20.0" height="16.0" rx="2" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="606.5" y="116.0" width="20.0" height="16.0" rx="2" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1.2"/>
+<rect x="634.0" y="116.0" width="20.0" height="16.0" rx="2" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1.2"/>
 <text x="589.0" y="190.0" text-anchor="middle" class="cap" style="fill:#141C24">mało kabla; przerwa</text>
 <text x="589.0" y="204.0" text-anchor="middle" class="cap" style="fill:#141C24">odcina resztę linii</text>
 <text x="589.0" y="230.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9.5px">EtherCAT, Profinet</text>
@@ -607,7 +616,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 <rect x="215.5" y="136.0" width="74.2" height="28.0" rx="2" fill="#5C6B77" stroke="none" stroke-width="1" opacity="0.3"/>
 <text x="252.6" y="154.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">cisza 3,5 zn.</text>
 <text x="252.6" y="180.0" text-anchor="middle" class="cap" style="font-size:9.5px">2,00 ms</text>
-<rect x="291.7" y="136.0" width="74.2" height="28.0" rx="2" fill="#C3CDD4" stroke="none" stroke-width="1" opacity="0.3"/>
+<rect x="291.7" y="136.0" width="74.2" height="28.0" rx="2" fill="#CCD2C7" stroke="none" stroke-width="1" opacity="0.3"/>
 <text x="328.8" y="154.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">urządzenie</text>
 <text x="328.8" y="180.0" text-anchor="middle" class="cap" style="font-size:9.5px">2,00 ms</text>
 <rect x="367.9" y="136.0" width="194.6" height="28.0" rx="2" fill="#B3641A" stroke="none" stroke-width="1" opacity="0.3"/>
@@ -622,15 +631,15 @@ html{scroll-padding-top:var(--sbh,84px)}
 <line x1="358.1" y1="236.0" x2="358.1" y2="446.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <line x1="466.3" y1="236.0" x2="466.3" y2="446.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <line x1="574.4" y1="236.0" x2="574.4" y2="446.0" stroke="#E3E8EB" stroke-width="0.8"/>
-<line x1="250.0" y1="446.0" x2="650.0" y2="446.0" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="250.0" y1="236.0" x2="250.0" y2="446.0" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="250.0" y1="446.0" x2="250.0" y2="450.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="250.0" y1="446.0" x2="650.0" y2="446.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="250.0" y1="236.0" x2="250.0" y2="446.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="250.0" y1="446.0" x2="250.0" y2="450.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="250.0" y="462.0" text-anchor="middle" class="tick">1°</text>
-<line x1="358.1" y1="446.0" x2="358.1" y2="450.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="358.1" y1="446.0" x2="358.1" y2="450.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="358.1" y="462.0" text-anchor="middle" class="tick">10°</text>
-<line x1="466.3" y1="446.0" x2="466.3" y2="450.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="466.3" y1="446.0" x2="466.3" y2="450.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="466.3" y="462.0" text-anchor="middle" class="tick">100°</text>
-<line x1="574.4" y1="446.0" x2="574.4" y2="450.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="574.4" y1="446.0" x2="574.4" y2="450.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="574.4" y="462.0" text-anchor="middle" class="tick">1000°</text>
 <text x="450.0" y="480.0" text-anchor="middle" class="axlab">utracona faza przy częstotliwości odcięcia</text>
 <text x="242.0" y="264.0" text-anchor="end" class="cap" style="fill:#141C24">zbiorniki (ωc = 0,38) + Modbus RTU</text>
@@ -676,7 +685,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 <svg viewBox="0 0 680 470" class="fig">
 <defs><marker id="arF21f0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#141C24"/></marker></defs>
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">NARYSUJ NA TABLICY W 6 RUCHACH</text>
-<rect x="14.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="32.0" cy="58.0" r="10" fill="#B3641A" stroke="none" stroke-width="1"/>
 <text x="32.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">1</text>
 <text x="48.0" y="56.0" text-anchor="start" class="bx-t">piramida:</text>
@@ -685,7 +694,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 <polygon points="50.0,154.0 66.0,124.0 142.0,124.0 158.0,154.0" fill="#B3641A" opacity="0.18" stroke="#B3641A"/>
 <polygon points="34.0,188.0 50.0,158.0 158.0,158.0 174.0,188.0" fill="#5B4B8A" opacity="0.18" stroke="#5B4B8A"/>
 <polygon points="18.0,222.0 34.0,192.0 174.0,192.0 190.0,222.0" fill="#0E6E78" opacity="0.18" stroke="#0E6E78"/>
-<rect x="236.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="236.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="254.0" cy="58.0" r="10" fill="#B3641A" stroke="none" stroke-width="1"/>
 <text x="254.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">2</text>
 <text x="270.0" y="56.0" text-anchor="start" class="bx-t">przy poziomach:</text>
@@ -698,7 +707,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="326.0" y="178.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9px">Profibus</text>
 <polygon points="240.0,222.0 256.0,192.0 396.0,192.0 412.0,222.0" fill="#0E6E78" opacity="0.18" stroke="#0E6E78"/>
 <text x="326.0" y="212.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9px">IO-Link</text>
-<rect x="458.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="458.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="476.0" cy="58.0" r="10" fill="#141C24" stroke="none" stroke-width="1"/>
 <text x="476.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">3</text>
 <text x="492.0" y="56.0" text-anchor="start" class="bx-t">obok strzałka:</text>
@@ -713,41 +722,41 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="548.0" y="212.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9px">IO-Link</text>
 <path d="M 644.0 96.0 L 644.0 224.0" fill="none" stroke="#141C24" stroke-width="1.3" marker-end="url(#arF21f0)"/>
 <text x="638.0" y="160.0" text-anchor="end" class="cap" style="font-size:9px">cykl</text>
-<rect x="14.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="32.0" cy="272.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
 <text x="32.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">4</text>
 <text x="48.0" y="270.0" text-anchor="start" class="bx-t">magistrala:</text>
 <text x="48.0" y="284.0" text-anchor="start" class="bx">master + 3 slave</text>
-<rect x="88.0" y="306.0" width="60.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<rect x="88.0" y="306.0" width="60.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.2"/>
 <text x="118.0" y="321.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">master</text>
 <line x1="34.0" y1="354.0" x2="202.0" y2="354.0" stroke="#5C6B77" stroke-width="2"/>
 <line x1="118.0" y1="328.0" x2="118.0" y2="354.0" stroke="#5C6B77" stroke-width="1.3"/>
 <line x1="58.0" y1="354.0" x2="58.0" y2="366.0" stroke="#5C6B77" stroke-width="1.2"/>
-<rect x="40.0" y="366.0" width="36.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<rect x="40.0" y="366.0" width="36.0" height="18.0" rx="2" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1"/>
 <text x="58.0" y="379.0" text-anchor="middle" class="cap" style="font-size:9px">S1</text>
 <line x1="118.0" y1="354.0" x2="118.0" y2="366.0" stroke="#5C6B77" stroke-width="1.2"/>
-<rect x="100.0" y="366.0" width="36.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<rect x="100.0" y="366.0" width="36.0" height="18.0" rx="2" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1"/>
 <text x="118.0" y="379.0" text-anchor="middle" class="cap" style="font-size:9px">S2</text>
 <line x1="178.0" y1="354.0" x2="178.0" y2="366.0" stroke="#5C6B77" stroke-width="1.2"/>
-<rect x="160.0" y="366.0" width="36.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<rect x="160.0" y="366.0" width="36.0" height="18.0" rx="2" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1"/>
 <text x="178.0" y="379.0" text-anchor="middle" class="cap" style="font-size:9px">S3</text>
-<rect x="236.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="236.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="254.0" cy="272.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
 <text x="254.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">5</text>
 <text x="270.0" y="270.0" text-anchor="start" class="bx-t">dostęp:</text>
 <text x="270.0" y="284.0" text-anchor="start" class="bx">kto nadaje, kiedy</text>
-<rect x="310.0" y="306.0" width="60.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<rect x="310.0" y="306.0" width="60.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.2"/>
 <text x="340.0" y="321.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">master</text>
 <line x1="256.0" y1="354.0" x2="424.0" y2="354.0" stroke="#5C6B77" stroke-width="2"/>
 <line x1="340.0" y1="328.0" x2="340.0" y2="354.0" stroke="#5C6B77" stroke-width="1.3"/>
 <line x1="280.0" y1="354.0" x2="280.0" y2="366.0" stroke="#5C6B77" stroke-width="1.2"/>
-<rect x="262.0" y="366.0" width="36.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<rect x="262.0" y="366.0" width="36.0" height="18.0" rx="2" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1"/>
 <text x="280.0" y="379.0" text-anchor="middle" class="cap" style="font-size:9px">S1</text>
 <line x1="340.0" y1="354.0" x2="340.0" y2="366.0" stroke="#5C6B77" stroke-width="1.2"/>
-<rect x="322.0" y="366.0" width="36.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<rect x="322.0" y="366.0" width="36.0" height="18.0" rx="2" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1"/>
 <text x="340.0" y="379.0" text-anchor="middle" class="cap" style="font-size:9px">S2</text>
 <line x1="400.0" y1="354.0" x2="400.0" y2="366.0" stroke="#5C6B77" stroke-width="1.2"/>
-<rect x="382.0" y="366.0" width="36.0" height="18.0" rx="2" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1"/>
+<rect x="382.0" y="366.0" width="36.0" height="18.0" rx="2" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1"/>
 <text x="400.0" y="379.0" text-anchor="middle" class="cap" style="font-size:9px">S3</text>
 <rect x="256.0" y="404.0" width="26.0" height="16.0" rx="2" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.3"/>
 <rect x="284.0" y="404.0" width="26.0" height="16.0" rx="2" fill="#5C6B77" stroke="none" stroke-width="1" opacity="0.3"/>
@@ -756,14 +765,14 @@ html{scroll-padding-top:var(--sbh,84px)}
 <rect x="368.0" y="404.0" width="26.0" height="16.0" rx="2" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.3"/>
 <rect x="396.0" y="404.0" width="26.0" height="16.0" rx="2" fill="#5C6B77" stroke="none" stroke-width="1" opacity="0.3"/>
 <text x="340.0" y="440.0" text-anchor="middle" class="cap" style="font-size:9px">pytanie, odpowiedź, …</text>
-<rect x="458.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="458.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="476.0" cy="272.0" r="10" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <text x="476.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">6</text>
 <text x="492.0" y="270.0" text-anchor="start" class="bx-t">opóźnienie</text>
 <text x="492.0" y="284.0" text-anchor="start" class="bx">w pętli: Δφ = ωτ</text>
 <clipPath id="cF21f86"><rect x="482" y="310" width="166" height="114"/></clipPath>
-<line x1="482.0" y1="424.0" x2="648.0" y2="424.0" stroke="#C3CDD4" stroke-width="1"/>
-<line x1="482.0" y1="310.0" x2="482.0" y2="424.0" stroke="#C3CDD4" stroke-width="1"/>
+<line x1="482.0" y1="424.0" x2="648.0" y2="424.0" stroke="#CCD2C7" stroke-width="1"/>
+<line x1="482.0" y1="310.0" x2="482.0" y2="424.0" stroke="#CCD2C7" stroke-width="1"/>
 <g clip-path="url(#cF21f86)"><polyline points="482.0,367.0 484.8,359.8 487.6,352.9 490.4,346.6 493.3,341.3 496.1,337.1 498.9,334.3 501.7,332.9 504.5,333.1 507.3,334.8 510.1,338.0 512.9,342.5 515.8,348.1 518.6,354.5 521.4,361.6 524.2,368.8 527.0,376.0 529.8,382.8 532.6,388.8 535.5,393.9 538.3,397.8 541.1,400.2 543.9,401.2 546.7,400.6 549.5,398.5 552.3,395.0 555.2,390.2 558.0,384.4 560.8,377.7 563.6,370.6 566.4,363.4 569.2,356.3 572.0,349.6 574.8,343.8 577.7,339.0 580.5,335.5 583.3,333.4 586.1,332.8 588.9,333.8 591.7,336.2 594.5,340.1 597.4,345.2 600.2,351.2 603.0,358.0 605.8,365.2 608.6,372.4 611.4,379.5 614.2,385.9 617.1,391.5 619.9,396.0 622.7,399.2 625.5,400.9 628.3,401.1 631.1,399.7 633.9,396.9 636.7,392.7 639.6,387.4 642.4,381.1 645.2,374.2 648.0,367.0" fill="none" stroke="#141C24" stroke-width="1.6" stroke-linejoin="round"/></g>
 <g clip-path="url(#cF21f86)"><polyline points="501.9,367.0 504.7,359.8 507.5,352.9 510.4,346.6 513.2,341.3 516.0,337.1 518.8,334.3 521.6,332.9 524.4,333.1 527.2,334.8 530.1,338.0 532.9,342.5 535.7,348.1 538.5,354.5 541.3,361.6 544.1,368.8 546.9,376.0 549.8,382.8 552.6,388.8 555.4,393.9 558.2,397.8 561.0,400.2 563.8,401.2 566.6,400.6 569.4,398.5 572.3,395.0 575.1,390.2 577.9,384.4 580.7,377.7 583.5,370.6 586.3,363.4 589.1,356.3 592.0,349.6 594.8,343.8 597.6,339.0 600.4,335.5 603.2,333.4 606.0,332.8 608.8,333.8 611.6,336.2 614.5,340.1 617.3,345.2 620.1,351.2 622.9,358.0 625.7,365.2 628.5,372.4 631.3,379.5 634.2,385.9 637.0,391.5 639.8,396.0 642.6,399.2 645.4,400.9 648.2,401.1 651.0,399.7 653.9,396.9 656.7,392.7 659.5,387.4 662.3,381.1 665.1,374.2 667.9,367.0" fill="none" stroke="#9C3B52" stroke-width="1.6" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
 <text x="565.0" y="444.0" text-anchor="middle" class="cap" style="font-size:9px">sygnał i ten sam po τ</text>

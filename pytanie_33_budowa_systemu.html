@@ -4,14 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pytanie 33 — Budowa zdecentralizowanego rozproszonego systemu sterowania</title>
+<link rel="icon" type="image/png" sizes="144x144" href="favicon-144.png?v=2">
+<link rel="icon" href="favicon.ico?v=2" sizes="any">
+<link rel="apple-touch-icon" href="favicon-144.png?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#141C24; --mut:#5C6B77; --line:#C3CDD4;
-  --paper:#E8ECEF; --card:#FCFDFD;
-  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52;
+  --ink:#141C24; --mut:#5C6B77; --line:#CCD2C7;
+  --paper:#EDEEE5; --card:#FDFDFA;
+  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52; --moss:#5E8C3A;
   --disp:"Space Grotesk",system-ui,sans-serif;
   --body:"STIX Two Text","Source Serif 4",Georgia,serif;
   --mono:"IBM Plex Mono",ui-monospace,monospace;
@@ -39,7 +42,7 @@ h2 .num{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--viole
         letter-spacing:.08em;flex:none}
 h3{font-family:var(--disp);font-weight:500;font-size:18.5px;margin:34px 0 8px;letter-spacing:-.01em}
 p{margin:0 0 14px}
-.rail{height:5px;background:linear-gradient(90deg,var(--teal) 0%,var(--violet) 55%,var(--amber) 100%);
+.rail{height:5px;background:linear-gradient(90deg,var(--moss) 0%,var(--teal) 30%,var(--violet) 62%,var(--amber) 100%);
       opacity:.85;margin:0 0 22px;border-radius:2px}
 
 /* ---- figury ---- */
@@ -83,7 +86,7 @@ figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:
 table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15px;background:var(--card)}
 th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
 th{font-family:var(--disp);font-weight:500;font-size:13px;letter-spacing:.02em;
-   background:#F2F5F6;border-bottom:1.5px solid var(--line)}
+   background:#F3F4EE;border-bottom:1.5px solid var(--line)}
 td.n{font-family:var(--mono);font-size:13.5px;white-space:nowrap}
 tr:last-child td{border-bottom:none}
 
@@ -115,6 +118,11 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
 .backfoot a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
             color:var(--teal);text-decoration:none;border-bottom:1px solid var(--line)}
 .backfoot a:hover,.backfoot a:focus-visible{border-bottom-color:var(--teal);outline:none}
+
+/* ---- meowl przy tytule ---- */
+.avatar{float:right;width:64px;height:64px;border-radius:50%;margin:2px 0 10px 18px;
+        box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--line)}
+header::after{content:"";display:block;clear:both}
 </style>
 </head>
 <body>
@@ -126,6 +134,7 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
 </nav>
 
 <header>
+  <img class="avatar" src="assets/meowl-wide.png" width="64" height="64" alt="" decoding="async">
   <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 33</p>
   <h1>Budowa zdecentralizowanego rozproszonego systemu sterowania</h1>
   <p class="quest">Przedstaw proces budowy zdecentralizowanego rozproszonego komputerowego systemu sterowania automatycznego.</p>
@@ -157,7 +166,7 @@ ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{colo
 .luka{display:inline-block;min-width:70px;border-bottom:1.5px solid var(--violet);text-align:center;font-family:var(--mono);font-size:14px;color:var(--violet)}
 /*stickybar-start*/
 .topnav{display:none}
-#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(232,236,239,.96);
+#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(237,238,229,.96);
   -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 #sbar .in{max-width:860px;margin:0 auto;padding:9px 22px 8px}
 #sbar .r1{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
@@ -190,64 +199,64 @@ html{scroll-padding-top:var(--sbh,84px)}
 <svg viewBox="0 0 680 440" class="fig">
 <defs><marker id="arF33a0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0E6E78"/></marker><marker id="arF33a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9C3B52"/></marker></defs>
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">PROCES BUDOWY SYSTEMU: OD WYMAGAŃ DO URUCHOMIENIA (MODEL V)</text>
-<rect x="20.0" y="44.0" width="214.0" height="46.0" rx="4" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="20.0" y="44.0" width="214.0" height="46.0" rx="4" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.3"/>
 <circle cx="36.0" cy="62.0" r="9" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <text x="36.0" y="66.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">1</text>
 <text x="50.0" y="66.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:11px">wymagania</text>
 <text x="32.0" y="82.0" text-anchor="start" class="cap" style="font-size:9.5px">cele, ograniczenia, bezpieczeństwo</text>
 <path d="M 80.0 90.0 L 100.0 106.0" fill="none" stroke="#0E6E78" stroke-width="1.2" marker-end="url(#arF33a0)"/>
-<rect x="42.0" y="106.0" width="214.0" height="46.0" rx="4" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="42.0" y="106.0" width="214.0" height="46.0" rx="4" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.3"/>
 <circle cx="58.0" cy="124.0" r="9" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <text x="58.0" y="128.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">2</text>
 <text x="72.0" y="128.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:11px">analiza obiektu</text>
 <text x="54.0" y="144.0" text-anchor="start" class="cap" style="font-size:9.5px">model, sygnały, sprzężenia</text>
 <path d="M 102.0 152.0 L 122.0 168.0" fill="none" stroke="#0E6E78" stroke-width="1.2" marker-end="url(#arF33a0)"/>
-<rect x="64.0" y="168.0" width="214.0" height="46.0" rx="4" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="64.0" y="168.0" width="214.0" height="46.0" rx="4" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.3"/>
 <circle cx="80.0" cy="186.0" r="9" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <text x="80.0" y="190.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">3</text>
 <text x="94.0" y="190.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:11px">dekompozycja</text>
 <text x="76.0" y="206.0" text-anchor="start" class="cap" style="font-size:9.5px">podsystemy, pary we–wy (RGA)</text>
 <path d="M 124.0 214.0 L 144.0 230.0" fill="none" stroke="#0E6E78" stroke-width="1.2" marker-end="url(#arF33a0)"/>
-<rect x="86.0" y="230.0" width="214.0" height="46.0" rx="4" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="86.0" y="230.0" width="214.0" height="46.0" rx="4" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.3"/>
 <circle cx="102.0" cy="248.0" r="9" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <text x="102.0" y="252.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">4</text>
 <text x="116.0" y="252.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:11px">struktura sterowania</text>
 <text x="98.0" y="268.0" text-anchor="start" class="cap" style="font-size:9.5px">zdecentr. / rozprosz. / hierarch.</text>
 <path d="M 146.0 276.0 L 166.0 292.0" fill="none" stroke="#0E6E78" stroke-width="1.2" marker-end="url(#arF33a0)"/>
-<rect x="108.0" y="292.0" width="214.0" height="46.0" rx="4" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="108.0" y="292.0" width="214.0" height="46.0" rx="4" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.3"/>
 <circle cx="124.0" cy="310.0" r="9" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <text x="124.0" y="314.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">5</text>
 <text x="138.0" y="314.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:11px">sprzęt i komunikacja</text>
 <text x="120.0" y="330.0" text-anchor="start" class="cap" style="font-size:9.5px">węzły, sieci, redundancja</text>
-<rect x="446.0" y="44.0" width="214.0" height="46.0" rx="4" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.3"/>
+<rect x="446.0" y="44.0" width="214.0" height="46.0" rx="4" fill="#FDFDFA" stroke="#9C3B52" stroke-width="1.3"/>
 <circle cx="462.0" cy="62.0" r="9" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <text x="462.0" y="66.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">11</text>
 <text x="476.0" y="66.0" text-anchor="start" class="bx-t" style="fill:#9C3B52;font-size:11px">eksploatacja</text>
 <text x="458.0" y="82.0" text-anchor="start" class="cap" style="font-size:9.5px">utrzymanie, modyfikacje</text>
 <path d="M 586.0 106.0 L 606.0 90.0" fill="none" stroke="#9C3B52" stroke-width="1.2" marker-end="url(#arF33a1)"/>
-<line x1="238.0" y1="67.0" x2="442.0" y2="67.0" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="4 3"/>
-<rect x="424.0" y="106.0" width="214.0" height="46.0" rx="4" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.3"/>
+<line x1="238.0" y1="67.0" x2="442.0" y2="67.0" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="4 3"/>
+<rect x="424.0" y="106.0" width="214.0" height="46.0" rx="4" fill="#FDFDFA" stroke="#9C3B52" stroke-width="1.3"/>
 <circle cx="440.0" cy="124.0" r="9" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <text x="440.0" y="128.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">10</text>
 <text x="454.0" y="128.0" text-anchor="start" class="bx-t" style="fill:#9C3B52;font-size:11px">SAT, uruchomienie</text>
 <text x="436.0" y="144.0" text-anchor="start" class="cap" style="font-size:9.5px">na obiekcie, z operatorami</text>
 <path d="M 564.0 168.0 L 584.0 152.0" fill="none" stroke="#9C3B52" stroke-width="1.2" marker-end="url(#arF33a1)"/>
-<line x1="260.0" y1="129.0" x2="420.0" y2="129.0" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="4 3"/>
-<rect x="402.0" y="168.0" width="214.0" height="46.0" rx="4" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.3"/>
+<line x1="260.0" y1="129.0" x2="420.0" y2="129.0" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="4 3"/>
+<rect x="402.0" y="168.0" width="214.0" height="46.0" rx="4" fill="#FDFDFA" stroke="#9C3B52" stroke-width="1.3"/>
 <circle cx="418.0" cy="186.0" r="9" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <text x="418.0" y="190.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">9</text>
 <text x="432.0" y="190.0" text-anchor="start" class="bx-t" style="fill:#9C3B52;font-size:11px">FAT</text>
 <text x="414.0" y="206.0" text-anchor="start" class="cap" style="font-size:9.5px">u dostawcy, z symulatorem</text>
 <path d="M 542.0 230.0 L 562.0 214.0" fill="none" stroke="#9C3B52" stroke-width="1.2" marker-end="url(#arF33a1)"/>
-<line x1="282.0" y1="191.0" x2="398.0" y2="191.0" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="4 3"/>
-<rect x="380.0" y="230.0" width="214.0" height="46.0" rx="4" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.3"/>
+<line x1="282.0" y1="191.0" x2="398.0" y2="191.0" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="4 3"/>
+<rect x="380.0" y="230.0" width="214.0" height="46.0" rx="4" fill="#FDFDFA" stroke="#9C3B52" stroke-width="1.3"/>
 <circle cx="396.0" cy="248.0" r="9" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <text x="396.0" y="252.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">8</text>
 <text x="410.0" y="252.0" text-anchor="start" class="bx-t" style="fill:#9C3B52;font-size:11px">testy integracyjne, HIL</text>
 <text x="392.0" y="268.0" text-anchor="start" class="cap" style="font-size:9.5px">węzły + sieć + model obiektu</text>
 <path d="M 520.0 292.0 L 540.0 276.0" fill="none" stroke="#9C3B52" stroke-width="1.2" marker-end="url(#arF33a1)"/>
-<line x1="304.0" y1="253.0" x2="376.0" y2="253.0" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="4 3"/>
-<rect x="358.0" y="292.0" width="214.0" height="46.0" rx="4" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.3"/>
+<line x1="304.0" y1="253.0" x2="376.0" y2="253.0" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="4 3"/>
+<rect x="358.0" y="292.0" width="214.0" height="46.0" rx="4" fill="#FDFDFA" stroke="#9C3B52" stroke-width="1.3"/>
 <circle cx="374.0" cy="310.0" r="9" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <text x="374.0" y="314.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">7</text>
 <text x="388.0" y="314.0" text-anchor="start" class="bx-t" style="fill:#9C3B52;font-size:11px">testy modułów</text>
@@ -297,17 +306,17 @@ html{scroll-padding-top:var(--sbh,84px)}
 <line x1="400.0" y1="80.0" x2="390.0" y2="200.0" stroke="#141C24" stroke-width="3.2"/>
 <line x1="170.0" y1="190.0" x2="300.0" y2="100.0" stroke="#9C3B52" stroke-width="1.2" stroke-dasharray="4 3"/>
 <line x1="170.0" y1="80.0" x2="300.0" y2="100.0" stroke="#9C3B52" stroke-width="1.2" stroke-dasharray="4 3"/>
-<circle cx="70.0" cy="110.0" r="17" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.6"/>
+<circle cx="70.0" cy="110.0" r="17" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.6"/>
 <text x="70.0" y="114.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:10.5px">P1</text>
-<circle cx="170.0" cy="80.0" r="17" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.6"/>
+<circle cx="170.0" cy="80.0" r="17" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.6"/>
 <text x="170.0" y="84.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:10.5px">P2</text>
-<circle cx="170.0" cy="190.0" r="17" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.6"/>
+<circle cx="170.0" cy="190.0" r="17" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.6"/>
 <text x="170.0" y="194.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:10.5px">P3</text>
-<circle cx="300.0" cy="100.0" r="17" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.6"/>
+<circle cx="300.0" cy="100.0" r="17" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.6"/>
 <text x="300.0" y="104.0" text-anchor="middle" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">P4</text>
-<circle cx="400.0" cy="80.0" r="17" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.6"/>
+<circle cx="400.0" cy="80.0" r="17" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.6"/>
 <text x="400.0" y="84.0" text-anchor="middle" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">P5</text>
-<circle cx="390.0" cy="200.0" r="17" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.6"/>
+<circle cx="390.0" cy="200.0" r="17" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.6"/>
 <text x="390.0" y="204.0" text-anchor="middle" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">P6</text>
 <text x="135.0" y="250.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:11px">podsystem A</text>
 <text x="360.0" y="250.0" text-anchor="middle" class="bx-t" style="fill:#5B4B8A;font-size:11px">podsystem B</text>
@@ -347,7 +356,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 <figure>
 <svg viewBox="0 0 680 330" class="fig">
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">RGA: KTÓRE WEJŚCIE STERUJE KTÓRYM WYJŚCIEM I CZY DA SIĘ ZDECENTRALIZOWAĆ</text>
-<rect x="14.0" y="40.0" width="208.0" height="280.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="40.0" width="208.0" height="280.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="14.0" y="40.0" width="208.0" height="4.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <text x="118.0" y="64.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:11px">A · słabe sprzężenie</text>
 <text x="44.0" y="112.0" text-anchor="start" class="bx-t" style="font-size:11px">G =</text>
@@ -368,7 +377,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 <path d="M 200 206 l 5 0 l 0 44 l -5 0" fill="none" stroke="#141C24" stroke-width="1.2"/>
 <text x="118.0" y="284.0" text-anchor="middle" class="cap" style="fill:#141C24">pary u₁→y₁, u₂→y₂;</text>
 <text x="118.0" y="300.0" text-anchor="middle" class="cap" style="fill:#0E6E78">zdecentralizowane wystarczy</text>
-<rect x="236.0" y="40.0" width="208.0" height="280.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="236.0" y="40.0" width="208.0" height="280.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="236.0" y="40.0" width="208.0" height="4.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
 <text x="340.0" y="64.0" text-anchor="middle" class="bx-t" style="fill:#B3641A;font-size:11px">B · „na krzyż”</text>
 <text x="266.0" y="112.0" text-anchor="start" class="bx-t" style="font-size:11px">G =</text>
@@ -389,7 +398,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 <path d="M 422 206 l 5 0 l 0 44 l -5 0" fill="none" stroke="#141C24" stroke-width="1.2"/>
 <text x="340.0" y="284.0" text-anchor="middle" class="cap" style="fill:#141C24">λ &lt; 0: zamień pary</text>
 <text x="340.0" y="300.0" text-anchor="middle" class="cap" style="fill:#B3641A">u₁→y₂, u₂→y₁</text>
-<rect x="458.0" y="40.0" width="208.0" height="280.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="458.0" y="40.0" width="208.0" height="280.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="458.0" y="40.0" width="208.0" height="4.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <text x="562.0" y="64.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52;font-size:11px">C · silne sprzężenie</text>
 <text x="488.0" y="112.0" text-anchor="start" class="bx-t" style="font-size:11px">G =</text>
@@ -451,43 +460,43 @@ html{scroll-padding-top:var(--sbh,84px)}
 <svg viewBox="0 0 680 330" class="fig">
 <defs><marker id="arF33d0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9C3B52"/></marker></defs>
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">Z PODSYSTEMÓW NA WĘZŁY: KAŻDY PODSYSTEM MA WŁASNY STEROWNIK</text>
-<rect x="250.0" y="44.0" width="180.0" height="40.0" rx="4" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.3"/>
+<rect x="250.0" y="44.0" width="180.0" height="40.0" rx="4" fill="#FDFDFA" stroke="#B3641A" stroke-width="1.3"/>
 <text x="340.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#B3641A;font-size:11px">koordynator / SCADA</text>
 <text x="340.0" y="77.0" text-anchor="middle" class="cap" style="font-size:9.5px">tylko cele i dane wspólne</text>
 <line x1="60.0" y1="118.0" x2="620.0" y2="118.0" stroke="#5C6B77" stroke-width="2.4"/>
 <text x="620.0" y="112.0" text-anchor="end" class="cap">sieć sterowania</text>
 <line x1="340.0" y1="84.0" x2="340.0" y2="118.0" stroke="#B3641A" stroke-width="1.4"/>
 <line x1="150.0" y1="118.0" x2="150.0" y2="146.0" stroke="#0E6E78" stroke-width="1.4"/>
-<rect x="70.0" y="146.0" width="160.0" height="40.0" rx="4" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.4"/>
+<rect x="70.0" y="146.0" width="160.0" height="40.0" rx="4" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.4"/>
 <text x="150.0" y="164.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:11px">węzeł A: sterownik</text>
 <text x="150.0" y="179.0" text-anchor="middle" class="cap" style="font-size:9.5px">pętle podsystemu A</text>
 <line x1="150.0" y1="186.0" x2="150.0" y2="206.0" stroke="#0E6E78" stroke-width="1.4"/>
 <rect x="60.0" y="206.0" width="180.0" height="30.0" rx="3" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.12"/>
 <text x="150.0" y="225.0" text-anchor="middle" class="cap" style="fill:#0E6E78">we/wy przy obiekcie</text>
 <line x1="90.0" y1="236.0" x2="90.0" y2="254.0" stroke="#0E6E78" stroke-width="1.1"/>
-<rect x="70.0" y="254.0" width="40.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="70.0" y="254.0" width="40.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="90.0" y="269.0" text-anchor="middle" class="cap" style="font-size:9.5px">P1</text>
 <line x1="150.0" y1="236.0" x2="150.0" y2="254.0" stroke="#0E6E78" stroke-width="1.1"/>
-<rect x="130.0" y="254.0" width="40.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="130.0" y="254.0" width="40.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="150.0" y="269.0" text-anchor="middle" class="cap" style="font-size:9.5px">P2</text>
 <line x1="210.0" y1="236.0" x2="210.0" y2="254.0" stroke="#0E6E78" stroke-width="1.1"/>
-<rect x="190.0" y="254.0" width="40.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="190.0" y="254.0" width="40.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="210.0" y="269.0" text-anchor="middle" class="cap" style="font-size:9.5px">P3</text>
 <line x1="530.0" y1="118.0" x2="530.0" y2="146.0" stroke="#5B4B8A" stroke-width="1.4"/>
-<rect x="450.0" y="146.0" width="160.0" height="40.0" rx="4" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.4"/>
+<rect x="450.0" y="146.0" width="160.0" height="40.0" rx="4" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.4"/>
 <text x="530.0" y="164.0" text-anchor="middle" class="bx-t" style="fill:#5B4B8A;font-size:11px">węzeł B: sterownik</text>
 <text x="530.0" y="179.0" text-anchor="middle" class="cap" style="font-size:9.5px">pętle podsystemu B</text>
 <line x1="530.0" y1="186.0" x2="530.0" y2="206.0" stroke="#5B4B8A" stroke-width="1.4"/>
 <rect x="440.0" y="206.0" width="180.0" height="30.0" rx="3" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.12"/>
 <text x="530.0" y="225.0" text-anchor="middle" class="cap" style="fill:#5B4B8A">we/wy przy obiekcie</text>
 <line x1="470.0" y1="236.0" x2="470.0" y2="254.0" stroke="#5B4B8A" stroke-width="1.1"/>
-<rect x="450.0" y="254.0" width="40.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="450.0" y="254.0" width="40.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="470.0" y="269.0" text-anchor="middle" class="cap" style="font-size:9.5px">P4</text>
 <line x1="530.0" y1="236.0" x2="530.0" y2="254.0" stroke="#5B4B8A" stroke-width="1.1"/>
-<rect x="510.0" y="254.0" width="40.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="510.0" y="254.0" width="40.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="530.0" y="269.0" text-anchor="middle" class="cap" style="font-size:9.5px">P5</text>
 <line x1="590.0" y1="236.0" x2="590.0" y2="254.0" stroke="#5B4B8A" stroke-width="1.1"/>
-<rect x="570.0" y="254.0" width="40.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="570.0" y="254.0" width="40.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="590.0" y="269.0" text-anchor="middle" class="cap" style="font-size:9.5px">P6</text>
 <path d="M 232.0 160.0 L 448.0 160.0" fill="none" stroke="#9C3B52" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arF33d0)"/>
 <path d="M 448.0 172.0 L 232.0 172.0" fill="none" stroke="#9C3B52" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arF33d0)"/>
@@ -536,7 +545,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 <rect x="570.0" y="82.0" width="86.0" height="28.0" rx="3" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.55"/>
 <text x="613.0" y="100.0" text-anchor="middle" class="cap" style="fill:#FFFFFF;font-size:9.5px">prawdziwe</text>
 <text x="180.0" y="134.0" text-anchor="end" class="cap" style="fill:#141C24">kod na sterowniku</text>
-<rect x="194.0" y="118.0" width="86.0" height="28.0" rx="3" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="194.0" y="118.0" width="86.0" height="28.0" rx="3" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="3 3"/>
 <text x="237.0" y="136.0" text-anchor="middle" class="cap" style="font-size:9.5px">model</text>
 <rect x="288.0" y="118.0" width="86.0" height="28.0" rx="3" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.55"/>
 <text x="331.0" y="136.0" text-anchor="middle" class="cap" style="fill:#FFFFFF;font-size:9.5px">prawdziwe</text>
@@ -547,9 +556,9 @@ html{scroll-padding-top:var(--sbh,84px)}
 <rect x="570.0" y="118.0" width="86.0" height="28.0" rx="3" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.55"/>
 <text x="613.0" y="136.0" text-anchor="middle" class="cap" style="fill:#FFFFFF;font-size:9.5px">prawdziwe</text>
 <text x="180.0" y="170.0" text-anchor="end" class="cap" style="fill:#141C24">sterowniki i sieć</text>
-<rect x="194.0" y="154.0" width="86.0" height="28.0" rx="3" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="194.0" y="154.0" width="86.0" height="28.0" rx="3" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="3 3"/>
 <text x="237.0" y="172.0" text-anchor="middle" class="cap" style="font-size:9.5px">model</text>
-<rect x="288.0" y="154.0" width="86.0" height="28.0" rx="3" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="288.0" y="154.0" width="86.0" height="28.0" rx="3" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="3 3"/>
 <text x="331.0" y="172.0" text-anchor="middle" class="cap" style="font-size:9.5px">model</text>
 <rect x="382.0" y="154.0" width="86.0" height="28.0" rx="3" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.55"/>
 <text x="425.0" y="172.0" text-anchor="middle" class="cap" style="fill:#FFFFFF;font-size:9.5px">prawdziwe</text>
@@ -558,13 +567,13 @@ html{scroll-padding-top:var(--sbh,84px)}
 <rect x="570.0" y="154.0" width="86.0" height="28.0" rx="3" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.55"/>
 <text x="613.0" y="172.0" text-anchor="middle" class="cap" style="fill:#FFFFFF;font-size:9.5px">prawdziwe</text>
 <text x="180.0" y="206.0" text-anchor="end" class="cap" style="fill:#141C24">obiekt</text>
-<rect x="194.0" y="190.0" width="86.0" height="28.0" rx="3" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="194.0" y="190.0" width="86.0" height="28.0" rx="3" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="3 3"/>
 <text x="237.0" y="208.0" text-anchor="middle" class="cap" style="font-size:9.5px">model</text>
-<rect x="288.0" y="190.0" width="86.0" height="28.0" rx="3" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="288.0" y="190.0" width="86.0" height="28.0" rx="3" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="3 3"/>
 <text x="331.0" y="208.0" text-anchor="middle" class="cap" style="font-size:9.5px">model</text>
-<rect x="382.0" y="190.0" width="86.0" height="28.0" rx="3" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="382.0" y="190.0" width="86.0" height="28.0" rx="3" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="3 3"/>
 <text x="425.0" y="208.0" text-anchor="middle" class="cap" style="font-size:9.5px">model</text>
-<rect x="476.0" y="190.0" width="86.0" height="28.0" rx="3" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="476.0" y="190.0" width="86.0" height="28.0" rx="3" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="3 3"/>
 <text x="519.0" y="208.0" text-anchor="middle" class="cap" style="font-size:9.5px">model</text>
 <rect x="570.0" y="190.0" width="86.0" height="28.0" rx="3" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.55"/>
 <text x="613.0" y="208.0" text-anchor="middle" class="cap" style="fill:#FFFFFF;font-size:9.5px">prawdziwe</text>
@@ -584,23 +593,23 @@ html{scroll-padding-top:var(--sbh,84px)}
 <svg viewBox="0 0 680 470" class="fig">
 <defs><marker id="arF33f0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9C3B52"/></marker></defs>
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">NARYSUJ NA TABLICY W 6 RUCHACH</text>
-<rect x="14.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="32.0" cy="58.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <text x="32.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">1</text>
 <text x="48.0" y="56.0" text-anchor="start" class="bx-t">litera V:</text>
 <text x="48.0" y="70.0" text-anchor="start" class="bx" style="font-size:9.5px">lewe ramię = projekt</text>
 <line x1="44.0" y1="100.0" x2="118.0" y2="220.0" stroke="#0E6E78" stroke-width="3"/>
-<rect x="236.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="236.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="254.0" cy="58.0" r="10" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <text x="254.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">2</text>
 <text x="270.0" y="56.0" text-anchor="start" class="bx-t">prawe ramię:</text>
 <text x="270.0" y="70.0" text-anchor="start" class="bx" style="font-size:9.5px">testy i uruchomienie</text>
 <line x1="266.0" y1="100.0" x2="340.0" y2="220.0" stroke="#0E6E78" stroke-width="3"/>
 <line x1="340.0" y1="220.0" x2="414.0" y2="100.0" stroke="#9C3B52" stroke-width="3"/>
-<line x1="284.3" y1="120.0" x2="395.7" y2="120.0" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
-<line x1="302.8" y1="150.0" x2="377.2" y2="150.0" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
-<line x1="321.3" y1="180.0" x2="358.7" y2="180.0" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
-<rect x="458.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<line x1="284.3" y1="120.0" x2="395.7" y2="120.0" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="3 3"/>
+<line x1="302.8" y1="150.0" x2="377.2" y2="150.0" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="3 3"/>
+<line x1="321.3" y1="180.0" x2="358.7" y2="180.0" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="458.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="476.0" cy="58.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <text x="476.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">3</text>
 <text x="492.0" y="56.0" text-anchor="start" class="bx-t">dekompozycja:</text>
@@ -612,14 +621,14 @@ html{scroll-padding-top:var(--sbh,84px)}
 <line x1="628.0" y1="190.0" x2="588.0" y2="200.0" stroke="#141C24" stroke-width="2.4"/>
 <line x1="608.0" y1="130.0" x2="588.0" y2="200.0" stroke="#141C24" stroke-width="2.4"/>
 <line x1="538.0" y1="180.0" x2="588.0" y2="200.0" stroke="#9C3B52" stroke-width="1" stroke-dasharray="3 2"/>
-<circle cx="508.0" cy="130.0" r="9" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
-<circle cx="538.0" cy="180.0" r="9" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
-<circle cx="498.0" cy="200.0" r="9" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
-<circle cx="608.0" cy="130.0" r="9" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
-<circle cx="628.0" cy="190.0" r="9" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
-<circle cx="588.0" cy="200.0" r="9" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<circle cx="508.0" cy="130.0" r="9" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.3"/>
+<circle cx="538.0" cy="180.0" r="9" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.3"/>
+<circle cx="498.0" cy="200.0" r="9" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.3"/>
+<circle cx="608.0" cy="130.0" r="9" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.3"/>
+<circle cx="628.0" cy="190.0" r="9" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.3"/>
+<circle cx="588.0" cy="200.0" r="9" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.3"/>
 <line x1="562.0" y1="100.0" x2="562.0" y2="230.0" stroke="#9C3B52" stroke-width="1.2" stroke-dasharray="5 4"/>
-<rect x="14.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="32.0" cy="272.0" r="10" fill="#B3641A" stroke="none" stroke-width="1"/>
 <text x="32.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">4</text>
 <text x="48.0" y="270.0" text-anchor="start" class="bx-t">RGA 2×2:</text>
@@ -628,41 +637,41 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="118.0" y="378.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9.5px">≈ 1 → pary na przekątnej</text>
 <text x="118.0" y="400.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9.5px">&lt; 0 → zamień pary</text>
 <text x="118.0" y="422.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:9.5px">≫ 1 → silne sprzężenie</text>
-<rect x="236.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="236.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="254.0" cy="272.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
 <text x="254.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">5</text>
 <text x="270.0" y="270.0" text-anchor="start" class="bx-t">węzły:</text>
 <text x="270.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">sterownik na podsystem</text>
 <line x1="256.0" y1="334.0" x2="424.0" y2="334.0" stroke="#5C6B77" stroke-width="2"/>
 <line x1="296.0" y1="334.0" x2="296.0" y2="354.0" stroke="#0E6E78" stroke-width="1.2"/>
-<rect x="266.0" y="354.0" width="60.0" height="24.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.2"/>
+<rect x="266.0" y="354.0" width="60.0" height="24.0" rx="3" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.2"/>
 <text x="296.0" y="370.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9px">węzeł</text>
-<rect x="268.0" y="404.0" width="24.0" height="18.0" rx="2" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="268.0" y="404.0" width="24.0" height="18.0" rx="2" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <line x1="280.0" y1="378.0" x2="280.0" y2="404.0" stroke="#0E6E78" stroke-width="1"/>
-<rect x="300.0" y="404.0" width="24.0" height="18.0" rx="2" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="300.0" y="404.0" width="24.0" height="18.0" rx="2" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <line x1="312.0" y1="378.0" x2="312.0" y2="404.0" stroke="#0E6E78" stroke-width="1"/>
 <line x1="384.0" y1="334.0" x2="384.0" y2="354.0" stroke="#5B4B8A" stroke-width="1.2"/>
-<rect x="354.0" y="354.0" width="60.0" height="24.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<rect x="354.0" y="354.0" width="60.0" height="24.0" rx="3" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.2"/>
 <text x="384.0" y="370.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9px">węzeł</text>
-<rect x="356.0" y="404.0" width="24.0" height="18.0" rx="2" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="356.0" y="404.0" width="24.0" height="18.0" rx="2" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <line x1="368.0" y1="378.0" x2="368.0" y2="404.0" stroke="#5B4B8A" stroke-width="1"/>
-<rect x="388.0" y="404.0" width="24.0" height="18.0" rx="2" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="388.0" y="404.0" width="24.0" height="18.0" rx="2" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <line x1="400.0" y1="378.0" x2="400.0" y2="404.0" stroke="#5B4B8A" stroke-width="1"/>
-<rect x="458.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="458.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="476.0" cy="272.0" r="10" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <text x="476.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">6</text>
 <text x="492.0" y="270.0" text-anchor="start" class="bx-t">testy:</text>
 <text x="492.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">MIL→SIL→HIL→FAT→SAT</text>
-<rect x="476.0" y="354.0" width="30.0" height="26.0" rx="3" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.2"/>
+<rect x="476.0" y="354.0" width="30.0" height="26.0" rx="3" fill="#FDFDFA" stroke="#9C3B52" stroke-width="1.2"/>
 <text x="491.0" y="371.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:8.5px">MIL</text>
 <path d="M 506.0 367.0 L 512.0 367.0" fill="none" stroke="#9C3B52" stroke-width="1" marker-end="url(#arF33f0)"/>
-<rect x="512.0" y="354.0" width="30.0" height="26.0" rx="3" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.2"/>
+<rect x="512.0" y="354.0" width="30.0" height="26.0" rx="3" fill="#FDFDFA" stroke="#9C3B52" stroke-width="1.2"/>
 <text x="527.0" y="371.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:8.5px">SIL</text>
 <path d="M 542.0 367.0 L 548.0 367.0" fill="none" stroke="#9C3B52" stroke-width="1" marker-end="url(#arF33f0)"/>
-<rect x="548.0" y="354.0" width="30.0" height="26.0" rx="3" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.2"/>
+<rect x="548.0" y="354.0" width="30.0" height="26.0" rx="3" fill="#FDFDFA" stroke="#9C3B52" stroke-width="1.2"/>
 <text x="563.0" y="371.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:8.5px">HIL</text>
 <path d="M 578.0 367.0 L 584.0 367.0" fill="none" stroke="#9C3B52" stroke-width="1" marker-end="url(#arF33f0)"/>
-<rect x="584.0" y="354.0" width="30.0" height="26.0" rx="3" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.2"/>
+<rect x="584.0" y="354.0" width="30.0" height="26.0" rx="3" fill="#FDFDFA" stroke="#9C3B52" stroke-width="1.2"/>
 <text x="599.0" y="371.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:8.5px">FAT</text>
 <path d="M 614.0 367.0 L 620.0 367.0" fill="none" stroke="#9C3B52" stroke-width="1" marker-end="url(#arF33f0)"/>
 <rect x="620.0" y="354.0" width="30.0" height="26.0" rx="3" fill="#0E6E78" stroke="#9C3B52" stroke-width="1.2"/>

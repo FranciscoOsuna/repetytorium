@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Feed powtórkowy — repetytorium</title>
+<link rel="icon" type="image/png" sizes="144x144" href="favicon-144.png?v=2">
+<link rel="icon" href="favicon.ico?v=2" sizes="any">
+<link rel="apple-touch-icon" href="favicon-144.png?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
@@ -139,12 +142,19 @@ p{margin:0 0 12px;max-width:62ch}
   .cmp{font-size:13px} .cmp div{padding:6px 6px 6px 0}
   .analogy{padding:9px 12px;margin-top:10px}
 }
+/* meowle */
+.mascot{width:30px;height:30px;border-radius:50%;flex:none;object-fit:cover;box-shadow:0 0 0 2px var(--bg),0 0 0 3px var(--line)}
+.mascot.pop{animation:mpop .45s ease}
+@keyframes mpop{40%{transform:scale(1.22) rotate(-6deg)}100%{transform:none}}
+.intro-meowls{display:block;width:100%;max-height:30vh;object-fit:cover;object-position:50% 40%;border-radius:16px;margin:0 0 20px}
+.mile-meowl{display:block;width:76px;height:76px;border-radius:50%;margin:0 0 14px}
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <div id="hud">
   <a class="back" href="index.html" aria-label="Powrót do repetytorium">←</a>
+  <img id="mascot" class="mascot" src="assets/meowl-wide.png" width="30" height="30" alt="">
   <span class="streak" id="streak" aria-label="seria">🔥 0</span>
   <span class="today" id="today">dziś 0</span>
   <button id="filterBtn">Pytania</button>
@@ -278,7 +288,8 @@ function renderCard(c){const {sec,body}=shell(c); R[c.typ](c,body); return sec;}
 function introCard(){
   const sec=el('section','card'); sec.style.setProperty('--h',150);
   const w=el('div','wrap'); const b=el('div','body');
-  b.innerHTML=`<div class="big">Przewijaj w górę.</div>
+  b.innerHTML=`<img class="intro-meowls" src="assets/meowl-banner.jpg" alt="">
+  <div class="big">Przewijaj w górę.</div>
   <p>Każda karta to jedna rzecz do powiedzenia na obronie. Odpowiadaj na głos, zanim odsłonisz odpowiedź.</p>
   <p>Karty, których nie umiesz, wracają szybciej. Te opanowane pojawiają się coraz rzadziej, ale nie znikają.</p>
   <p class="hint" style="text-align:left">Wersja próbna: ${Object.keys(TOPICS).length} pytań, ${CARDS.length} kart.</p>`;
@@ -288,7 +299,8 @@ function milestoneCard(){
   const sec=el('section','card'); sec.style.setProperty('--h',48);
   const w=el('div','wrap'); const b=el('div','body');
   const weak=weakest();
-  b.innerHTML=`<div class="big">${S.ses.n} kart za Tobą.</div>
+  b.innerHTML=`<img class="mile-meowl" src="assets/meowl-snowy.png" alt="">
+   <div class="big">${S.ses.n} kart za Tobą.</div>
    <div class="stat"><div><b>${S.ses.ok}</b><span>umiałeś</span></div><div><b>${S.best}</b><span>najdłuższa seria</span></div></div>
    ${weak?`<p>Najwięcej do powtórki: <b>${weak.q}. ${esc(TOPICS[weak.q].t)}</b> (${weak.pct}% opanowane).</p>`:''}
    <p class="hint" style="text-align:left">Przewiń dalej, feed się nie kończy.</p>`;
@@ -309,8 +321,18 @@ function rate(c,good,delay){
   st.b=good?Math.min(st.b+1,5):0;
   S.ses.n++; S.today++; if(good){S.ses.ok++; S.streak++; S.best=Math.max(S.best,S.streak);} else S.streak=0;
   if(navigator.vibrate) try{navigator.vibrate(good?12:[8,40,8])}catch(e){}
-  hud(); save();
+  hud(); save(); mascot(good);
   setTimeout(()=>advance(),delay||420);
+}
+/* meowl w pasku: oczy szeroko = pytanie, zmrużone = umiem, pręgowany = jeszcze nie */
+const mascotEl=document.getElementById('mascot');
+['wide','tabby','snowy'].forEach(k=>{new Image().src='assets/meowl-'+k+'.png';});
+function mascot(good){
+  if(!mascotEl) return;
+  mascotEl.src='assets/meowl-'+(good?'snowy':'tabby')+'.png';
+  mascotEl.classList.remove('pop'); void mascotEl.offsetWidth; mascotEl.classList.add('pop');
+  clearTimeout(mascot.t);
+  mascot.t=setTimeout(()=>{mascotEl.src='assets/meowl-wide.png'; mascotEl.classList.remove('pop');},1400);
 }
 function current(){const i=Math.round(feed.scrollTop/feed.clientHeight); return i;}
 function advance(){const i=current(); const next=feed.children[i+1]; if(!next) append(3);

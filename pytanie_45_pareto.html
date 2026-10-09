@@ -4,14 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pytanie 45 — Wielocelowe zagadnienia decyzyjne: porządek Pareto</title>
+<link rel="icon" type="image/png" sizes="144x144" href="favicon-144.png?v=2">
+<link rel="icon" href="favicon.ico?v=2" sizes="any">
+<link rel="apple-touch-icon" href="favicon-144.png?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#141C24; --mut:#5C6B77; --line:#C3CDD4;
-  --paper:#E8ECEF; --card:#FCFDFD;
-  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52;
+  --ink:#141C24; --mut:#5C6B77; --line:#CCD2C7;
+  --paper:#EDEEE5; --card:#FDFDFA;
+  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52; --moss:#5E8C3A;
   --disp:"Space Grotesk",system-ui,sans-serif;
   --body:"STIX Two Text","Source Serif 4",Georgia,serif;
   --mono:"IBM Plex Mono",ui-monospace,monospace;
@@ -39,7 +42,7 @@ h2 .num{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--viole
         letter-spacing:.08em;flex:none}
 h3{font-family:var(--disp);font-weight:500;font-size:18.5px;margin:34px 0 8px;letter-spacing:-.01em}
 p{margin:0 0 14px}
-.rail{height:5px;background:linear-gradient(90deg,var(--teal) 0%,var(--violet) 55%,var(--amber) 100%);
+.rail{height:5px;background:linear-gradient(90deg,var(--moss) 0%,var(--teal) 30%,var(--violet) 62%,var(--amber) 100%);
       opacity:.85;margin:0 0 22px;border-radius:2px}
 
 /* ---- figury ---- */
@@ -83,7 +86,7 @@ figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:
 table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15px;background:var(--card)}
 th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
 th{font-family:var(--disp);font-weight:500;font-size:13px;letter-spacing:.02em;
-   background:#F2F5F6;border-bottom:1.5px solid var(--line)}
+   background:#F3F4EE;border-bottom:1.5px solid var(--line)}
 td.n{font-family:var(--mono);font-size:13.5px;white-space:nowrap}
 tr:last-child td{border-bottom:none}
 
@@ -115,6 +118,11 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
 .backfoot a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
             color:var(--teal);text-decoration:none;border-bottom:1px solid var(--line)}
 .backfoot a:hover,.backfoot a:focus-visible{border-bottom-color:var(--teal);outline:none}
+
+/* ---- meowl przy tytule ---- */
+.avatar{float:right;width:64px;height:64px;border-radius:50%;margin:2px 0 10px 18px;
+        box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--line)}
+header::after{content:"";display:block;clear:both}
 </style>
 </head>
 <body>
@@ -126,6 +134,7 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
 </nav>
 
 <header>
+  <img class="avatar" src="assets/meowl-wide.png" width="64" height="64" alt="" decoding="async">
   <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 45</p>
   <h1>Wielocelowe zagadnienia decyzyjne: porządek Pareto</h1>
   <p class="quest">Wielocelowe zagadnienia decyzyjne – algorytmy rozwiązywania z uwzględnieniem przyjętego porządku Pareto.</p>
@@ -157,7 +166,7 @@ ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{colo
 .luka{display:inline-block;min-width:70px;border-bottom:1.5px solid var(--violet);text-align:center;font-family:var(--mono);font-size:14px;color:var(--violet)}
 /*stickybar-start*/
 .topnav{display:none}
-#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(232,236,239,.96);
+#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(237,238,229,.96);
   -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 #sbar .in{max-width:860px;margin:0 auto;padding:9px 22px 8px}
 #sbar .r1{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
@@ -233,28 +242,28 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="105.0" y="116.5" text-anchor="middle" class="cap" style="font-size:9.5px">nieporównywalne</text>
 <text x="235.0" y="241.5" text-anchor="middle" class="cap" style="font-size:9.5px">nieporównywalne</text>
 <clipPath id="cF45a19"><rect x="380" y="50" width="270" height="240"/></clipPath>
-<line x1="380.0" y1="290.0" x2="650.0" y2="290.0" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="380.0" y1="50.0" x2="380.0" y2="290.0" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="380.0" y1="290.0" x2="380.0" y2="294.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="380.0" y1="290.0" x2="650.0" y2="290.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="380.0" y1="50.0" x2="380.0" y2="290.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="380.0" y1="290.0" x2="380.0" y2="294.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="380.0" y="306.0" text-anchor="middle" class="tick">−12</text>
-<line x1="442.3" y1="290.0" x2="442.3" y2="294.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="442.3" y1="290.0" x2="442.3" y2="294.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="442.3" y="306.0" text-anchor="middle" class="tick">−9</text>
-<line x1="504.6" y1="290.0" x2="504.6" y2="294.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="504.6" y1="290.0" x2="504.6" y2="294.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="504.6" y="306.0" text-anchor="middle" class="tick">−6</text>
-<line x1="566.9" y1="290.0" x2="566.9" y2="294.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="566.9" y1="290.0" x2="566.9" y2="294.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="566.9" y="306.0" text-anchor="middle" class="tick">−3</text>
-<line x1="629.2" y1="290.0" x2="629.2" y2="294.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="629.2" y1="290.0" x2="629.2" y2="294.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="629.2" y="306.0" text-anchor="middle" class="tick">0</text>
-<line x1="376.0" y1="277.4" x2="380.0" y2="277.4" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="376.0" y1="277.4" x2="380.0" y2="277.4" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="380.0" y1="277.4" x2="650.0" y2="277.4" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="372.0" y="281.4" text-anchor="end" class="tick">0</text>
-<line x1="376.0" y1="214.2" x2="380.0" y2="214.2" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="376.0" y1="214.2" x2="380.0" y2="214.2" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="380.0" y1="214.2" x2="650.0" y2="214.2" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="372.0" y="218.2" text-anchor="end" class="tick">5</text>
-<line x1="376.0" y1="151.1" x2="380.0" y2="151.1" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="376.0" y1="151.1" x2="380.0" y2="151.1" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="380.0" y1="151.1" x2="650.0" y2="151.1" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="372.0" y="155.1" text-anchor="end" class="tick">10</text>
-<line x1="376.0" y1="87.9" x2="380.0" y2="87.9" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="376.0" y1="87.9" x2="380.0" y2="87.9" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="380.0" y1="87.9" x2="650.0" y2="87.9" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="372.0" y="91.9" text-anchor="end" class="tick">15</text>
 <text x="515.0" y="324.0" text-anchor="middle" class="axlab">z₁ = −x₁ − 2x₂</text>
@@ -296,32 +305,32 @@ html{scroll-padding-top:var(--sbh,84px)}
 <defs><marker id="arF45b0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0E6E78"/></marker><marker id="arF45b1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B3641A"/></marker><marker id="arF45b2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#141C24"/></marker></defs>
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">PRZYKŁAD Z WYKŁADU: TE SAME PUNKTY W PRZESTRZENI DECYZJI I CELÓW</text>
 <clipPath id="cF45b1"><rect x="60" y="50" width="240" height="250"/></clipPath>
-<line x1="60.0" y1="300.0" x2="300.0" y2="300.0" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="60.0" y1="50.0" x2="60.0" y2="300.0" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="60.0" y1="300.0" x2="60.0" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="60.0" y1="300.0" x2="300.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="60.0" y1="50.0" x2="60.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="60.0" y1="300.0" x2="60.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="60.0" y="316.0" text-anchor="middle" class="tick">0</text>
-<line x1="135.0" y1="300.0" x2="135.0" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="135.0" y1="300.0" x2="135.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="135.0" y="316.0" text-anchor="middle" class="tick">10</text>
-<line x1="210.0" y1="300.0" x2="210.0" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="210.0" y1="300.0" x2="210.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="210.0" y="316.0" text-anchor="middle" class="tick">20</text>
-<line x1="285.0" y1="300.0" x2="285.0" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="285.0" y1="300.0" x2="285.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="285.0" y="316.0" text-anchor="middle" class="tick">30</text>
-<line x1="56.0" y1="300.0" x2="60.0" y2="300.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="56.0" y1="300.0" x2="60.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="60.0" y1="300.0" x2="300.0" y2="300.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="52.0" y="304.0" text-anchor="end" class="tick">0</text>
-<line x1="56.0" y1="254.5" x2="60.0" y2="254.5" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="56.0" y1="254.5" x2="60.0" y2="254.5" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="60.0" y1="254.5" x2="300.0" y2="254.5" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="52.0" y="258.5" text-anchor="end" class="tick">10</text>
-<line x1="56.0" y1="209.1" x2="60.0" y2="209.1" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="56.0" y1="209.1" x2="60.0" y2="209.1" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="60.0" y1="209.1" x2="300.0" y2="209.1" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="52.0" y="213.1" text-anchor="end" class="tick">20</text>
-<line x1="56.0" y1="163.6" x2="60.0" y2="163.6" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="56.0" y1="163.6" x2="60.0" y2="163.6" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="60.0" y1="163.6" x2="300.0" y2="163.6" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="52.0" y="167.6" text-anchor="end" class="tick">30</text>
-<line x1="56.0" y1="118.2" x2="60.0" y2="118.2" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="56.0" y1="118.2" x2="60.0" y2="118.2" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="60.0" y1="118.2" x2="300.0" y2="118.2" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="52.0" y="122.2" text-anchor="end" class="tick">40</text>
-<line x1="56.0" y1="72.7" x2="60.0" y2="72.7" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="56.0" y1="72.7" x2="60.0" y2="72.7" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="60.0" y1="72.7" x2="300.0" y2="72.7" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="52.0" y="76.7" text-anchor="end" class="tick">50</text>
 <text x="180.0" y="334.0" text-anchor="middle" class="axlab">x₁</text>
@@ -349,37 +358,37 @@ html{scroll-padding-top:var(--sbh,84px)}
 <path d="M 318.0 170.0 L 362.0 170.0" fill="none" stroke="#141C24" stroke-width="1.6" marker-end="url(#arF45b2)"/>
 <text x="340.0" y="160.0" text-anchor="middle" class="bx-t" style="font-size:11px">z(x)</text>
 <clipPath id="cF45b54"><rect x="410" y="50" width="250" height="250"/></clipPath>
-<line x1="410.0" y1="300.0" x2="660.0" y2="300.0" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="410.0" y1="50.0" x2="410.0" y2="300.0" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="410.0" y1="300.0" x2="410.0" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="410.0" y1="300.0" x2="660.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="410.0" y1="50.0" x2="410.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="410.0" y1="300.0" x2="410.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="410.0" y="316.0" text-anchor="middle" class="tick">0</text>
-<line x1="471.0" y1="300.0" x2="471.0" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="471.0" y1="300.0" x2="471.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="471.0" y="316.0" text-anchor="middle" class="tick">20</text>
-<line x1="532.0" y1="300.0" x2="532.0" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="532.0" y1="300.0" x2="532.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="532.0" y="316.0" text-anchor="middle" class="tick">40</text>
-<line x1="592.9" y1="300.0" x2="592.9" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="592.9" y1="300.0" x2="592.9" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="592.9" y="316.0" text-anchor="middle" class="tick">60</text>
-<line x1="653.9" y1="300.0" x2="653.9" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="653.9" y1="300.0" x2="653.9" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="653.9" y="316.0" text-anchor="middle" class="tick">80</text>
-<line x1="406.0" y1="300.0" x2="410.0" y2="300.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="406.0" y1="300.0" x2="410.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="410.0" y1="300.0" x2="660.0" y2="300.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="402.0" y="304.0" text-anchor="end" class="tick">0</text>
-<line x1="406.0" y1="260.0" x2="410.0" y2="260.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="406.0" y1="260.0" x2="410.0" y2="260.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="410.0" y1="260.0" x2="660.0" y2="260.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="402.0" y="264.0" text-anchor="end" class="tick">20</text>
-<line x1="406.0" y1="220.0" x2="410.0" y2="220.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="406.0" y1="220.0" x2="410.0" y2="220.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="410.0" y1="220.0" x2="660.0" y2="220.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="402.0" y="224.0" text-anchor="end" class="tick">40</text>
-<line x1="406.0" y1="180.0" x2="410.0" y2="180.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="406.0" y1="180.0" x2="410.0" y2="180.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="410.0" y1="180.0" x2="660.0" y2="180.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="402.0" y="184.0" text-anchor="end" class="tick">60</text>
-<line x1="406.0" y1="140.0" x2="410.0" y2="140.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="406.0" y1="140.0" x2="410.0" y2="140.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="410.0" y1="140.0" x2="660.0" y2="140.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="402.0" y="144.0" text-anchor="end" class="tick">80</text>
-<line x1="406.0" y1="100.0" x2="410.0" y2="100.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="406.0" y1="100.0" x2="410.0" y2="100.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="410.0" y1="100.0" x2="660.0" y2="100.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="402.0" y="104.0" text-anchor="end" class="tick">100</text>
-<line x1="406.0" y1="60.0" x2="410.0" y2="60.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="406.0" y1="60.0" x2="410.0" y2="60.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="410.0" y1="60.0" x2="660.0" y2="60.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="402.0" y="64.0" text-anchor="end" class="tick">120</text>
 <text x="535.0" y="334.0" text-anchor="middle" class="axlab">z₁ — zysk</text>
@@ -429,32 +438,32 @@ html{scroll-padding-top:var(--sbh,84px)}
 <defs><marker id="arF45c0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#141C24"/></marker><marker id="arF45c1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker></defs>
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">METODA ε-OGRANICZEŃ: max z₁ PRZY z₂ ≥ 100</text>
 <clipPath id="cF45c1"><rect x="60" y="50" width="240" height="250"/></clipPath>
-<line x1="60.0" y1="300.0" x2="300.0" y2="300.0" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="60.0" y1="50.0" x2="60.0" y2="300.0" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="60.0" y1="300.0" x2="60.0" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="60.0" y1="300.0" x2="300.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="60.0" y1="50.0" x2="60.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="60.0" y1="300.0" x2="60.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="60.0" y="316.0" text-anchor="middle" class="tick">0</text>
-<line x1="135.0" y1="300.0" x2="135.0" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="135.0" y1="300.0" x2="135.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="135.0" y="316.0" text-anchor="middle" class="tick">10</text>
-<line x1="210.0" y1="300.0" x2="210.0" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="210.0" y1="300.0" x2="210.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="210.0" y="316.0" text-anchor="middle" class="tick">20</text>
-<line x1="285.0" y1="300.0" x2="285.0" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="285.0" y1="300.0" x2="285.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="285.0" y="316.0" text-anchor="middle" class="tick">30</text>
-<line x1="56.0" y1="300.0" x2="60.0" y2="300.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="56.0" y1="300.0" x2="60.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="60.0" y1="300.0" x2="300.0" y2="300.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="52.0" y="304.0" text-anchor="end" class="tick">0</text>
-<line x1="56.0" y1="254.5" x2="60.0" y2="254.5" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="56.0" y1="254.5" x2="60.0" y2="254.5" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="60.0" y1="254.5" x2="300.0" y2="254.5" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="52.0" y="258.5" text-anchor="end" class="tick">10</text>
-<line x1="56.0" y1="209.1" x2="60.0" y2="209.1" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="56.0" y1="209.1" x2="60.0" y2="209.1" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="60.0" y1="209.1" x2="300.0" y2="209.1" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="52.0" y="213.1" text-anchor="end" class="tick">20</text>
-<line x1="56.0" y1="163.6" x2="60.0" y2="163.6" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="56.0" y1="163.6" x2="60.0" y2="163.6" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="60.0" y1="163.6" x2="300.0" y2="163.6" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="52.0" y="167.6" text-anchor="end" class="tick">30</text>
-<line x1="56.0" y1="118.2" x2="60.0" y2="118.2" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="56.0" y1="118.2" x2="60.0" y2="118.2" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="60.0" y1="118.2" x2="300.0" y2="118.2" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="52.0" y="122.2" text-anchor="end" class="tick">40</text>
-<line x1="56.0" y1="72.7" x2="60.0" y2="72.7" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="56.0" y1="72.7" x2="60.0" y2="72.7" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="60.0" y1="72.7" x2="300.0" y2="72.7" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="52.0" y="76.7" text-anchor="end" class="tick">50</text>
 <text x="180.0" y="334.0" text-anchor="middle" class="axlab">x₁</text>
@@ -478,37 +487,37 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="183.8" y="240.9" text-anchor="start" class="cap" style="fill:#5B4B8A;font-size:9px">linia z₁ = 62,5</text>
 <path d="M 318.0 170.0 L 362.0 170.0" fill="none" stroke="#141C24" stroke-width="1.6" marker-end="url(#arF45c0)"/>
 <clipPath id="cF45c50"><rect x="410" y="50" width="250" height="250"/></clipPath>
-<line x1="410.0" y1="300.0" x2="660.0" y2="300.0" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="410.0" y1="50.0" x2="410.0" y2="300.0" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="410.0" y1="300.0" x2="410.0" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="410.0" y1="300.0" x2="660.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="410.0" y1="50.0" x2="410.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="410.0" y1="300.0" x2="410.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="410.0" y="316.0" text-anchor="middle" class="tick">0</text>
-<line x1="471.0" y1="300.0" x2="471.0" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="471.0" y1="300.0" x2="471.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="471.0" y="316.0" text-anchor="middle" class="tick">20</text>
-<line x1="532.0" y1="300.0" x2="532.0" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="532.0" y1="300.0" x2="532.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="532.0" y="316.0" text-anchor="middle" class="tick">40</text>
-<line x1="592.9" y1="300.0" x2="592.9" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="592.9" y1="300.0" x2="592.9" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="592.9" y="316.0" text-anchor="middle" class="tick">60</text>
-<line x1="653.9" y1="300.0" x2="653.9" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="653.9" y1="300.0" x2="653.9" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="653.9" y="316.0" text-anchor="middle" class="tick">80</text>
-<line x1="406.0" y1="300.0" x2="410.0" y2="300.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="406.0" y1="300.0" x2="410.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="410.0" y1="300.0" x2="660.0" y2="300.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="402.0" y="304.0" text-anchor="end" class="tick">0</text>
-<line x1="406.0" y1="260.0" x2="410.0" y2="260.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="406.0" y1="260.0" x2="410.0" y2="260.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="410.0" y1="260.0" x2="660.0" y2="260.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="402.0" y="264.0" text-anchor="end" class="tick">20</text>
-<line x1="406.0" y1="220.0" x2="410.0" y2="220.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="406.0" y1="220.0" x2="410.0" y2="220.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="410.0" y1="220.0" x2="660.0" y2="220.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="402.0" y="224.0" text-anchor="end" class="tick">40</text>
-<line x1="406.0" y1="180.0" x2="410.0" y2="180.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="406.0" y1="180.0" x2="410.0" y2="180.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="410.0" y1="180.0" x2="660.0" y2="180.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="402.0" y="184.0" text-anchor="end" class="tick">60</text>
-<line x1="406.0" y1="140.0" x2="410.0" y2="140.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="406.0" y1="140.0" x2="410.0" y2="140.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="410.0" y1="140.0" x2="660.0" y2="140.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="402.0" y="144.0" text-anchor="end" class="tick">80</text>
-<line x1="406.0" y1="100.0" x2="410.0" y2="100.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="406.0" y1="100.0" x2="410.0" y2="100.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="410.0" y1="100.0" x2="660.0" y2="100.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="402.0" y="104.0" text-anchor="end" class="tick">100</text>
-<line x1="406.0" y1="60.0" x2="410.0" y2="60.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="406.0" y1="60.0" x2="410.0" y2="60.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="410.0" y1="60.0" x2="660.0" y2="60.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="402.0" y="64.0" text-anchor="end" class="tick">120</text>
 <text x="535.0" y="334.0" text-anchor="middle" class="axlab">z₁ — zysk</text>
@@ -553,37 +562,37 @@ html{scroll-padding-top:var(--sbh,84px)}
 <defs><marker id="arF45d0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B3641A"/></marker></defs>
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">METODA WAŻENIA: HIPERPŁASZCZYZNA w·z = c PRZESUWANA W STRONĘ WZROSTU</text>
 <clipPath id="cF45d1"><rect x="70" y="50" width="290" height="250"/></clipPath>
-<line x1="70.0" y1="300.0" x2="360.0" y2="300.0" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="70.0" y1="50.0" x2="70.0" y2="300.0" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="70.0" y1="300.0" x2="70.0" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="70.0" y1="300.0" x2="360.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="70.0" y1="50.0" x2="70.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="70.0" y1="300.0" x2="70.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="70.0" y="316.0" text-anchor="middle" class="tick">0</text>
-<line x1="140.7" y1="300.0" x2="140.7" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="140.7" y1="300.0" x2="140.7" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="140.7" y="316.0" text-anchor="middle" class="tick">20</text>
-<line x1="211.5" y1="300.0" x2="211.5" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="211.5" y1="300.0" x2="211.5" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="211.5" y="316.0" text-anchor="middle" class="tick">40</text>
-<line x1="282.2" y1="300.0" x2="282.2" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="282.2" y1="300.0" x2="282.2" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="282.2" y="316.0" text-anchor="middle" class="tick">60</text>
-<line x1="352.9" y1="300.0" x2="352.9" y2="304.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="352.9" y1="300.0" x2="352.9" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="352.9" y="316.0" text-anchor="middle" class="tick">80</text>
-<line x1="66.0" y1="300.0" x2="70.0" y2="300.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="66.0" y1="300.0" x2="70.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="70.0" y1="300.0" x2="360.0" y2="300.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="62.0" y="304.0" text-anchor="end" class="tick">0</text>
-<line x1="66.0" y1="260.0" x2="70.0" y2="260.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="66.0" y1="260.0" x2="70.0" y2="260.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="70.0" y1="260.0" x2="360.0" y2="260.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="62.0" y="264.0" text-anchor="end" class="tick">20</text>
-<line x1="66.0" y1="220.0" x2="70.0" y2="220.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="66.0" y1="220.0" x2="70.0" y2="220.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="70.0" y1="220.0" x2="360.0" y2="220.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="62.0" y="224.0" text-anchor="end" class="tick">40</text>
-<line x1="66.0" y1="180.0" x2="70.0" y2="180.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="66.0" y1="180.0" x2="70.0" y2="180.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="70.0" y1="180.0" x2="360.0" y2="180.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="62.0" y="184.0" text-anchor="end" class="tick">60</text>
-<line x1="66.0" y1="140.0" x2="70.0" y2="140.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="66.0" y1="140.0" x2="70.0" y2="140.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="70.0" y1="140.0" x2="360.0" y2="140.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="62.0" y="144.0" text-anchor="end" class="tick">80</text>
-<line x1="66.0" y1="100.0" x2="70.0" y2="100.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="66.0" y1="100.0" x2="70.0" y2="100.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="70.0" y1="100.0" x2="360.0" y2="100.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="62.0" y="104.0" text-anchor="end" class="tick">100</text>
-<line x1="66.0" y1="60.0" x2="70.0" y2="60.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="66.0" y1="60.0" x2="70.0" y2="60.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="70.0" y1="60.0" x2="360.0" y2="60.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="62.0" y="64.0" text-anchor="end" class="tick">120</text>
 <text x="215.0" y="334.0" text-anchor="middle" class="axlab">z₁ — zysk</text>
@@ -646,34 +655,34 @@ html{scroll-padding-top:var(--sbh,84px)}
 <svg viewBox="0 0 680 350" class="fig">
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">GENEROWANIE FRONTU: 5 ZADAŃ LP KAŻDĄ METODĄ</text>
 <clipPath id="cF45e1"><rect x="70" y="60" width="250" height="220"/></clipPath>
-<line x1="70.0" y1="280.0" x2="320.0" y2="280.0" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="70.0" y1="60.0" x2="70.0" y2="280.0" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="70.0" y1="280.0" x2="70.0" y2="284.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="70.0" y1="280.0" x2="320.0" y2="280.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="70.0" y1="60.0" x2="70.0" y2="280.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="70.0" y1="280.0" x2="70.0" y2="284.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="70.0" y="296.0" text-anchor="middle" class="tick">55</text>
-<line x1="132.5" y1="280.0" x2="132.5" y2="284.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="132.5" y1="280.0" x2="132.5" y2="284.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="132.5" y="296.0" text-anchor="middle" class="tick">60</text>
-<line x1="195.0" y1="280.0" x2="195.0" y2="284.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="195.0" y1="280.0" x2="195.0" y2="284.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="195.0" y="296.0" text-anchor="middle" class="tick">65</text>
-<line x1="257.5" y1="280.0" x2="257.5" y2="284.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="257.5" y1="280.0" x2="257.5" y2="284.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="257.5" y="296.0" text-anchor="middle" class="tick">70</text>
-<line x1="320.0" y1="280.0" x2="320.0" y2="284.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="320.0" y1="280.0" x2="320.0" y2="284.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="320.0" y="296.0" text-anchor="middle" class="tick">75</text>
-<line x1="66.0" y1="280.0" x2="70.0" y2="280.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="66.0" y1="280.0" x2="70.0" y2="280.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="70.0" y1="280.0" x2="320.0" y2="280.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="62.0" y="284.0" text-anchor="end" class="tick">60</text>
-<line x1="66.0" y1="242.1" x2="70.0" y2="242.1" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="66.0" y1="242.1" x2="70.0" y2="242.1" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="70.0" y1="242.1" x2="320.0" y2="242.1" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="62.0" y="246.1" text-anchor="end" class="tick">70</text>
-<line x1="66.0" y1="204.1" x2="70.0" y2="204.1" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="66.0" y1="204.1" x2="70.0" y2="204.1" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="70.0" y1="204.1" x2="320.0" y2="204.1" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="62.0" y="208.1" text-anchor="end" class="tick">80</text>
-<line x1="66.0" y1="166.2" x2="70.0" y2="166.2" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="66.0" y1="166.2" x2="70.0" y2="166.2" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="70.0" y1="166.2" x2="320.0" y2="166.2" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="62.0" y="170.2" text-anchor="end" class="tick">90</text>
-<line x1="66.0" y1="128.3" x2="70.0" y2="128.3" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="66.0" y1="128.3" x2="70.0" y2="128.3" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="70.0" y1="128.3" x2="320.0" y2="128.3" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="62.0" y="132.3" text-anchor="end" class="tick">100</text>
-<line x1="66.0" y1="90.3" x2="70.0" y2="90.3" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="66.0" y1="90.3" x2="70.0" y2="90.3" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="70.0" y1="90.3" x2="320.0" y2="90.3" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="62.0" y="94.3" text-anchor="end" class="tick">110</text>
 <text x="195.0" y="314.0" text-anchor="middle" class="axlab">z₁</text>
@@ -690,34 +699,34 @@ html{scroll-padding-top:var(--sbh,84px)}
 <circle cx="132.5" cy="90.3" r="5" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <text x="142.5" y="94.3" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:10.5px">(60,0; 110)</text>
 <clipPath id="cF45e45"><rect x="400" y="60" width="250" height="220"/></clipPath>
-<line x1="400.0" y1="280.0" x2="650.0" y2="280.0" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="400.0" y1="60.0" x2="400.0" y2="280.0" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="400.0" y1="280.0" x2="400.0" y2="284.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="400.0" y1="280.0" x2="650.0" y2="280.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="400.0" y1="60.0" x2="400.0" y2="280.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="400.0" y1="280.0" x2="400.0" y2="284.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="400.0" y="296.0" text-anchor="middle" class="tick">55</text>
-<line x1="462.5" y1="280.0" x2="462.5" y2="284.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="462.5" y1="280.0" x2="462.5" y2="284.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="462.5" y="296.0" text-anchor="middle" class="tick">60</text>
-<line x1="525.0" y1="280.0" x2="525.0" y2="284.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="525.0" y1="280.0" x2="525.0" y2="284.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="525.0" y="296.0" text-anchor="middle" class="tick">65</text>
-<line x1="587.5" y1="280.0" x2="587.5" y2="284.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="587.5" y1="280.0" x2="587.5" y2="284.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="587.5" y="296.0" text-anchor="middle" class="tick">70</text>
-<line x1="650.0" y1="280.0" x2="650.0" y2="284.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="650.0" y1="280.0" x2="650.0" y2="284.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="650.0" y="296.0" text-anchor="middle" class="tick">75</text>
-<line x1="396.0" y1="280.0" x2="400.0" y2="280.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="396.0" y1="280.0" x2="400.0" y2="280.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="400.0" y1="280.0" x2="650.0" y2="280.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="392.0" y="284.0" text-anchor="end" class="tick">60</text>
-<line x1="396.0" y1="242.1" x2="400.0" y2="242.1" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="396.0" y1="242.1" x2="400.0" y2="242.1" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="400.0" y1="242.1" x2="650.0" y2="242.1" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="392.0" y="246.1" text-anchor="end" class="tick">70</text>
-<line x1="396.0" y1="204.1" x2="400.0" y2="204.1" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="396.0" y1="204.1" x2="400.0" y2="204.1" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="400.0" y1="204.1" x2="650.0" y2="204.1" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="392.0" y="208.1" text-anchor="end" class="tick">80</text>
-<line x1="396.0" y1="166.2" x2="400.0" y2="166.2" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="396.0" y1="166.2" x2="400.0" y2="166.2" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="400.0" y1="166.2" x2="650.0" y2="166.2" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="392.0" y="170.2" text-anchor="end" class="tick">90</text>
-<line x1="396.0" y1="128.3" x2="400.0" y2="128.3" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="396.0" y1="128.3" x2="400.0" y2="128.3" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="400.0" y1="128.3" x2="650.0" y2="128.3" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="392.0" y="132.3" text-anchor="end" class="tick">100</text>
-<line x1="396.0" y1="90.3" x2="400.0" y2="90.3" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="396.0" y1="90.3" x2="400.0" y2="90.3" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="400.0" y1="90.3" x2="650.0" y2="90.3" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="392.0" y="94.3" text-anchor="end" class="tick">110</text>
 <text x="525.0" y="314.0" text-anchor="middle" class="axlab">z₁</text>
@@ -762,7 +771,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 <figure>
 <svg viewBox="0 0 680 470" class="fig">
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">NARYSUJ NA TABLICY W 6 RUCHACH</text>
-<rect x="14.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="32.0" cy="58.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
 <text x="32.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">1</text>
 <text x="48.0" y="56.0" text-anchor="start" class="bx-t">stożki</text>
@@ -774,60 +783,60 @@ html{scroll-padding-top:var(--sbh,84px)}
 <circle cx="118.0" cy="162.0" r="4" fill="#5B4B8A" stroke="none" stroke-width="1"/>
 <text x="81.0" y="196.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9px">lepsze</text>
 <text x="155.0" y="136.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:9px">gorsze</text>
-<rect x="236.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="236.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="254.0" cy="58.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <text x="254.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">2</text>
 <text x="270.0" y="56.0" text-anchor="start" class="bx-t">decyzje</text>
 <text x="270.0" y="70.0" text-anchor="start" class="bx" style="font-size:9.5px">wielokąt X, krawędź AB</text>
 <clipPath id="cF45f18"><rect x="266" y="90" width="160" height="136"/></clipPath>
-<line x1="266.0" y1="226.0" x2="430.0" y2="226.0" stroke="#C3CDD4" stroke-width="1"/>
-<line x1="266.0" y1="86.0" x2="266.0" y2="226.0" stroke="#C3CDD4" stroke-width="1"/>
+<line x1="266.0" y1="226.0" x2="430.0" y2="226.0" stroke="#CCD2C7" stroke-width="1"/>
+<line x1="266.0" y1="86.0" x2="266.0" y2="226.0" stroke="#CCD2C7" stroke-width="1"/>
 <polygon points="266.0,226.0 394.0,226.0 394.0,188.2 330.0,112.7 266.0,112.7" fill="#0E6E78" opacity="0.14" stroke="none" stroke-width="1"/>
 <g clip-path="url(#cF45f18)"><polyline points="330.0,112.7 394.0,188.2" fill="none" stroke="#5B4B8A" stroke-width="2.6" stroke-linejoin="round"/></g>
-<rect x="458.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="458.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="476.0" cy="58.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
 <text x="476.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">3</text>
 <text x="492.0" y="56.0" text-anchor="start" class="bx-t">cele</text>
 <text x="492.0" y="70.0" text-anchor="start" class="bx" style="font-size:9.5px">obraz X, front, ideał</text>
 <clipPath id="cF45f28"><rect x="488" y="90" width="160" height="136"/></clipPath>
-<line x1="488.0" y1="226.0" x2="652.0" y2="226.0" stroke="#C3CDD4" stroke-width="1"/>
-<line x1="488.0" y1="86.0" x2="488.0" y2="226.0" stroke="#C3CDD4" stroke-width="1"/>
+<line x1="488.0" y1="226.0" x2="652.0" y2="226.0" stroke="#CCD2C7" stroke-width="1"/>
+<line x1="488.0" y1="86.0" x2="488.0" y2="226.0" stroke="#CCD2C7" stroke-width="1"/>
 <polygon points="488.0,226.0 608.0,180.7 628.0,146.7 608.0,101.3 548.0,124.0" fill="#0E6E78" opacity="0.14" stroke="none" stroke-width="1"/>
 <g clip-path="url(#cF45f28)"><polyline points="608.0,101.3 628.0,146.7" fill="none" stroke="#5B4B8A" stroke-width="2.6" stroke-linejoin="round"/></g>
 <circle cx="628.0" cy="101.3" r="5" fill="#FFFFFF" stroke="#B3641A" stroke-width="1.5"/>
-<rect x="14.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="32.0" cy="272.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <text x="32.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">4</text>
 <text x="48.0" y="270.0" text-anchor="start" class="bx-t">ε-ograniczenia</text>
 <text x="48.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">z₂ ≥ ε → max z₁</text>
 <clipPath id="cF45f39"><rect x="44" y="304" width="160" height="136"/></clipPath>
-<line x1="44.0" y1="440.0" x2="208.0" y2="440.0" stroke="#C3CDD4" stroke-width="1"/>
-<line x1="44.0" y1="300.0" x2="44.0" y2="440.0" stroke="#C3CDD4" stroke-width="1"/>
+<line x1="44.0" y1="440.0" x2="208.0" y2="440.0" stroke="#CCD2C7" stroke-width="1"/>
+<line x1="44.0" y1="300.0" x2="44.0" y2="440.0" stroke="#CCD2C7" stroke-width="1"/>
 <polygon points="44.0,440.0 172.0,440.0 172.0,402.2 108.0,326.7 44.0,326.7" fill="#0E6E78" opacity="0.14" stroke="none" stroke-width="1"/>
 <g clip-path="url(#cF45f39)"><polyline points="108.0,326.7 172.0,402.2" fill="none" stroke="#5B4B8A" stroke-width="2.6" stroke-linejoin="round"/></g>
 <g clip-path="url(#cF45f39)"><polyline points="44.0,314.1 204.0,377.0" fill="none" stroke="#0E6E78" stroke-width="1.4" stroke-linejoin="round"/></g>
 <polygon points="76.0,326.7 108.0,326.7 124.0,345.6" fill="#0E6E78" opacity="0.5" stroke="none" stroke-width="1"/>
 <polygon points="124.0,339.6 125.6,343.4 129.7,343.7 126.6,346.4 127.5,350.4 124.0,348.3 120.5,350.4 121.4,346.4 118.3,343.7 122.4,343.4" fill="#5B4B8A"/>
-<rect x="236.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="236.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="254.0" cy="272.0" r="10" fill="#B3641A" stroke="none" stroke-width="1"/>
 <text x="254.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">5</text>
 <text x="270.0" y="270.0" text-anchor="start" class="bx-t">ważenie</text>
 <text x="270.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">prosta w·z = c</text>
 <clipPath id="cF45f52"><rect x="266" y="304" width="160" height="136"/></clipPath>
-<line x1="266.0" y1="440.0" x2="430.0" y2="440.0" stroke="#C3CDD4" stroke-width="1"/>
-<line x1="266.0" y1="300.0" x2="266.0" y2="440.0" stroke="#C3CDD4" stroke-width="1"/>
+<line x1="266.0" y1="440.0" x2="430.0" y2="440.0" stroke="#CCD2C7" stroke-width="1"/>
+<line x1="266.0" y1="300.0" x2="266.0" y2="440.0" stroke="#CCD2C7" stroke-width="1"/>
 <polygon points="266.0,440.0 386.0,394.7 406.0,360.7 386.0,315.3 326.0,338.0" fill="#0E6E78" opacity="0.14" stroke="none" stroke-width="1"/>
 <g clip-path="url(#cF45f52)"><polyline points="386.0,315.3 406.0,360.7" fill="none" stroke="#5B4B8A" stroke-width="2.6" stroke-linejoin="round"/></g>
 <g clip-path="url(#cF45f52)"><polyline points="316.0,255.8 426.0,349.3" fill="none" stroke="#B3641A" stroke-width="1.3" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
 <polygon points="386.0,309.3 387.6,313.1 391.7,313.5 388.6,316.2 389.5,320.2 386.0,318.0 382.5,320.2 383.4,316.2 380.3,313.5 384.4,313.1" fill="#B3641A"/>
-<rect x="458.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="458.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="476.0" cy="272.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
 <text x="476.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">6</text>
 <text x="492.0" y="270.0" text-anchor="start" class="bx-t">porównanie</text>
 <text x="492.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">równe ε vs skoki wag</text>
 <clipPath id="cF45f64"><rect x="488" y="304" width="160" height="136"/></clipPath>
-<line x1="488.0" y1="440.0" x2="652.0" y2="440.0" stroke="#C3CDD4" stroke-width="1"/>
-<line x1="488.0" y1="300.0" x2="488.0" y2="440.0" stroke="#C3CDD4" stroke-width="1"/>
+<line x1="488.0" y1="440.0" x2="652.0" y2="440.0" stroke="#CCD2C7" stroke-width="1"/>
+<line x1="488.0" y1="300.0" x2="488.0" y2="440.0" stroke="#CCD2C7" stroke-width="1"/>
 <polygon points="488.0,440.0 608.0,394.7 628.0,360.7 608.0,315.3 548.0,338.0" fill="#0E6E78" opacity="0.14" stroke="none" stroke-width="1"/>
 <g clip-path="url(#cF45f64)"><polyline points="608.0,315.3 628.0,360.7" fill="none" stroke="#5B4B8A" stroke-width="2.6" stroke-linejoin="round"/></g>
 <circle cx="628.0" cy="360.7" r="3.5" fill="#0E6E78" stroke="none" stroke-width="1"/>

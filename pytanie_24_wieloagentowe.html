@@ -4,14 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pytanie 24 — Rozproszone i wieloagentowe struktury sterowania</title>
+<link rel="icon" type="image/png" sizes="144x144" href="favicon-144.png?v=2">
+<link rel="icon" href="favicon.ico?v=2" sizes="any">
+<link rel="apple-touch-icon" href="favicon-144.png?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#141C24; --mut:#5C6B77; --line:#C3CDD4;
-  --paper:#E8ECEF; --card:#FCFDFD;
-  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52;
+  --ink:#141C24; --mut:#5C6B77; --line:#CCD2C7;
+  --paper:#EDEEE5; --card:#FDFDFA;
+  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52; --moss:#5E8C3A;
   --disp:"Space Grotesk",system-ui,sans-serif;
   --body:"STIX Two Text","Source Serif 4",Georgia,serif;
   --mono:"IBM Plex Mono",ui-monospace,monospace;
@@ -39,7 +42,7 @@ h2 .num{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--viole
         letter-spacing:.08em;flex:none}
 h3{font-family:var(--disp);font-weight:500;font-size:18.5px;margin:34px 0 8px;letter-spacing:-.01em}
 p{margin:0 0 14px}
-.rail{height:5px;background:linear-gradient(90deg,var(--teal) 0%,var(--violet) 55%,var(--amber) 100%);
+.rail{height:5px;background:linear-gradient(90deg,var(--moss) 0%,var(--teal) 30%,var(--violet) 62%,var(--amber) 100%);
       opacity:.85;margin:0 0 22px;border-radius:2px}
 
 /* ---- figury ---- */
@@ -83,7 +86,7 @@ figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:
 table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15px;background:var(--card)}
 th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
 th{font-family:var(--disp);font-weight:500;font-size:13px;letter-spacing:.02em;
-   background:#F2F5F6;border-bottom:1.5px solid var(--line)}
+   background:#F3F4EE;border-bottom:1.5px solid var(--line)}
 td.n{font-family:var(--mono);font-size:13.5px;white-space:nowrap}
 tr:last-child td{border-bottom:none}
 
@@ -115,6 +118,11 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
 .backfoot a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
             color:var(--teal);text-decoration:none;border-bottom:1px solid var(--line)}
 .backfoot a:hover,.backfoot a:focus-visible{border-bottom-color:var(--teal);outline:none}
+
+/* ---- meowl przy tytule ---- */
+.avatar{float:right;width:64px;height:64px;border-radius:50%;margin:2px 0 10px 18px;
+        box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--line)}
+header::after{content:"";display:block;clear:both}
 </style>
 </head>
 <body>
@@ -126,6 +134,7 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
 </nav>
 
 <header>
+  <img class="avatar" src="assets/meowl-wide.png" width="64" height="64" alt="" decoding="async">
   <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 24</p>
   <h1>Rozproszone i wieloagentowe struktury sterowania</h1>
   <p class="quest">Przedstaw rozproszone i wieloagentowe struktury sterowania.</p>
@@ -157,7 +166,7 @@ ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{colo
 .luka{display:inline-block;min-width:70px;border-bottom:1.5px solid var(--violet);text-align:center;font-family:var(--mono);font-size:14px;color:var(--violet)}
 /*stickybar-start*/
 .topnav{display:none}
-#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(232,236,239,.96);
+#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(237,238,229,.96);
   -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 #sbar .in{max-width:860px;margin:0 auto;padding:9px 22px 8px}
 #sbar .r1{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
@@ -190,47 +199,47 @@ html{scroll-padding-top:var(--sbh,84px)}
 <svg viewBox="0 0 680 360" class="fig">
 <defs><marker id="arF24a0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker><marker id="arF24a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B3641A"/></marker><marker id="arF24a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker></defs>
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">OD JEDNEGO REGULATORA DO WIELU AGENTÓW: PIĘĆ STRUKTUR</text>
-<rect x="14.0" y="40.0" width="124.0" height="250.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="40.0" width="124.0" height="250.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="14.0" y="40.0" width="124.0" height="4.0" rx="0" fill="#5C6B77" stroke="none" stroke-width="1"/>
 <text x="76.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#5C6B77;font-size:10.5px">scentralizowana</text>
-<rect x="24.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="24.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="46.0" y="234.0" text-anchor="middle" class="cap" style="font-size:9.5px">P1</text>
-<rect x="84.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="84.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="106.0" y="234.0" text-anchor="middle" class="cap" style="font-size:9.5px">P2</text>
 <line x1="68.0" y1="230.0" x2="84.0" y2="230.0" stroke="#9C3B52" stroke-width="1.2" stroke-dasharray="3 2"/>
-<rect x="48.0" y="139.0" width="56.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5C6B77" stroke-width="1.3"/>
+<rect x="48.0" y="139.0" width="56.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#5C6B77" stroke-width="1.3"/>
 <text x="76.0" y="154.0" text-anchor="middle" class="cap" style="fill:#5C6B77;font-size:9.5px">R</text>
 <line x1="76.0" y1="161.0" x2="46.0" y2="219.0" stroke="#5C6B77" stroke-width="1.2"/>
 <line x1="76.0" y1="161.0" x2="106.0" y2="219.0" stroke="#5C6B77" stroke-width="1.2"/>
 <text x="76.0" y="266.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">jeden regulator,</text>
 <text x="76.0" y="280.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">pełny model</text>
-<rect x="146.0" y="40.0" width="124.0" height="250.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="146.0" y="40.0" width="124.0" height="250.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="146.0" y="40.0" width="124.0" height="4.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <text x="208.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:10.5px">zdecentralizowana</text>
-<rect x="156.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="156.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="178.0" y="234.0" text-anchor="middle" class="cap" style="font-size:9.5px">P1</text>
-<rect x="216.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="216.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="238.0" y="234.0" text-anchor="middle" class="cap" style="font-size:9.5px">P2</text>
 <line x1="200.0" y1="230.0" x2="216.0" y2="230.0" stroke="#9C3B52" stroke-width="1.2" stroke-dasharray="3 2"/>
-<rect x="158.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="158.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.3"/>
 <text x="178.0" y="154.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9.5px">R1</text>
-<rect x="218.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="218.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.3"/>
 <text x="238.0" y="154.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9.5px">R2</text>
 <line x1="178.0" y1="161.0" x2="178.0" y2="219.0" stroke="#0E6E78" stroke-width="1.2"/>
 <line x1="238.0" y1="161.0" x2="238.0" y2="219.0" stroke="#0E6E78" stroke-width="1.2"/>
 <text x="208.0" y="266.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">lokalne regulatory,</text>
 <text x="208.0" y="280.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">bez wymiany danych</text>
-<rect x="278.0" y="40.0" width="124.0" height="250.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="278.0" y="40.0" width="124.0" height="250.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="278.0" y="40.0" width="124.0" height="4.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
 <text x="340.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">rozproszona</text>
-<rect x="288.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="288.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="310.0" y="234.0" text-anchor="middle" class="cap" style="font-size:9.5px">P1</text>
-<rect x="348.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="348.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="370.0" y="234.0" text-anchor="middle" class="cap" style="font-size:9.5px">P2</text>
 <line x1="332.0" y1="230.0" x2="348.0" y2="230.0" stroke="#9C3B52" stroke-width="1.2" stroke-dasharray="3 2"/>
-<rect x="290.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<rect x="290.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.3"/>
 <text x="310.0" y="154.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9.5px">R1</text>
-<rect x="350.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<rect x="350.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.3"/>
 <text x="370.0" y="154.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9.5px">R2</text>
 <line x1="310.0" y1="161.0" x2="310.0" y2="219.0" stroke="#5B4B8A" stroke-width="1.2"/>
 <line x1="370.0" y1="161.0" x2="370.0" y2="219.0" stroke="#5B4B8A" stroke-width="1.2"/>
@@ -238,41 +247,41 @@ html{scroll-padding-top:var(--sbh,84px)}
 <path d="M 349.0 155.0 L 331.0 155.0" fill="none" stroke="#5B4B8A" stroke-width="1.2" marker-end="url(#arF24a0)"/>
 <text x="340.0" y="266.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">lokalne regulatory</text>
 <text x="340.0" y="280.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">wymieniają dane</text>
-<rect x="410.0" y="40.0" width="124.0" height="250.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="410.0" y="40.0" width="124.0" height="250.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="410.0" y="40.0" width="124.0" height="4.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
 <text x="472.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#B3641A;font-size:10.5px">hierarchiczna</text>
-<rect x="420.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="420.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="442.0" y="234.0" text-anchor="middle" class="cap" style="font-size:9.5px">P1</text>
-<rect x="480.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="480.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="502.0" y="234.0" text-anchor="middle" class="cap" style="font-size:9.5px">P2</text>
 <line x1="464.0" y1="230.0" x2="480.0" y2="230.0" stroke="#9C3B52" stroke-width="1.2" stroke-dasharray="3 2"/>
-<rect x="422.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.3"/>
+<rect x="422.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#B3641A" stroke-width="1.3"/>
 <text x="442.0" y="154.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9.5px">R1</text>
-<rect x="482.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.3"/>
+<rect x="482.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#B3641A" stroke-width="1.3"/>
 <text x="502.0" y="154.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9.5px">R2</text>
 <line x1="442.0" y1="161.0" x2="442.0" y2="219.0" stroke="#B3641A" stroke-width="1.2"/>
 <line x1="502.0" y1="161.0" x2="502.0" y2="219.0" stroke="#B3641A" stroke-width="1.2"/>
-<rect x="448.0" y="89.0" width="48.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.3"/>
+<rect x="448.0" y="89.0" width="48.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#B3641A" stroke-width="1.3"/>
 <text x="472.0" y="104.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9.5px">K</text>
 <path d="M 472.0 111.0 L 442.0 138.0" fill="none" stroke="#B3641A" stroke-width="1.1" marker-end="url(#arF24a1)"/>
 <path d="M 472.0 111.0 L 502.0 138.0" fill="none" stroke="#B3641A" stroke-width="1.1" marker-end="url(#arF24a1)"/>
 <text x="472.0" y="266.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">koordynator nad</text>
 <text x="472.0" y="280.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">regulatorami</text>
-<rect x="542.0" y="40.0" width="124.0" height="250.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="542.0" y="40.0" width="124.0" height="250.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="542.0" y="40.0" width="124.0" height="4.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <text x="604.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52;font-size:10.5px">wieloagentowa</text>
-<rect x="552.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="552.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="574.0" y="234.0" text-anchor="middle" class="cap" style="font-size:9.5px">P1</text>
-<rect x="612.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="612.0" y="219.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="634.0" y="234.0" text-anchor="middle" class="cap" style="font-size:9.5px">P2</text>
 <line x1="596.0" y1="230.0" x2="612.0" y2="230.0" stroke="#9C3B52" stroke-width="1.2" stroke-dasharray="3 2"/>
-<circle cx="574.0" cy="150.0" r="16" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.4"/>
+<circle cx="574.0" cy="150.0" r="16" fill="#FDFDFA" stroke="#9C3B52" stroke-width="1.4"/>
 <text x="574.0" y="154.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52;font-size:11px">A</text>
 <line x1="574.0" y1="166.0" x2="574.0" y2="219.0" stroke="#9C3B52" stroke-width="1.2"/>
-<circle cx="634.0" cy="150.0" r="16" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.4"/>
+<circle cx="634.0" cy="150.0" r="16" fill="#FDFDFA" stroke="#9C3B52" stroke-width="1.4"/>
 <text x="634.0" y="154.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52;font-size:11px">A</text>
 <line x1="634.0" y1="166.0" x2="634.0" y2="219.0" stroke="#9C3B52" stroke-width="1.2"/>
-<circle cx="604.0" cy="102.0" r="14" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.4"/>
+<circle cx="604.0" cy="102.0" r="14" fill="#FDFDFA" stroke="#9C3B52" stroke-width="1.4"/>
 <text x="604.0" y="106.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52;font-size:10px">A</text>
 <line x1="590.0" y1="150.0" x2="618.0" y2="150.0" stroke="#9C3B52" stroke-width="1.1" stroke-dasharray="2 2"/>
 <line x1="594.0" y1="112.0" x2="584.0" y2="138.0" stroke="#9C3B52" stroke-width="1.1" stroke-dasharray="2 2"/>
@@ -327,10 +336,10 @@ html{scroll-padding-top:var(--sbh,84px)}
 <figure>
 <svg viewBox="0 0 680 296" class="fig">
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">PRZYKŁAD: DWIE SPRZĘŻONE STREFY — TRZY SPOSOBY WYBORU MOCY</text>
-<rect x="20.0" y="60.0" width="90.0" height="70.0" rx="4" fill="#F8EFEA" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="20.0" y="60.0" width="90.0" height="70.0" rx="4" fill="#F8EFEA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="65.0" y="90.0" text-anchor="middle" class="bx-t" style="font-size:11px">strefa 1</text>
 <text x="65.0" y="108.0" text-anchor="middle" class="cap">u₁ → y₁</text>
-<rect x="130.0" y="60.0" width="90.0" height="70.0" rx="4" fill="#F8EFEA" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="130.0" y="60.0" width="90.0" height="70.0" rx="4" fill="#F8EFEA" stroke="#CCD2C7" stroke-width="1"/>
 <text x="175.0" y="90.0" text-anchor="middle" class="bx-t" style="font-size:11px">strefa 2</text>
 <text x="175.0" y="108.0" text-anchor="middle" class="cap">u₂ → y₂</text>
 <rect x="110.0" y="60.0" width="20.0" height="70.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.25"/>
@@ -340,32 +349,32 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="120.0" y="208.0" text-anchor="middle" class="bx-t" style="font-size:11px">y₂ = u₁ + 2u₂</text>
 <text x="120.0" y="230.0" text-anchor="middle" class="cap" style="fill:#141C24">cel: y₁ = y₂ = 3</text>
 <clipPath id="cF24b13"><rect x="290" y="50" width="360" height="200"/></clipPath>
-<line x1="290.0" y1="250.0" x2="650.0" y2="250.0" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="290.0" y1="50.0" x2="290.0" y2="250.0" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="290.0" y1="250.0" x2="290.0" y2="254.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="290.0" y1="250.0" x2="650.0" y2="250.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="290.0" y1="50.0" x2="290.0" y2="250.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="290.0" y1="250.0" x2="290.0" y2="254.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="290.0" y="266.0" text-anchor="middle" class="tick">0</text>
-<line x1="350.0" y1="250.0" x2="350.0" y2="254.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="350.0" y1="250.0" x2="350.0" y2="254.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="350.0" y="266.0" text-anchor="middle" class="tick">1</text>
-<line x1="410.0" y1="250.0" x2="410.0" y2="254.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="410.0" y1="250.0" x2="410.0" y2="254.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="410.0" y="266.0" text-anchor="middle" class="tick">2</text>
-<line x1="470.0" y1="250.0" x2="470.0" y2="254.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="470.0" y1="250.0" x2="470.0" y2="254.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="470.0" y="266.0" text-anchor="middle" class="tick">3</text>
-<line x1="530.0" y1="250.0" x2="530.0" y2="254.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="530.0" y1="250.0" x2="530.0" y2="254.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="530.0" y="266.0" text-anchor="middle" class="tick">4</text>
-<line x1="590.0" y1="250.0" x2="590.0" y2="254.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="590.0" y1="250.0" x2="590.0" y2="254.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="590.0" y="266.0" text-anchor="middle" class="tick">5</text>
-<line x1="650.0" y1="250.0" x2="650.0" y2="254.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="650.0" y1="250.0" x2="650.0" y2="254.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="650.0" y="266.0" text-anchor="middle" class="tick">6</text>
-<line x1="286.0" y1="221.4" x2="290.0" y2="221.4" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="286.0" y1="221.4" x2="290.0" y2="221.4" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="290.0" y1="221.4" x2="650.0" y2="221.4" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="282.0" y="225.4" text-anchor="end" class="tick">2</text>
-<line x1="286.0" y1="164.3" x2="290.0" y2="164.3" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="286.0" y1="164.3" x2="290.0" y2="164.3" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="290.0" y1="164.3" x2="650.0" y2="164.3" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="282.0" y="168.3" text-anchor="end" class="tick">3</text>
-<line x1="286.0" y1="107.1" x2="290.0" y2="107.1" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="286.0" y1="107.1" x2="290.0" y2="107.1" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="290.0" y1="107.1" x2="650.0" y2="107.1" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="282.0" y="111.1" text-anchor="end" class="tick">4</text>
-<line x1="286.0" y1="50.0" x2="290.0" y2="50.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="286.0" y1="50.0" x2="290.0" y2="50.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <line x1="290.0" y1="50.0" x2="650.0" y2="50.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="282.0" y="54.0" text-anchor="end" class="tick">5</text>
 <text x="470.0" y="284.0" text-anchor="middle" class="axlab">iteracja wymiany danych</text>
@@ -412,37 +421,37 @@ html{scroll-padding-top:var(--sbh,84px)}
 <svg viewBox="0 0 680 390" class="fig">
 <defs><marker id="arF24c0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#141C24"/></marker><marker id="arF24c1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0E6E78"/></marker><marker id="arF24c2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B3641A"/></marker><marker id="arF24c3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9C3B52"/></marker></defs>
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">AGENT: POSTRZEGA, DECYDUJE, DZIAŁA I ROZMAWIA Z INNYMI</text>
-<rect x="180.0" y="50.0" width="320.0" height="200.0" rx="8" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.5"/>
+<rect x="180.0" y="50.0" width="320.0" height="200.0" rx="8" fill="#FDFDFA" stroke="#9C3B52" stroke-width="1.5"/>
 <text x="340.0" y="72.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52">AGENT</text>
-<rect x="200.0" y="90.0" width="90.0" height="50.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="200.0" y="90.0" width="90.0" height="50.0" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="200.0" y="90.0" width="90.0" height="3.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <text x="245.0" y="113.0" text-anchor="middle" class="bx-t">percepcja</text>
 <text x="245.0" y="128.0" text-anchor="middle" class="bx">pomiary</text>
-<rect x="300.0" y="90.0" width="80.0" height="50.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="300.0" y="90.0" width="80.0" height="50.0" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="300.0" y="90.0" width="80.0" height="3.0" rx="0" fill="#5B4B8A" stroke="none" stroke-width="1"/>
 <text x="340.0" y="113.0" text-anchor="middle" class="bx-t" style="font-size:11px">wiedza</text>
 <text x="340.0" y="128.0" text-anchor="middle" class="bx">model, cele</text>
-<rect x="390.0" y="90.0" width="90.0" height="50.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="390.0" y="90.0" width="90.0" height="50.0" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="390.0" y="90.0" width="90.0" height="3.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
 <text x="435.0" y="113.0" text-anchor="middle" class="bx-t">decyzja</text>
 <text x="435.0" y="128.0" text-anchor="middle" class="bx">plan, reguły</text>
 <path d="M 290.0 115.0 L 298.0 115.0" fill="none" stroke="#141C24" stroke-width="1.2" marker-end="url(#arF24c0)"/>
 <path d="M 380.0 115.0 L 388.0 115.0" fill="none" stroke="#141C24" stroke-width="1.2" marker-end="url(#arF24c0)"/>
-<rect x="270.0" y="170.0" width="140.0" height="50.0" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="270.0" y="170.0" width="140.0" height="50.0" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="270.0" y="170.0" width="140.0" height="3.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <text x="340.0" y="193.0" text-anchor="middle" class="bx-t">komunikacja</text>
 <text x="340.0" y="208.0" text-anchor="middle" class="bx">wiadomości do agentów</text>
 <path d="M 435.0 140.0 L 435.0 195.0 L 412.0 195.0" fill="none" stroke="#9C3B52" stroke-width="1.2" stroke-dasharray="3 2"/>
-<rect x="180.0" y="290.0" width="320.0" height="50.0" rx="6" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="180.0" y="290.0" width="320.0" height="50.0" rx="6" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="340.0" y="312.0" text-anchor="middle" class="bx-t" style="font-size:11px">OTOCZENIE</text>
 <text x="340.0" y="328.0" text-anchor="middle" class="cap">proces, maszyny, ludzie</text>
 <path d="M 245.0 288.0 L 245.0 142.0" fill="none" stroke="#0E6E78" stroke-width="1.5" marker-end="url(#arF24c1)"/>
 <text x="238.0" y="270.0" text-anchor="end" class="cap" style="fill:#0E6E78">czujniki</text>
 <path d="M 435.0 142.0 L 435.0 288.0" fill="none" stroke="#B3641A" stroke-width="1.5" marker-end="url(#arF24c2)"/>
 <text x="442.0" y="270.0" text-anchor="start" class="cap" style="fill:#B3641A">działanie</text>
-<circle cx="610.0" cy="120.0" r="20" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.4"/>
+<circle cx="610.0" cy="120.0" r="20" fill="#FDFDFA" stroke="#9C3B52" stroke-width="1.4"/>
 <text x="610.0" y="125.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52">A</text>
-<circle cx="610.0" cy="200.0" r="20" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.4"/>
+<circle cx="610.0" cy="200.0" r="20" fill="#FDFDFA" stroke="#9C3B52" stroke-width="1.4"/>
 <text x="610.0" y="205.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52">A</text>
 <path d="M 412.0 190.0 L 588.0 125.0" fill="none" stroke="#9C3B52" stroke-width="1.1" stroke-dasharray="3 2" marker-end="url(#arF24c3)"/>
 <path d="M 588.0 200.0 L 412.0 200.0" fill="none" stroke="#9C3B52" stroke-width="1.1" stroke-dasharray="3 2" marker-end="url(#arF24c3)"/>
@@ -479,18 +488,18 @@ html{scroll-padding-top:var(--sbh,84px)}
 <defs><marker id="arF24d0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9C3B52"/></marker><marker id="arF24d1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker><marker id="arF24d2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker></defs>
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">JAK AGENCI SIĘ DOGADUJĄ: PRZETARG (CONTRACT NET) I KONSENSUS</text>
 <text x="170.0" y="52.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52;font-size:11px">CONTRACT NET — przetarg na zadanie</text>
-<rect x="32.0" y="64.0" width="56.0" height="24.0" rx="3" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1.2"/>
+<rect x="32.0" y="64.0" width="56.0" height="24.0" rx="3" fill="#FDFDFA" stroke="#9C3B52" stroke-width="1.2"/>
 <text x="60.0" y="80.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:9px">zlecający</text>
-<line x1="60.0" y1="88.0" x2="60.0" y2="300.0" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
-<rect x="122.0" y="64.0" width="56.0" height="24.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<line x1="60.0" y1="88.0" x2="60.0" y2="300.0" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="122.0" y="64.0" width="56.0" height="24.0" rx="3" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.2"/>
 <text x="150.0" y="80.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9px">K1</text>
-<line x1="150.0" y1="88.0" x2="150.0" y2="300.0" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
-<rect x="192.0" y="64.0" width="56.0" height="24.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<line x1="150.0" y1="88.0" x2="150.0" y2="300.0" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="192.0" y="64.0" width="56.0" height="24.0" rx="3" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.2"/>
 <text x="220.0" y="80.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9px">K2</text>
-<line x1="220.0" y1="88.0" x2="220.0" y2="300.0" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
-<rect x="262.0" y="64.0" width="56.0" height="24.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.2"/>
+<line x1="220.0" y1="88.0" x2="220.0" y2="300.0" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="262.0" y="64.0" width="56.0" height="24.0" rx="3" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.2"/>
 <text x="290.0" y="80.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9px">K3</text>
-<line x1="290.0" y1="88.0" x2="290.0" y2="300.0" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="3 3"/>
+<line x1="290.0" y1="88.0" x2="290.0" y2="300.0" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="3 3"/>
 <path d="M 60.0 110.0 L 150.0 110.0" fill="none" stroke="#9C3B52" stroke-width="1.3" marker-end="url(#arF24d0)"/>
 <text x="70.0" y="105.0" text-anchor="start" class="cap" style="fill:#9C3B52;font-size:9px">ogłoszenie</text>
 <path d="M 60.0 118.0 L 220.0 118.0" fill="none" stroke="#9C3B52" stroke-width="1.3" marker-end="url(#arF24d0)"/>
@@ -507,17 +516,17 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="170.0" y="330.0" text-anchor="middle" class="cap" style="font-size:9px">zlecający nie musi znać agentów z góry</text>
 <text x="515.0" y="52.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:11px">KONSENSUS — uzgodnienie wartości</text>
 <clipPath id="cF24d29"><rect x="420" y="80" width="230" height="180"/></clipPath>
-<line x1="420.0" y1="260.0" x2="650.0" y2="260.0" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="420.0" y1="80.0" x2="420.0" y2="260.0" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="420.0" y1="260.0" x2="420.0" y2="264.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="420.0" y1="260.0" x2="650.0" y2="260.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="420.0" y1="80.0" x2="420.0" y2="260.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="420.0" y1="260.0" x2="420.0" y2="264.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="420.0" y="276.0" text-anchor="middle" class="tick">0</text>
-<line x1="477.5" y1="260.0" x2="477.5" y2="264.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="477.5" y1="260.0" x2="477.5" y2="264.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="477.5" y="276.0" text-anchor="middle" class="tick">2</text>
-<line x1="535.0" y1="260.0" x2="535.0" y2="264.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="535.0" y1="260.0" x2="535.0" y2="264.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="535.0" y="276.0" text-anchor="middle" class="tick">4</text>
-<line x1="592.5" y1="260.0" x2="592.5" y2="264.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="592.5" y1="260.0" x2="592.5" y2="264.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="592.5" y="276.0" text-anchor="middle" class="tick">6</text>
-<line x1="650.0" y1="260.0" x2="650.0" y2="264.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="650.0" y1="260.0" x2="650.0" y2="264.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="650.0" y="276.0" text-anchor="middle" class="tick">8</text>
 <text x="535.0" y="294.0" text-anchor="middle" class="axlab">iteracja</text>
 <g clip-path="url(#cF24d29)"><polyline points="420.0,247.1 448.8,227.9 477.5,213.4 506.2,202.5 535.0,194.4 563.8,188.3 592.5,183.7 621.2,180.3 650.0,177.7" fill="none" stroke="#0E6E78" stroke-width="1.8" stroke-linejoin="round"/></g>
@@ -567,99 +576,99 @@ html{scroll-padding-top:var(--sbh,84px)}
 <svg viewBox="0 0 680 470" class="fig">
 <defs><marker id="arF24e0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker><marker id="arF24e1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B3641A"/></marker><marker id="arF24e2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0E6E78"/></marker><marker id="arF24e3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9C3B52"/></marker></defs>
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">NARYSUJ NA TABLICY W 6 RUCHACH</text>
-<rect x="14.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="32.0" cy="58.0" r="10" fill="#5C6B77" stroke="none" stroke-width="1"/>
 <text x="32.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">1</text>
 <text x="48.0" y="56.0" text-anchor="start" class="bx-t">obiekt:</text>
 <text x="48.0" y="70.0" text-anchor="start" class="bx" style="font-size:9.5px">P1, P2 i sprzężenie</text>
-<rect x="48.0" y="199.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="48.0" y="199.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="70.0" y="214.0" text-anchor="middle" class="cap" style="font-size:9.5px">P1</text>
-<rect x="144.0" y="199.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="144.0" y="199.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="166.0" y="214.0" text-anchor="middle" class="cap" style="font-size:9.5px">P2</text>
 <line x1="92.0" y1="210.0" x2="144.0" y2="210.0" stroke="#9C3B52" stroke-width="1.2" stroke-dasharray="3 2"/>
-<rect x="236.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="236.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="254.0" cy="58.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
 <text x="254.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">2</text>
 <text x="270.0" y="56.0" text-anchor="start" class="bx-t">zdecentralizowana:</text>
 <text x="270.0" y="70.0" text-anchor="start" class="bx" style="font-size:9.5px">R1, R2, bez łącza</text>
-<rect x="270.0" y="199.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="270.0" y="199.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="292.0" y="214.0" text-anchor="middle" class="cap" style="font-size:9.5px">P1</text>
-<rect x="366.0" y="199.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="366.0" y="199.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="388.0" y="214.0" text-anchor="middle" class="cap" style="font-size:9.5px">P2</text>
 <line x1="314.0" y1="210.0" x2="366.0" y2="210.0" stroke="#9C3B52" stroke-width="1.2" stroke-dasharray="3 2"/>
-<rect x="272.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="272.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.3"/>
 <text x="292.0" y="154.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9.5px">R1</text>
-<rect x="368.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.3"/>
+<rect x="368.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.3"/>
 <text x="388.0" y="154.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9.5px">R2</text>
 <line x1="292.0" y1="161.0" x2="292.0" y2="199.0" stroke="#0E6E78" stroke-width="1.2"/>
 <line x1="388.0" y1="161.0" x2="388.0" y2="199.0" stroke="#0E6E78" stroke-width="1.2"/>
-<rect x="458.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="458.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="476.0" cy="58.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
 <text x="476.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">3</text>
 <text x="492.0" y="56.0" text-anchor="start" class="bx-t">rozproszona:</text>
 <text x="492.0" y="70.0" text-anchor="start" class="bx" style="font-size:9.5px">strzałki R1 ↔ R2</text>
-<rect x="492.0" y="199.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="492.0" y="199.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="514.0" y="214.0" text-anchor="middle" class="cap" style="font-size:9.5px">P1</text>
-<rect x="588.0" y="199.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="588.0" y="199.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="610.0" y="214.0" text-anchor="middle" class="cap" style="font-size:9.5px">P2</text>
 <line x1="536.0" y1="210.0" x2="588.0" y2="210.0" stroke="#9C3B52" stroke-width="1.2" stroke-dasharray="3 2"/>
-<rect x="494.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<rect x="494.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.3"/>
 <text x="514.0" y="154.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9.5px">R1</text>
-<rect x="590.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1.3"/>
+<rect x="590.0" y="139.0" width="40.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1.3"/>
 <text x="610.0" y="154.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9.5px">R2</text>
 <line x1="514.0" y1="161.0" x2="514.0" y2="199.0" stroke="#5B4B8A" stroke-width="1.2"/>
 <line x1="610.0" y1="161.0" x2="610.0" y2="199.0" stroke="#5B4B8A" stroke-width="1.2"/>
 <path d="M 535.0 146.0 L 589.0 146.0" fill="none" stroke="#5B4B8A" stroke-width="1.1" marker-end="url(#arF24e0)"/>
 <path d="M 589.0 154.0 L 535.0 154.0" fill="none" stroke="#5B4B8A" stroke-width="1.1" marker-end="url(#arF24e0)"/>
-<rect x="14.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="14.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="32.0" cy="272.0" r="10" fill="#B3641A" stroke="none" stroke-width="1"/>
 <text x="32.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">4</text>
 <text x="48.0" y="270.0" text-anchor="start" class="bx-t">hierarchiczna:</text>
 <text x="48.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">koordynator K</text>
-<rect x="48.0" y="413.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="48.0" y="413.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="70.0" y="428.0" text-anchor="middle" class="cap" style="font-size:9.5px">P1</text>
-<rect x="144.0" y="413.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="144.0" y="413.0" width="44.0" height="22.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="166.0" y="428.0" text-anchor="middle" class="cap" style="font-size:9.5px">P2</text>
 <line x1="92.0" y1="424.0" x2="144.0" y2="424.0" stroke="#9C3B52" stroke-width="1.2" stroke-dasharray="3 2"/>
-<rect x="50.0" y="353.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.3"/>
+<rect x="50.0" y="353.0" width="40.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#B3641A" stroke-width="1.3"/>
 <text x="70.0" y="368.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9.5px">R1</text>
-<rect x="146.0" y="353.0" width="40.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.3"/>
+<rect x="146.0" y="353.0" width="40.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#B3641A" stroke-width="1.3"/>
 <text x="166.0" y="368.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9.5px">R2</text>
 <line x1="70.0" y1="375.0" x2="70.0" y2="413.0" stroke="#B3641A" stroke-width="1.2"/>
 <line x1="166.0" y1="375.0" x2="166.0" y2="413.0" stroke="#B3641A" stroke-width="1.2"/>
 <path d="M 91.0 360.0 L 145.0 360.0" fill="none" stroke="#5B4B8A" stroke-width="1.1" marker-end="url(#arF24e0)"/>
 <path d="M 145.0 368.0 L 91.0 368.0" fill="none" stroke="#5B4B8A" stroke-width="1.1" marker-end="url(#arF24e0)"/>
-<rect x="96.0" y="305.0" width="44.0" height="22.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.3"/>
+<rect x="96.0" y="305.0" width="44.0" height="22.0" rx="3" fill="#FDFDFA" stroke="#B3641A" stroke-width="1.3"/>
 <text x="118.0" y="320.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9.5px">K</text>
 <path d="M 118.0 327.0 L 70.0 352.0" fill="none" stroke="#B3641A" stroke-width="1.1" marker-end="url(#arF24e1)"/>
 <path d="M 118.0 327.0 L 166.0 352.0" fill="none" stroke="#B3641A" stroke-width="1.1" marker-end="url(#arF24e1)"/>
-<rect x="236.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="236.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="254.0" cy="272.0" r="10" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <text x="254.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">5</text>
 <text x="270.0" y="270.0" text-anchor="start" class="bx-t">agent:</text>
 <text x="270.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">percepcja → decyzja → działanie</text>
-<rect x="250.0" y="334.0" width="56.0" height="26.0" rx="3" fill="#FCFDFD" stroke="#0E6E78" stroke-width="1.2"/>
+<rect x="250.0" y="334.0" width="56.0" height="26.0" rx="3" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.2"/>
 <text x="278.0" y="351.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9px">perc.</text>
-<rect x="314.0" y="334.0" width="56.0" height="26.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.2"/>
+<rect x="314.0" y="334.0" width="56.0" height="26.0" rx="3" fill="#FDFDFA" stroke="#B3641A" stroke-width="1.2"/>
 <text x="342.0" y="351.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9px">decyzja</text>
-<rect x="378.0" y="334.0" width="56.0" height="26.0" rx="3" fill="#FCFDFD" stroke="#B3641A" stroke-width="1.2"/>
+<rect x="378.0" y="334.0" width="56.0" height="26.0" rx="3" fill="#FDFDFA" stroke="#B3641A" stroke-width="1.2"/>
 <text x="406.0" y="351.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9px">dział.</text>
-<rect x="266.0" y="404.0" width="150.0" height="26.0" rx="3" fill="#EEF1F3" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="266.0" y="404.0" width="150.0" height="26.0" rx="3" fill="#EEF1F3" stroke="#CCD2C7" stroke-width="1"/>
 <text x="341.0" y="421.0" text-anchor="middle" class="cap" style="font-size:9.5px">otoczenie</text>
 <path d="M 278.0 404.0 L 278.0 362.0" fill="none" stroke="#0E6E78" stroke-width="1.1" marker-end="url(#arF24e2)"/>
 <path d="M 406.0 362.0 L 406.0 404.0" fill="none" stroke="#B3641A" stroke-width="1.1" marker-end="url(#arF24e1)"/>
-<rect x="458.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="458.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <circle cx="476.0" cy="272.0" r="10" fill="#9C3B52" stroke="none" stroke-width="1"/>
 <text x="476.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">6</text>
 <text x="492.0" y="270.0" text-anchor="start" class="bx-t">przetarg:</text>
 <text x="492.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">ogłoszenie, oferty, przydział</text>
-<rect x="478.0" y="310.0" width="50.0" height="20.0" rx="3" fill="#FCFDFD" stroke="#9C3B52" stroke-width="1"/>
+<rect x="478.0" y="310.0" width="50.0" height="20.0" rx="3" fill="#FDFDFA" stroke="#9C3B52" stroke-width="1"/>
 <text x="503.0" y="324.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:9px">zlec.</text>
-<rect x="542.0" y="310.0" width="32.0" height="20.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1"/>
+<rect x="542.0" y="310.0" width="32.0" height="20.0" rx="3" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1"/>
 <text x="558.0" y="324.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9px">K1</text>
-<rect x="578.0" y="310.0" width="32.0" height="20.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1"/>
+<rect x="578.0" y="310.0" width="32.0" height="20.0" rx="3" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1"/>
 <text x="594.0" y="324.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9px">K2</text>
-<rect x="614.0" y="310.0" width="32.0" height="20.0" rx="3" fill="#FCFDFD" stroke="#5B4B8A" stroke-width="1"/>
+<rect x="614.0" y="310.0" width="32.0" height="20.0" rx="3" fill="#FDFDFA" stroke="#5B4B8A" stroke-width="1"/>
 <text x="630.0" y="324.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9px">K3</text>
 <path d="M 503.0 354.0 L 630.0 354.0" fill="none" stroke="#9C3B52" stroke-width="1.2" marker-end="url(#arF24e3)"/>
 <path d="M 594.0 384.0 L 503.0 384.0" fill="none" stroke="#5B4B8A" stroke-width="1.2" marker-end="url(#arF24e0)"/>

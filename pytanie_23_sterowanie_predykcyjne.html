@@ -4,14 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pytanie 23 — Elementy technologii sterowania predykcyjnego</title>
+<link rel="icon" type="image/png" sizes="144x144" href="favicon-144.png?v=2">
+<link rel="icon" href="favicon.ico?v=2" sizes="any">
+<link rel="apple-touch-icon" href="favicon-144.png?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#141C24; --mut:#5C6B77; --line:#C3CDD4;
-  --paper:#E8ECEF; --card:#FCFDFD;
-  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52;
+  --ink:#141C24; --mut:#5C6B77; --line:#CCD2C7;
+  --paper:#EDEEE5; --card:#FDFDFA;
+  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52; --moss:#5E8C3A;
   --disp:"Space Grotesk",system-ui,sans-serif;
   --body:"STIX Two Text","Source Serif 4",Georgia,serif;
   --mono:"IBM Plex Mono",ui-monospace,monospace;
@@ -39,7 +42,7 @@ h2 .num{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--viole
         letter-spacing:.08em;flex:none}
 h3{font-family:var(--disp);font-weight:500;font-size:18.5px;margin:34px 0 8px;letter-spacing:-.01em}
 p{margin:0 0 14px}
-.rail{height:5px;background:linear-gradient(90deg,var(--teal) 0%,var(--violet) 55%,var(--amber) 100%);
+.rail{height:5px;background:linear-gradient(90deg,var(--moss) 0%,var(--teal) 30%,var(--violet) 62%,var(--amber) 100%);
       opacity:.85;margin:0 0 22px;border-radius:2px}
 
 /* ---- figury ---- */
@@ -83,7 +86,7 @@ figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:
 table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15px;background:var(--card)}
 th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
 th{font-family:var(--disp);font-weight:500;font-size:13px;letter-spacing:.02em;
-   background:#F2F5F6;border-bottom:1.5px solid var(--line)}
+   background:#F3F4EE;border-bottom:1.5px solid var(--line)}
 td.n{font-family:var(--mono);font-size:13.5px;white-space:nowrap}
 tr:last-child td{border-bottom:none}
 
@@ -115,6 +118,11 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
 .backfoot a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
             color:var(--teal);text-decoration:none;border-bottom:1px solid var(--line)}
 .backfoot a:hover,.backfoot a:focus-visible{border-bottom-color:var(--teal);outline:none}
+
+/* ---- meowl przy tytule ---- */
+.avatar{float:right;width:64px;height:64px;border-radius:50%;margin:2px 0 10px 18px;
+        box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--line)}
+header::after{content:"";display:block;clear:both}
 </style>
 </head>
 <body>
@@ -136,7 +144,7 @@ footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
 .inter .odczyt.staly3{min-height:104px}
 /*stickybar-start*/
 .topnav{display:none}
-#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(232,236,239,.96);
+#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(237,238,229,.96);
   -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 #sbar .in{max-width:860px;margin:0 auto;padding:9px 22px 8px}
 #sbar .r1{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
@@ -160,6 +168,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 </nav>
 
 <header>
+  <img class="avatar" src="assets/meowl-snowy.png" width="64" height="64" alt="" decoding="async">
   <p class="eyebrow">Egzamin dyplomowy &middot; ARiSS &middot; pytanie 23</p>
   <h1>Elementy technologii sterowania predykcyjnego</h1>
   <p class="quest">Przedstaw podstawowe elementy technologii sterowania predykcyjnego.</p>
@@ -198,27 +207,27 @@ html{scroll-padding-top:var(--sbh,84px)}
 <defs><marker id="arF23" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker><marker id="arvF23" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker></defs>
 <text x="340" y="22" text-anchor="middle" class="bx-t">W KAŻDEJ PRÓBCE LICZONY JEST CAŁY PLAN, WYKONYWANY TYLKO PIERWSZY KROK</text>
 <clipPath id="c1F23"><rect x="64" y="56" width="596" height="116"/></clipPath>
-<line x1="64" y1="172" x2="660" y2="172" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="64" y1="56" x2="64" y2="172" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="64.0" y1="172" x2="64.0" y2="176" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="64" y1="172" x2="660" y2="172" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="64" y1="56" x2="64" y2="172" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="64.0" y1="172" x2="64.0" y2="176" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="64.0" y="188" text-anchor="middle" class="tick">0</text>
-<line x1="178.6" y1="172" x2="178.6" y2="176" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="178.6" y1="172" x2="178.6" y2="176" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="178.6" y="188" text-anchor="middle" class="tick">5</text>
-<line x1="293.2" y1="172" x2="293.2" y2="176" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="293.2" y1="172" x2="293.2" y2="176" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="293.2" y="188" text-anchor="middle" class="tick">10</text>
-<line x1="407.8" y1="172" x2="407.8" y2="176" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="407.8" y1="172" x2="407.8" y2="176" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="407.8" y="188" text-anchor="middle" class="tick">15</text>
-<line x1="522.5" y1="172" x2="522.5" y2="176" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="522.5" y1="172" x2="522.5" y2="176" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="522.5" y="188" text-anchor="middle" class="tick">20</text>
-<line x1="637.1" y1="172" x2="637.1" y2="176" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="637.1" y1="172" x2="637.1" y2="176" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="637.1" y="188" text-anchor="middle" class="tick">25</text>
-<line x1="60" y1="172.0" x2="64" y2="172.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="60" y1="172.0" x2="64" y2="172.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="56" y="176.0" text-anchor="end" class="tick">0.0</text>
-<line x1="60" y1="125.6" x2="64" y2="125.6" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="60" y1="125.6" x2="64" y2="125.6" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="56" y="129.6" text-anchor="end" class="tick">0.5</text>
-<line x1="60" y1="79.2" x2="64" y2="79.2" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="60" y1="79.2" x2="64" y2="79.2" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="56" y="83.2" text-anchor="end" class="tick">1.0</text>
-<line x1="64.0" y1="79.2" x2="660.0" y2="79.2" stroke="#C3CDD4" stroke-width="1.4" stroke-dasharray="5 4"/>
+<line x1="64.0" y1="79.2" x2="660.0" y2="79.2" stroke="#CCD2C7" stroke-width="1.4" stroke-dasharray="5 4"/>
 <text x="270.3" y="72.2" text-anchor="middle" class="cap">wartość zadana</text>
 <g clip-path="url(#c1F23)">
 <polyline points="64.0,172.0 75.5,172.0 86.9,171.9 98.4,171.9 109.8,171.9 121.3,171.8 132.8,171.5 144.2,170.9 155.7,169.8 167.2,168.3 178.6,166.5 190.1,164.3 201.5,161.9 213.0,159.3 224.5,156.4 235.9,153.2 247.4,149.8 258.8,146.3 270.3,142.6 281.8,138.7 293.2,134.6 304.7,130.3 316.2,125.8 327.6,121.3 339.1,116.6 350.5,112.0 362.0,107.5 373.5,103.1 384.9,98.8 396.4,94.9 407.8,91.0 419.3,87.3 430.8,84.3 442.2,81.7 453.7,79.5 465.2,77.7 476.6,76.3 488.1,75.5 499.5,75.2 511.0,75.4 522.5,76.0 533.9,76.9 545.4,77.7 556.8,78.3 568.3,78.7 579.8,78.8 591.2,78.7 602.7,78.8 614.2,79.1 625.6,79.3 637.1,79.4 648.5,79.4 660.0,79.3" fill="none" stroke="#0E6E78" stroke-width="2.0"/>
@@ -233,25 +242,25 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="183.6" y="120" text-anchor="start" class="cap" style="fill:#5B4B8A">chwila k+4</text>
 <text x="64" y="48" text-anchor="start" class="axlab">poziom h₂ — przebieg rzeczywisty i dwie prognozy</text>
 <clipPath id="c2F23"><rect x="64" y="214" width="596" height="72"/></clipPath>
-<line x1="64" y1="286" x2="660" y2="286" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="64" y1="214" x2="64" y2="286" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="64.0" y1="286" x2="64.0" y2="290" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="64" y1="286" x2="660" y2="286" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="64" y1="214" x2="64" y2="286" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="64.0" y1="286" x2="64.0" y2="290" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="64.0" y="302" text-anchor="middle" class="tick">0</text>
-<line x1="178.6" y1="286" x2="178.6" y2="290" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="178.6" y1="286" x2="178.6" y2="290" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="178.6" y="302" text-anchor="middle" class="tick">5</text>
-<line x1="293.2" y1="286" x2="293.2" y2="290" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="293.2" y1="286" x2="293.2" y2="290" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="293.2" y="302" text-anchor="middle" class="tick">10</text>
-<line x1="407.8" y1="286" x2="407.8" y2="290" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="407.8" y1="286" x2="407.8" y2="290" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="407.8" y="302" text-anchor="middle" class="tick">15</text>
-<line x1="522.5" y1="286" x2="522.5" y2="290" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="522.5" y1="286" x2="522.5" y2="290" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="522.5" y="302" text-anchor="middle" class="tick">20</text>
-<line x1="637.1" y1="286" x2="637.1" y2="290" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="637.1" y1="286" x2="637.1" y2="290" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="637.1" y="302" text-anchor="middle" class="tick">25</text>
-<line x1="60" y1="286.0" x2="64" y2="286.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="60" y1="286.0" x2="64" y2="286.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="56" y="290.0" text-anchor="end" class="tick">0.0</text>
-<line x1="60" y1="253.3" x2="64" y2="253.3" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="60" y1="253.3" x2="64" y2="253.3" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="56" y="257.3" text-anchor="end" class="tick">0.3</text>
-<line x1="60" y1="220.5" x2="64" y2="220.5" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="60" y1="220.5" x2="64" y2="220.5" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="56" y="224.5" text-anchor="end" class="tick">0.6</text>
 <g clip-path="url(#c2F23)">
 <polyline points="64.0,286.0 75.5,286.0 75.5,286.0 86.9,286.0 86.9,286.0 98.4,286.0 98.4,283.0 109.8,283.0 109.8,279.7 121.3,279.7 121.3,276.5 132.8,276.5 132.8,273.2 144.2,273.2 144.2,269.9 155.7,269.9 155.7,266.6 167.2,266.6 167.2,263.4 178.6,263.4 178.6,260.1 190.1,260.1 190.1,256.8 201.5,256.8 201.5,253.6 213.0,253.6 213.0,250.3 224.5,250.3 224.5,247.0 235.9,247.0 235.9,243.7 247.4,243.7 247.4,240.5 258.8,240.5 258.8,237.2 270.3,237.2 270.3,233.9 281.8,233.9 281.8,230.6 293.2,230.6 293.2,227.4 304.7,227.4 304.7,224.1 316.2,224.1 316.2,220.8 327.6,220.8 327.6,220.5 339.1,220.5 339.1,220.5 350.5,220.5 350.5,220.5 362.0,220.5 362.0,220.5 373.5,220.5 373.5,220.5 384.9,220.5 384.9,221.7 396.4,221.7 396.4,220.6 407.8,220.6 407.8,223.9 419.3,223.9 419.3,227.2 430.8,227.2 430.8,230.4 442.2,230.4 442.2,233.7 453.7,233.7 453.7,237.0 465.2,237.0 465.2,240.3 476.6,240.3 476.6,243.5 488.1,243.5 488.1,246.8 499.5,246.8 499.5,250.1 511.0,250.1 511.0,252.1 522.5,252.1 522.5,248.8 533.9,248.8 533.9,245.5 545.4,245.5 545.4,242.3 556.8,242.3 556.8,242.1 568.3,242.1 568.3,240.2 579.8,240.2 579.8,243.5 591.2,243.5 591.2,246.7 602.7,246.7 602.7,245.7 614.2,245.7 614.2,242.4 625.6,242.4 625.6,239.2 637.1,239.2 637.1,238.4 648.5,238.4 648.5,241.7 660.0,241.7 660.0,244.9 671.5,244.9" fill="none" stroke="#0E6E78" stroke-width="1.6"/>
@@ -291,27 +300,27 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="340" y="22" text-anchor="middle" class="bx-t">CO SKŁADA SIĘ NA REGULATOR PREDYKCYJNY</text>
 <rect x="30" y="52" width="380" height="248" rx="3" fill="none" stroke="#5B4B8A" stroke-width="1.2" stroke-dasharray="6 5"/>
 <text x="38" y="68" text-anchor="start" class="cap" style="fill:#5B4B8A">REGULATOR PREDYKCYJNY</text>
-<rect x="46" y="80" width="168" height="56" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="46" y="80" width="168" height="56" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="46" y="80" width="168" height="3" fill="#0E6E78"/>
 <text x="130.0" y="96.2" text-anchor="middle" class="bx-t">① MODEL OBIEKTU</text>
 <text x="130.0" y="114.7" text-anchor="middle" class="bx">prognoza wyjścia na Np</text>
 <text x="130.0" y="128.8" text-anchor="middle" class="bx">próbek</text>
-<rect x="226" y="80" width="168" height="56" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="226" y="80" width="168" height="56" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="226" y="80" width="168" height="3" fill="#0E6E78"/>
 <text x="310.0" y="96.2" text-anchor="middle" class="bx-t">② FUNKCJA CELU</text>
 <text x="310.0" y="114.7" text-anchor="middle" class="bx">wagi q i λ, horyzonty</text>
 <text x="310.0" y="128.8" text-anchor="middle" class="bx">Np, Nu</text>
-<rect x="46" y="148" width="168" height="56" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="46" y="148" width="168" height="56" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="46" y="148" width="168" height="3" fill="#B3641A"/>
 <text x="130.0" y="164.2" text-anchor="middle" class="bx-t">③ OGRANICZENIA</text>
 <text x="130.0" y="182.7" text-anchor="middle" class="bx">zakres i szybkość</text>
 <text x="130.0" y="196.8" text-anchor="middle" class="bx">zaworu, limity wyjść</text>
-<rect x="226" y="148" width="168" height="56" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="226" y="148" width="168" height="56" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="226" y="148" width="168" height="3" fill="#B3641A"/>
 <text x="310.0" y="164.2" text-anchor="middle" class="bx-t">④ OPTYMALIZACJA</text>
 <text x="310.0" y="182.7" text-anchor="middle" class="bx">zadanie QP w każdej</text>
 <text x="310.0" y="196.8" text-anchor="middle" class="bx">próbce</text>
-<rect x="46" y="216" width="348" height="56" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="46" y="216" width="348" height="56" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="46" y="216" width="348" height="3" fill="#5B4B8A"/>
 <text x="220.0" y="232.2" text-anchor="middle" class="bx-t">⑤ ESTYMATOR STANU I MODEL ZAKŁÓCENIA</text>
 <text x="220.0" y="250.7" text-anchor="middle" class="bx">stan z pomiaru (filtr Kalmana), stała niezgodność</text>
@@ -325,7 +334,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="556" y="176" text-anchor="middle" class="cap" style="fill:#5B4B8A">⑥ przesuwany horyzont:</text>
 <text x="556" y="190" text-anchor="middle" class="cap" style="fill:#5B4B8A">z całego planu wykonywany</text>
 <text x="556" y="204" text-anchor="middle" class="cap" style="fill:#5B4B8A">jest tylko pierwszy krok</text>
-<rect x="480" y="80" width="168" height="56" rx="2" fill="#FCFDFD" stroke="#C3CDD4" stroke-width="1"/>
+<rect x="480" y="80" width="168" height="56" rx="2" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
 <rect x="480" y="80" width="168" height="3" fill="#5C6B77"/>
 <text x="564.0" y="96.2" text-anchor="middle" class="bx-t">OBIEKT</text>
 <text x="564.0" y="114.7" text-anchor="middle" class="bx">zawór, zbiorniki,</text>
@@ -393,23 +402,23 @@ html{scroll-padding-top:var(--sbh,84px)}
 <defs><marker id="arF23" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker><marker id="arvF23" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker></defs>
 <text x="340" y="22" text-anchor="middle" class="bx-t">OGRANICZENIE WPISANE W ZADANIE KONTRA OBCIĘTE PO FAKCIE</text>
 <clipPath id="c3aF23"><rect x="72" y="62" width="244" height="152"/></clipPath>
-<line x1="72" y1="214" x2="316" y2="214" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="72" y1="62" x2="72" y2="214" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="85.2" y1="214" x2="85.2" y2="218" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="72" y1="214" x2="316" y2="214" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="72" y1="62" x2="72" y2="214" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="85.2" y1="214" x2="85.2" y2="218" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="85.2" y="230" text-anchor="middle" class="tick">10</text>
-<line x1="151.1" y1="214" x2="151.1" y2="218" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="151.1" y1="214" x2="151.1" y2="218" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="151.1" y="230" text-anchor="middle" class="tick">20</text>
-<line x1="217.1" y1="214" x2="217.1" y2="218" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="217.1" y1="214" x2="217.1" y2="218" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="217.1" y="230" text-anchor="middle" class="tick">30</text>
-<line x1="283.0" y1="214" x2="283.0" y2="218" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="283.0" y1="214" x2="283.0" y2="218" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="283.0" y="230" text-anchor="middle" class="tick">40</text>
-<line x1="68" y1="214.0" x2="72" y2="214.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="68" y1="214.0" x2="72" y2="214.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="64" y="218.0" text-anchor="end" class="tick">0.9</text>
-<line x1="68" y1="147.9" x2="72" y2="147.9" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="68" y1="147.9" x2="72" y2="147.9" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="64" y="151.9" text-anchor="end" class="tick">1.0</text>
-<line x1="68" y1="81.8" x2="72" y2="81.8" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="68" y1="81.8" x2="72" y2="81.8" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="64" y="85.8" text-anchor="end" class="tick">1.1</text>
-<line x1="72.0" y1="147.9" x2="316.0" y2="147.9" stroke="#C3CDD4" stroke-width="1.4" stroke-dasharray="5 4"/>
+<line x1="72.0" y1="147.9" x2="316.0" y2="147.9" stroke="#CCD2C7" stroke-width="1.4" stroke-dasharray="5 4"/>
 <g clip-path="url(#c3aF23)">
 <polyline points="72.0,654.7 75.3,629.8 78.6,603.6 81.9,576.1 85.2,547.0 88.5,516.5 91.8,485.0 95.1,452.5 98.4,419.2 101.7,386.4 105.0,354.4 108.3,322.8 111.6,292.3 114.9,263.6 118.2,235.4 121.5,208.4 124.8,184.3 128.1,162.7 131.4,143.0 134.6,125.2 137.9,111.0 141.2,100.7 144.5,93.8 147.8,90.5 151.1,91.4 154.4,95.1 157.7,101.4 161.0,110.4 164.3,121.6 167.6,133.4 170.9,143.9 174.2,153.6 177.5,161.9 180.8,167.4 184.1,170.4 187.4,171.3 190.7,169.2 194.0,164.8 197.3,159.5 200.6,154.7 203.9,150.9 207.2,147.9 210.5,144.9 213.8,141.4 217.1,138.7 220.4,137.6 223.7,138.5 227.0,141.6 230.3,146.6 233.6,151.1 236.9,153.8 240.2,153.8 243.5,151.6 246.8,149.0 250.1,147.8 253.4,149.4 256.6,153.1 259.9,156.6 263.2,158.9 266.5,160.5 269.8,160.0 273.1,156.6 276.4,151.5 279.7,145.8 283.0,140.7 286.3,136.8 289.6,135.2 292.9,136.0 296.2,138.3 299.5,140.6 302.8,143.6 306.1,147.5 309.4,151.1 312.7,153.5 316.0,154.5" fill="none" stroke="#9C3B52" stroke-width="1.7"/>
 <polyline points="72.0,651.0 75.3,625.9 78.6,599.5 81.9,571.8 85.2,542.5 88.5,511.8 91.8,480.1 95.1,447.4 98.4,414.1 101.7,381.3 105.0,349.5 108.3,318.0 111.6,287.8 114.9,259.3 118.2,231.3 121.5,204.6 124.8,181.2 128.1,161.2 131.4,143.5 134.6,127.9 137.9,116.1 141.2,108.2 144.5,103.7 147.8,102.8 151.1,105.8 154.4,111.7 157.7,120.0 161.0,129.7 164.3,138.8 167.6,145.7 170.9,149.9 174.2,152.5 177.5,153.8 180.8,152.8 184.1,150.3 187.4,147.4 190.7,144.9 194.0,144.2 197.3,145.6 200.6,148.3 203.9,150.3 207.2,150.5 210.5,148.4 213.8,144.5 217.1,140.5 220.4,137.5 223.7,136.2 227.0,137.1 230.3,140.8 233.6,145.9 236.9,150.3 240.2,152.8 243.5,153.5 246.8,153.3 250.1,152.5 253.4,152.9 256.6,154.7 259.9,156.7 263.2,158.2 266.5,159.7 269.8,159.5 273.1,156.7 276.4,152.1 279.7,146.6 283.0,141.4 286.3,137.2 289.6,135.2 292.9,135.6 296.2,137.7 299.5,140.0 302.8,143.3 306.1,147.4 309.4,151.1 312.7,153.6 316.0,154.8" fill="none" stroke="#B3641A" stroke-width="1.7"/>
@@ -424,23 +433,23 @@ html{scroll-padding-top:var(--sbh,84px)}
 <line x1="72" y1="306" x2="92" y2="306" stroke="#0E6E78" stroke-width="2.4"/>
 <text x="99" y="310" text-anchor="start" class="cap" style="fill:#0E6E78">ograniczenia w zadaniu: 4,3 %</text>
 <clipPath id="c3F23"><rect x="420" y="62" width="236" height="152"/></clipPath>
-<line x1="420" y1="214" x2="656" y2="214" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="420" y1="62" x2="420" y2="214" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="420.0" y1="214" x2="420.0" y2="218" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="420" y1="214" x2="656" y2="214" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="420" y1="62" x2="420" y2="214" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="420.0" y1="214" x2="420.0" y2="218" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="420.0" y="230" text-anchor="middle" class="tick">0</text>
-<line x1="498.7" y1="214" x2="498.7" y2="218" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="498.7" y1="214" x2="498.7" y2="218" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="498.7" y="230" text-anchor="middle" class="tick">20</text>
-<line x1="577.3" y1="214" x2="577.3" y2="218" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="577.3" y1="214" x2="577.3" y2="218" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="577.3" y="230" text-anchor="middle" class="tick">40</text>
-<line x1="656.0" y1="214" x2="656.0" y2="218" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="656.0" y1="214" x2="656.0" y2="218" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="656.0" y="230" text-anchor="middle" class="tick">60</text>
-<line x1="416" y1="214.0" x2="420" y2="214.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="416" y1="214.0" x2="420" y2="214.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="412" y="218.0" text-anchor="end" class="tick">0.0</text>
-<line x1="416" y1="170.6" x2="420" y2="170.6" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="416" y1="170.6" x2="420" y2="170.6" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="412" y="174.6" text-anchor="end" class="tick">0.3</text>
-<line x1="416" y1="127.1" x2="420" y2="127.1" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="416" y1="127.1" x2="420" y2="127.1" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="412" y="131.1" text-anchor="end" class="tick">0.6</text>
-<line x1="416" y1="83.7" x2="420" y2="83.7" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="416" y1="83.7" x2="420" y2="83.7" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="412" y="87.7" text-anchor="end" class="tick">0.9</text>
 <line x1="420.0" y1="127.1" x2="656.0" y2="127.1" stroke="#9C3B52" stroke-width="1.6" stroke-dasharray="6 4"/>
 <text x="654.0" y="120.1" text-anchor="end" class="cap" style="fill:#9C3B52">zakres zaworu</text>
@@ -480,23 +489,23 @@ html{scroll-padding-top:var(--sbh,84px)}
 <svg viewBox="0 0 680 312" class="fig">
 <defs><marker id="arF23" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker><marker id="arvF23" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker></defs>
 <text x="340" y="22" text-anchor="middle" class="bx-t">HORYZONT KRÓTSZY NIŻ OPÓŹNIENIE — REGULATOR NIE MA CZEGO OPTYMALIZOWAĆ</text>
-<line x1="72" y1="214" x2="316" y2="214" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="72" y1="62" x2="72" y2="214" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="72.0" y1="214" x2="72.0" y2="218" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="72" y1="214" x2="316" y2="214" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="72" y1="62" x2="72" y2="214" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="72.0" y1="214" x2="72.0" y2="218" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="72.0" y="230" text-anchor="middle" class="tick">0</text>
-<line x1="153.3" y1="214" x2="153.3" y2="218" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="153.3" y1="214" x2="153.3" y2="218" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="153.3" y="230" text-anchor="middle" class="tick">20</text>
-<line x1="234.7" y1="214" x2="234.7" y2="218" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="234.7" y1="214" x2="234.7" y2="218" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="234.7" y="230" text-anchor="middle" class="tick">40</text>
-<line x1="316.0" y1="214" x2="316.0" y2="218" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="316.0" y1="214" x2="316.0" y2="218" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="316.0" y="230" text-anchor="middle" class="tick">60</text>
-<line x1="68" y1="208.4" x2="72" y2="208.4" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="68" y1="208.4" x2="72" y2="208.4" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="64" y="212.4" text-anchor="end" class="tick">0.0</text>
-<line x1="68" y1="152.1" x2="72" y2="152.1" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="68" y1="152.1" x2="72" y2="152.1" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="64" y="156.1" text-anchor="end" class="tick">0.5</text>
-<line x1="68" y1="95.8" x2="72" y2="95.8" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="68" y1="95.8" x2="72" y2="95.8" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="64" y="99.8" text-anchor="end" class="tick">1.0</text>
-<line x1="72.0" y1="95.8" x2="316.0" y2="95.8" stroke="#C3CDD4" stroke-width="1.4" stroke-dasharray="5 4"/>
+<line x1="72.0" y1="95.8" x2="316.0" y2="95.8" stroke="#CCD2C7" stroke-width="1.4" stroke-dasharray="5 4"/>
 <polyline points="72.0,208.4 76.1,208.4 80.1,208.4 84.2,208.4 88.3,208.4 92.3,208.4 96.4,208.4 100.5,208.3 104.5,208.3 108.6,208.7 112.7,208.9 116.7,208.7 120.8,208.4 124.9,208.3 128.9,208.2 133.0,208.4 137.1,208.6 141.1,208.7 145.2,208.8 149.3,209.1 153.3,209.0 157.4,208.8 161.5,208.6 165.5,208.7 169.6,208.3 173.7,208.1 177.7,208.3 181.8,208.5 185.9,208.6 189.9,208.2 194.0,208.1 198.1,208.0 202.1,208.2 206.2,208.6 210.3,209.2 214.3,209.4 218.4,209.3 222.5,209.1 226.5,208.9 230.6,208.7 234.7,208.1 238.7,208.0 242.8,208.8 246.9,209.4 250.9,210.0 255.0,210.3 259.1,210.4 263.1,210.4 267.2,210.5 271.3,210.4 275.3,210.0 279.4,209.4 283.5,209.0 287.5,209.0 291.6,209.1 295.7,209.5 299.7,209.8 303.8,210.0 307.9,210.1 311.9,210.0 316.0,210.0 320.1,209.9 324.1,210.0 328.2,210.2 332.3,209.8 336.3,209.2 340.4,208.9 344.5,208.4 348.5,208.2 352.6,208.0 356.7,207.9 360.7,207.7 364.8,207.4 368.9,207.2 372.9,207.2 377.0,206.9 381.1,207.0 385.1,207.2 389.2,207.5 393.3,207.3 397.3,207.3 401.4,207.2 405.5,207.3 409.5,207.3 413.6,207.5 417.7,207.6 421.7,207.6 425.8,207.5 429.9,207.6 433.9,208.1 438.0,208.6 442.1,209.2 446.1,209.4 450.2,209.6 454.3,209.5 458.3,209.1 462.4,209.0 466.5,208.7 470.5,208.5 474.6,208.4" fill="none" stroke="#9C3B52" stroke-width="1.7"/>
 <polyline points="72.0,208.4 76.1,208.4 80.1,208.4 84.2,208.4 88.3,208.4 92.3,208.4 96.4,208.4 100.5,207.3 104.5,205.7 108.6,201.4 112.7,185.5 116.7,158.7 120.8,128.8 124.9,100.4 128.9,81.4 133.0,77.9 137.1,84.9 141.1,95.7 145.2,102.9 149.3,100.8 153.3,94.7 157.4,93.1 161.5,96.4 165.5,99.4 169.6,97.1 173.7,91.6 177.7,89.2 181.8,91.6 185.9,95.6 189.9,97.8 194.0,99.6 198.1,100.0 202.1,99.6 206.2,99.7 210.3,97.2 214.3,92.9 218.4,92.2 222.5,94.1 226.5,94.5 230.6,94.8 234.7,94.8 238.7,95.7 242.8,96.2 246.9,96.7 250.9,97.9 255.0,97.8 259.1,95.1 263.1,96.8 267.2,103.4 271.3,104.9 275.3,95.7 279.4,86.3 283.5,86.7 287.5,93.0 291.6,96.5 295.7,95.9 299.7,96.0 303.8,97.5 307.9,97.3 311.9,98.8 316.0,101.5 320.1,100.5 324.1,97.1 328.2,93.0 332.3,88.6 336.3,87.9 340.4,93.0 344.5,96.9 348.5,96.8 352.6,93.7 356.7,92.5 360.7,94.5 364.8,97.4 368.9,98.9 372.9,97.1 377.0,94.3 381.1,92.9 385.1,93.8 389.2,96.6 393.3,98.8 397.3,98.7 401.4,95.6 405.5,92.5 409.5,94.1 413.6,98.6 417.7,98.3 421.7,95.0 425.8,95.5 429.9,97.5 433.9,95.6 438.0,93.4 442.1,96.8 446.1,99.6 450.2,98.1 454.3,95.6 458.3,96.0 462.4,99.4 466.5,98.5 470.5,92.4 474.6,87.8" fill="none" stroke="#B3641A" stroke-width="1.7"/>
 <polyline points="72.0,208.4 76.1,208.4 80.1,208.4 84.2,208.4 88.3,208.4 92.3,208.4 96.4,208.4 100.5,207.4 104.5,206.5 108.6,202.5 112.7,186.7 116.7,159.8 120.8,129.9 124.9,105.2 128.9,94.0 133.0,92.9 137.1,93.6 141.1,96.2 145.2,98.3 149.3,98.8 153.3,97.7 157.4,96.6 161.5,96.0 165.5,96.7 169.6,95.9 173.7,93.8 177.7,92.1 181.8,91.9 185.9,93.4 189.9,95.6 194.0,98.6 198.1,99.7 202.1,100.0 206.2,100.2 210.3,97.7 214.3,94.9 218.4,94.0 222.5,93.4 226.5,93.1 230.6,94.4 234.7,94.7 238.7,95.4 242.8,96.0 246.9,97.0 250.9,98.0 255.0,97.5 259.1,95.8 263.1,97.8 267.2,101.5 271.3,101.4 275.3,96.3 279.4,92.8 283.5,91.5 287.5,91.0 291.6,92.1 295.7,94.8 299.7,97.3 303.8,97.8 307.9,96.8 311.9,98.7 316.0,100.4 320.1,99.7 324.1,98.3 328.2,95.4 332.3,90.8 336.3,89.1 340.4,91.5 344.5,93.5 348.5,95.1 352.6,94.8 356.7,94.4 360.7,94.6 364.8,95.7 368.9,97.2 372.9,97.1 377.0,96.0 381.1,94.3 385.1,94.1 389.2,95.5 393.3,97.2 397.3,97.8 401.4,96.5 405.5,94.6 409.5,95.1 413.6,96.7 417.7,96.2 421.7,96.1 425.8,97.2 429.9,96.8 433.9,94.8 438.0,94.9 442.1,97.6 446.1,97.6 450.2,97.1 454.3,97.0 458.3,97.2 462.4,98.2 466.5,96.8 470.5,93.8 474.6,91.3" fill="none" stroke="#0E6E78" stroke-width="1.7"/>
@@ -509,25 +518,25 @@ html{scroll-padding-top:var(--sbh,84px)}
 <line x1="72" y1="306" x2="92" y2="306" stroke="#0E6E78" stroke-width="2.4"/>
 <text x="99" y="310" text-anchor="start" class="cap" style="fill:#0E6E78">Np = 20 (10 s) — poprawnie</text>
 <rect x="430.0" y="62" width="125.79999999999995" height="152" fill="#9C3B52" opacity="0.10"/>
-<line x1="430" y1="214" x2="656" y2="214" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="430" y1="62" x2="430" y2="214" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="426" y1="182.3" x2="430" y2="182.3" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="430" y1="214" x2="656" y2="214" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="430" y1="62" x2="430" y2="214" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="426" y1="182.3" x2="430" y2="182.3" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="422" y="186.3" text-anchor="end" class="tick">0.7</text>
-<line x1="426" y1="150.7" x2="430" y2="150.7" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="426" y1="150.7" x2="430" y2="150.7" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="422" y="154.7" text-anchor="end" class="tick">0.8</text>
-<line x1="426" y1="119.0" x2="430" y2="119.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="426" y1="119.0" x2="430" y2="119.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="422" y="123.0" text-anchor="end" class="tick">0.9</text>
-<line x1="426" y1="87.3" x2="430" y2="87.3" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="426" y1="87.3" x2="430" y2="87.3" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="422" y="91.3" text-anchor="end" class="tick">1.0</text>
-<line x1="430.0" y1="214" x2="430.0" y2="218" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="430.0" y1="214" x2="430.0" y2="218" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="430.0" y="230" text-anchor="middle" class="tick">2</text>
-<line x1="494.3" y1="214" x2="494.3" y2="218" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="494.3" y1="214" x2="494.3" y2="218" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="494.3" y="230" text-anchor="middle" class="tick">5</text>
-<line x1="555.8" y1="214" x2="555.8" y2="218" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="555.8" y1="214" x2="555.8" y2="218" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="555.8" y="230" text-anchor="middle" class="tick">12</text>
-<line x1="591.7" y1="214" x2="591.7" y2="218" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="591.7" y1="214" x2="591.7" y2="218" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="591.7" y="230" text-anchor="middle" class="tick">20</text>
-<line x1="656.0" y1="214" x2="656.0" y2="218" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="656.0" y1="214" x2="656.0" y2="218" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="656.0" y="230" text-anchor="middle" class="tick">50</text>
 <line x1="381.3" y1="87.3" x2="656.0" y2="87.3" stroke="#141C24" stroke-width="1.2" stroke-dasharray="4 4"/>
 <text x="654.0" y="79.3" text-anchor="end" class="cap">granica stabilności</text>
@@ -564,49 +573,49 @@ html{scroll-padding-top:var(--sbh,84px)}
 <defs><marker id="arF23I" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker><marker id="arvF23I" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker></defs>
 <text x="340" y="22" text-anchor="middle" class="bx-t">HORYZONT MUSI SIĘGAĆ DALEJ NIŻ OPÓŹNIENIE OBIEKTU</text>
 <clipPath id="cwF23I"><rect x="64" y="60" width="596" height="118"/></clipPath>
-<line x1="64" y1="178" x2="660" y2="178" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="64" y1="60" x2="64" y2="178" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="64.0" y1="178" x2="64.0" y2="182" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="64" y1="178" x2="660" y2="178" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="64" y1="60" x2="64" y2="178" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="64.0" y1="178" x2="64.0" y2="182" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="64.0" y="194" text-anchor="middle" class="tick">0</text>
-<line x1="183.2" y1="178" x2="183.2" y2="182" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="183.2" y1="178" x2="183.2" y2="182" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="183.2" y="194" text-anchor="middle" class="tick">20</text>
-<line x1="302.4" y1="178" x2="302.4" y2="182" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="302.4" y1="178" x2="302.4" y2="182" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="302.4" y="194" text-anchor="middle" class="tick">40</text>
-<line x1="421.6" y1="178" x2="421.6" y2="182" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="421.6" y1="178" x2="421.6" y2="182" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="421.6" y="194" text-anchor="middle" class="tick">60</text>
-<line x1="540.8" y1="178" x2="540.8" y2="182" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="540.8" y1="178" x2="540.8" y2="182" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="540.8" y="194" text-anchor="middle" class="tick">80</text>
-<line x1="660.0" y1="178" x2="660.0" y2="182" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="660.0" y1="178" x2="660.0" y2="182" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="660.0" y="194" text-anchor="middle" class="tick">100</text>
-<line x1="60" y1="171.4" x2="64" y2="171.4" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="60" y1="171.4" x2="64" y2="171.4" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="56" y="175.4" text-anchor="end" class="tick">0.0</text>
-<line x1="60" y1="130.1" x2="64" y2="130.1" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="60" y1="130.1" x2="64" y2="130.1" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="56" y="134.1" text-anchor="end" class="tick">0.5</text>
-<line x1="60" y1="88.9" x2="64" y2="88.9" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="60" y1="88.9" x2="64" y2="88.9" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="56" y="92.9" text-anchor="end" class="tick">1.0</text>
-<line x1="64.0" y1="88.9" x2="660.0" y2="88.9" stroke="#C3CDD4" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="64.0" y1="88.9" x2="660.0" y2="88.9" stroke="#CCD2C7" stroke-width="1" stroke-dasharray="4 4"/>
 <g clip-path="url(#cwF23I)"><polyline id="p23h" points="" fill="none" stroke="#0E6E78" stroke-width="2"/></g>
 <text x="64" y="52" text-anchor="start" class="axlab">poziom h₂ (skok zadany w 2 s, opóźnienie 6 s w torze pomiarowym)</text>
 <clipPath id="cuF23I"><rect x="64" y="216" width="596" height="76"/></clipPath>
-<line x1="64" y1="292" x2="660" y2="292" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="64" y1="216" x2="64" y2="292" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="64.0" y1="292" x2="64.0" y2="296" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="64" y1="292" x2="660" y2="292" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="64" y1="216" x2="64" y2="292" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="64.0" y1="292" x2="64.0" y2="296" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="64.0" y="308" text-anchor="middle" class="tick">0</text>
-<line x1="183.2" y1="292" x2="183.2" y2="296" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="183.2" y1="292" x2="183.2" y2="296" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="183.2" y="308" text-anchor="middle" class="tick">20</text>
-<line x1="302.4" y1="292" x2="302.4" y2="296" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="302.4" y1="292" x2="302.4" y2="296" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="302.4" y="308" text-anchor="middle" class="tick">40</text>
-<line x1="421.6" y1="292" x2="421.6" y2="296" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="421.6" y1="292" x2="421.6" y2="296" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="421.6" y="308" text-anchor="middle" class="tick">60</text>
-<line x1="540.8" y1="292" x2="540.8" y2="296" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="540.8" y1="292" x2="540.8" y2="296" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="540.8" y="308" text-anchor="middle" class="tick">80</text>
-<line x1="660.0" y1="292" x2="660.0" y2="296" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="660.0" y1="292" x2="660.0" y2="296" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="660.0" y="308" text-anchor="middle" class="tick">100</text>
-<line x1="60" y1="292.0" x2="64" y2="292.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="60" y1="292.0" x2="64" y2="292.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="56" y="296.0" text-anchor="end" class="tick">0.0</text>
-<line x1="60" y1="258.2" x2="64" y2="258.2" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="60" y1="258.2" x2="64" y2="258.2" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="56" y="262.2" text-anchor="end" class="tick">0.6</text>
-<line x1="60" y1="224.4" x2="64" y2="224.4" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="60" y1="224.4" x2="64" y2="224.4" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="56" y="228.4" text-anchor="end" class="tick">1.2</text>
 <g clip-path="url(#cuF23I)"><polyline id="p23u" points="" fill="none" stroke="#5B4B8A" stroke-width="1.6"/></g>
 <text x="64" y="208" text-anchor="start" class="axlab">otwarcie zaworu</text>
@@ -679,21 +688,21 @@ html{scroll-padding-top:var(--sbh,84px)}
 <svg viewBox="0 0 680 308" class="fig">
 <defs><marker id="arF23" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B77"/></marker><marker id="arvF23" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker></defs>
 <text x="340" y="22" text-anchor="middle" class="bx-t">DWA POKRĘTŁA, KTÓRE TRZEBA UMIEĆ NAZWAĆ</text>
-<line x1="80" y1="214" x2="316" y2="214" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="80" y1="62" x2="80" y2="214" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="119.3" y1="214" x2="119.3" y2="218" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="80" y1="214" x2="316" y2="214" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="80" y1="62" x2="80" y2="214" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="119.3" y1="214" x2="119.3" y2="218" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="119.3" y="230" text-anchor="middle" class="tick">0.02</text>
-<line x1="198.0" y1="214" x2="198.0" y2="218" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="198.0" y1="214" x2="198.0" y2="218" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="198.0" y="230" text-anchor="middle" class="tick">0.04</text>
-<line x1="276.7" y1="214" x2="276.7" y2="218" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="276.7" y1="214" x2="276.7" y2="218" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="276.7" y="230" text-anchor="middle" class="tick">0.06</text>
-<line x1="76" y1="214.0" x2="80" y2="214.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="76" y1="214.0" x2="80" y2="214.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="72" y="218.0" text-anchor="end" class="tick">3</text>
-<line x1="76" y1="174.0" x2="80" y2="174.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="76" y1="174.0" x2="80" y2="174.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="72" y="178.0" text-anchor="end" class="tick">4</text>
-<line x1="76" y1="134.0" x2="80" y2="134.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="76" y1="134.0" x2="80" y2="134.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="72" y="138.0" text-anchor="end" class="tick">5</text>
-<line x1="76" y1="94.0" x2="80" y2="94.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="76" y1="94.0" x2="80" y2="94.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="72" y="98.0" text-anchor="end" class="tick">6</text>
 <polyline points="292.8,197.0 255.0,196.0 232.2,195.2 202.4,193.7 176.6,191.2 156.3,188.8 137.0,183.2 123.5,171.0 107.5,135.1 91.1,81.3" fill="none" stroke="#5B4B8A" stroke-width="2.0"/>
 <circle cx="292.8" cy="197.0" r="3.4" fill="#5B4B8A"/>
@@ -713,21 +722,21 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="316" y="248" text-anchor="end" class="axlab">odchylenie sterowania (zużycie zaworu)</text>
 <line x1="80" y1="272" x2="100" y2="272" stroke="#5B4B8A" stroke-width="2.4"/>
 <text x="107" y="276" text-anchor="start" class="cap" style="fill:#5B4B8A">każdy punkt to inna waga λ</text>
-<line x1="420" y1="214" x2="656" y2="214" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="420" y1="62" x2="420" y2="214" stroke="#C3CDD4" stroke-width="1.2"/>
-<line x1="453.7" y1="214" x2="453.7" y2="218" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="420" y1="214" x2="656" y2="214" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="420" y1="62" x2="420" y2="214" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="453.7" y1="214" x2="453.7" y2="218" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="453.7" y="230" text-anchor="middle" class="tick">40</text>
-<line x1="521.1" y1="214" x2="521.1" y2="218" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="521.1" y1="214" x2="521.1" y2="218" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="521.1" y="230" text-anchor="middle" class="tick">60</text>
-<line x1="588.6" y1="214" x2="588.6" y2="218" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="588.6" y1="214" x2="588.6" y2="218" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="588.6" y="230" text-anchor="middle" class="tick">80</text>
-<line x1="656.0" y1="214" x2="656.0" y2="218" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="656.0" y1="214" x2="656.0" y2="218" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="656.0" y="230" text-anchor="middle" class="tick">100</text>
-<line x1="416" y1="163.3" x2="420" y2="163.3" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="416" y1="163.3" x2="420" y2="163.3" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="412" y="167.3" text-anchor="end" class="tick">0.9</text>
-<line x1="416" y1="100.0" x2="420" y2="100.0" stroke="#C3CDD4" stroke-width="1.2"/>
+<line x1="416" y1="100.0" x2="420" y2="100.0" stroke="#CCD2C7" stroke-width="1.2"/>
 <text x="412" y="104.0" text-anchor="end" class="tick">1.0</text>
-<line x1="420.0" y1="100.0" x2="656.0" y2="100.0" stroke="#C3CDD4" stroke-width="1.4" stroke-dasharray="5 4"/>
+<line x1="420.0" y1="100.0" x2="656.0" y2="100.0" stroke="#CCD2C7" stroke-width="1.4" stroke-dasharray="5 4"/>
 <polyline points="421.7,101.3 423.4,100.6 425.1,100.5 426.7,101.4 428.4,102.1 430.1,101.7 431.8,99.8 433.5,97.6 435.2,96.5 436.9,97.1 438.5,99.8 440.2,103.1 441.9,105.0 443.6,105.9 445.3,107.2 447.0,107.9 448.7,108.0 450.3,108.2 452.0,108.4 453.7,108.3 455.4,110.3 457.1,116.0 458.8,123.7 460.5,132.0 462.1,140.2 463.8,148.0 465.5,154.4 467.2,159.0 468.9,162.2 470.6,164.8 472.3,167.2 473.9,168.9 475.6,170.7 477.3,172.6 479.0,173.9 480.7,174.9 482.4,176.0 484.1,177.3 485.7,178.5 487.4,179.2 489.1,179.5 490.8,180.2 492.5,180.5 494.2,180.3 495.9,180.0 497.5,179.5 499.2,179.3 500.9,179.0 502.6,178.6 504.3,178.5 506.0,178.8 507.7,180.1 509.3,181.6 511.0,181.8 512.7,181.0 514.4,179.7 516.1,177.9 517.8,176.2 519.5,175.0 521.1,174.2 522.8,173.2 524.5,171.7 526.2,170.7 527.9,170.8 529.6,170.9 531.3,171.1 532.9,171.5 534.6,172.0 536.3,172.5 538.0,172.2 539.7,171.2 541.4,170.3 543.1,169.9 544.7,169.9 546.4,170.3 548.1,170.5 549.8,170.1 551.5,169.6 553.2,170.0 554.9,171.2 556.5,172.5 558.2,173.5 559.9,174.8 561.6,175.8 563.3,175.1 565.0,174.2 566.7,173.9 568.3,173.2 570.0,172.6 571.7,172.8 573.4,173.0 575.1,172.9 576.8,172.9 578.5,172.9 580.1,173.4 581.8,174.0 583.5,174.2 585.2,174.5 586.9,174.9 588.6,175.1 590.3,174.9 591.9,174.6 593.6,174.5 595.3,175.0 597.0,176.0 598.7,177.0 600.4,178.2 602.1,179.8 603.7,181.3 605.4,182.5 607.1,182.9 608.8,182.2 610.5,181.5 612.2,181.2 613.9,180.5 615.5,179.2 617.2,177.4 618.9,176.3 620.6,176.1 622.3,175.8 624.0,175.0 625.7,174.2 627.3,173.7 629.0,173.4 630.7,173.5 632.4,174.0 634.1,173.9 635.8,173.7 637.5,173.3 639.1,173.7 640.8,174.8 642.5,175.0 644.2,174.2 645.9,172.8 647.6,171.6 649.3,171.4 650.9,172.1 652.6,172.5 654.3,173.3" fill="none" stroke="#9C3B52" stroke-width="1.7"/>
 <polyline points="421.7,89.4 423.4,85.3 425.1,83.3 426.7,84.2 428.4,87.3 430.1,91.2 431.8,94.2 433.5,96.0 435.2,97.7 436.9,100.6 438.5,104.8 440.2,108.7 441.9,110.0 443.6,109.2 445.3,107.7 447.0,105.5 448.7,103.3 450.3,102.4 452.0,102.5 453.7,102.9 455.4,105.5 457.1,111.1 458.8,117.8 460.5,124.1 462.1,129.5 463.8,134.0 465.5,136.6 467.2,136.6 468.9,133.9 470.6,129.7 472.3,124.8 473.9,119.2 475.6,114.0 477.3,109.4 479.0,104.9 480.7,100.8 482.4,97.3 484.1,94.9 485.7,94.3 487.4,94.4 489.1,95.1 490.8,96.7 492.5,98.4 494.2,99.3 495.9,99.1 497.5,98.4 499.2,98.2 500.9,98.7 502.6,99.4 504.3,100.5 506.0,101.9 507.7,104.5 509.3,107.3 511.0,108.1 512.7,107.0 514.4,104.5 516.1,100.8 517.8,97.1 519.5,93.9 521.1,91.5 522.8,89.8 524.5,89.2 526.2,90.5 527.9,94.0 529.6,98.3 531.3,102.2 532.9,105.0 534.6,106.1 536.3,105.6 538.0,103.0 539.7,99.0 541.4,95.0 543.1,92.3 544.7,91.6 546.4,93.0 548.1,95.5 549.8,97.6 551.5,98.8 553.2,100.3 554.9,102.9 556.5,105.7 558.2,107.8 559.9,108.9 561.6,108.3 563.3,105.1 565.0,101.0 566.7,97.7 568.3,94.9 570.0,93.7 571.7,94.6 573.4,96.0 575.1,96.9 576.8,97.8 578.5,98.7 580.1,99.8 581.8,100.4 583.5,100.2 585.2,100.8 586.9,101.6 588.6,102.6 590.3,103.1 591.9,102.7 593.6,102.0 595.3,101.3 597.0,100.5 598.7,99.5 600.4,99.6 602.1,101.1 603.7,103.2 605.4,104.6 607.1,104.2 608.8,101.9 610.5,99.2 612.2,96.9 613.9,94.9 615.5,93.6 617.2,93.5 618.9,95.1 620.6,97.6 622.3,99.3 624.0,99.4 625.7,99.1 627.3,99.0 629.0,99.4 630.7,100.7 632.4,102.0 634.1,102.0 635.8,100.7 637.5,98.5 639.1,97.2 640.8,97.0 642.5,96.2 644.2,94.4 645.9,92.1 647.6,90.9 649.3,92.1 650.9,95.8 652.6,99.8 654.3,104.4" fill="none" stroke="#0E6E78" stroke-width="1.7"/>
 <line x1="453.7" y1="62" x2="453.7" y2="214" stroke="#B3641A" stroke-width="1.4" stroke-dasharray="5 4"/>
