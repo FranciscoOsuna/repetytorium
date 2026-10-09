@@ -12,9 +12,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#141C24; --mut:#5C6B77; --line:#CCD2C7;
-  --paper:#EDEEE5; --card:#FDFDFA;
-  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52; --sky:#3E63B8;
+  --ink:#0F1B2D; --mut:#5A667A; --line:#CDD5E2;
+  --paper:#EEF1F6; --card:#FBFCFE;
+  --teal:#2457D6; --amber:#E2711D; --violet:#7A4FD0; --rose:#D04C70; --sky:#4C7DF0;
   --disp:"Space Grotesk",system-ui,sans-serif;
   --body:"STIX Two Text","Source Serif 4",Georgia,serif;
   --mono:"IBM Plex Mono",ui-monospace,monospace;
@@ -86,7 +86,7 @@ figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:
 table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15px;background:var(--card)}
 th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
 th{font-family:var(--disp);font-weight:500;font-size:13px;letter-spacing:.02em;
-   background:#F3F4EE;border-bottom:1.5px solid var(--line)}
+   background:#F4F2EA;border-bottom:1.5px solid var(--line)}
 td.n{font-family:var(--mono);font-size:13.5px;white-space:nowrap}
 tr:last-child td{border-bottom:none}
 
@@ -99,9 +99,9 @@ ol.steps>li::before{content:counter(st);position:absolute;left:0;top:1px;
   background:var(--violet);color:#fff;display:flex;align-items:center;justify-content:center}
 strong{font-weight:600}
 .tag{font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:2px;
-     background:rgba(14,110,120,.12);color:var(--teal);white-space:nowrap}
-.tag.a{background:rgba(179,100,26,.13);color:var(--amber)}
-.tag.v{background:rgba(91,75,138,.13);color:var(--violet)}
+     background:rgba(36,87,214,.12);color:var(--teal);white-space:nowrap}
+.tag.a{background:rgba(226,113,29,.13);color:var(--amber)}
+.tag.v{background:rgba(122,79,208,.13);color:var(--violet)}
 footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
        font-family:var(--mono);font-size:12px;color:var(--mut)}
 @media print{body{background:#fff}figure,.box,.eq,table{break-inside:avoid}.topnav,.backfoot{display:none}}
@@ -166,7 +166,7 @@ ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{colo
 .luka{display:inline-block;min-width:70px;border-bottom:1.5px solid var(--violet);text-align:center;font-family:var(--mono);font-size:14px;color:var(--violet)}
 /*stickybar-start*/
 .topnav{display:none}
-#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(237,238,229,.96);
+#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(238,241,246,.96);
   -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 #sbar .in{max-width:860px;margin:0 auto;padding:9px 22px 8px}
 #sbar .r1{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
@@ -214,36 +214,36 @@ html{scroll-padding-top:var(--sbh,84px)}
 
 <figure>
 <svg viewBox="0 0 680 300" class="fig">
-<defs><marker id="arF44a0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#141C24"/></marker></defs>
+<defs><marker id="arF44a0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0F1B2D"/></marker></defs>
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">ANALIZA WRAŻLIWOŚCI: CO SIĘ DZIEJE Z DECYZJĄ, GDY ZMIENIAJĄ SIĘ DANE MODELU</text>
-<rect x="14.0" y="50.0" width="230.0" height="170.0" rx="6" fill="#FDFDFA" stroke="#141C24" stroke-width="1.3"/>
+<rect x="14.0" y="50.0" width="230.0" height="170.0" rx="6" fill="#FBFCFE" stroke="#0F1B2D" stroke-width="1.3"/>
 <text x="129.0" y="72.0" text-anchor="middle" class="bx-t" style="font-size:11.5px">MODEL LP</text>
-<text x="129.0" y="100.0" text-anchor="middle" class="bx-t" style="fill:#B3641A;font-size:13px">max  cᵀx</text>
-<text x="129.0" y="128.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:13px">Ax ≤ b,  x ≥ 0</text>
-<text x="30.0" y="160.0" text-anchor="start" class="cap" style="fill:#B3641A;font-size:10px">c — ceny, zyski, koszty</text>
-<text x="30.0" y="180.0" text-anchor="start" class="cap" style="fill:#0E6E78;font-size:10px">b — zasoby, limity</text>
-<text x="30.0" y="200.0" text-anchor="start" class="cap" style="fill:#9C3B52;font-size:10px">A — technologia, normy zużycia</text>
-<path d="M 246.0 135.0 L 290.0 135.0" fill="none" stroke="#141C24" stroke-width="1.6" marker-end="url(#arF44a0)"/>
-<rect x="292.0" y="80.0" width="150.0" height="110.0" rx="6" fill="#F6F5FA" stroke="#5B4B8A" stroke-width="1.6"/>
-<text x="367.0" y="104.0" text-anchor="middle" class="bx-t" style="fill:#5B4B8A;font-size:11.5px">OPTIMUM</text>
-<text x="367.0" y="128.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:10.5px">x* (plan)</text>
-<text x="367.0" y="148.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:10.5px">z* (wartość)</text>
-<text x="367.0" y="168.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9px">baza (które ogr. aktywne)</text>
-<path d="M 444.0 135.0 L 486.0 135.0" fill="none" stroke="#141C24" stroke-width="1.6" marker-end="url(#arF44a0)"/>
-<rect x="488.0" y="50.0" width="178.0" height="50.0" rx="5" fill="#FDFDFA" stroke="#B3641A" stroke-width="1.3"/>
-<rect x="488.0" y="50.0" width="4.0" height="50.0" rx="0" fill="#B3641A" stroke="none" stroke-width="1"/>
-<text x="500.0" y="70.0" text-anchor="start" class="bx-t" style="fill:#B3641A;font-size:9.5px">Czy plan (baza) się nie zmieni?</text>
-<text x="500.0" y="87.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9px">przedziały stabilności c, b, A</text>
-<rect x="488.0" y="108.0" width="178.0" height="50.0" rx="5" fill="#FDFDFA" stroke="#0E6E78" stroke-width="1.3"/>
-<rect x="488.0" y="108.0" width="4.0" height="50.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1"/>
-<text x="500.0" y="128.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:9.5px">Ile zyskam na jednostce zasobu?</text>
-<text x="500.0" y="145.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9px">ceny dualne (cienia)</text>
-<rect x="488.0" y="166.0" width="178.0" height="50.0" rx="5" fill="#FDFDFA" stroke="#9C3B52" stroke-width="1.3"/>
-<rect x="488.0" y="166.0" width="4.0" height="50.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1"/>
-<text x="500.0" y="186.0" text-anchor="start" class="bx-t" style="fill:#9C3B52;font-size:9.5px">Czy opłaca się nowy produkt?</text>
-<text x="500.0" y="203.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9px">koszt alternatywny (z y)</text>
-<rect x="14.0" y="240.0" width="652.0" height="46.0" rx="4" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.07"/>
-<text x="340.0" y="260.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:10.5px">bez rozwiązywania zadania od nowa: odpowiedzi czyta się z rozwiązania bazowego</text>
+<text x="129.0" y="100.0" text-anchor="middle" class="bx-t" style="fill:#E2711D;font-size:13px">max  cᵀx</text>
+<text x="129.0" y="128.0" text-anchor="middle" class="bx-t" style="fill:#2457D6;font-size:13px">Ax ≤ b,  x ≥ 0</text>
+<text x="30.0" y="160.0" text-anchor="start" class="cap" style="fill:#E2711D;font-size:10px">c — ceny, zyski, koszty</text>
+<text x="30.0" y="180.0" text-anchor="start" class="cap" style="fill:#2457D6;font-size:10px">b — zasoby, limity</text>
+<text x="30.0" y="200.0" text-anchor="start" class="cap" style="fill:#D04C70;font-size:10px">A — technologia, normy zużycia</text>
+<path d="M 246.0 135.0 L 290.0 135.0" fill="none" stroke="#0F1B2D" stroke-width="1.6" marker-end="url(#arF44a0)"/>
+<rect x="292.0" y="80.0" width="150.0" height="110.0" rx="6" fill="#F6F5FA" stroke="#7A4FD0" stroke-width="1.6"/>
+<text x="367.0" y="104.0" text-anchor="middle" class="bx-t" style="fill:#7A4FD0;font-size:11.5px">OPTIMUM</text>
+<text x="367.0" y="128.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:10.5px">x* (plan)</text>
+<text x="367.0" y="148.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:10.5px">z* (wartość)</text>
+<text x="367.0" y="168.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">baza (które ogr. aktywne)</text>
+<path d="M 444.0 135.0 L 486.0 135.0" fill="none" stroke="#0F1B2D" stroke-width="1.6" marker-end="url(#arF44a0)"/>
+<rect x="488.0" y="50.0" width="178.0" height="50.0" rx="5" fill="#FBFCFE" stroke="#E2711D" stroke-width="1.3"/>
+<rect x="488.0" y="50.0" width="4.0" height="50.0" rx="0" fill="#E2711D" stroke="none" stroke-width="1"/>
+<text x="500.0" y="70.0" text-anchor="start" class="bx-t" style="fill:#E2711D;font-size:9.5px">Czy plan (baza) się nie zmieni?</text>
+<text x="500.0" y="87.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9px">przedziały stabilności c, b, A</text>
+<rect x="488.0" y="108.0" width="178.0" height="50.0" rx="5" fill="#FBFCFE" stroke="#2457D6" stroke-width="1.3"/>
+<rect x="488.0" y="108.0" width="4.0" height="50.0" rx="0" fill="#2457D6" stroke="none" stroke-width="1"/>
+<text x="500.0" y="128.0" text-anchor="start" class="bx-t" style="fill:#2457D6;font-size:9.5px">Ile zyskam na jednostce zasobu?</text>
+<text x="500.0" y="145.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9px">ceny dualne (cienia)</text>
+<rect x="488.0" y="166.0" width="178.0" height="50.0" rx="5" fill="#FBFCFE" stroke="#D04C70" stroke-width="1.3"/>
+<rect x="488.0" y="166.0" width="4.0" height="50.0" rx="0" fill="#D04C70" stroke="none" stroke-width="1"/>
+<text x="500.0" y="186.0" text-anchor="start" class="bx-t" style="fill:#D04C70;font-size:9.5px">Czy opłaca się nowy produkt?</text>
+<text x="500.0" y="203.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9px">koszt alternatywny (z y)</text>
+<rect x="14.0" y="240.0" width="652.0" height="46.0" rx="4" fill="#7A4FD0" stroke="none" stroke-width="1" opacity="0.07"/>
+<text x="340.0" y="260.0" text-anchor="middle" class="cap" style="fill:#7A4FD0;font-size:10.5px">bez rozwiązywania zadania od nowa: odpowiedzi czyta się z rozwiązania bazowego</text>
 <text x="340.0" y="277.0" text-anchor="middle" class="cap" style="font-size:9.5px">(krok 5 z 8 kroków rozwiązania problemu decyzyjnego, → 42)</text>
 </svg>
 <figcaption>Trzy grupy parametrów zadania liniowego i trzy pytania, na które analiza wrażliwości odpowiada bez ponownego rozwiązywania. Opracowanie własne na podstawie notatki do zagadnienia 44.</figcaption>
@@ -280,7 +280,7 @@ html{scroll-padding-top:var(--sbh,84px)}
 
 <figure>
 <svg viewBox="0 0 680 418" class="fig">
-<defs><marker id="arF44b0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker></defs>
+<defs><marker id="arF44b0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#7A4FD0"/></marker></defs>
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">ZADANIE BAZOWE W JEDNAKOWEJ SKALI: 1 KRATKA = 5 SZTUK</text>
 <clipPath id="cF44b1"><rect x="46" y="46" width="256" height="320"/></clipPath>
 <line x1="46.0" y1="46.0" x2="46.0" y2="366.0" stroke="#D5DDE2" stroke-width="0.9"/>
@@ -308,73 +308,73 @@ html{scroll-padding-top:var(--sbh,84px)}
 <line x1="46.0" y1="86.0" x2="302.0" y2="86.0" stroke="#EEF2F4" stroke-width="0.7"/>
 <line x1="46.0" y1="46.0" x2="302.0" y2="46.0" stroke="#D5DDE2" stroke-width="0.9"/>
 <text x="40.0" y="50.0" text-anchor="end" class="tick">40</text>
-<line x1="46.0" y1="366.0" x2="302.0" y2="366.0" stroke="#5C6B77" stroke-width="1.2"/>
-<line x1="46.0" y1="46.0" x2="46.0" y2="366.0" stroke="#5C6B77" stroke-width="1.2"/>
+<line x1="46.0" y1="366.0" x2="302.0" y2="366.0" stroke="#5A667A" stroke-width="1.2"/>
+<line x1="46.0" y1="46.0" x2="46.0" y2="366.0" stroke="#5A667A" stroke-width="1.2"/>
 <text x="308.0" y="370.0" text-anchor="start" class="axlab">x₁</text>
 <text x="46.0" y="38.0" text-anchor="middle" class="axlab">x₂</text>
 <g clip-path="url(#cF44b1)">
-<polygon points="46.0,366.0 206.0,366.0 206.0,286.0 126.0,126.0 46.0,126.0" fill="#0E6E78" opacity="0.16" stroke="none" stroke-width="1"/>
+<polygon points="46.0,366.0 206.0,366.0 206.0,286.0 126.0,126.0 46.0,126.0" fill="#2457D6" opacity="0.16" stroke="none" stroke-width="1"/>
 </g>
-<g clip-path="url(#cF44b1)"><polyline points="6.0,-114.0 526.0,926.0" fill="none" stroke="#9C3B52" stroke-width="2.2" stroke-linejoin="round"/></g>
-<g clip-path="url(#cF44b1)"><polyline points="206.0,406.0 206.0,-114.0" fill="none" stroke="#9C3B52" stroke-width="2.2" stroke-linejoin="round"/></g>
-<g clip-path="url(#cF44b1)"><polyline points="6.0,126.0 526.0,126.0" fill="none" stroke="#5C6B77" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="5 4"/></g>
-<g clip-path="url(#cF44b1)"><polyline points="6.0,6.0 526.0,1566.0" fill="none" stroke="#5B4B8A" stroke-width="1.1" stroke-linejoin="round" stroke-dasharray="6 4"/></g>
-<text x="129.0" y="361.0" text-anchor="start" class="cap" style="fill:#5B4B8A;font-size:9px">z=30</text>
-<g clip-path="url(#cF44b1)"><polyline points="6.0,-154.0 526.0,1406.0" fill="none" stroke="#5B4B8A" stroke-width="1.1" stroke-linejoin="round" stroke-dasharray="6 4"/></g>
-<text x="182.3" y="361.0" text-anchor="start" class="cap" style="fill:#5B4B8A;font-size:9px">z=50</text>
-<g clip-path="url(#cF44b1)"><polyline points="6.0,-314.0 526.0,1246.0" fill="none" stroke="#5B4B8A" stroke-width="2.0" stroke-linejoin="round" stroke-dasharray="6 4"/></g>
-<text x="235.7" y="361.0" text-anchor="start" class="cap" style="fill:#5B4B8A;font-size:9px">z=70</text>
-<path d="M 206.0 286.0 L 263.6 266.8" fill="none" stroke="#5B4B8A" stroke-width="2.2" marker-end="url(#arF44b0)"/>
-<path d="M 215.9 282.7 L 212.6 272.8 L 202.7 276.1" fill="none" stroke="#5B4B8A" stroke-width="1"/>
-<text x="265.2" y="225.2" text-anchor="middle" class="bx-t" style="fill:#5B4B8A;font-size:10px">∇z = (3, 1)</text>
-<circle cx="46.0" cy="366.0" r="3.5" fill="#141C24" stroke="none" stroke-width="1"/>
-<circle cx="126.0" cy="126.0" r="3.5" fill="#141C24" stroke="none" stroke-width="1"/>
-<text x="119.0" y="119.0" text-anchor="end" class="bx-t" style="fill:#141C24;font-size:10.5px">A</text>
-<circle cx="206.0" cy="366.0" r="3.5" fill="#141C24" stroke="none" stroke-width="1"/>
-<text x="212.0" y="360.0" text-anchor="start" class="bx-t" style="fill:#141C24;font-size:10.5px">C</text>
-<circle cx="46.0" cy="126.0" r="3.5" fill="#141C24" stroke="none" stroke-width="1"/>
-<text x="53.0" y="119.0" text-anchor="start" class="bx-t" style="fill:#141C24;font-size:10.5px">D</text>
-<circle cx="206.0" cy="286.0" r="8.5" fill="#FFFFFF" stroke="#5B4B8A" stroke-width="1.8"/>
-<circle cx="206.0" cy="286.0" r="4.5" fill="#5B4B8A" stroke="none" stroke-width="1"/>
-<text x="197.0" y="302.0" text-anchor="end" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">B</text>
-<text x="90.0" y="54.0" text-anchor="start" class="cap" style="fill:#9C3B52;font-size:9.5px">surowiec</text>
-<text x="210.0" y="66.0" text-anchor="start" class="cap" style="fill:#9C3B52;font-size:9.5px">rynek 1</text>
-<text x="242.0" y="116.4" text-anchor="start" class="cap" style="fill:#5C6B77;font-size:9.5px">rynek 2</text>
-<rect x="344.0" y="46.0" width="322.0" height="326.0" rx="5" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
-<text x="358.0" y="68.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:11px">JAK CZYTAĆ RYSUNEK</text>
-<circle cx="368.0" cy="92.0" r="8" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<g clip-path="url(#cF44b1)"><polyline points="6.0,-114.0 526.0,926.0" fill="none" stroke="#D04C70" stroke-width="2.2" stroke-linejoin="round"/></g>
+<g clip-path="url(#cF44b1)"><polyline points="206.0,406.0 206.0,-114.0" fill="none" stroke="#D04C70" stroke-width="2.2" stroke-linejoin="round"/></g>
+<g clip-path="url(#cF44b1)"><polyline points="6.0,126.0 526.0,126.0" fill="none" stroke="#5A667A" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="5 4"/></g>
+<g clip-path="url(#cF44b1)"><polyline points="6.0,6.0 526.0,1566.0" fill="none" stroke="#7A4FD0" stroke-width="1.1" stroke-linejoin="round" stroke-dasharray="6 4"/></g>
+<text x="129.0" y="361.0" text-anchor="start" class="cap" style="fill:#7A4FD0;font-size:9px">z=30</text>
+<g clip-path="url(#cF44b1)"><polyline points="6.0,-154.0 526.0,1406.0" fill="none" stroke="#7A4FD0" stroke-width="1.1" stroke-linejoin="round" stroke-dasharray="6 4"/></g>
+<text x="182.3" y="361.0" text-anchor="start" class="cap" style="fill:#7A4FD0;font-size:9px">z=50</text>
+<g clip-path="url(#cF44b1)"><polyline points="6.0,-314.0 526.0,1246.0" fill="none" stroke="#7A4FD0" stroke-width="2.0" stroke-linejoin="round" stroke-dasharray="6 4"/></g>
+<text x="235.7" y="361.0" text-anchor="start" class="cap" style="fill:#7A4FD0;font-size:9px">z=70</text>
+<path d="M 206.0 286.0 L 263.6 266.8" fill="none" stroke="#7A4FD0" stroke-width="2.2" marker-end="url(#arF44b0)"/>
+<path d="M 215.9 282.7 L 212.6 272.8 L 202.7 276.1" fill="none" stroke="#7A4FD0" stroke-width="1"/>
+<text x="265.2" y="225.2" text-anchor="middle" class="bx-t" style="fill:#7A4FD0;font-size:10px">∇z = (3, 1)</text>
+<circle cx="46.0" cy="366.0" r="3.5" fill="#0F1B2D" stroke="none" stroke-width="1"/>
+<circle cx="126.0" cy="126.0" r="3.5" fill="#0F1B2D" stroke="none" stroke-width="1"/>
+<text x="119.0" y="119.0" text-anchor="end" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">A</text>
+<circle cx="206.0" cy="366.0" r="3.5" fill="#0F1B2D" stroke="none" stroke-width="1"/>
+<text x="212.0" y="360.0" text-anchor="start" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">C</text>
+<circle cx="46.0" cy="126.0" r="3.5" fill="#0F1B2D" stroke="none" stroke-width="1"/>
+<text x="53.0" y="119.0" text-anchor="start" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">D</text>
+<circle cx="206.0" cy="286.0" r="8.5" fill="#FFFFFF" stroke="#7A4FD0" stroke-width="1.8"/>
+<circle cx="206.0" cy="286.0" r="4.5" fill="#7A4FD0" stroke="none" stroke-width="1"/>
+<text x="197.0" y="302.0" text-anchor="end" class="bx-t" style="fill:#7A4FD0;font-size:10.5px">B</text>
+<text x="90.0" y="54.0" text-anchor="start" class="cap" style="fill:#D04C70;font-size:9.5px">surowiec</text>
+<text x="210.0" y="66.0" text-anchor="start" class="cap" style="fill:#D04C70;font-size:9.5px">rynek 1</text>
+<text x="242.0" y="116.4" text-anchor="start" class="cap" style="fill:#5A667A;font-size:9.5px">rynek 2</text>
+<rect x="344.0" y="46.0" width="322.0" height="326.0" rx="5" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<text x="358.0" y="68.0" text-anchor="start" class="bx-t" style="fill:#7A4FD0;font-size:11px">JAK CZYTAĆ RYSUNEK</text>
+<circle cx="368.0" cy="92.0" r="8" fill="#7A4FD0" stroke="none" stroke-width="1"/>
 <text x="368.0" y="96.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">1</text>
-<text x="382.0" y="96.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9.5px">każde ograniczenie = prosta + półpłaszczyzna</text>
-<circle cx="368.0" cy="114.0" r="8" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="382.0" y="96.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9.5px">każde ograniczenie = prosta + półpłaszczyzna</text>
+<circle cx="368.0" cy="114.0" r="8" fill="#7A4FD0" stroke="none" stroke-width="1"/>
 <text x="368.0" y="118.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">2</text>
-<text x="382.0" y="118.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9.5px">wspólna część = plany dopuszczalne (zielone)</text>
-<circle cx="368.0" cy="136.0" r="8" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="382.0" y="118.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9.5px">wspólna część = plany dopuszczalne (zielone)</text>
+<circle cx="368.0" cy="136.0" r="8" fill="#7A4FD0" stroke="none" stroke-width="1"/>
 <text x="368.0" y="140.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">3</text>
-<text x="382.0" y="140.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9.5px">z = 3x₁ + x₂ = const → proste równoległe</text>
-<circle cx="368.0" cy="158.0" r="8" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="382.0" y="140.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9.5px">z = 3x₁ + x₂ = const → proste równoległe</text>
+<circle cx="368.0" cy="158.0" r="8" fill="#7A4FD0" stroke="none" stroke-width="1"/>
 <text x="368.0" y="162.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">4</text>
-<text x="382.0" y="162.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9.5px">∇z = (3, 1) ⟂ do nich, pokazuje, gdzie z rośnie</text>
-<circle cx="368.0" cy="180.0" r="8" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="382.0" y="162.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9.5px">∇z = (3, 1) ⟂ do nich, pokazuje, gdzie z rośnie</text>
+<circle cx="368.0" cy="180.0" r="8" fill="#7A4FD0" stroke="none" stroke-width="1"/>
 <text x="368.0" y="184.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">5</text>
-<text x="382.0" y="184.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9.5px">przesuwaj prostą zysku wzdłuż ∇z;</text>
-<circle cx="368.0" cy="202.0" r="8" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="382.0" y="184.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9.5px">przesuwaj prostą zysku wzdłuż ∇z;</text>
+<circle cx="368.0" cy="202.0" r="8" fill="#7A4FD0" stroke="none" stroke-width="1"/>
 <text x="368.0" y="206.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:10.5px">6</text>
-<text x="382.0" y="206.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9.5px">ostatni punkt wspólny z obszarem = B</text>
-<line x1="358.0" y1="226.0" x2="652.0" y2="226.0" stroke="#CCD2C7" stroke-width="1"/>
+<text x="382.0" y="206.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9.5px">ostatni punkt wspólny z obszarem = B</text>
+<line x1="358.0" y1="226.0" x2="652.0" y2="226.0" stroke="#CDD5E2" stroke-width="1"/>
 <text x="358.0" y="248.0" text-anchor="start" class="cap" style="font-size:9.5px">ograniczenie</text>
 <text x="472.0" y="248.0" text-anchor="start" class="cap" style="font-size:9.5px">zużyte / limit</text>
 <text x="576.0" y="248.0" text-anchor="start" class="cap" style="font-size:9.5px">stan w B</text>
-<text x="358.0" y="272.0" text-anchor="start" class="bx-t" style="fill:#9C3B52;font-size:10.5px">surowiec</text>
-<text x="472.0" y="272.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9.5px">50 / 50</text>
-<text x="576.0" y="272.0" text-anchor="start" class="cap" style="fill:#9C3B52;font-size:10px">aktywne</text>
-<text x="358.0" y="296.0" text-anchor="start" class="bx-t" style="fill:#9C3B52;font-size:10.5px">rynek 1</text>
-<text x="472.0" y="296.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9.5px">20 / 20</text>
-<text x="576.0" y="296.0" text-anchor="start" class="cap" style="fill:#9C3B52;font-size:10px">aktywne</text>
-<text x="358.0" y="320.0" text-anchor="start" class="bx-t" style="fill:#5C6B77;font-size:10.5px">rynek 2</text>
-<text x="472.0" y="320.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9.5px">10 / 30</text>
-<text x="576.0" y="320.0" text-anchor="start" class="cap" style="fill:#5C6B77;font-size:10px">luz 20</text>
-<text x="358.0" y="352.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9.5px">z w wierzchołkach: 0 → 0, D → 30, A → 60,</text>
-<text x="358.0" y="366.0" text-anchor="start" class="cap" style="fill:#5B4B8A;font-size:9.5px">C → 60, B → 70 (najwięcej)</text>
+<text x="358.0" y="272.0" text-anchor="start" class="bx-t" style="fill:#D04C70;font-size:10.5px">surowiec</text>
+<text x="472.0" y="272.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9.5px">50 / 50</text>
+<text x="576.0" y="272.0" text-anchor="start" class="cap" style="fill:#D04C70;font-size:10px">aktywne</text>
+<text x="358.0" y="296.0" text-anchor="start" class="bx-t" style="fill:#D04C70;font-size:10.5px">rynek 1</text>
+<text x="472.0" y="296.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9.5px">20 / 20</text>
+<text x="576.0" y="296.0" text-anchor="start" class="cap" style="fill:#D04C70;font-size:10px">aktywne</text>
+<text x="358.0" y="320.0" text-anchor="start" class="bx-t" style="fill:#5A667A;font-size:10.5px">rynek 2</text>
+<text x="472.0" y="320.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9.5px">10 / 30</text>
+<text x="576.0" y="320.0" text-anchor="start" class="cap" style="fill:#5A667A;font-size:10px">luz 20</text>
+<text x="358.0" y="352.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9.5px">z w wierzchołkach: 0 → 0, D → 30, A → 60,</text>
+<text x="358.0" y="366.0" text-anchor="start" class="cap" style="fill:#7A4FD0;font-size:9.5px">C → 60, B → 70 (najwięcej)</text>
 </svg>
 <figcaption>Obie osie mają tę samą skalę, więc wektor ∇z = (3, 1) naprawdę jest prostopadły do prostych zysku (znak kąta prostego przy B). Optimum to wierzchołek B(20, 10) z zyskiem 70. Rachunek własny, sprawdzony programem linprog.</figcaption>
 </figure>
@@ -415,9 +415,9 @@ html{scroll-padding-top:var(--sbh,84px)}
 
 <figure>
 <svg viewBox="0 0 680 440" class="fig">
-<defs><marker id="arF44c0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker><marker id="arF44c1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B3641A"/></marker><marker id="arF44c2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9C3B52"/></marker></defs>
+<defs><marker id="arF44c0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#7A4FD0"/></marker><marker id="arF44c1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#E2711D"/></marker><marker id="arF44c2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#D04C70"/></marker></defs>
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">ZMIANA c₁: PROSTA ZYSKU SIĘ OBRACA, OBSZAR STOI W MIEJSCU</text>
-<text x="120.0" y="50.0" text-anchor="middle" class="bx-t" style="fill:#5B4B8A;font-size:11px">c = (3, 1)</text>
+<text x="120.0" y="50.0" text-anchor="middle" class="bx-t" style="fill:#7A4FD0;font-size:11px">c = (3, 1)</text>
 <clipPath id="cF44c2"><rect x="40" y="62" width="156.0" height="208.0"/></clipPath>
 <line x1="40.0" y1="62.0" x2="40.0" y2="270.0" stroke="#D5DDE2" stroke-width="0.9"/>
 <text x="40.0" y="285.0" text-anchor="middle" class="tick">0</text>
@@ -444,23 +444,23 @@ html{scroll-padding-top:var(--sbh,84px)}
 <line x1="40.0" y1="88.0" x2="196.0" y2="88.0" stroke="#EEF2F4" stroke-width="0.7"/>
 <line x1="40.0" y1="62.0" x2="196.0" y2="62.0" stroke="#D5DDE2" stroke-width="0.9"/>
 <text x="34.0" y="66.0" text-anchor="end" class="tick">40</text>
-<line x1="40.0" y1="270.0" x2="196.0" y2="270.0" stroke="#5C6B77" stroke-width="1.2"/>
-<line x1="40.0" y1="62.0" x2="40.0" y2="270.0" stroke="#5C6B77" stroke-width="1.2"/>
+<line x1="40.0" y1="270.0" x2="196.0" y2="270.0" stroke="#5A667A" stroke-width="1.2"/>
+<line x1="40.0" y1="62.0" x2="40.0" y2="270.0" stroke="#5A667A" stroke-width="1.2"/>
 <g clip-path="url(#cF44c2)">
-<polygon points="40.0,270.0 144.0,270.0 144.0,218.0 92.0,114.0 40.0,114.0" fill="#0E6E78" opacity="0.14" stroke="none" stroke-width="1"/>
+<polygon points="40.0,270.0 144.0,270.0 144.0,218.0 92.0,114.0 40.0,114.0" fill="#2457D6" opacity="0.14" stroke="none" stroke-width="1"/>
 </g>
-<g clip-path="url(#cF44c2)"><polyline points="14.0,-42.0 352.0,634.0" fill="none" stroke="#9C3B52" stroke-width="1.2" stroke-linejoin="round"/></g>
-<g clip-path="url(#cF44c2)"><polyline points="144.0,296.0 144.0,-42.0" fill="none" stroke="#9C3B52" stroke-width="1.2" stroke-linejoin="round"/></g>
-<g clip-path="url(#cF44c2)"><polyline points="14.0,114.0 352.0,114.0" fill="none" stroke="#5C6B77" stroke-width="1" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
-<g clip-path="url(#cF44c2)"><polyline points="14.0,-172.0 352.0,842.0" fill="none" stroke="#5B4B8A" stroke-width="2.2" stroke-linejoin="round"/></g>
-<path d="M 144.0 218.0 L 178.3 206.6" fill="none" stroke="#5B4B8A" stroke-width="1.8" marker-end="url(#arF44c0)"/>
-<circle cx="92.0" cy="114.0" r="3.3" fill="#141C24" stroke="none" stroke-width="1"/>
-<text x="85.0" y="128.0" text-anchor="end" class="bx-t" style="fill:#141C24;font-size:10.5px">A</text>
-<circle cx="144.0" cy="218.0" r="4.2" fill="#5B4B8A" stroke="none" stroke-width="1"/>
-<text x="150.0" y="231.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">B</text>
-<text x="120.0" y="302.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9.5px">optimum B, z* = 70</text>
-<text x="120.0" y="316.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9px">nachylenie prostej −c₁/c₂ = −3</text>
-<text x="338.0" y="50.0" text-anchor="middle" class="bx-t" style="fill:#B3641A;font-size:11px">c = (2, 1)</text>
+<g clip-path="url(#cF44c2)"><polyline points="14.0,-42.0 352.0,634.0" fill="none" stroke="#D04C70" stroke-width="1.2" stroke-linejoin="round"/></g>
+<g clip-path="url(#cF44c2)"><polyline points="144.0,296.0 144.0,-42.0" fill="none" stroke="#D04C70" stroke-width="1.2" stroke-linejoin="round"/></g>
+<g clip-path="url(#cF44c2)"><polyline points="14.0,114.0 352.0,114.0" fill="none" stroke="#5A667A" stroke-width="1" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
+<g clip-path="url(#cF44c2)"><polyline points="14.0,-172.0 352.0,842.0" fill="none" stroke="#7A4FD0" stroke-width="2.2" stroke-linejoin="round"/></g>
+<path d="M 144.0 218.0 L 178.3 206.6" fill="none" stroke="#7A4FD0" stroke-width="1.8" marker-end="url(#arF44c0)"/>
+<circle cx="92.0" cy="114.0" r="3.3" fill="#0F1B2D" stroke="none" stroke-width="1"/>
+<text x="85.0" y="128.0" text-anchor="end" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">A</text>
+<circle cx="144.0" cy="218.0" r="4.2" fill="#7A4FD0" stroke="none" stroke-width="1"/>
+<text x="150.0" y="231.0" text-anchor="start" class="bx-t" style="fill:#7A4FD0;font-size:10.5px">B</text>
+<text x="120.0" y="302.0" text-anchor="middle" class="cap" style="fill:#7A4FD0;font-size:9.5px">optimum B, z* = 70</text>
+<text x="120.0" y="316.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">nachylenie prostej −c₁/c₂ = −3</text>
+<text x="338.0" y="50.0" text-anchor="middle" class="bx-t" style="fill:#E2711D;font-size:11px">c = (2, 1)</text>
 <clipPath id="cF44c45"><rect x="258" y="62" width="156.0" height="208.0"/></clipPath>
 <line x1="258.0" y1="62.0" x2="258.0" y2="270.0" stroke="#D5DDE2" stroke-width="0.9"/>
 <line x1="284.0" y1="62.0" x2="284.0" y2="270.0" stroke="#EEF2F4" stroke-width="0.7"/>
@@ -478,28 +478,28 @@ html{scroll-padding-top:var(--sbh,84px)}
 <line x1="258.0" y1="114.0" x2="414.0" y2="114.0" stroke="#D5DDE2" stroke-width="0.9"/>
 <line x1="258.0" y1="88.0" x2="414.0" y2="88.0" stroke="#EEF2F4" stroke-width="0.7"/>
 <line x1="258.0" y1="62.0" x2="414.0" y2="62.0" stroke="#D5DDE2" stroke-width="0.9"/>
-<line x1="258.0" y1="270.0" x2="414.0" y2="270.0" stroke="#5C6B77" stroke-width="1.2"/>
-<line x1="258.0" y1="62.0" x2="258.0" y2="270.0" stroke="#5C6B77" stroke-width="1.2"/>
+<line x1="258.0" y1="270.0" x2="414.0" y2="270.0" stroke="#5A667A" stroke-width="1.2"/>
+<line x1="258.0" y1="62.0" x2="258.0" y2="270.0" stroke="#5A667A" stroke-width="1.2"/>
 <text x="258.0" y="285.0" text-anchor="middle" class="tick">0</text>
 <text x="310.0" y="285.0" text-anchor="middle" class="tick">10</text>
 <text x="362.0" y="285.0" text-anchor="middle" class="tick">20</text>
 <text x="414.0" y="285.0" text-anchor="middle" class="tick">30</text>
 <g clip-path="url(#cF44c45)">
-<polygon points="258.0,270.0 362.0,270.0 362.0,218.0 310.0,114.0 258.0,114.0" fill="#0E6E78" opacity="0.14" stroke="none" stroke-width="1"/>
+<polygon points="258.0,270.0 362.0,270.0 362.0,218.0 310.0,114.0 258.0,114.0" fill="#2457D6" opacity="0.14" stroke="none" stroke-width="1"/>
 </g>
-<g clip-path="url(#cF44c45)"><polyline points="232.0,-42.0 570.0,634.0" fill="none" stroke="#9C3B52" stroke-width="1.2" stroke-linejoin="round"/></g>
-<g clip-path="url(#cF44c45)"><polyline points="362.0,296.0 362.0,-42.0" fill="none" stroke="#9C3B52" stroke-width="1.2" stroke-linejoin="round"/></g>
-<g clip-path="url(#cF44c45)"><polyline points="232.0,114.0 570.0,114.0" fill="none" stroke="#5C6B77" stroke-width="1" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
-<g clip-path="url(#cF44c45)"><polyline points="232.0,-42.0 570.0,634.0" fill="none" stroke="#B3641A" stroke-width="1.4" stroke-linejoin="round" stroke-dasharray="6 4"/></g>
-<g clip-path="url(#cF44c45)"><polyline points="310.0,114.0 362.0,218.0" fill="none" stroke="#B3641A" stroke-width="4.2" stroke-linejoin="round"/></g>
-<path d="M 336.0 166.0 L 358.9 154.6" fill="none" stroke="#B3641A" stroke-width="1.8" marker-end="url(#arF44c1)"/>
-<circle cx="310.0" cy="114.0" r="4.2" fill="#B3641A" stroke="none" stroke-width="1"/>
-<text x="303.0" y="128.0" text-anchor="end" class="bx-t" style="fill:#B3641A;font-size:10.5px">A</text>
-<circle cx="362.0" cy="218.0" r="4.2" fill="#B3641A" stroke="none" stroke-width="1"/>
-<text x="368.0" y="231.0" text-anchor="start" class="bx-t" style="fill:#B3641A;font-size:10.5px">B</text>
-<text x="338.0" y="302.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9.5px">remis: cała krawędź AB, z* = 50</text>
-<text x="338.0" y="316.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9px">nachylenie prostej −c₁/c₂ = −2</text>
-<text x="556.0" y="50.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52;font-size:11px">c = (1,5; 1)</text>
+<g clip-path="url(#cF44c45)"><polyline points="232.0,-42.0 570.0,634.0" fill="none" stroke="#D04C70" stroke-width="1.2" stroke-linejoin="round"/></g>
+<g clip-path="url(#cF44c45)"><polyline points="362.0,296.0 362.0,-42.0" fill="none" stroke="#D04C70" stroke-width="1.2" stroke-linejoin="round"/></g>
+<g clip-path="url(#cF44c45)"><polyline points="232.0,114.0 570.0,114.0" fill="none" stroke="#5A667A" stroke-width="1" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
+<g clip-path="url(#cF44c45)"><polyline points="232.0,-42.0 570.0,634.0" fill="none" stroke="#E2711D" stroke-width="1.4" stroke-linejoin="round" stroke-dasharray="6 4"/></g>
+<g clip-path="url(#cF44c45)"><polyline points="310.0,114.0 362.0,218.0" fill="none" stroke="#E2711D" stroke-width="4.2" stroke-linejoin="round"/></g>
+<path d="M 336.0 166.0 L 358.9 154.6" fill="none" stroke="#E2711D" stroke-width="1.8" marker-end="url(#arF44c1)"/>
+<circle cx="310.0" cy="114.0" r="4.2" fill="#E2711D" stroke="none" stroke-width="1"/>
+<text x="303.0" y="128.0" text-anchor="end" class="bx-t" style="fill:#E2711D;font-size:10.5px">A</text>
+<circle cx="362.0" cy="218.0" r="4.2" fill="#E2711D" stroke="none" stroke-width="1"/>
+<text x="368.0" y="231.0" text-anchor="start" class="bx-t" style="fill:#E2711D;font-size:10.5px">B</text>
+<text x="338.0" y="302.0" text-anchor="middle" class="cap" style="fill:#E2711D;font-size:9.5px">remis: cała krawędź AB, z* = 50</text>
+<text x="338.0" y="316.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">nachylenie prostej −c₁/c₂ = −2</text>
+<text x="556.0" y="50.0" text-anchor="middle" class="bx-t" style="fill:#D04C70;font-size:11px">c = (1,5; 1)</text>
 <clipPath id="cF44c84"><rect x="476" y="62" width="156.0" height="208.0"/></clipPath>
 <line x1="476.0" y1="62.0" x2="476.0" y2="270.0" stroke="#D5DDE2" stroke-width="0.9"/>
 <line x1="502.0" y1="62.0" x2="502.0" y2="270.0" stroke="#EEF2F4" stroke-width="0.7"/>
@@ -517,52 +517,52 @@ html{scroll-padding-top:var(--sbh,84px)}
 <line x1="476.0" y1="114.0" x2="632.0" y2="114.0" stroke="#D5DDE2" stroke-width="0.9"/>
 <line x1="476.0" y1="88.0" x2="632.0" y2="88.0" stroke="#EEF2F4" stroke-width="0.7"/>
 <line x1="476.0" y1="62.0" x2="632.0" y2="62.0" stroke="#D5DDE2" stroke-width="0.9"/>
-<line x1="476.0" y1="270.0" x2="632.0" y2="270.0" stroke="#5C6B77" stroke-width="1.2"/>
-<line x1="476.0" y1="62.0" x2="476.0" y2="270.0" stroke="#5C6B77" stroke-width="1.2"/>
+<line x1="476.0" y1="270.0" x2="632.0" y2="270.0" stroke="#5A667A" stroke-width="1.2"/>
+<line x1="476.0" y1="62.0" x2="476.0" y2="270.0" stroke="#5A667A" stroke-width="1.2"/>
 <text x="476.0" y="285.0" text-anchor="middle" class="tick">0</text>
 <text x="528.0" y="285.0" text-anchor="middle" class="tick">10</text>
 <text x="580.0" y="285.0" text-anchor="middle" class="tick">20</text>
 <text x="632.0" y="285.0" text-anchor="middle" class="tick">30</text>
 <g clip-path="url(#cF44c84)">
-<polygon points="476.0,270.0 580.0,270.0 580.0,218.0 528.0,114.0 476.0,114.0" fill="#0E6E78" opacity="0.14" stroke="none" stroke-width="1"/>
+<polygon points="476.0,270.0 580.0,270.0 580.0,218.0 528.0,114.0 476.0,114.0" fill="#2457D6" opacity="0.14" stroke="none" stroke-width="1"/>
 </g>
-<g clip-path="url(#cF44c84)"><polyline points="450.0,-42.0 788.0,634.0" fill="none" stroke="#9C3B52" stroke-width="1.2" stroke-linejoin="round"/></g>
-<g clip-path="url(#cF44c84)"><polyline points="580.0,296.0 580.0,-42.0" fill="none" stroke="#9C3B52" stroke-width="1.2" stroke-linejoin="round"/></g>
-<g clip-path="url(#cF44c84)"><polyline points="450.0,114.0 788.0,114.0" fill="none" stroke="#5C6B77" stroke-width="1" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
-<g clip-path="url(#cF44c84)"><polyline points="450.0,-3.0 788.0,504.0" fill="none" stroke="#9C3B52" stroke-width="2.2" stroke-linejoin="round"/></g>
-<path d="M 528.0 114.0 L 545.2 102.6" fill="none" stroke="#9C3B52" stroke-width="1.8" marker-end="url(#arF44c2)"/>
-<circle cx="528.0" cy="114.0" r="4.2" fill="#9C3B52" stroke="none" stroke-width="1"/>
-<text x="521.0" y="128.0" text-anchor="end" class="bx-t" style="fill:#9C3B52;font-size:10.5px">A</text>
-<circle cx="580.0" cy="218.0" r="3.3" fill="#141C24" stroke="none" stroke-width="1"/>
-<text x="586.0" y="231.0" text-anchor="start" class="bx-t" style="fill:#141C24;font-size:10.5px">B</text>
-<text x="556.0" y="302.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:9.5px">optimum A, z* = 45</text>
-<text x="556.0" y="316.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9px">nachylenie prostej −c₁/c₂ = −1,5</text>
-<rect x="60.0" y="376.0" width="200.0" height="16.0" rx="2" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.18"/>
-<rect x="260.0" y="376.0" width="350.0" height="16.0" rx="2" fill="#5B4B8A" stroke="none" stroke-width="1" opacity="0.18"/>
-<line x1="60.0" y1="384.0" x2="560.0" y2="384.0" stroke="#141C24" stroke-width="1.2"/>
-<line x1="560.0" y1="384.0" x2="570.0" y2="384.0" stroke="#141C24" stroke-width="1.2" stroke-dasharray="2 3"/>
-<line x1="574.0" y1="384.0" x2="610.0" y2="384.0" stroke="#141C24" stroke-width="1.2"/>
-<line x1="60.0" y1="380.0" x2="60.0" y2="388.0" stroke="#141C24" stroke-width="1"/>
+<g clip-path="url(#cF44c84)"><polyline points="450.0,-42.0 788.0,634.0" fill="none" stroke="#D04C70" stroke-width="1.2" stroke-linejoin="round"/></g>
+<g clip-path="url(#cF44c84)"><polyline points="580.0,296.0 580.0,-42.0" fill="none" stroke="#D04C70" stroke-width="1.2" stroke-linejoin="round"/></g>
+<g clip-path="url(#cF44c84)"><polyline points="450.0,114.0 788.0,114.0" fill="none" stroke="#5A667A" stroke-width="1" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
+<g clip-path="url(#cF44c84)"><polyline points="450.0,-3.0 788.0,504.0" fill="none" stroke="#D04C70" stroke-width="2.2" stroke-linejoin="round"/></g>
+<path d="M 528.0 114.0 L 545.2 102.6" fill="none" stroke="#D04C70" stroke-width="1.8" marker-end="url(#arF44c2)"/>
+<circle cx="528.0" cy="114.0" r="4.2" fill="#D04C70" stroke="none" stroke-width="1"/>
+<text x="521.0" y="128.0" text-anchor="end" class="bx-t" style="fill:#D04C70;font-size:10.5px">A</text>
+<circle cx="580.0" cy="218.0" r="3.3" fill="#0F1B2D" stroke="none" stroke-width="1"/>
+<text x="586.0" y="231.0" text-anchor="start" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">B</text>
+<text x="556.0" y="302.0" text-anchor="middle" class="cap" style="fill:#D04C70;font-size:9.5px">optimum A, z* = 45</text>
+<text x="556.0" y="316.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">nachylenie prostej −c₁/c₂ = −1,5</text>
+<rect x="60.0" y="376.0" width="200.0" height="16.0" rx="2" fill="#D04C70" stroke="none" stroke-width="1" opacity="0.18"/>
+<rect x="260.0" y="376.0" width="350.0" height="16.0" rx="2" fill="#7A4FD0" stroke="none" stroke-width="1" opacity="0.18"/>
+<line x1="60.0" y1="384.0" x2="560.0" y2="384.0" stroke="#0F1B2D" stroke-width="1.2"/>
+<line x1="560.0" y1="384.0" x2="570.0" y2="384.0" stroke="#0F1B2D" stroke-width="1.2" stroke-dasharray="2 3"/>
+<line x1="574.0" y1="384.0" x2="610.0" y2="384.0" stroke="#0F1B2D" stroke-width="1.2"/>
+<line x1="60.0" y1="380.0" x2="60.0" y2="388.0" stroke="#0F1B2D" stroke-width="1"/>
 <text x="60.0" y="404.0" text-anchor="middle" class="tick">0</text>
-<line x1="160.0" y1="380.0" x2="160.0" y2="388.0" stroke="#141C24" stroke-width="1"/>
+<line x1="160.0" y1="380.0" x2="160.0" y2="388.0" stroke="#0F1B2D" stroke-width="1"/>
 <text x="160.0" y="404.0" text-anchor="middle" class="tick">1</text>
-<line x1="260.0" y1="380.0" x2="260.0" y2="388.0" stroke="#141C24" stroke-width="1"/>
+<line x1="260.0" y1="380.0" x2="260.0" y2="388.0" stroke="#0F1B2D" stroke-width="1"/>
 <text x="260.0" y="404.0" text-anchor="middle" class="tick">2</text>
-<line x1="360.0" y1="380.0" x2="360.0" y2="388.0" stroke="#141C24" stroke-width="1"/>
+<line x1="360.0" y1="380.0" x2="360.0" y2="388.0" stroke="#0F1B2D" stroke-width="1"/>
 <text x="360.0" y="404.0" text-anchor="middle" class="tick">3</text>
-<line x1="460.0" y1="380.0" x2="460.0" y2="388.0" stroke="#141C24" stroke-width="1"/>
+<line x1="460.0" y1="380.0" x2="460.0" y2="388.0" stroke="#0F1B2D" stroke-width="1"/>
 <text x="460.0" y="404.0" text-anchor="middle" class="tick">4</text>
-<line x1="560.0" y1="380.0" x2="560.0" y2="388.0" stroke="#141C24" stroke-width="1"/>
+<line x1="560.0" y1="380.0" x2="560.0" y2="388.0" stroke="#0F1B2D" stroke-width="1"/>
 <text x="560.0" y="404.0" text-anchor="middle" class="tick">5</text>
 <text x="610.0" y="404.0" text-anchor="middle" class="tick">∞</text>
 <text x="30.0" y="388.0" text-anchor="middle" class="axlab">c₁/c₂</text>
-<text x="160.0" y="370.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52;font-size:10px">optimum A</text>
-<text x="410.0" y="370.0" text-anchor="middle" class="bx-t" style="fill:#5B4B8A;font-size:10px">optimum B (ta sama baza)</text>
-<text x="60.0" y="420.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:8.5px">remis D–A</text>
-<text x="260.0" y="420.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:8.5px">remis A–B</text>
-<text x="610.0" y="420.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:8.5px">remis B–C</text>
-<circle cx="210.0" cy="384.0" r="4" fill="#9C3B52" stroke="none" stroke-width="1"/>
-<circle cx="360.0" cy="384.0" r="4" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<text x="160.0" y="370.0" text-anchor="middle" class="bx-t" style="fill:#D04C70;font-size:10px">optimum A</text>
+<text x="410.0" y="370.0" text-anchor="middle" class="bx-t" style="fill:#7A4FD0;font-size:10px">optimum B (ta sama baza)</text>
+<text x="60.0" y="420.0" text-anchor="middle" class="cap" style="fill:#E2711D;font-size:8.5px">remis D–A</text>
+<text x="260.0" y="420.0" text-anchor="middle" class="cap" style="fill:#E2711D;font-size:8.5px">remis A–B</text>
+<text x="610.0" y="420.0" text-anchor="middle" class="cap" style="fill:#E2711D;font-size:8.5px">remis B–C</text>
+<circle cx="210.0" cy="384.0" r="4" fill="#D04C70" stroke="none" stroke-width="1"/>
+<circle cx="360.0" cy="384.0" r="4" fill="#7A4FD0" stroke="none" stroke-width="1"/>
 </svg>
 <figcaption>Trzy wartości c₁ przy c₂ = 1. Pogrubiona linia to prosta zysku przez optimum, strzałka to ∇z. Na dole cała oś c₁/c₂: każdy przedział to inny wierzchołek, a na granicach wypada remis całej krawędzi. Rachunek własny, sprawdzony programem linprog.</figcaption>
 </figure>
@@ -620,34 +620,34 @@ Tu <span class="m" data-tex="y_1 = 1"><svg style="vertical-align: -0.464ex;" xml
 <line x1="46.0" y1="81.0" x2="270.0" y2="81.0" stroke="#EEF2F4" stroke-width="0.7"/>
 <line x1="46.0" y1="46.0" x2="270.0" y2="46.0" stroke="#D5DDE2" stroke-width="0.9"/>
 <text x="40.0" y="50.0" text-anchor="end" class="tick">40</text>
-<line x1="46.0" y1="326.0" x2="270.0" y2="326.0" stroke="#5C6B77" stroke-width="1.2"/>
-<line x1="46.0" y1="46.0" x2="46.0" y2="326.0" stroke="#5C6B77" stroke-width="1.2"/>
+<line x1="46.0" y1="326.0" x2="270.0" y2="326.0" stroke="#5A667A" stroke-width="1.2"/>
+<line x1="46.0" y1="46.0" x2="46.0" y2="326.0" stroke="#5A667A" stroke-width="1.2"/>
 <text x="276.0" y="330.0" text-anchor="start" class="axlab">x₁</text>
 <text x="46.0" y="38.0" text-anchor="middle" class="axlab">x₂</text>
 <g clip-path="url(#cF44d1)">
-<polygon points="46.0,326.0 186.0,326.0 186.0,256.0 116.0,116.0 46.0,116.0" fill="#0E6E78" opacity="0.14" stroke="none" stroke-width="1"/>
+<polygon points="46.0,326.0 186.0,326.0 186.0,256.0 116.0,116.0 46.0,116.0" fill="#2457D6" opacity="0.14" stroke="none" stroke-width="1"/>
 </g>
-<g clip-path="url(#cF44d1)"><polyline points="11.0,-24.0 466.0,886.0" fill="none" stroke="#0E6E78" stroke-width="1.3" stroke-linejoin="round" stroke-dasharray="5 4"/></g>
-<g clip-path="url(#cF44d1)"><polyline points="11.0,-94.0 466.0,816.0" fill="none" stroke="#9C3B52" stroke-width="2.2" stroke-linejoin="round"/></g>
-<g clip-path="url(#cF44d1)"><polyline points="11.0,-164.0 466.0,746.0" fill="none" stroke="#0E6E78" stroke-width="1.1" stroke-linejoin="round" stroke-dasharray="2 3"/></g>
-<g clip-path="url(#cF44d1)"><polyline points="11.0,-234.0 466.0,676.0" fill="none" stroke="#0E6E78" stroke-width="1.3" stroke-linejoin="round" stroke-dasharray="5 4"/></g>
-<g clip-path="url(#cF44d1)"><polyline points="186.0,361.0 186.0,-94.0" fill="none" stroke="#9C3B52" stroke-width="1.6" stroke-linejoin="round"/></g>
-<g clip-path="url(#cF44d1)"><polyline points="11.0,116.0 466.0,116.0" fill="none" stroke="#5C6B77" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
-<g clip-path="url(#cF44d1)"><polyline points="186.0,326.0 186.0,116.0" fill="none" stroke="#5B4B8A" stroke-width="3.6" stroke-linejoin="round"/></g>
-<circle cx="186.0" cy="326.0" r="3.6" fill="#5B4B8A" stroke="none" stroke-width="1"/>
-<line x1="186.0" y1="326.0" x2="278.0" y2="318.0" stroke="#CCD2C7" stroke-width="0.8"/>
-<text x="282.0" y="322.0" text-anchor="start" class="cap" style="fill:#0E6E78;font-size:9px">b₁=40: (20, 0)</text>
-<circle cx="186.0" cy="256.0" r="3.6" fill="#5B4B8A" stroke="none" stroke-width="1"/>
-<line x1="186.0" y1="256.0" x2="278.0" y2="256.0" stroke="#CCD2C7" stroke-width="0.8"/>
-<text x="282.0" y="260.0" text-anchor="start" class="cap" style="fill:#5B4B8A;font-size:9px">b₁=50: (20, 10)</text>
-<circle cx="186.0" cy="186.0" r="3.6" fill="#5B4B8A" stroke="none" stroke-width="1"/>
-<line x1="186.0" y1="186.0" x2="278.0" y2="186.0" stroke="#CCD2C7" stroke-width="0.8"/>
-<text x="282.0" y="190.0" text-anchor="start" class="cap" style="fill:#0E6E78;font-size:9px">b₁=60: (20, 20)</text>
-<circle cx="186.0" cy="116.0" r="3.6" fill="#5B4B8A" stroke="none" stroke-width="1"/>
-<line x1="186.0" y1="116.0" x2="278.0" y2="116.0" stroke="#CCD2C7" stroke-width="0.8"/>
-<text x="282.0" y="120.0" text-anchor="start" class="cap" style="fill:#0E6E78;font-size:9px">b₁=70: (20, 30)</text>
-<text x="160.0" y="360.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9.5px">prosta 2x₁ + x₂ = b₁ dla b₁ = 40, 50, 60, 70:</text>
-<text x="160.0" y="374.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9.5px">przesuwa się, nachylenie stałe</text>
+<g clip-path="url(#cF44d1)"><polyline points="11.0,-24.0 466.0,886.0" fill="none" stroke="#2457D6" stroke-width="1.3" stroke-linejoin="round" stroke-dasharray="5 4"/></g>
+<g clip-path="url(#cF44d1)"><polyline points="11.0,-94.0 466.0,816.0" fill="none" stroke="#D04C70" stroke-width="2.2" stroke-linejoin="round"/></g>
+<g clip-path="url(#cF44d1)"><polyline points="11.0,-164.0 466.0,746.0" fill="none" stroke="#2457D6" stroke-width="1.1" stroke-linejoin="round" stroke-dasharray="2 3"/></g>
+<g clip-path="url(#cF44d1)"><polyline points="11.0,-234.0 466.0,676.0" fill="none" stroke="#2457D6" stroke-width="1.3" stroke-linejoin="round" stroke-dasharray="5 4"/></g>
+<g clip-path="url(#cF44d1)"><polyline points="186.0,361.0 186.0,-94.0" fill="none" stroke="#D04C70" stroke-width="1.6" stroke-linejoin="round"/></g>
+<g clip-path="url(#cF44d1)"><polyline points="11.0,116.0 466.0,116.0" fill="none" stroke="#5A667A" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
+<g clip-path="url(#cF44d1)"><polyline points="186.0,326.0 186.0,116.0" fill="none" stroke="#7A4FD0" stroke-width="3.6" stroke-linejoin="round"/></g>
+<circle cx="186.0" cy="326.0" r="3.6" fill="#7A4FD0" stroke="none" stroke-width="1"/>
+<line x1="186.0" y1="326.0" x2="278.0" y2="318.0" stroke="#CDD5E2" stroke-width="0.8"/>
+<text x="282.0" y="322.0" text-anchor="start" class="cap" style="fill:#2457D6;font-size:9px">b₁=40: (20, 0)</text>
+<circle cx="186.0" cy="256.0" r="3.6" fill="#7A4FD0" stroke="none" stroke-width="1"/>
+<line x1="186.0" y1="256.0" x2="278.0" y2="256.0" stroke="#CDD5E2" stroke-width="0.8"/>
+<text x="282.0" y="260.0" text-anchor="start" class="cap" style="fill:#7A4FD0;font-size:9px">b₁=50: (20, 10)</text>
+<circle cx="186.0" cy="186.0" r="3.6" fill="#7A4FD0" stroke="none" stroke-width="1"/>
+<line x1="186.0" y1="186.0" x2="278.0" y2="186.0" stroke="#CDD5E2" stroke-width="0.8"/>
+<text x="282.0" y="190.0" text-anchor="start" class="cap" style="fill:#2457D6;font-size:9px">b₁=60: (20, 20)</text>
+<circle cx="186.0" cy="116.0" r="3.6" fill="#7A4FD0" stroke="none" stroke-width="1"/>
+<line x1="186.0" y1="116.0" x2="278.0" y2="116.0" stroke="#CDD5E2" stroke-width="0.8"/>
+<text x="282.0" y="120.0" text-anchor="start" class="cap" style="fill:#2457D6;font-size:9px">b₁=70: (20, 30)</text>
+<text x="160.0" y="360.0" text-anchor="middle" class="cap" style="fill:#2457D6;font-size:9.5px">prosta 2x₁ + x₂ = b₁ dla b₁ = 40, 50, 60, 70:</text>
+<text x="160.0" y="374.0" text-anchor="middle" class="cap" style="fill:#2457D6;font-size:9.5px">przesuwa się, nachylenie stałe</text>
 <clipPath id="cF44d55"><rect x="420" y="46" width="240" height="280"/></clipPath>
 <line x1="420.0" y1="46.0" x2="420.0" y2="326.0" stroke="#D5DDE2" stroke-width="0.8"/>
 <text x="420.0" y="341.0" text-anchor="middle" class="tick">0</text>
@@ -681,20 +681,20 @@ Tu <span class="m" data-tex="y_1 = 1"><svg style="vertical-align: -0.464ex;" xml
 <line x1="420.0" y1="74.0" x2="660.0" y2="74.0" stroke="#EEF2F4" stroke-width="0.8"/>
 <line x1="420.0" y1="46.0" x2="660.0" y2="46.0" stroke="#D5DDE2" stroke-width="0.8"/>
 <text x="414.0" y="50.0" text-anchor="end" class="tick">100</text>
-<line x1="420.0" y1="326.0" x2="660.0" y2="326.0" stroke="#5C6B77" stroke-width="1.2"/>
-<line x1="420.0" y1="46.0" x2="420.0" y2="326.0" stroke="#5C6B77" stroke-width="1.2"/>
+<line x1="420.0" y1="326.0" x2="660.0" y2="326.0" stroke="#5A667A" stroke-width="1.2"/>
+<line x1="420.0" y1="46.0" x2="420.0" y2="326.0" stroke="#5A667A" stroke-width="1.2"/>
 <text x="540.0" y="358.0" text-anchor="middle" class="axlab">b₁ — dostępny surowiec</text>
 <text x="420.0" y="38.0" text-anchor="middle" class="axlab">z*</text>
-<rect x="526.7" y="46.0" width="80.0" height="280.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.08"/>
-<g clip-path="url(#cF44d55)"><polyline points="420.0,326.0 526.7,158.0 606.7,74.0 660.0,74.0" fill="none" stroke="#5B4B8A" stroke-width="2.6" stroke-linejoin="round"/></g>
-<path d="M 553.3 130.0 L 580.0 130.0 L 580.0 102.0" fill="none" stroke="#0E6E78" stroke-width="1.4"/>
-<text x="566.7" y="143.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9px">+10</text>
-<text x="584.0" y="120.0" text-anchor="start" class="cap" style="fill:#0E6E78;font-size:9px">+10</text>
-<circle cx="553.3" cy="130.0" r="4.5" fill="#9C3B52" stroke="none" stroke-width="1"/>
-<text x="473.3" y="222.4" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">nachylenie 1,5</text>
-<text x="566.7" y="65.6" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:11px">y₁ = 1</text>
-<text x="633.3" y="90.8" text-anchor="middle" class="cap" style="fill:#141C24;font-size:9.5px">nachylenie 0</text>
-<text x="566.7" y="303.6" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9.5px">[40; 70]</text>
+<rect x="526.7" y="46.0" width="80.0" height="280.0" rx="0" fill="#2457D6" stroke="none" stroke-width="1" opacity="0.08"/>
+<g clip-path="url(#cF44d55)"><polyline points="420.0,326.0 526.7,158.0 606.7,74.0 660.0,74.0" fill="none" stroke="#7A4FD0" stroke-width="2.6" stroke-linejoin="round"/></g>
+<path d="M 553.3 130.0 L 580.0 130.0 L 580.0 102.0" fill="none" stroke="#2457D6" stroke-width="1.4"/>
+<text x="566.7" y="143.0" text-anchor="middle" class="cap" style="fill:#2457D6;font-size:9px">+10</text>
+<text x="584.0" y="120.0" text-anchor="start" class="cap" style="fill:#2457D6;font-size:9px">+10</text>
+<circle cx="553.3" cy="130.0" r="4.5" fill="#D04C70" stroke="none" stroke-width="1"/>
+<text x="473.3" y="222.4" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9.5px">nachylenie 1,5</text>
+<text x="566.7" y="65.6" text-anchor="middle" class="bx-t" style="fill:#2457D6;font-size:11px">y₁ = 1</text>
+<text x="633.3" y="90.8" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9.5px">nachylenie 0</text>
+<text x="566.7" y="303.6" text-anchor="middle" class="cap" style="fill:#2457D6;font-size:9.5px">[40; 70]</text>
 </svg>
 <figcaption>Po lewej: cztery położenia prostej surowca i droga optimum po x₁ = 20. Po prawej: zysk optymalny w funkcji b₁ — łamana o nachyleniach 1,5, 1 i 0. Nachylenie na odcinku z naszym b₁ = 50 to cena dualna y₁ = 1 (trójkąt: +10 surowca → +10 zysku). Rachunek własny.</figcaption>
 </figure>
@@ -717,7 +717,7 @@ Tu <span class="m" data-tex="y_1 = 1"><svg style="vertical-align: -0.464ex;" xml
 
 <figure>
 <svg viewBox="0 0 680 370" class="fig">
-<defs><marker id="arF44g0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9C3B52"/></marker><marker id="arF44g1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker><marker id="arF44g2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#141C24"/></marker></defs>
+<defs><marker id="arF44g0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#D04C70"/></marker><marker id="arF44g1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#7A4FD0"/></marker><marker id="arF44g2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0F1B2D"/></marker></defs>
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">W OPTIMUM ∇z = y₁·a₁ + y₂·a₂ — TO SĄ CENY DUALNE</text>
 <clipPath id="cF44g1"><rect x="46" y="46" width="304" height="304"/></clipPath>
 <line x1="46.0" y1="46.0" x2="46.0" y2="350.0" stroke="#EEF2F4" stroke-width="0.7"/>
@@ -768,47 +768,47 @@ Tu <span class="m" data-tex="y_1 = 1"><svg style="vertical-align: -0.464ex;" xml
 <line x1="46.0" y1="62.0" x2="350.0" y2="62.0" stroke="#D5DDE2" stroke-width="0.9"/>
 <text x="40.0" y="66.0" text-anchor="end" class="tick">20</text>
 <line x1="46.0" y1="46.0" x2="350.0" y2="46.0" stroke="#EEF2F4" stroke-width="0.7"/>
-<line x1="46.0" y1="350.0" x2="350.0" y2="350.0" stroke="#5C6B77" stroke-width="1.2"/>
-<line x1="46.0" y1="46.0" x2="46.0" y2="350.0" stroke="#5C6B77" stroke-width="1.2"/>
+<line x1="46.0" y1="350.0" x2="350.0" y2="350.0" stroke="#5A667A" stroke-width="1.2"/>
+<line x1="46.0" y1="46.0" x2="46.0" y2="350.0" stroke="#5A667A" stroke-width="1.2"/>
 <text x="356.0" y="354.0" text-anchor="start" class="axlab">x₁</text>
 <text x="46.0" y="38.0" text-anchor="middle" class="axlab">x₂</text>
 <g clip-path="url(#cF44g1)">
-<polygon points="46.0,350.0 174.0,350.0 174.0,222.0 46.0,-34.0" fill="#0E6E78" opacity="0.14" stroke="none" stroke-width="1"/>
+<polygon points="46.0,350.0 174.0,350.0 174.0,222.0 46.0,-34.0" fill="#2457D6" opacity="0.14" stroke="none" stroke-width="1"/>
 </g>
-<g clip-path="url(#cF44g1)"><polyline points="-226.0,-578.0 814.0,1502.0" fill="none" stroke="#9C3B52" stroke-width="2" stroke-linejoin="round"/></g>
-<g clip-path="url(#cF44g1)"><polyline points="174.0,462.0 174.0,-578.0" fill="none" stroke="#9C3B52" stroke-width="2" stroke-linejoin="round"/></g>
+<g clip-path="url(#cF44g1)"><polyline points="-226.0,-578.0 814.0,1502.0" fill="none" stroke="#D04C70" stroke-width="2" stroke-linejoin="round"/></g>
+<g clip-path="url(#cF44g1)"><polyline points="174.0,462.0 174.0,-578.0" fill="none" stroke="#D04C70" stroke-width="2" stroke-linejoin="round"/></g>
 <g clip-path="url(#cF44g1)">
-<polygon points="174.0,222.0 558.0,30.0 558.0,222.0" fill="#B3641A" opacity="0.16" stroke="none" stroke-width="1"/>
+<polygon points="174.0,222.0 558.0,30.0 558.0,222.0" fill="#E2711D" opacity="0.16" stroke="none" stroke-width="1"/>
 </g>
-<path d="M 270.0 174.0 L 318.0 174.0 L 222.0 222.0" fill="none" stroke="#5C6B77" stroke-width="1" stroke-dasharray="3 3"/>
-<path d="M 174.0 222.0 L 270.0 174.0" fill="none" stroke="#9C3B52" stroke-width="2" marker-end="url(#arF44g0)"/>
-<path d="M 174.0 222.0 L 222.0 222.0" fill="none" stroke="#9C3B52" stroke-width="2" marker-end="url(#arF44g0)"/>
-<path d="M 174.0 222.0 L 318.0 174.0" fill="none" stroke="#5B4B8A" stroke-width="2.6" marker-end="url(#arF44g1)"/>
-<path d="M 174.0 222.0 L 246.0 174.0" fill="none" stroke="#141C24" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#arF44g2)"/>
-<circle cx="174.0" cy="222.0" r="8.5" fill="#FFFFFF" stroke="#5B4B8A" stroke-width="1.8"/>
-<circle cx="174.0" cy="222.0" r="4.5" fill="#5B4B8A" stroke="none" stroke-width="1"/>
-<text x="166.0" y="237.0" text-anchor="end" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">B</text>
-<text x="263.6" y="146.8" text-anchor="middle" class="bx-t" style="fill:#9C3B52;font-size:10px">a₁ = (2, 1)</text>
-<text x="222.0" y="238.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52;font-size:10px">a₂ = (1, 0)</text>
-<text x="321.2" y="186.8" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:10px">∇z = (3, 1)</text>
-<text x="239.6" y="170.8" text-anchor="end" class="bx-t" style="fill:#141C24;font-size:9.5px">(1,5; 1)</text>
-<text x="302.0" y="70.0" text-anchor="middle" class="cap" style="fill:#B3641A;font-size:9.5px">stożek normalnych</text>
-<text x="62.0" y="46.0" text-anchor="start" class="cap" style="fill:#9C3B52;font-size:9.5px">surowiec</text>
-<text x="180.4" y="334.0" text-anchor="start" class="cap" style="fill:#9C3B52;font-size:9.5px">rynek 1</text>
-<rect x="384.0" y="46.0" width="282.0" height="304.0" rx="5" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
-<text x="396.0" y="72.0" text-anchor="start" class="bx-t" style="fill:#9C3B52;font-size:9.5px">a₁, a₂ — normalne</text>
-<text x="396.0" y="92.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9.5px">ograniczeń aktywnych</text>
-<text x="396.0" y="112.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9.5px">(współczynniki z ich</text>
-<text x="396.0" y="132.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9.5px">lewych stron)</text>
-<text x="396.0" y="152.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9.5px"></text>
-<text x="396.0" y="172.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:9.5px">(3, 1) = 1·(2, 1) + 1·(1, 0)</text>
-<text x="396.0" y="192.0" text-anchor="start" class="cap" style="fill:#5B4B8A;font-size:9.5px">y₁ = 1, y₂ = 1 ≥ 0</text>
-<text x="396.0" y="212.0" text-anchor="start" class="cap" style="fill:#5B4B8A;font-size:9.5px">∇z w stożku → B optymalne</text>
-<text x="396.0" y="232.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:9.5px"></text>
-<text x="396.0" y="252.0" text-anchor="start" class="bx-t" style="fill:#141C24;font-size:9.5px">(1,5; 1) = 1·(2, 1) − 0,5·(1, 0)</text>
-<text x="396.0" y="272.0" text-anchor="start" class="cap" style="fill:#9C3B52;font-size:9.5px">y₂ = −0,5 &lt; 0  (strzałka przerywana)</text>
-<text x="396.0" y="292.0" text-anchor="start" class="cap" style="fill:#9C3B52;font-size:9.5px">∇z poza stożkiem →</text>
-<text x="396.0" y="312.0" text-anchor="start" class="cap" style="fill:#9C3B52;font-size:9.5px">B już nie jest optymalne</text>
+<path d="M 270.0 174.0 L 318.0 174.0 L 222.0 222.0" fill="none" stroke="#5A667A" stroke-width="1" stroke-dasharray="3 3"/>
+<path d="M 174.0 222.0 L 270.0 174.0" fill="none" stroke="#D04C70" stroke-width="2" marker-end="url(#arF44g0)"/>
+<path d="M 174.0 222.0 L 222.0 222.0" fill="none" stroke="#D04C70" stroke-width="2" marker-end="url(#arF44g0)"/>
+<path d="M 174.0 222.0 L 318.0 174.0" fill="none" stroke="#7A4FD0" stroke-width="2.6" marker-end="url(#arF44g1)"/>
+<path d="M 174.0 222.0 L 246.0 174.0" fill="none" stroke="#0F1B2D" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#arF44g2)"/>
+<circle cx="174.0" cy="222.0" r="8.5" fill="#FFFFFF" stroke="#7A4FD0" stroke-width="1.8"/>
+<circle cx="174.0" cy="222.0" r="4.5" fill="#7A4FD0" stroke="none" stroke-width="1"/>
+<text x="166.0" y="237.0" text-anchor="end" class="bx-t" style="fill:#7A4FD0;font-size:10.5px">B</text>
+<text x="263.6" y="146.8" text-anchor="middle" class="bx-t" style="fill:#D04C70;font-size:10px">a₁ = (2, 1)</text>
+<text x="222.0" y="238.0" text-anchor="middle" class="bx-t" style="fill:#D04C70;font-size:10px">a₂ = (1, 0)</text>
+<text x="321.2" y="186.8" text-anchor="start" class="bx-t" style="fill:#7A4FD0;font-size:10px">∇z = (3, 1)</text>
+<text x="239.6" y="170.8" text-anchor="end" class="bx-t" style="fill:#0F1B2D;font-size:9.5px">(1,5; 1)</text>
+<text x="302.0" y="70.0" text-anchor="middle" class="cap" style="fill:#E2711D;font-size:9.5px">stożek normalnych</text>
+<text x="62.0" y="46.0" text-anchor="start" class="cap" style="fill:#D04C70;font-size:9.5px">surowiec</text>
+<text x="180.4" y="334.0" text-anchor="start" class="cap" style="fill:#D04C70;font-size:9.5px">rynek 1</text>
+<rect x="384.0" y="46.0" width="282.0" height="304.0" rx="5" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<text x="396.0" y="72.0" text-anchor="start" class="bx-t" style="fill:#D04C70;font-size:9.5px">a₁, a₂ — normalne</text>
+<text x="396.0" y="92.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9.5px">ograniczeń aktywnych</text>
+<text x="396.0" y="112.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9.5px">(współczynniki z ich</text>
+<text x="396.0" y="132.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9.5px">lewych stron)</text>
+<text x="396.0" y="152.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9.5px"></text>
+<text x="396.0" y="172.0" text-anchor="start" class="bx-t" style="fill:#7A4FD0;font-size:9.5px">(3, 1) = 1·(2, 1) + 1·(1, 0)</text>
+<text x="396.0" y="192.0" text-anchor="start" class="cap" style="fill:#7A4FD0;font-size:9.5px">y₁ = 1, y₂ = 1 ≥ 0</text>
+<text x="396.0" y="212.0" text-anchor="start" class="cap" style="fill:#7A4FD0;font-size:9.5px">∇z w stożku → B optymalne</text>
+<text x="396.0" y="232.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9.5px"></text>
+<text x="396.0" y="252.0" text-anchor="start" class="bx-t" style="fill:#0F1B2D;font-size:9.5px">(1,5; 1) = 1·(2, 1) − 0,5·(1, 0)</text>
+<text x="396.0" y="272.0" text-anchor="start" class="cap" style="fill:#D04C70;font-size:9.5px">y₂ = −0,5 &lt; 0  (strzałka przerywana)</text>
+<text x="396.0" y="292.0" text-anchor="start" class="cap" style="fill:#D04C70;font-size:9.5px">∇z poza stożkiem →</text>
+<text x="396.0" y="312.0" text-anchor="start" class="cap" style="fill:#D04C70;font-size:9.5px">B już nie jest optymalne</text>
 </svg>
 <figcaption>Zbliżenie na B w jednakowej skali (1 kratka = 1 sztuka). Normalne a₁ i a₂ ograniczeń aktywnych rozpinają stożek. ∇z = (3, 1) jest w środku: składa się z 1·a₁ + 1·a₂ (równoległobok), więc y = (1, 1) ≥ 0 i B jest optymalne. Dla c = (1,5; 1) potrzebny byłby ujemny współczynnik — to warunek c₁/c₂ ≥ 2 z sekcji 04 w języku wektorów.</figcaption>
 </figure>
@@ -888,46 +888,46 @@ Przy maksymalizacji produkt opłaca się, gdy <span class="m" data-tex="\bar{c}_
 <line x1="46.0" y1="88.0" x2="238.0" y2="88.0" stroke="#EEF2F4" stroke-width="0.7"/>
 <line x1="46.0" y1="58.0" x2="238.0" y2="58.0" stroke="#D5DDE2" stroke-width="0.9"/>
 <text x="40.0" y="62.0" text-anchor="end" class="tick">50</text>
-<line x1="46.0" y1="358.0" x2="238.0" y2="358.0" stroke="#5C6B77" stroke-width="1.2"/>
-<line x1="46.0" y1="46.0" x2="46.0" y2="358.0" stroke="#5C6B77" stroke-width="1.2"/>
+<line x1="46.0" y1="358.0" x2="238.0" y2="358.0" stroke="#5A667A" stroke-width="1.2"/>
+<line x1="46.0" y1="46.0" x2="46.0" y2="358.0" stroke="#5A667A" stroke-width="1.2"/>
 <text x="244.0" y="362.0" text-anchor="start" class="axlab">x₁</text>
 <text x="46.0" y="38.0" text-anchor="middle" class="axlab">x₂</text>
 <g clip-path="url(#cF44h1)">
-<polygon points="46.0,358.0 166.0,358.0 166.0,298.0 106.0,178.0 46.0,178.0" fill="#0E6E78" opacity="0.12" stroke="none" stroke-width="1"/>
+<polygon points="46.0,358.0 166.0,358.0 166.0,298.0 106.0,178.0 46.0,178.0" fill="#2457D6" opacity="0.12" stroke="none" stroke-width="1"/>
 </g>
-<g clip-path="url(#cF44h1)"><polyline points="166.0,388.0 166.0,-2.0" fill="none" stroke="#9C3B52" stroke-width="1.6" stroke-linejoin="round"/></g>
-<g clip-path="url(#cF44h1)"><polyline points="16.0,178.0 406.0,178.0" fill="none" stroke="#5C6B77" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
-<g clip-path="url(#cF44h1)"><polyline points="16.0,28.0 406.0,418.0" fill="none" stroke="#0E6E78" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="5 4"/></g>
-<circle cx="166.0" cy="178.0" r="4" fill="#0E6E78" stroke="none" stroke-width="1"/>
-<line x1="166.0" y1="178.0" x2="246.0" y2="178.0" stroke="#CCD2C7" stroke-width="0.8"/>
-<text x="250.0" y="182.0" text-anchor="start" class="cap" style="fill:#0E6E78;font-size:9px">a₁₁=1: (20, 30)</text>
-<g clip-path="url(#cF44h1)"><polyline points="16.0,13.0 406.0,598.0" fill="none" stroke="#5B4B8A" stroke-width="1.5" stroke-linejoin="round"/></g>
-<circle cx="166.0" cy="238.0" r="4" fill="#5B4B8A" stroke="none" stroke-width="1"/>
-<line x1="166.0" y1="238.0" x2="246.0" y2="238.0" stroke="#CCD2C7" stroke-width="0.8"/>
-<text x="250.0" y="242.0" text-anchor="start" class="cap" style="fill:#5B4B8A;font-size:9px">a₁₁=1,5: (20, 20)</text>
-<g clip-path="url(#cF44h1)"><polyline points="16.0,-2.0 406.0,778.0" fill="none" stroke="#9C3B52" stroke-width="2.2" stroke-linejoin="round"/></g>
-<circle cx="166.0" cy="298.0" r="4" fill="#9C3B52" stroke="none" stroke-width="1"/>
-<line x1="166.0" y1="298.0" x2="246.0" y2="298.0" stroke="#CCD2C7" stroke-width="0.8"/>
-<text x="250.0" y="302.0" text-anchor="start" class="cap" style="fill:#9C3B52;font-size:9px">a₁₁=2: (20, 10)</text>
-<g clip-path="url(#cF44h1)"><polyline points="16.0,-17.0 406.0,958.0" fill="none" stroke="#B3641A" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="5 4"/></g>
-<circle cx="166.0" cy="358.0" r="4" fill="#B3641A" stroke="none" stroke-width="1"/>
-<line x1="166.0" y1="358.0" x2="246.0" y2="350.0" stroke="#CCD2C7" stroke-width="0.8"/>
-<text x="250.0" y="354.0" text-anchor="start" class="cap" style="fill:#B3641A;font-size:9px">a₁₁=2,5: (20, 0)</text>
-<circle cx="46.0" cy="58.0" r="4" fill="#141C24" stroke="none" stroke-width="1"/>
-<text x="54.0" y="62.0" text-anchor="start" class="bx-t" style="fill:#141C24;font-size:10.5px">(0, 50)</text>
-<rect x="372.0" y="46.0" width="294.0" height="312.0" rx="5" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
-<text x="386.0" y="72.0" text-anchor="start" class="bx-t" style="fill:#141C24;font-size:10px">ta sama baza (surowiec + rynek 1):</text>
-<text x="386.0" y="94.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:10px">x₁ = 20,  x₂ = 50 − 20·a₁₁</text>
-<text x="386.0" y="116.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10px"></text>
-<text x="386.0" y="138.0" text-anchor="start" class="bx-t" style="fill:#141C24;font-size:10px">warunek 1 — plan dopuszczalny:</text>
-<text x="386.0" y="160.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10px">x₂ ≥ 0 → 50 − 20a₁₁ ≥ 0 → a₁₁ ≤ 2,5</text>
-<text x="386.0" y="182.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10px">x₂ ≤ 30 → 50 − 20a₁₁ ≤ 30 → a₁₁ ≥ 1</text>
-<text x="386.0" y="204.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10px"></text>
-<text x="386.0" y="226.0" text-anchor="start" class="bx-t" style="fill:#141C24;font-size:10px">warunek 2 — plan optymalny (jak w sekcji 04):</text>
-<text x="386.0" y="248.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10px">c₁/c₂ ≥ a₁₁/a₁₂ → 3/1 ≥ a₁₁ → a₁₁ ≤ 3</text>
-<text x="386.0" y="270.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10px"></text>
-<text x="386.0" y="292.0" text-anchor="start" class="bx-t" style="fill:#B3641A;font-size:10px">razem: a₁₁ ∈ [1; 2,5]</text>
-<text x="386.0" y="314.0" text-anchor="start" class="cap" style="fill:#5B4B8A;font-size:10px">a₁₁ = 1,5 → (20, 20), z* = 80 (o 10 więcej)</text>
+<g clip-path="url(#cF44h1)"><polyline points="166.0,388.0 166.0,-2.0" fill="none" stroke="#D04C70" stroke-width="1.6" stroke-linejoin="round"/></g>
+<g clip-path="url(#cF44h1)"><polyline points="16.0,178.0 406.0,178.0" fill="none" stroke="#5A667A" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
+<g clip-path="url(#cF44h1)"><polyline points="16.0,28.0 406.0,418.0" fill="none" stroke="#2457D6" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="5 4"/></g>
+<circle cx="166.0" cy="178.0" r="4" fill="#2457D6" stroke="none" stroke-width="1"/>
+<line x1="166.0" y1="178.0" x2="246.0" y2="178.0" stroke="#CDD5E2" stroke-width="0.8"/>
+<text x="250.0" y="182.0" text-anchor="start" class="cap" style="fill:#2457D6;font-size:9px">a₁₁=1: (20, 30)</text>
+<g clip-path="url(#cF44h1)"><polyline points="16.0,13.0 406.0,598.0" fill="none" stroke="#7A4FD0" stroke-width="1.5" stroke-linejoin="round"/></g>
+<circle cx="166.0" cy="238.0" r="4" fill="#7A4FD0" stroke="none" stroke-width="1"/>
+<line x1="166.0" y1="238.0" x2="246.0" y2="238.0" stroke="#CDD5E2" stroke-width="0.8"/>
+<text x="250.0" y="242.0" text-anchor="start" class="cap" style="fill:#7A4FD0;font-size:9px">a₁₁=1,5: (20, 20)</text>
+<g clip-path="url(#cF44h1)"><polyline points="16.0,-2.0 406.0,778.0" fill="none" stroke="#D04C70" stroke-width="2.2" stroke-linejoin="round"/></g>
+<circle cx="166.0" cy="298.0" r="4" fill="#D04C70" stroke="none" stroke-width="1"/>
+<line x1="166.0" y1="298.0" x2="246.0" y2="298.0" stroke="#CDD5E2" stroke-width="0.8"/>
+<text x="250.0" y="302.0" text-anchor="start" class="cap" style="fill:#D04C70;font-size:9px">a₁₁=2: (20, 10)</text>
+<g clip-path="url(#cF44h1)"><polyline points="16.0,-17.0 406.0,958.0" fill="none" stroke="#E2711D" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="5 4"/></g>
+<circle cx="166.0" cy="358.0" r="4" fill="#E2711D" stroke="none" stroke-width="1"/>
+<line x1="166.0" y1="358.0" x2="246.0" y2="350.0" stroke="#CDD5E2" stroke-width="0.8"/>
+<text x="250.0" y="354.0" text-anchor="start" class="cap" style="fill:#E2711D;font-size:9px">a₁₁=2,5: (20, 0)</text>
+<circle cx="46.0" cy="58.0" r="4" fill="#0F1B2D" stroke="none" stroke-width="1"/>
+<text x="54.0" y="62.0" text-anchor="start" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">(0, 50)</text>
+<rect x="372.0" y="46.0" width="294.0" height="312.0" rx="5" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<text x="386.0" y="72.0" text-anchor="start" class="bx-t" style="fill:#0F1B2D;font-size:10px">ta sama baza (surowiec + rynek 1):</text>
+<text x="386.0" y="94.0" text-anchor="start" class="bx-t" style="fill:#7A4FD0;font-size:10px">x₁ = 20,  x₂ = 50 − 20·a₁₁</text>
+<text x="386.0" y="116.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10px"></text>
+<text x="386.0" y="138.0" text-anchor="start" class="bx-t" style="fill:#0F1B2D;font-size:10px">warunek 1 — plan dopuszczalny:</text>
+<text x="386.0" y="160.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10px">x₂ ≥ 0 → 50 − 20a₁₁ ≥ 0 → a₁₁ ≤ 2,5</text>
+<text x="386.0" y="182.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10px">x₂ ≤ 30 → 50 − 20a₁₁ ≤ 30 → a₁₁ ≥ 1</text>
+<text x="386.0" y="204.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10px"></text>
+<text x="386.0" y="226.0" text-anchor="start" class="bx-t" style="fill:#0F1B2D;font-size:10px">warunek 2 — plan optymalny (jak w sekcji 04):</text>
+<text x="386.0" y="248.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10px">c₁/c₂ ≥ a₁₁/a₁₂ → 3/1 ≥ a₁₁ → a₁₁ ≤ 3</text>
+<text x="386.0" y="270.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10px"></text>
+<text x="386.0" y="292.0" text-anchor="start" class="bx-t" style="fill:#E2711D;font-size:10px">razem: a₁₁ ∈ [1; 2,5]</text>
+<text x="386.0" y="314.0" text-anchor="start" class="cap" style="fill:#7A4FD0;font-size:10px">a₁₁ = 1,5 → (20, 20), z* = 80 (o 10 więcej)</text>
 </svg>
 <figcaption>Cztery wartości a₁₁: prosta surowca obraca się wokół (0, 50), a optimum zjeżdża po x₁ = 20. Poniżej a₁₁ = 1 surowiec przestaje wiązać, a plan blokuje rynek 2. Powyżej 2,5 surowca nie starcza na 20 sztuk produktu 1. W obu przypadkach zmienia się baza. Rachunek własny, sprawdzony programem linprog.</figcaption>
 </figure>
@@ -950,52 +950,52 @@ Przy maksymalizacji produkt opłaca się, gdy <span class="m" data-tex="\bar{c}_
 <figure>
 <svg viewBox="0 0 680 330" class="fig">
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">RAPORT WRAŻLIWOŚCI DLA ZADANIA BAZOWEGO (JAK Z SOLVERA)</text>
-<text x="20.0" y="44.0" text-anchor="start" class="bx-t" style="fill:#B3641A;font-size:11px">ZMIENNE DECYZYJNE</text>
+<text x="20.0" y="44.0" text-anchor="start" class="bx-t" style="fill:#E2711D;font-size:11px">ZMIENNE DECYZYJNE</text>
 <text x="20.0" y="68.0" text-anchor="start" class="cap" style="font-size:9.5px">zmienna</text>
 <text x="110.0" y="68.0" text-anchor="start" class="cap" style="font-size:9.5px">wartość</text>
 <text x="190.0" y="68.0" text-anchor="start" class="cap" style="font-size:9.5px">koszt zredukowany</text>
 <text x="330.0" y="68.0" text-anchor="start" class="cap" style="font-size:9.5px">cᵢ</text>
 <text x="390.0" y="68.0" text-anchor="start" class="cap" style="font-size:9.5px">dopuszczalny wzrost</text>
 <text x="530.0" y="68.0" text-anchor="start" class="cap" style="font-size:9.5px">dopuszczalny spadek</text>
-<line x1="20.0" y1="75.0" x2="660.0" y2="75.0" stroke="#CCD2C7" stroke-width="1"/>
-<text x="20.0" y="96.0" text-anchor="start" class="bx-t" style="fill:#B3641A;font-size:10.5px">x₁</text>
-<text x="110.0" y="96.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">20</text>
-<text x="190.0" y="96.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">0</text>
-<text x="330.0" y="96.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">3</text>
-<text x="390.0" y="96.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">∞</text>
-<text x="530.0" y="96.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">1</text>
-<text x="20.0" y="120.0" text-anchor="start" class="bx-t" style="fill:#B3641A;font-size:10.5px">x₂</text>
-<text x="110.0" y="120.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">10</text>
-<text x="190.0" y="120.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">0</text>
-<text x="330.0" y="120.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">1</text>
-<text x="390.0" y="120.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">0,5</text>
-<text x="530.0" y="120.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">1</text>
-<text x="20.0" y="166.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:11px">OGRANICZENIA</text>
+<line x1="20.0" y1="75.0" x2="660.0" y2="75.0" stroke="#CDD5E2" stroke-width="1"/>
+<text x="20.0" y="96.0" text-anchor="start" class="bx-t" style="fill:#E2711D;font-size:10.5px">x₁</text>
+<text x="110.0" y="96.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10.5px">20</text>
+<text x="190.0" y="96.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10.5px">0</text>
+<text x="330.0" y="96.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10.5px">3</text>
+<text x="390.0" y="96.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10.5px">∞</text>
+<text x="530.0" y="96.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10.5px">1</text>
+<text x="20.0" y="120.0" text-anchor="start" class="bx-t" style="fill:#E2711D;font-size:10.5px">x₂</text>
+<text x="110.0" y="120.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10.5px">10</text>
+<text x="190.0" y="120.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10.5px">0</text>
+<text x="330.0" y="120.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10.5px">1</text>
+<text x="390.0" y="120.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10.5px">0,5</text>
+<text x="530.0" y="120.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10.5px">1</text>
+<text x="20.0" y="166.0" text-anchor="start" class="bx-t" style="fill:#2457D6;font-size:11px">OGRANICZENIA</text>
 <text x="20.0" y="190.0" text-anchor="start" class="cap" style="font-size:9.5px">ograniczenie</text>
 <text x="110.0" y="190.0" text-anchor="start" class="cap" style="font-size:9.5px">lewa strona</text>
 <text x="190.0" y="190.0" text-anchor="start" class="cap" style="font-size:9.5px">cena dualna</text>
 <text x="330.0" y="190.0" text-anchor="start" class="cap" style="font-size:9.5px">bᵢ</text>
 <text x="390.0" y="190.0" text-anchor="start" class="cap" style="font-size:9.5px">dopuszczalny wzrost</text>
 <text x="530.0" y="190.0" text-anchor="start" class="cap" style="font-size:9.5px">dopuszczalny spadek</text>
-<line x1="20.0" y1="197.0" x2="660.0" y2="197.0" stroke="#CCD2C7" stroke-width="1"/>
-<text x="20.0" y="218.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:10.5px">surowiec</text>
-<text x="110.0" y="218.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">50</text>
-<text x="190.0" y="218.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">1</text>
-<text x="330.0" y="218.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">50</text>
-<text x="390.0" y="218.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">20</text>
-<text x="530.0" y="218.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">10</text>
-<text x="20.0" y="242.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:10.5px">rynek 1</text>
-<text x="110.0" y="242.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">20</text>
-<text x="190.0" y="242.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">1</text>
-<text x="330.0" y="242.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">20</text>
-<text x="390.0" y="242.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">5</text>
-<text x="530.0" y="242.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">10</text>
-<text x="20.0" y="266.0" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:10.5px">rynek 2</text>
-<text x="110.0" y="266.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">10</text>
-<text x="190.0" y="266.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">0</text>
-<text x="330.0" y="266.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">30</text>
-<text x="390.0" y="266.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">∞</text>
-<text x="530.0" y="266.0" text-anchor="start" class="cap" style="fill:#141C24;font-size:10.5px">20</text>
+<line x1="20.0" y1="197.0" x2="660.0" y2="197.0" stroke="#CDD5E2" stroke-width="1"/>
+<text x="20.0" y="218.0" text-anchor="start" class="bx-t" style="fill:#2457D6;font-size:10.5px">surowiec</text>
+<text x="110.0" y="218.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10.5px">50</text>
+<text x="190.0" y="218.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10.5px">1</text>
+<text x="330.0" y="218.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10.5px">50</text>
+<text x="390.0" y="218.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10.5px">20</text>
+<text x="530.0" y="218.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10.5px">10</text>
+<text x="20.0" y="242.0" text-anchor="start" class="bx-t" style="fill:#2457D6;font-size:10.5px">rynek 1</text>
+<text x="110.0" y="242.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10.5px">20</text>
+<text x="190.0" y="242.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10.5px">1</text>
+<text x="330.0" y="242.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10.5px">20</text>
+<text x="390.0" y="242.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10.5px">5</text>
+<text x="530.0" y="242.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10.5px">10</text>
+<text x="20.0" y="266.0" text-anchor="start" class="bx-t" style="fill:#2457D6;font-size:10.5px">rynek 2</text>
+<text x="110.0" y="266.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10.5px">10</text>
+<text x="190.0" y="266.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10.5px">0</text>
+<text x="330.0" y="266.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10.5px">30</text>
+<text x="390.0" y="266.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10.5px">∞</text>
+<text x="530.0" y="266.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:10.5px">20</text>
 <text x="340.0" y="318.0" text-anchor="middle" class="cap" style="font-size:9.5px">Excel Solver: „Raport wrażliwości”; MATLAB linprog: pole lambda (ceny dualne)</text>
 </svg>
 <figcaption>Wynik rachunku zapisany tak, jak drukuje go solver. „Koszt zredukowany” to c̄ z sekcji 06 (0 dla zmiennych w bazie). „Cena dualna” to y z sekcji 05. „Dopuszczalny wzrost/spadek” to odległość do końców przedziału, w którym baza się nie zmienia. Rachunek własny, zgodny z linprog (HiGHS).</figcaption>
@@ -1034,23 +1034,23 @@ Przy maksymalizacji produkt opłaca się, gdy <span class="m" data-tex="\bar{c}_
 
 <figure>
 <svg viewBox="0 0 680 470" class="fig">
-<defs><marker id="arF44f0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#141C24"/></marker><marker id="arF44f1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker></defs>
+<defs><marker id="arF44f0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0F1B2D"/></marker><marker id="arF44f1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#7A4FD0"/></marker></defs>
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">NARYSUJ NA TABLICY W 6 RUCHACH (KRATKA: 1 = 5 SZTUK)</text>
-<rect x="14.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
-<circle cx="32.0" cy="58.0" r="10" fill="#5C6B77" stroke="none" stroke-width="1"/>
+<rect x="14.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<circle cx="32.0" cy="58.0" r="10" fill="#5A667A" stroke="none" stroke-width="1"/>
 <text x="32.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">1</text>
 <text x="48.0" y="56.0" text-anchor="start" class="bx-t">model</text>
 <text x="48.0" y="70.0" text-anchor="start" class="bx" style="font-size:9.5px">c, b, A → x*, z*</text>
-<rect x="28.0" y="110.0" width="70.0" height="60.0" rx="3" fill="#FDFDFA" stroke="#141C24" stroke-width="1"/>
+<rect x="28.0" y="110.0" width="70.0" height="60.0" rx="3" fill="#FBFCFE" stroke="#0F1B2D" stroke-width="1"/>
 <text x="63.0" y="136.0" text-anchor="middle" class="cap" style="font-size:9.5px">c, b, A</text>
 <text x="63.0" y="154.0" text-anchor="middle" class="bx-t" style="font-size:10px">LP</text>
-<path d="M 100.0 140.0 L 132.0 140.0" fill="none" stroke="#141C24" stroke-width="1.2" marker-end="url(#arF44f0)"/>
-<rect x="134.0" y="110.0" width="72.0" height="60.0" rx="3" fill="#F6F5FA" stroke="#5B4B8A" stroke-width="1"/>
-<text x="170.0" y="136.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9.5px">x*, z*</text>
-<text x="170.0" y="154.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9px">baza</text>
-<text x="118.0" y="210.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52;font-size:10.5px">Δc, Δb, ΔA → ?</text>
-<rect x="236.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
-<circle cx="254.0" cy="58.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<path d="M 100.0 140.0 L 132.0 140.0" fill="none" stroke="#0F1B2D" stroke-width="1.2" marker-end="url(#arF44f0)"/>
+<rect x="134.0" y="110.0" width="72.0" height="60.0" rx="3" fill="#F6F5FA" stroke="#7A4FD0" stroke-width="1"/>
+<text x="170.0" y="136.0" text-anchor="middle" class="cap" style="fill:#7A4FD0;font-size:9.5px">x*, z*</text>
+<text x="170.0" y="154.0" text-anchor="middle" class="cap" style="fill:#7A4FD0;font-size:9px">baza</text>
+<text x="118.0" y="210.0" text-anchor="middle" class="bx-t" style="fill:#D04C70;font-size:10.5px">Δc, Δb, ΔA → ?</text>
+<rect x="236.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<circle cx="254.0" cy="58.0" r="10" fill="#7A4FD0" stroke="none" stroke-width="1"/>
 <text x="254.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">2</text>
 <text x="270.0" y="56.0" text-anchor="start" class="bx-t">optimum</text>
 <text x="270.0" y="70.0" text-anchor="start" class="bx" style="font-size:9.5px">przesuwaj prostą zysku</text>
@@ -1071,20 +1071,20 @@ Przy maksymalizacji produkt opłaca się, gdy <span class="m" data-tex="\bar{c}_
 <line x1="276.0" y1="122.0" x2="390.0" y2="122.0" stroke="#D5DDE2" stroke-width="0.9"/>
 <line x1="276.0" y1="103.0" x2="390.0" y2="103.0" stroke="#EEF2F4" stroke-width="0.7"/>
 <line x1="276.0" y1="84.0" x2="390.0" y2="84.0" stroke="#D5DDE2" stroke-width="0.9"/>
-<line x1="276.0" y1="236.0" x2="390.0" y2="236.0" stroke="#5C6B77" stroke-width="1.2"/>
-<line x1="276.0" y1="84.0" x2="276.0" y2="236.0" stroke="#5C6B77" stroke-width="1.2"/>
+<line x1="276.0" y1="236.0" x2="390.0" y2="236.0" stroke="#5A667A" stroke-width="1.2"/>
+<line x1="276.0" y1="84.0" x2="276.0" y2="236.0" stroke="#5A667A" stroke-width="1.2"/>
 <g clip-path="url(#cF44f19)">
-<polygon points="276.0,236.0 352.0,236.0 352.0,198.0 314.0,122.0 276.0,122.0" fill="#0E6E78" opacity="0.16" stroke="none" stroke-width="1"/>
+<polygon points="276.0,236.0 352.0,236.0 352.0,198.0 314.0,122.0 276.0,122.0" fill="#2457D6" opacity="0.16" stroke="none" stroke-width="1"/>
 </g>
-<g clip-path="url(#cF44f19)"><polyline points="257.0,8.0 504.0,502.0" fill="none" stroke="#9C3B52" stroke-width="1.4" stroke-linejoin="round"/></g>
-<g clip-path="url(#cF44f19)"><polyline points="352.0,255.0 352.0,8.0" fill="none" stroke="#9C3B52" stroke-width="1.4" stroke-linejoin="round"/></g>
-<g clip-path="url(#cF44f19)"><polyline points="257.0,65.0 504.0,806.0" fill="none" stroke="#5B4B8A" stroke-width="1" stroke-linejoin="round" stroke-dasharray="3 3"/></g>
-<g clip-path="url(#cF44f19)"><polyline points="257.0,-11.0 504.0,730.0" fill="none" stroke="#5B4B8A" stroke-width="1" stroke-linejoin="round" stroke-dasharray="3 3"/></g>
-<g clip-path="url(#cF44f19)"><polyline points="257.0,-87.0 504.0,654.0" fill="none" stroke="#5B4B8A" stroke-width="1" stroke-linejoin="round" stroke-dasharray="3 3"/></g>
-<path d="M 352.0 198.0 L 377.1 189.6" fill="none" stroke="#5B4B8A" stroke-width="1.4" marker-end="url(#arF44f1)"/>
-<polygon points="352.0,192.5 353.5,196.0 357.2,196.3 354.4,198.8 355.2,202.4 352.0,200.5 348.8,202.4 349.6,198.8 346.8,196.3 350.5,196.0" fill="#5B4B8A"/>
-<rect x="458.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
-<circle cx="476.0" cy="58.0" r="10" fill="#B3641A" stroke="none" stroke-width="1"/>
+<g clip-path="url(#cF44f19)"><polyline points="257.0,8.0 504.0,502.0" fill="none" stroke="#D04C70" stroke-width="1.4" stroke-linejoin="round"/></g>
+<g clip-path="url(#cF44f19)"><polyline points="352.0,255.0 352.0,8.0" fill="none" stroke="#D04C70" stroke-width="1.4" stroke-linejoin="round"/></g>
+<g clip-path="url(#cF44f19)"><polyline points="257.0,65.0 504.0,806.0" fill="none" stroke="#7A4FD0" stroke-width="1" stroke-linejoin="round" stroke-dasharray="3 3"/></g>
+<g clip-path="url(#cF44f19)"><polyline points="257.0,-11.0 504.0,730.0" fill="none" stroke="#7A4FD0" stroke-width="1" stroke-linejoin="round" stroke-dasharray="3 3"/></g>
+<g clip-path="url(#cF44f19)"><polyline points="257.0,-87.0 504.0,654.0" fill="none" stroke="#7A4FD0" stroke-width="1" stroke-linejoin="round" stroke-dasharray="3 3"/></g>
+<path d="M 352.0 198.0 L 377.1 189.6" fill="none" stroke="#7A4FD0" stroke-width="1.4" marker-end="url(#arF44f1)"/>
+<polygon points="352.0,192.5 353.5,196.0 357.2,196.3 354.4,198.8 355.2,202.4 352.0,200.5 348.8,202.4 349.6,198.8 346.8,196.3 350.5,196.0" fill="#7A4FD0"/>
+<rect x="458.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<circle cx="476.0" cy="58.0" r="10" fill="#E2711D" stroke="none" stroke-width="1"/>
 <text x="476.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">3</text>
 <text x="492.0" y="56.0" text-anchor="start" class="bx-t">c_j</text>
 <text x="492.0" y="70.0" text-anchor="start" class="bx" style="font-size:9.5px">obrót prostej zysku</text>
@@ -1105,17 +1105,17 @@ Przy maksymalizacji produkt opłaca się, gdy <span class="m" data-tex="\bar{c}_
 <line x1="498.0" y1="122.0" x2="612.0" y2="122.0" stroke="#D5DDE2" stroke-width="0.9"/>
 <line x1="498.0" y1="103.0" x2="612.0" y2="103.0" stroke="#EEF2F4" stroke-width="0.7"/>
 <line x1="498.0" y1="84.0" x2="612.0" y2="84.0" stroke="#D5DDE2" stroke-width="0.9"/>
-<line x1="498.0" y1="236.0" x2="612.0" y2="236.0" stroke="#5C6B77" stroke-width="1.2"/>
-<line x1="498.0" y1="84.0" x2="498.0" y2="236.0" stroke="#5C6B77" stroke-width="1.2"/>
+<line x1="498.0" y1="236.0" x2="612.0" y2="236.0" stroke="#5A667A" stroke-width="1.2"/>
+<line x1="498.0" y1="84.0" x2="498.0" y2="236.0" stroke="#5A667A" stroke-width="1.2"/>
 <g clip-path="url(#cF44f53)">
-<polygon points="498.0,236.0 574.0,236.0 574.0,198.0 536.0,122.0 498.0,122.0" fill="#0E6E78" opacity="0.16" stroke="none" stroke-width="1"/>
+<polygon points="498.0,236.0 574.0,236.0 574.0,198.0 536.0,122.0 498.0,122.0" fill="#2457D6" opacity="0.16" stroke="none" stroke-width="1"/>
 </g>
-<g clip-path="url(#cF44f53)"><polyline points="479.0,-87.0 726.0,654.0" fill="none" stroke="#5B4B8A" stroke-width="1.3" stroke-linejoin="round"/></g>
-<g clip-path="url(#cF44f53)"><polyline points="479.0,8.0 726.0,502.0" fill="none" stroke="#B3641A" stroke-width="1.3" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
-<g clip-path="url(#cF44f53)"><polyline points="479.0,36.5 726.0,407.0" fill="none" stroke="#9C3B52" stroke-width="1.3" stroke-linejoin="round"/></g>
-<polygon points="574.0,192.5 575.5,196.0 579.2,196.3 576.4,198.8 577.2,202.4 574.0,200.5 570.8,202.4 571.6,198.8 568.8,196.3 572.5,196.0" fill="#5B4B8A"/>
-<rect x="14.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
-<circle cx="32.0" cy="272.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<g clip-path="url(#cF44f53)"><polyline points="479.0,-87.0 726.0,654.0" fill="none" stroke="#7A4FD0" stroke-width="1.3" stroke-linejoin="round"/></g>
+<g clip-path="url(#cF44f53)"><polyline points="479.0,8.0 726.0,502.0" fill="none" stroke="#E2711D" stroke-width="1.3" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
+<g clip-path="url(#cF44f53)"><polyline points="479.0,36.5 726.0,407.0" fill="none" stroke="#D04C70" stroke-width="1.3" stroke-linejoin="round"/></g>
+<polygon points="574.0,192.5 575.5,196.0 579.2,196.3 576.4,198.8 577.2,202.4 574.0,200.5 570.8,202.4 571.6,198.8 568.8,196.3 572.5,196.0" fill="#7A4FD0"/>
+<rect x="14.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<circle cx="32.0" cy="272.0" r="10" fill="#2457D6" stroke="none" stroke-width="1"/>
 <text x="32.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">4</text>
 <text x="48.0" y="270.0" text-anchor="start" class="bx-t">b_i</text>
 <text x="48.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">przesuw ograniczenia</text>
@@ -1136,17 +1136,17 @@ Przy maksymalizacji produkt opłaca się, gdy <span class="m" data-tex="\bar{c}_
 <line x1="54.0" y1="336.0" x2="168.0" y2="336.0" stroke="#D5DDE2" stroke-width="0.9"/>
 <line x1="54.0" y1="317.0" x2="168.0" y2="317.0" stroke="#EEF2F4" stroke-width="0.7"/>
 <line x1="54.0" y1="298.0" x2="168.0" y2="298.0" stroke="#D5DDE2" stroke-width="0.9"/>
-<line x1="54.0" y1="450.0" x2="168.0" y2="450.0" stroke="#5C6B77" stroke-width="1.2"/>
-<line x1="54.0" y1="298.0" x2="54.0" y2="450.0" stroke="#5C6B77" stroke-width="1.2"/>
+<line x1="54.0" y1="450.0" x2="168.0" y2="450.0" stroke="#5A667A" stroke-width="1.2"/>
+<line x1="54.0" y1="298.0" x2="54.0" y2="450.0" stroke="#5A667A" stroke-width="1.2"/>
 <g clip-path="url(#cF44f84)">
-<polygon points="54.0,450.0 130.0,450.0 130.0,412.0 92.0,336.0 54.0,336.0" fill="#0E6E78" opacity="0.16" stroke="none" stroke-width="1"/>
+<polygon points="54.0,450.0 130.0,450.0 130.0,412.0 92.0,336.0 54.0,336.0" fill="#2457D6" opacity="0.16" stroke="none" stroke-width="1"/>
 </g>
-<g clip-path="url(#cF44f84)"><polyline points="35.0,260.0 282.0,754.0" fill="none" stroke="#0E6E78" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
-<g clip-path="url(#cF44f84)"><polyline points="35.0,146.0 282.0,640.0" fill="none" stroke="#0E6E78" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
-<g clip-path="url(#cF44f84)"><polyline points="130.0,450.0 130.0,336.0" fill="none" stroke="#5B4B8A" stroke-width="2.4" stroke-linejoin="round"/></g>
-<polygon points="130.0,406.5 131.5,410.0 135.2,410.3 132.4,412.8 133.2,416.4 130.0,414.5 126.8,416.4 127.6,412.8 124.8,410.3 128.5,410.0" fill="#5B4B8A"/>
-<rect x="236.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
-<circle cx="254.0" cy="272.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<g clip-path="url(#cF44f84)"><polyline points="35.0,260.0 282.0,754.0" fill="none" stroke="#2457D6" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
+<g clip-path="url(#cF44f84)"><polyline points="35.0,146.0 282.0,640.0" fill="none" stroke="#2457D6" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
+<g clip-path="url(#cF44f84)"><polyline points="130.0,450.0 130.0,336.0" fill="none" stroke="#7A4FD0" stroke-width="2.4" stroke-linejoin="round"/></g>
+<polygon points="130.0,406.5 131.5,410.0 135.2,410.3 132.4,412.8 133.2,416.4 130.0,414.5 126.8,416.4 127.6,412.8 124.8,410.3 128.5,410.0" fill="#7A4FD0"/>
+<rect x="236.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<circle cx="254.0" cy="272.0" r="10" fill="#2457D6" stroke="none" stroke-width="1"/>
 <text x="254.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">5</text>
 <text x="270.0" y="270.0" text-anchor="start" class="bx-t">z*(b)</text>
 <text x="270.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">łamana, nachylenia</text>
@@ -1172,20 +1172,20 @@ Przy maksymalizacji produkt opłaca się, gdy <span class="m" data-tex="\bar{c}_
 <line x1="266.0" y1="331.2" x2="426.0" y2="331.2" stroke="#EEF2F4" stroke-width="0.7"/>
 <line x1="266.0" y1="317.6" x2="426.0" y2="317.6" stroke="#EEF2F4" stroke-width="0.7"/>
 <line x1="266.0" y1="304.0" x2="426.0" y2="304.0" stroke="#EEF2F4" stroke-width="0.7"/>
-<line x1="266.0" y1="440.0" x2="430.0" y2="440.0" stroke="#5C6B77" stroke-width="1"/>
-<line x1="266.0" y1="300.0" x2="266.0" y2="440.0" stroke="#5C6B77" stroke-width="1"/>
-<g clip-path="url(#cF44f115)"><polyline points="266.0,440.0 337.1,358.4 390.4,317.6 426.0,317.6" fill="none" stroke="#5B4B8A" stroke-width="2" stroke-linejoin="round"/></g>
+<line x1="266.0" y1="440.0" x2="430.0" y2="440.0" stroke="#5A667A" stroke-width="1"/>
+<line x1="266.0" y1="300.0" x2="266.0" y2="440.0" stroke="#5A667A" stroke-width="1"/>
+<g clip-path="url(#cF44f115)"><polyline points="266.0,440.0 337.1,358.4 390.4,317.6 426.0,317.6" fill="none" stroke="#7A4FD0" stroke-width="2" stroke-linejoin="round"/></g>
 <text x="290.9" y="396.5" text-anchor="middle" class="cap" style="font-size:9px">1,5</text>
-<text x="354.9" y="325.8" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9px">1</text>
+<text x="354.9" y="325.8" text-anchor="middle" class="cap" style="fill:#2457D6;font-size:9px">1</text>
 <text x="408.2" y="308.1" text-anchor="middle" class="cap" style="font-size:9px">0</text>
-<rect x="458.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
-<circle cx="476.0" cy="272.0" r="10" fill="#9C3B52" stroke="none" stroke-width="1"/>
+<rect x="458.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<circle cx="476.0" cy="272.0" r="10" fill="#D04C70" stroke="none" stroke-width="1"/>
 <text x="476.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">6</text>
 <text x="492.0" y="270.0" text-anchor="start" class="bx-t">nowy produkt</text>
 <text x="492.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">c₃ vs koszt alternat.</text>
 <text x="562.0" y="334.0" text-anchor="middle" class="cap" style="font-size:9.5px">koszt alternatywny</text>
-<text x="562.0" y="354.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:11px">= 1,5 · y₁ = 1,5</text>
-<text x="562.0" y="394.0" text-anchor="middle" class="bx-t" style="fill:#9C3B52;font-size:10.5px">c₃ &gt; 1,5 → produkuj</text>
+<text x="562.0" y="354.0" text-anchor="middle" class="bx-t" style="fill:#2457D6;font-size:11px">= 1,5 · y₁ = 1,5</text>
+<text x="562.0" y="394.0" text-anchor="middle" class="bx-t" style="fill:#D04C70;font-size:10.5px">c₃ &gt; 1,5 → produkuj</text>
 <text x="562.0" y="416.0" text-anchor="middle" class="cap" style="font-size:9.5px">c₃ = 2 → z* = 73,3</text>
 </svg>
 <figcaption>Rysuj na kratce w tej samej skali na obu osiach. (1) Model z parametrami c, b, A i pytanie „co, jeśli się zmienią?”. (2) Wielokąt, proste zysku i ∇z — optimum B. (3) Obracająca się prosta zysku: c = (3, 1), remis (2, 1), skok przy (1,5; 1). (4) Przesuwane ograniczenie surowca i optimum na x₁ = 20. (5) Łamana z*(b₁) z nachyleniami 1,5 / 1 / 0. (6) Koszt alternatywny nowego produktu.</figcaption>

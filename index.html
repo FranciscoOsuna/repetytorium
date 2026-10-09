@@ -12,9 +12,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#141C24; --mut:#5C6B77; --line:#CCD2C7;
-  --paper:#EDEEE5; --card:#FDFDFA;
-  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52; --sky:#3E63B8;
+  --ink:#0F1B2D; --mut:#5A667A; --line:#CDD5E2;
+  --paper:#EEF1F6; --card:#FBFCFE;
+  --teal:#2457D6; --amber:#E2711D; --violet:#7A4FD0; --rose:#D04C70; --sky:#4C7DF0;
   --disp:"Space Grotesk",system-ui,sans-serif;
   --body:"STIX Two Text","Source Serif 4",Georgia,serif;
   --mono:"IBM Plex Mono",ui-monospace,monospace;
@@ -76,11 +76,11 @@ h1{font-family:var(--disp);font-weight:700;font-size:clamp(32px,5.4vw,50px);line
 .panel .lbl button:hover{color:var(--ink);border-color:var(--ink)}
 .people{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0 0}
 .person{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:12px;
-        border:1px solid var(--line);background:#F3F4EE;border-radius:2px;padding:5px 10px;
+        border:1px solid var(--line);background:#F4F2EA;border-radius:2px;padding:5px 10px;
         cursor:pointer;user-select:none;transition:border-color .12s ease,background .12s ease}
 .person:hover{border-color:var(--mut)}
 .person input{appearance:none;width:9px;height:9px;border:1px solid var(--mut);border-radius:1px;margin:0}
-.person.on{background:rgba(91,75,138,.10);border-color:var(--violet);color:var(--ink)}
+.person.on{background:rgba(122,79,208,.10);border-color:var(--violet);color:var(--ink)}
 .person.on input{background:var(--violet);border-color:var(--violet)}
 .person .cnt{color:var(--mut);font-size:11px}
 .verdict{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin:14px 0 0;line-height:1.6}
@@ -128,9 +128,9 @@ h2 .cnt{font-family:var(--mono);font-size:12px;font-weight:400;color:var(--mut);
 .q .who{font-family:var(--mono);font-size:10.5px;color:var(--mut);white-space:nowrap;
         display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
 .q .who span{border:1px solid var(--line);border-radius:2px;padding:1px 5px}
-.q .who span.on{border-color:var(--violet);color:var(--violet);background:rgba(91,75,138,.08)}
+.q .who span.on{border-color:var(--violet);color:var(--violet);background:rgba(122,79,208,.08)}
 .q.soon{opacity:.75}
-.q.next{opacity:1;border-left-color:var(--amber);box-shadow:0 0 0 1px rgba(179,100,26,.22)}
+.q.next{opacity:1;border-left-color:var(--amber);box-shadow:0 0 0 1px rgba(226,113,29,.22)}
 .q.next .n,.q.next .tag{color:var(--amber)}
 .q.ready{border-left-color:var(--teal)}
 .q.ready .n{color:var(--teal)}
@@ -141,7 +141,7 @@ h2 .cnt{font-family:var(--mono);font-size:12px;font-weight:400;color:var(--mut);
 
 /* tryb komisji */
 body.komisja .q{opacity:.38}
-body.komisja .q.hit{opacity:1;border-left-color:var(--violet);box-shadow:0 0 0 1px rgba(91,75,138,.18)}
+body.komisja .q.hit{opacity:1;border-left-color:var(--violet);box-shadow:0 0 0 1px rgba(122,79,208,.18)}
 body.komisja .q.hit.ready{border-left-color:var(--teal)}
 body.komisja section.dim h2,body.komisja section.dim .meta{opacity:.45}
 .hitmark{display:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
@@ -151,7 +151,7 @@ body.komisja .q.hit .hitmark{display:block}
 /* ---- przyklejony pasek nawigacji ---- */
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-.topbar{position:sticky;top:0;z-index:30;background:rgba(237,238,229,.95);
+.topbar{position:sticky;top:0;z-index:30;background:rgba(238,241,246,.95);
         -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .tb-in{max-width:960px;margin:0 auto;padding:8px 22px 7px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px}
 .tb-brand{display:flex;align-items:center;gap:9px;flex:none;text-decoration:none;color:var(--ink);
@@ -195,10 +195,10 @@ html{scroll-behavior:smooth}
 #flat > .lead{margin:0 0 6px}
 body.by-num .topbar .chips{display:none}
 .q{scroll-margin-top:calc(var(--bar-h,56px) + 18px)}
-.q .etap{display:none}
-body.by-num .q .etap{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--mut);margin-top:2px}
+.q .kat{display:none}
+body.by-num .q .kat{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--mut);margin-top:2px}
 .q.flash{animation:qflash 1.7s ease}
-@keyframes qflash{0%,55%{box-shadow:0 0 0 3px rgba(62,99,184,.5)}100%{box-shadow:0 0 0 0 rgba(62,99,184,0)}}
+@keyframes qflash{0%,55%{box-shadow:0 0 0 3px rgba(76,125,240,.5)}100%{box-shadow:0 0 0 0 rgba(76,125,240,0)}}
 
 /* skład komisji = beta: domyślnie schowany */
 body:not(.show-beta) .panel,
@@ -233,13 +233,13 @@ footer{margin-top:70px;padding-top:20px;border-top:1px solid var(--line);
 <nav class="topbar" id="topbar" aria-label="Nawigacja po repetytorium">
   <div class="tb-in">
     <a class="tb-brand" href="#top" title="Na górę"><img src="assets/meowl-wide.png" width="28" height="28" alt=""><span>Repetytorium</span></a>
-    <ul class="chips" id="chips" aria-label="Etapy"></ul>
+    <ul class="chips" id="chips" aria-label="Kategorie"></ul>
     <form class="tb-jump" id="jump" role="search" aria-label="Przejdź do pytania o numerze">
       <label for="jumpN">nr</label><input id="jumpN" type="number" min="1" max="99" inputmode="numeric" placeholder="1&ndash;50">
     </form>
     <div class="tb-ctl">
       <div class="seg" role="group" aria-label="Sortowanie pytań">
-        <button type="button" data-sort="stage" aria-pressed="true" title="Kolejność nauki, pogrupowana w etapy">Etapy</button>
+        <button type="button" data-sort="stage" aria-pressed="true" title="Pytania pogrupowane w kategorie">Kategorie</button>
         <button type="button" data-sort="num" aria-pressed="false" title="Wszystkie pytania wg numeru">Numer</button>
       </div>
       <label class="betatoggle" title="Funkcja eksperymentalna: filtrowanie pytań wg składu komisji">
@@ -253,7 +253,6 @@ footer{margin-top:70px;padding-top:20px;border-top:1px solid var(--line);
 <header>
   <div class="masthead">
     <div class="mh-text">
-      <p class="eyebrow">Egzamin dyplomowy · ARiSS · II stopień · Systemy sterowania i wspomagania decyzji</p>
       <h1>Repetytorium</h1>
     </div>
     <figure class="mh-meowls">
@@ -261,16 +260,9 @@ footer{margin-top:70px;padding-top:20px;border-top:1px solid var(--line);
            alt="Trzy meowle, czyli koty z ciałem sowy, siedzące na drewnianej belce: pręgowany z kwiatkiem, ten z wielkimi oczami i biały ze zmrużonymi oczami">
     </figure>
   </div>
-  <p class="quest">Zestaw 50 zagadnień egzaminacyjnych ułożony w <strong>kolejności nauki</strong>: każdy etap korzysta z tego, co odłożył poprzedni. Przy pytaniach jeszcze nieopracowanych widać numer w kolejce. <span class="beta-only">Zaznacz członków komisji, żeby zobaczyć, które pytania są w ich zasięgu.</span></p>
-  <div class="status">
-    <span>opracowane: <b id="done">0</b> / <b id="total">50</b></span>
-    <div class="bar"><span id="fill" style="width:0%"></span></div>
-    <span id="left"></span>
-  </div>
 
   <a class="feedlink" href="feed_powtorki.html">
     <span class="fl-t">Feed powtórkowy</span>
-    <span class="fl-d">Krótkie karty do przewijania na telefonie: fakty, fiszki, dopytki komisji, prawda/fałsz. Karty, których nie umiesz, wracają częściej.</span>
   </a>
 
   <div class="panel">
@@ -287,14 +279,6 @@ footer{margin-top:70px;padding-top:20px;border-top:1px solid var(--line);
 
 <main id="cats"></main>
 <div id="flat" class="list" hidden></div>
-
-<footer>
-  Etapy nie są przedmiotami z planu studiów — to kolejność, w jakiej zagadnienia najlepiej się na siebie nakładają:
-  ten sam obiekt kolejnymi metodami, bliźniacze pytania obok siebie, synteza po składnikach. Przedmiot jest podany przy każdym pytaniu<span class="beta-only"> wraz z obsadą wykładu</span>; komplet siedzi w tablicach <code>PEOPLE</code>, <code>PRZEDMIOTY</code>
-  i <code>ETAPY</code> na dole tego pliku.<br>
-  Pliki opracowań: <code>pytanie_NN_slug.html</code> w tym samym folderze.
-</footer>
-
 </div>
 
 <script>
@@ -321,7 +305,7 @@ const PEOPLE = {
 /* ══════════════════════════════════════════════════════════════════════
    2. PRZEDMIOTY
    Źródło wykładowców i semestru dla pytań; przypisanie pytanie → przedmiot
-   siedzi w polu `p` każdej pozycji w ETAPY poniżej.
+   siedzi w polu `p` każdej pozycji w KATEGORIE poniżej.
    ══════════════════════════════════════════════════════════════════════ */
 const PRZEDMIOTY = {
   mid: {name:"Modelowanie i identyfikacja", short:"modelowanie i identyfikacja", sem:"sem. 1 · kierunkowy", teachers:["duzinkiewicz","grochowski","puchalski"]},
@@ -338,28 +322,28 @@ const PRZEDMIOTY = {
 };
 
 /* ══════════════════════════════════════════════════════════════════════
-   3. ETAPY NAUKI — kolejność opracowywania i powtarzania
+   3. KATEGORIE NAUKI — kolejność opracowywania i powtarzania
    Kolejność wynika z trzech reguł (szczegóły w notatce `kolejnosc-opracowan`):
    ten sam obiekt kolejnymi metodami uczy więcej niż nowy obiekt przy każdej
    metodzie; bliźniaki robi się razem; synteza idzie po składnikach.
    p: klucz przedmiotu (stąd wykładowcy i semestr), file: gotowe opracowanie.
    ══════════════════════════════════════════════════════════════════════ */
-const ETAPY = [
- {name:"Skąd się bierze model", lead:"Wszystko dalsze zakłada, że model obiektu istnieje. Ten etap mówi, skąd go wziąć: z wiedzy o procesie albo z danych — i jak sprawdzić, czy jest cokolwiek wart.", items:[
+const KATEGORIE = [
+ {name:"Modelowanie i identyfikacja", items:[
    {n:1, p:"mid", t:"Technologie modelowania oparte o wiedzę i oparte o dane – podaj charakterystykę, wskaż związki, przedstaw kroki budowy modeli.", file:"pytanie_01_technologie_modelowania.html"},
    {n:2, p:"mid", t:"Metoda najmniejszych kwadratów w identyfikacji parametrów modeli analitycznych – odmiany, algorytmy znajdowania estymat parametrów.", file:"pytanie_02_metoda_najmniejszych_kwadratow.html"},
    {n:3, p:"mid", t:"Modele rozmyte lingwistyczne – struktury, uproszczone wnioskowanie Mamdaniego, rozmywanie, wyostrzenie.", file:"pytanie_03_modele_rozmyte_lingwistyczne.html"},
    {n:4, p:"mid", t:"Modele neuronowe jednokierunkowe i rekurencyjne – struktury, uczenie relacji wejście–wyjście.", file:"pytanie_04_modele_neuronowe.html"},
  ]},
 
- {name:"Sterowanie w przestrzeni stanu", lead:"Rdzeń całej specjalności. Najpierw warunki, kiedy sterowanie i estymacja są w ogóle możliwe, potem sprzężenie od stanu, uchyb ustalony i obserwator. Wszystkie cztery zagadnienia policzone na tym samym obiekcie dwóch zbiorników.", items:[
+ {name:"Sterowanie w przestrzeni stanu", items:[
    {n:5, p:"ts", t:"Sterowalność, obserwowalność – badanie, znaczenie w metodzie alokacji biegunów i konstrukcji obserwatorów.", file:"pytanie_05_sterowalnosc_obserwowalnosc.html"},
    {n:6, p:"ts", t:"Sterowanie ze sprzężeniem od stanu – metoda alokacji biegunów i wykorzystanie macierzy kompensacji wzmocnień, metody projektowania.", file:"pytanie_06_sprzezenie_od_stanu.html"},
    {n:7, p:"ts", t:"Sterowanie ze sprzężeniem od stanu – metoda alokacji biegunów i wykorzystanie działań całkujących, metody projektowania.", file:"pytanie_07_dzialanie_calkujace.html"},
    {n:8, p:"ts", t:"Obserwatory – funkcja, rodzaje, metody projektowania.", file:"pytanie_08_obserwatory.html"},
  ]},
 
- {name:"Szukanie najlepszego rozwiązania", lead:"Optymalizacja jest językiem, w którym zapisuje się sterowanie optymalne, sterowanie predykcyjne i wspomaganie decyzji. Metody klasyczne, potem genetyczne, na koniec wielokryterialność.", items:[
+ {name:"Optymalizacja", items:[
    {n:9, p:"opt", t:"Klasyfikacja i charakterystyka algorytmów optymalizacji nieliniowej bez ograniczeń i z ograniczeniami.", file:"pytanie_09_optymalizacja.html"},
    {n:10, p:"opt", t:"Przedstaw zastosowanie metody funkcji kary w zagadnieniach optymalizacyjnych.", file:"pytanie_10_funkcja_kary.html"},
    {n:13, p:"msi", t:"Schemat i parametry działania algorytmu genetycznego.", file:"pytanie_13_ag_schemat_parametry.html"},
@@ -368,19 +352,19 @@ const ETAPY = [
    {n:12, p:"opt", t:"Sformułowanie zadania optymalizacji wielokryterialnej i metody poszukiwania zbioru rozwiązań Pareto optymalnych.", file:"pytanie_12_wielokryterialna.html"},
  ]},
 
- {name:"Systemy, które się uczą", lead:"Modele, których nie wyprowadza się z równań, tylko uczy z danych albo zapisuje regułami. Wracają później przy sterowaniu inteligentnym i przy diagnostyce.", items:[
+ {name:"Sztuczna inteligencja", items:[
    {n:15, p:"msi", t:"Struktury i mechanizmy wnioskowania systemów rozmytych.", file:"pytanie_15_systemy_rozmyte.html"},
    {n:16, p:"msi", t:"Struktury i metody uczenia sieci neuronowych.", file:"pytanie_16_sieci_neuronowe.html"},
    {n:30, p:"msi", t:"Wymień i opisz podstawowe mechanizmy samoorganizacji sieci neuronowych samoorganizujących.", file:"pytanie_30_samoorganizacja.html"},
  ]},
 
- {name:"Sygnał cyfrowy i jego filtracja", lead:"Każdy regulator z tego zestawu pracuje na próbkach. Ten etap tłumaczy, co się dzieje z sygnałem po drodze do algorytmu i wprowadza filtr Kalmana jako narzędzie estymacji.", items:[
+ {name:"Filtry i sygnały cyfrowe", items:[
    {n:17, p:"cps", t:"Filtry cyfrowe – opis, właściwości i zastosowania.", file:"pytanie_17_filtry_cyfrowe.html"},
    {n:19, p:"cps", t:"Zalety technologii cyfrowego przetwarzania sygnałów.", file:"pytanie_19_zalety_cyfrowego.html"},
    {n:20, p:"cps", t:"Rozszerzony filtr Kalmana a filtr Kalmana – podobieństwa, różnice, zastosowania.", file:"pytanie_20_ekf.html"},
  ]},
 
- {name:"Od predykcji do adaptacji", lead:"Główna oś specjalności i najdroższy etap w całym zestawie. Ten sam obiekt sterowany kolejno: mimo opóźnienia, z estymatą stanu, z predykcją, mimo nieliniowości, mimo niepewności modelu, z modelem uczonym na bieżąco. Każde kolejne zagadnienie odpowiada na pytanie, które zostawiło poprzednie.", items:[
+ {name:"Sterowanie zaawansowane", items:[
    {n:18, p:"sas", t:"Przedstaw metody sterowania obiektami z opóźnieniami i dokonaj wzajemnego porównania tych metod.", file:"pytanie_18_opoznienia.html"},
    {n:40, p:"sas", t:"Przedstaw filtr Kalmana i opisz jego zastosowanie w strukturach sterowania.", file:"pytanie_40_filtr_kalmana.html"},
    {n:23, p:"sas", t:"Przedstaw podstawowe elementy technologii sterowania predykcyjnego.", file:"pytanie_23_sterowanie_predykcyjne.html"},
@@ -391,14 +375,14 @@ const ETAPY = [
    {n:41, p:"sas", t:"Przedstaw sterowanie inteligentne z wykorzystaniem dynamicznych sieci neuronowych oraz systemów rozmytych Takagi-Sugeno.", file:"pytanie_41_sterowanie_inteligentne.html"},
  ]},
 
- {name:"Kiedy obiekt przestaje pasować do modelu", lead:"Ta sama idea, co innowacja filtru Kalmana: reszta między modelem a rzeczywistością niesie informację o uszkodzeniu. Najpierw metody wykrywania, na końcu sterowanie, które potrafi uszkodzenie przeżyć.", items:[
+ {name:"Diagnostyka i uszkodzenia", items:[
    {n:27, p:"mid2", t:"Wymień i opisz kroki algorytmu budowy modelu PCA, a następnie wyjaśnij sposób jego wykorzystania do diagnostyki procesów.", file:"pytanie_27_model_pca_diagnostyka.html"},
    {n:31, p:"mid2", t:"Wymień i opisz kroki algorytmu budowy modelu Kernel PCA. Porównaj metodę Kernel PCA z metodą PCA.", file:"pytanie_31_kernel_pca.html"},
    {n:28, p:"mid2", t:"Opisz metodę SVM (maszyny wektorów podtrzymujących) i przedstaw jej zastosowanie do rozwiązywania zagadnień klasyfikacji.", file:"pytanie_28_svm.html"},
    {n:29, p:"mid2", t:"Przedstaw ideę sterowania tolerującego uszkodzenia (FTC – Fault Tolerant Control).", file:"pytanie_29_ftc.html"},
  ]},
 
- {name:"Gdzie to wszystko mieszka", lead:"Warstwa systemowa: hierarchia warstw, sprzęt, komunikacja i rozproszenie. Model warstwowy jest ramą, w której dopiero widać, gdzie kończy się regulacja, a zaczyna optymalizacja i decyzja.", items:[
+ {name:"Architektura systemów", items:[
    {n:32, p:"kss", t:"Przedstaw hierarchiczny warstwowy model komputerowego systemu sterowania, scharakteryzuj poszczególne warstwy i zaproponuj jego realizację sprzętowo-programową.", file:"pytanie_32_model_warstwowy.html"},
    {n:22, p:"kss", t:"Struktura funkcjonalna i sprzętowa systemów automatyki przemysłowej.", file:"pytanie_22_struktura_automatyki.html"},
    {n:21, p:"kss", t:"Systemy komunikacji w rozproszonych systemach sterowania.", file:"pytanie_21_komunikacja.html"},
@@ -406,7 +390,7 @@ const ETAPY = [
    {n:33, p:"kss", t:"Przedstaw proces budowy zdecentralizowanego rozproszonego komputerowego systemu sterowania automatycznego.", file:"pytanie_33_budowa_systemu.html"},
  ]},
 
- {name:"Decyzje ponad regulacją", lead:"Najwyższa warstwa: cele, których nie da się zapisać jednym wskaźnikiem jakości. Od definicji procesu decyzyjnego, przez metody wieloatrybutowe i wielocelowe, po dekompozycję zadań wielkiej skali.", items:[
+ {name:"Wspomaganie decyzji", items:[
    {n:42, p:"sswd", t:"Proces decyzyjny – czym jest i jakie są jego niezbędne elementy; system wspomagania decyzji – funkcje, idee działania, możliwe elementy architektury.", file:"pytanie_42_proces_decyzyjny.html"},
    {n:35, p:"sswd", t:"Przedstaw zadania systemu wspomagania decyzji i możliwy model jego współpracy z komputerowym systemem sterowania automatycznego.", file:"pytanie_35_swd_i_kss.html"},
    {n:43, p:"sswd", t:"Wieloatrybutowe zagadnienia decyzyjne – charakterystyka i wybrana metoda rozwiązywania.", file:"pytanie_43_wieloatrybutowe.html"},
@@ -416,14 +400,14 @@ const ETAPY = [
    {n:36, p:"sswd", t:"Przedstaw realizację algorytmu Dantziga–Wolfe’a w hierarchicznym systemie wspomagania decyzji.", file:"pytanie_36_dantzig_wolfe.html"},
  ]},
 
- {name:"Wiedza zapisana regułami", lead:"Krótki, samodzielny łańcuch — słownik pojęć, metody wnioskowania, struktura systemu ekspertowego i przeszukiwanie grafu. Niezależny od reszty zestawu, więc można go wcisnąć w dowolną lukę.", items:[
+ {name:"Inżynieria wiedzy", items:[
    {n:47, p:"siw", t:"Wyjaśnij pojęcia i podaj przykłady zastosowania predykatu, reguły produkcji, reguły decyzyjnej oraz klauzuli.", file:"pytanie_47_predykat_reguly_klauzule.html"},
    {n:48, p:"siw", t:"Wymień i opisz podstawowe metody wnioskowania dedukcyjnego na podstawie faktów oraz na podstawie celów.", file:"pytanie_48_wnioskowanie.html"},
    {n:49, p:"siw", t:"Przedstaw i opisz podstawową strukturę systemu ekspertowego."},
    {n:50, p:"siw", t:"Opisz działanie i przedstaw cechy algorytmu A*."},
  ]},
 
- {name:"Projekt, dokumentacja, jakość", lead:"Dwa zagadnienia spoza linii technicznej. Nic nie odblokowują i od niczego nie zależą — ale są najtańsze w całym zestawie i zamykają całą kategorię jednym posiedzeniem.", items:[
+ {name:"Zarządzanie projektem i jakością", items:[
    {n:25, p:"app", t:"Przedstaw typowe procesy w zarządzaniu projektem."},
    {n:26, p:"app", t:"Struktura i zawartość dokumentów w typowym systemie zarządzania jakością w zakładzie produkcyjnym."},
  ]},
@@ -451,14 +435,14 @@ const counts = {};         // klucz wykładowcy → liczba pytań
 
 let kolejka = 0;                       // numer w kolejce opracowań (tylko pozycje bez pliku)
 
-ETAPY.forEach((et,si) => {
+KATEGORIE.forEach((et,si) => {
   const id = "e-" + slug(et.name);
   const ready = et.items.filter(i => i.file).length;
   total += et.items.length;
   done  += ready;
 
   const li = document.createElement("li");
-  li.innerHTML = `<a href="#${id}">${et.name} <span class="c">${ready}/${et.items.length}</span></a>`;
+  li.innerHTML = `<a href="#${id}">${et.name}</a>`;
   chips.appendChild(li);
 
   const przed = [...new Set(et.items.map(i => PRZEDMIOTY[i.p].name))];
@@ -470,10 +454,8 @@ ETAPY.forEach((et,si) => {
   const sec = document.createElement("section");
   sec.id = id;
   sec.innerHTML =
-    `<h2><span class="num">etap ${pad(si+1)}</span> ${et.name}` +
-    `<span class="cnt">${ready} / ${et.items.length} opracowane</span></h2>` +
-    `<p class="lead">${et.lead}</p>` +
-    `<p class="meta"><span>${przed.join(" · ")}</span>${who}</p>` +
+    `<h2>${et.name}</h2>` +
+    `<p class="meta beta-only">${who}</p>` +
     `<div class="rail"></div><div class="list"></div>`;
   const list = sec.querySelector(".list");
 
@@ -486,7 +468,7 @@ ETAPY.forEach((et,si) => {
     el.dataset.n = q.n;
     if (q.file) el.href = q.file;
     let tag;
-    if (q.file) { tag = "opracowane"; }
+    if (q.file) { tag = ""; }
     else {
       kolejka++;
       tag = kolejka === 1 ? "następne w kolejce" : "w kolejce &middot; " + pad(kolejka);
@@ -494,7 +476,7 @@ ETAPY.forEach((et,si) => {
     }
     el.innerHTML =
       `<span class="n">${pad(q.n)}</span>` +
-      `<span class="t"><span class="tt">${q.t}</span><span class="przed">${P.short}</span><span class="etap">etap ${pad(si+1)} &middot; ${et.name}</span></span>` +
+      `<span class="t"><span class="tt">${q.t}</span><span class="przed">${P.short}</span><span class="kat">${et.name}</span></span>` +
       `<span class="side"><span class="tag">${tag}</span>` +
       `<span class="hitmark">komisja</span>` +
       `<span class="who">${keys.map(k=>`<span data-k="${k}">${PEOPLE[k].short}</span>`).join("")}</span></span>`;
@@ -505,10 +487,6 @@ ETAPY.forEach((et,si) => {
   cats.appendChild(sec);
 });
 
-document.getElementById("done").textContent  = done;
-document.getElementById("total").textContent = total;
-document.getElementById("fill").style.width  = (100*done/total).toFixed(1) + "%";
-document.getElementById("left").textContent  = "pozostało " + (total-done);
 
 let betaOn = false;   // skład komisji: funkcja beta, domyślnie wyłączona
 
@@ -583,8 +561,7 @@ const pref = {
   set(k, v){ try{ localStorage.setItem(k, v); }catch(e){} }
 };
 
-/* sortowanie: etapy (kolejność nauki) albo numer pytania */
-flat.innerHTML = '<p class="lead">Wszystkie zagadnienia w kolejności numerów z listy egzaminacyjnej.</p>';
+/* sortowanie: kategorie (kolejność nauki) albo numer pytania */
 const segBtns = [...document.querySelectorAll(".seg button")];
 function setSort(mode, scroll){
   const num = mode === "num";
@@ -624,7 +601,7 @@ document.getElementById("jump").addEventListener("submit", e => {
   jumpN.select();
 });
 
-/* podświetlenie bieżącego etapu na pasku */
+/* podświetlenie bieżącego kategorii na pasku */
 const secs  = [...cats.querySelectorAll("section")];
 const links = [...chips.querySelectorAll("a")];
 let active = -2, tick = false;

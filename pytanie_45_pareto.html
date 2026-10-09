@@ -12,9 +12,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#141C24; --mut:#5C6B77; --line:#CCD2C7;
-  --paper:#EDEEE5; --card:#FDFDFA;
-  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52; --sky:#3E63B8;
+  --ink:#0F1B2D; --mut:#5A667A; --line:#CDD5E2;
+  --paper:#EEF1F6; --card:#FBFCFE;
+  --teal:#2457D6; --amber:#E2711D; --violet:#7A4FD0; --rose:#D04C70; --sky:#4C7DF0;
   --disp:"Space Grotesk",system-ui,sans-serif;
   --body:"STIX Two Text","Source Serif 4",Georgia,serif;
   --mono:"IBM Plex Mono",ui-monospace,monospace;
@@ -86,7 +86,7 @@ figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:
 table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15px;background:var(--card)}
 th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
 th{font-family:var(--disp);font-weight:500;font-size:13px;letter-spacing:.02em;
-   background:#F3F4EE;border-bottom:1.5px solid var(--line)}
+   background:#F4F2EA;border-bottom:1.5px solid var(--line)}
 td.n{font-family:var(--mono);font-size:13.5px;white-space:nowrap}
 tr:last-child td{border-bottom:none}
 
@@ -99,9 +99,9 @@ ol.steps>li::before{content:counter(st);position:absolute;left:0;top:1px;
   background:var(--violet);color:#fff;display:flex;align-items:center;justify-content:center}
 strong{font-weight:600}
 .tag{font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:2px;
-     background:rgba(14,110,120,.12);color:var(--teal);white-space:nowrap}
-.tag.a{background:rgba(179,100,26,.13);color:var(--amber)}
-.tag.v{background:rgba(91,75,138,.13);color:var(--violet)}
+     background:rgba(36,87,214,.12);color:var(--teal);white-space:nowrap}
+.tag.a{background:rgba(226,113,29,.13);color:var(--amber)}
+.tag.v{background:rgba(122,79,208,.13);color:var(--violet)}
 footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
        font-family:var(--mono);font-size:12px;color:var(--mut)}
 @media print{body{background:#fff}figure,.box,.eq,table{break-inside:avoid}.topnav,.backfoot{display:none}}
@@ -166,7 +166,7 @@ ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{colo
 .luka{display:inline-block;min-width:70px;border-bottom:1.5px solid var(--violet);text-align:center;font-family:var(--mono);font-size:14px;color:var(--violet)}
 /*stickybar-start*/
 .topnav{display:none}
-#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(237,238,229,.96);
+#sbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(238,241,246,.96);
   -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 #sbar .in{max-width:860px;margin:0 auto;padding:9px 22px 8px}
 #sbar .r1{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em}
@@ -221,67 +221,67 @@ html{scroll-padding-top:var(--sbh,84px)}
 
 <figure>
 <svg viewBox="0 0 680 330" class="fig">
-<defs><marker id="arF45a0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#141C24"/></marker></defs>
+<defs><marker id="arF45a0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0F1B2D"/></marker></defs>
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">PORZĄDEK PARETO: STOŻKI I PUNKTY NIEZDOMINOWANE (MINIMALIZACJA)</text>
-<rect x="40.0" y="175.0" width="130.0" height="125.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.16"/>
-<rect x="170.0" y="50.0" width="130.0" height="125.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.16"/>
+<rect x="40.0" y="175.0" width="130.0" height="125.0" rx="0" fill="#2457D6" stroke="none" stroke-width="1" opacity="0.16"/>
+<rect x="170.0" y="50.0" width="130.0" height="125.0" rx="0" fill="#D04C70" stroke="none" stroke-width="1" opacity="0.16"/>
 <rect x="40.0" y="50.0" width="130.0" height="125.0" rx="0" fill="#EEF1F3" stroke="none" stroke-width="1"/>
 <rect x="170.0" y="175.0" width="130.0" height="125.0" rx="0" fill="#EEF1F3" stroke="none" stroke-width="1"/>
-<path d="M 40.0 300.0 L 308.0 300.0" fill="none" stroke="#141C24" stroke-width="1.2" marker-end="url(#arF45a0)"/>
-<path d="M 40.0 300.0 L 40.0 42.0" fill="none" stroke="#141C24" stroke-width="1.2" marker-end="url(#arF45a0)"/>
+<path d="M 40.0 300.0 L 308.0 300.0" fill="none" stroke="#0F1B2D" stroke-width="1.2" marker-end="url(#arF45a0)"/>
+<path d="M 40.0 300.0 L 40.0 42.0" fill="none" stroke="#0F1B2D" stroke-width="1.2" marker-end="url(#arF45a0)"/>
 <text x="308.0" y="316.0" text-anchor="end" class="axlab">z₁</text>
 <text x="34.0" y="48.0" text-anchor="end" class="axlab">z₂</text>
-<line x1="40.0" y1="175.0" x2="300.0" y2="175.0" stroke="#141C24" stroke-width="1" stroke-dasharray="4 3"/>
-<line x1="170.0" y1="50.0" x2="170.0" y2="300.0" stroke="#141C24" stroke-width="1" stroke-dasharray="4 3"/>
-<circle cx="170.0" cy="175.0" r="6" fill="#5B4B8A" stroke="none" stroke-width="1"/>
-<text x="180.0" y="167.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:12px">z*</text>
-<text x="105.0" y="241.5" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:11px">LEPSZE</text>
+<line x1="40.0" y1="175.0" x2="300.0" y2="175.0" stroke="#0F1B2D" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="170.0" y1="50.0" x2="170.0" y2="300.0" stroke="#0F1B2D" stroke-width="1" stroke-dasharray="4 3"/>
+<circle cx="170.0" cy="175.0" r="6" fill="#7A4FD0" stroke="none" stroke-width="1"/>
+<text x="180.0" y="167.0" text-anchor="start" class="bx-t" style="fill:#7A4FD0;font-size:12px">z*</text>
+<text x="105.0" y="241.5" text-anchor="middle" class="bx-t" style="fill:#2457D6;font-size:11px">LEPSZE</text>
 <text x="105.0" y="257.5" text-anchor="middle" class="cap" style="font-size:9.5px">z ≤ z*</text>
-<text x="235.0" y="116.5" text-anchor="middle" class="bx-t" style="fill:#9C3B52;font-size:11px">GORSZE</text>
+<text x="235.0" y="116.5" text-anchor="middle" class="bx-t" style="fill:#D04C70;font-size:11px">GORSZE</text>
 <text x="235.0" y="132.5" text-anchor="middle" class="cap" style="font-size:9.5px">z ≥ z*</text>
 <text x="105.0" y="116.5" text-anchor="middle" class="cap" style="font-size:9.5px">nieporównywalne</text>
 <text x="235.0" y="241.5" text-anchor="middle" class="cap" style="font-size:9.5px">nieporównywalne</text>
 <clipPath id="cF45a19"><rect x="380" y="50" width="270" height="240"/></clipPath>
-<line x1="380.0" y1="290.0" x2="650.0" y2="290.0" stroke="#CCD2C7" stroke-width="1.2"/>
-<line x1="380.0" y1="50.0" x2="380.0" y2="290.0" stroke="#CCD2C7" stroke-width="1.2"/>
-<line x1="380.0" y1="290.0" x2="380.0" y2="294.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="380.0" y1="290.0" x2="650.0" y2="290.0" stroke="#CDD5E2" stroke-width="1.2"/>
+<line x1="380.0" y1="50.0" x2="380.0" y2="290.0" stroke="#CDD5E2" stroke-width="1.2"/>
+<line x1="380.0" y1="290.0" x2="380.0" y2="294.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="380.0" y="306.0" text-anchor="middle" class="tick">−12</text>
-<line x1="442.3" y1="290.0" x2="442.3" y2="294.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="442.3" y1="290.0" x2="442.3" y2="294.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="442.3" y="306.0" text-anchor="middle" class="tick">−9</text>
-<line x1="504.6" y1="290.0" x2="504.6" y2="294.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="504.6" y1="290.0" x2="504.6" y2="294.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="504.6" y="306.0" text-anchor="middle" class="tick">−6</text>
-<line x1="566.9" y1="290.0" x2="566.9" y2="294.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="566.9" y1="290.0" x2="566.9" y2="294.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="566.9" y="306.0" text-anchor="middle" class="tick">−3</text>
-<line x1="629.2" y1="290.0" x2="629.2" y2="294.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="629.2" y1="290.0" x2="629.2" y2="294.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="629.2" y="306.0" text-anchor="middle" class="tick">0</text>
-<line x1="376.0" y1="277.4" x2="380.0" y2="277.4" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="376.0" y1="277.4" x2="380.0" y2="277.4" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="380.0" y1="277.4" x2="650.0" y2="277.4" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="372.0" y="281.4" text-anchor="end" class="tick">0</text>
-<line x1="376.0" y1="214.2" x2="380.0" y2="214.2" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="376.0" y1="214.2" x2="380.0" y2="214.2" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="380.0" y1="214.2" x2="650.0" y2="214.2" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="372.0" y="218.2" text-anchor="end" class="tick">5</text>
-<line x1="376.0" y1="151.1" x2="380.0" y2="151.1" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="376.0" y1="151.1" x2="380.0" y2="151.1" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="380.0" y1="151.1" x2="650.0" y2="151.1" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="372.0" y="155.1" text-anchor="end" class="tick">10</text>
-<line x1="376.0" y1="87.9" x2="380.0" y2="87.9" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="376.0" y1="87.9" x2="380.0" y2="87.9" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="380.0" y1="87.9" x2="650.0" y2="87.9" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="372.0" y="91.9" text-anchor="end" class="tick">15</text>
 <text x="515.0" y="324.0" text-anchor="middle" class="axlab">z₁ = −x₁ − 2x₂</text>
 <text x="372.0" y="42.0" text-anchor="start" class="axlab">z₂ = 3x₁ + 2x₂</text>
-<polygon points="629.2,277.4 525.4,87.9 473.5,68.9 421.5,75.3 442.3,163.7" fill="#0E6E78" opacity="0.12" stroke="none" stroke-width="1"/>
-<g clip-path="url(#cF45a19)"><polyline points="421.5,75.3 442.3,163.7 629.2,277.4" fill="none" stroke="#5B4B8A" stroke-width="3" stroke-linejoin="round"/></g>
-<circle cx="629.2" cy="277.4" r="4.5" fill="#5B4B8A" stroke="none" stroke-width="1"/>
-<text x="637.2" y="271.4" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">A</text>
-<circle cx="525.4" cy="87.9" r="4.5" fill="#5C6B77" stroke="none" stroke-width="1"/>
-<text x="533.4" y="81.9" text-anchor="start" class="bx-t" style="fill:#5C6B77;font-size:10.5px">B</text>
-<circle cx="473.5" cy="68.9" r="4.5" fill="#5C6B77" stroke="none" stroke-width="1"/>
-<text x="481.5" y="62.9" text-anchor="start" class="bx-t" style="fill:#5C6B77;font-size:10.5px">C</text>
-<circle cx="421.5" cy="75.3" r="4.5" fill="#5B4B8A" stroke="none" stroke-width="1"/>
-<text x="413.5" y="69.3" text-anchor="end" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">D</text>
-<circle cx="442.3" cy="163.7" r="4.5" fill="#5B4B8A" stroke="none" stroke-width="1"/>
-<text x="434.3" y="157.7" text-anchor="end" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">E</text>
-<text x="386.2" y="245.8" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">front Pareto: D–E–A</text>
-<text x="542.0" y="119.5" text-anchor="start" class="cap" style="fill:#5C6B77;font-size:9.5px">B, C — zdominowane</text>
+<polygon points="629.2,277.4 525.4,87.9 473.5,68.9 421.5,75.3 442.3,163.7" fill="#2457D6" opacity="0.12" stroke="none" stroke-width="1"/>
+<g clip-path="url(#cF45a19)"><polyline points="421.5,75.3 442.3,163.7 629.2,277.4" fill="none" stroke="#7A4FD0" stroke-width="3" stroke-linejoin="round"/></g>
+<circle cx="629.2" cy="277.4" r="4.5" fill="#7A4FD0" stroke="none" stroke-width="1"/>
+<text x="637.2" y="271.4" text-anchor="start" class="bx-t" style="fill:#7A4FD0;font-size:10.5px">A</text>
+<circle cx="525.4" cy="87.9" r="4.5" fill="#5A667A" stroke="none" stroke-width="1"/>
+<text x="533.4" y="81.9" text-anchor="start" class="bx-t" style="fill:#5A667A;font-size:10.5px">B</text>
+<circle cx="473.5" cy="68.9" r="4.5" fill="#5A667A" stroke="none" stroke-width="1"/>
+<text x="481.5" y="62.9" text-anchor="start" class="bx-t" style="fill:#5A667A;font-size:10.5px">C</text>
+<circle cx="421.5" cy="75.3" r="4.5" fill="#7A4FD0" stroke="none" stroke-width="1"/>
+<text x="413.5" y="69.3" text-anchor="end" class="bx-t" style="fill:#7A4FD0;font-size:10.5px">D</text>
+<circle cx="442.3" cy="163.7" r="4.5" fill="#7A4FD0" stroke="none" stroke-width="1"/>
+<text x="434.3" y="157.7" text-anchor="end" class="bx-t" style="fill:#7A4FD0;font-size:10.5px">E</text>
+<text x="386.2" y="245.8" text-anchor="start" class="bx-t" style="fill:#7A4FD0;font-size:10.5px">front Pareto: D–E–A</text>
+<text x="542.0" y="119.5" text-anchor="start" class="cap" style="fill:#5A667A;font-size:9.5px">B, C — zdominowane</text>
 </svg>
 <figcaption>Po lewej stożki nierówności Pareto wokół punktu z*. Punkty z lewego dolnego stożka są lepsze, z prawego górnego — gorsze, pozostałe są z z* nieporównywalne. Po prawej przykład minimalizacji z wykładu: z pięciu wierzchołków obrazu zbioru X niezdominowane są A, E i D. Na podstawie: K. Duzinkiewicz, <em>Zagadnienia wielocelowe I</em>, 27.10.2025.</figcaption>
 </figure>
@@ -302,112 +302,112 @@ html{scroll-padding-top:var(--sbh,84px)}
 
 <figure>
 <svg viewBox="0 0 680 360" class="fig">
-<defs><marker id="arF45b0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0E6E78"/></marker><marker id="arF45b1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B3641A"/></marker><marker id="arF45b2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#141C24"/></marker></defs>
+<defs><marker id="arF45b0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#2457D6"/></marker><marker id="arF45b1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#E2711D"/></marker><marker id="arF45b2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0F1B2D"/></marker></defs>
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">PRZYKŁAD Z WYKŁADU: TE SAME PUNKTY W PRZESTRZENI DECYZJI I CELÓW</text>
 <clipPath id="cF45b1"><rect x="60" y="50" width="240" height="250"/></clipPath>
-<line x1="60.0" y1="300.0" x2="300.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
-<line x1="60.0" y1="50.0" x2="60.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
-<line x1="60.0" y1="300.0" x2="60.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="60.0" y1="300.0" x2="300.0" y2="300.0" stroke="#CDD5E2" stroke-width="1.2"/>
+<line x1="60.0" y1="50.0" x2="60.0" y2="300.0" stroke="#CDD5E2" stroke-width="1.2"/>
+<line x1="60.0" y1="300.0" x2="60.0" y2="304.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="60.0" y="316.0" text-anchor="middle" class="tick">0</text>
-<line x1="135.0" y1="300.0" x2="135.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="135.0" y1="300.0" x2="135.0" y2="304.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="135.0" y="316.0" text-anchor="middle" class="tick">10</text>
-<line x1="210.0" y1="300.0" x2="210.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="210.0" y1="300.0" x2="210.0" y2="304.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="210.0" y="316.0" text-anchor="middle" class="tick">20</text>
-<line x1="285.0" y1="300.0" x2="285.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="285.0" y1="300.0" x2="285.0" y2="304.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="285.0" y="316.0" text-anchor="middle" class="tick">30</text>
-<line x1="56.0" y1="300.0" x2="60.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="56.0" y1="300.0" x2="60.0" y2="300.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="60.0" y1="300.0" x2="300.0" y2="300.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="52.0" y="304.0" text-anchor="end" class="tick">0</text>
-<line x1="56.0" y1="254.5" x2="60.0" y2="254.5" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="56.0" y1="254.5" x2="60.0" y2="254.5" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="60.0" y1="254.5" x2="300.0" y2="254.5" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="52.0" y="258.5" text-anchor="end" class="tick">10</text>
-<line x1="56.0" y1="209.1" x2="60.0" y2="209.1" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="56.0" y1="209.1" x2="60.0" y2="209.1" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="60.0" y1="209.1" x2="300.0" y2="209.1" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="52.0" y="213.1" text-anchor="end" class="tick">20</text>
-<line x1="56.0" y1="163.6" x2="60.0" y2="163.6" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="56.0" y1="163.6" x2="60.0" y2="163.6" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="60.0" y1="163.6" x2="300.0" y2="163.6" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="52.0" y="167.6" text-anchor="end" class="tick">30</text>
-<line x1="56.0" y1="118.2" x2="60.0" y2="118.2" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="56.0" y1="118.2" x2="60.0" y2="118.2" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="60.0" y1="118.2" x2="300.0" y2="118.2" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="52.0" y="122.2" text-anchor="end" class="tick">40</text>
-<line x1="56.0" y1="72.7" x2="60.0" y2="72.7" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="56.0" y1="72.7" x2="60.0" y2="72.7" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="60.0" y1="72.7" x2="300.0" y2="72.7" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="52.0" y="76.7" text-anchor="end" class="tick">50</text>
 <text x="180.0" y="334.0" text-anchor="middle" class="axlab">x₁</text>
 <text x="54.0" y="42.0" text-anchor="end" class="axlab">x₂</text>
-<polygon points="60.0,300.0 210.0,300.0 210.0,254.5 135.0,163.6 60.0,163.6" fill="#0E6E78" opacity="0.12" stroke="none" stroke-width="1"/>
-<g clip-path="url(#cF45b1)"><polyline points="60.0,72.7 266.2,322.7" fill="none" stroke="#5C6B77" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
-<g clip-path="url(#cF45b1)"><polyline points="210.0,300.0 210.0,50.0" fill="none" stroke="#5C6B77" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
-<g clip-path="url(#cF45b1)"><polyline points="60.0,163.6 300.0,163.6" fill="none" stroke="#5C6B77" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
-<g clip-path="url(#cF45b1)"><polyline points="135.0,163.6 210.0,254.5" fill="none" stroke="#5B4B8A" stroke-width="3.2" stroke-linejoin="round"/></g>
-<circle cx="60.0" cy="300.0" r="4" fill="#141C24" stroke="none" stroke-width="1"/>
-<text x="52.0" y="294.0" text-anchor="end" class="bx-t" style="fill:#141C24;font-size:10.5px">0</text>
-<circle cx="135.0" cy="163.6" r="4" fill="#5B4B8A" stroke="none" stroke-width="1"/>
-<text x="141.0" y="155.6" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">A</text>
-<circle cx="210.0" cy="254.5" r="4" fill="#5B4B8A" stroke="none" stroke-width="1"/>
-<text x="218.0" y="250.5" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">B</text>
-<circle cx="210.0" cy="300.0" r="4" fill="#141C24" stroke="none" stroke-width="1"/>
-<text x="218.0" y="294.0" text-anchor="start" class="bx-t" style="fill:#141C24;font-size:10.5px">C</text>
-<circle cx="60.0" cy="163.6" r="4" fill="#141C24" stroke="none" stroke-width="1"/>
-<text x="52.0" y="157.6" text-anchor="end" class="bx-t" style="fill:#141C24;font-size:10.5px">D</text>
-<path d="M 90.0 263.6 L 162.0 249.1" fill="none" stroke="#0E6E78" stroke-width="1.6" marker-end="url(#arF45b0)"/>
-<text x="166.0" y="247.1" text-anchor="start" class="cap" style="fill:#0E6E78;font-size:10px">∇z₁</text>
-<path d="M 90.0 263.6 L 138.0 220.0" fill="none" stroke="#B3641A" stroke-width="1.6" marker-end="url(#arF45b1)"/>
-<text x="142.0" y="218.0" text-anchor="start" class="cap" style="fill:#B3641A;font-size:10px">∇z₂</text>
-<text x="232.5" y="86.4" text-anchor="start" class="cap" style="fill:#5C6B77;font-size:9px">2x₁ + x₂ ≤ 50</text>
-<path d="M 318.0 170.0 L 362.0 170.0" fill="none" stroke="#141C24" stroke-width="1.6" marker-end="url(#arF45b2)"/>
+<polygon points="60.0,300.0 210.0,300.0 210.0,254.5 135.0,163.6 60.0,163.6" fill="#2457D6" opacity="0.12" stroke="none" stroke-width="1"/>
+<g clip-path="url(#cF45b1)"><polyline points="60.0,72.7 266.2,322.7" fill="none" stroke="#5A667A" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
+<g clip-path="url(#cF45b1)"><polyline points="210.0,300.0 210.0,50.0" fill="none" stroke="#5A667A" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
+<g clip-path="url(#cF45b1)"><polyline points="60.0,163.6 300.0,163.6" fill="none" stroke="#5A667A" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
+<g clip-path="url(#cF45b1)"><polyline points="135.0,163.6 210.0,254.5" fill="none" stroke="#7A4FD0" stroke-width="3.2" stroke-linejoin="round"/></g>
+<circle cx="60.0" cy="300.0" r="4" fill="#0F1B2D" stroke="none" stroke-width="1"/>
+<text x="52.0" y="294.0" text-anchor="end" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">0</text>
+<circle cx="135.0" cy="163.6" r="4" fill="#7A4FD0" stroke="none" stroke-width="1"/>
+<text x="141.0" y="155.6" text-anchor="start" class="bx-t" style="fill:#7A4FD0;font-size:10.5px">A</text>
+<circle cx="210.0" cy="254.5" r="4" fill="#7A4FD0" stroke="none" stroke-width="1"/>
+<text x="218.0" y="250.5" text-anchor="start" class="bx-t" style="fill:#7A4FD0;font-size:10.5px">B</text>
+<circle cx="210.0" cy="300.0" r="4" fill="#0F1B2D" stroke="none" stroke-width="1"/>
+<text x="218.0" y="294.0" text-anchor="start" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">C</text>
+<circle cx="60.0" cy="163.6" r="4" fill="#0F1B2D" stroke="none" stroke-width="1"/>
+<text x="52.0" y="157.6" text-anchor="end" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">D</text>
+<path d="M 90.0 263.6 L 162.0 249.1" fill="none" stroke="#2457D6" stroke-width="1.6" marker-end="url(#arF45b0)"/>
+<text x="166.0" y="247.1" text-anchor="start" class="cap" style="fill:#2457D6;font-size:10px">∇z₁</text>
+<path d="M 90.0 263.6 L 138.0 220.0" fill="none" stroke="#E2711D" stroke-width="1.6" marker-end="url(#arF45b1)"/>
+<text x="142.0" y="218.0" text-anchor="start" class="cap" style="fill:#E2711D;font-size:10px">∇z₂</text>
+<text x="232.5" y="86.4" text-anchor="start" class="cap" style="fill:#5A667A;font-size:9px">2x₁ + x₂ ≤ 50</text>
+<path d="M 318.0 170.0 L 362.0 170.0" fill="none" stroke="#0F1B2D" stroke-width="1.6" marker-end="url(#arF45b2)"/>
 <text x="340.0" y="160.0" text-anchor="middle" class="bx-t" style="font-size:11px">z(x)</text>
 <clipPath id="cF45b54"><rect x="410" y="50" width="250" height="250"/></clipPath>
-<line x1="410.0" y1="300.0" x2="660.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
-<line x1="410.0" y1="50.0" x2="410.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
-<line x1="410.0" y1="300.0" x2="410.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="410.0" y1="300.0" x2="660.0" y2="300.0" stroke="#CDD5E2" stroke-width="1.2"/>
+<line x1="410.0" y1="50.0" x2="410.0" y2="300.0" stroke="#CDD5E2" stroke-width="1.2"/>
+<line x1="410.0" y1="300.0" x2="410.0" y2="304.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="410.0" y="316.0" text-anchor="middle" class="tick">0</text>
-<line x1="471.0" y1="300.0" x2="471.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="471.0" y1="300.0" x2="471.0" y2="304.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="471.0" y="316.0" text-anchor="middle" class="tick">20</text>
-<line x1="532.0" y1="300.0" x2="532.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="532.0" y1="300.0" x2="532.0" y2="304.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="532.0" y="316.0" text-anchor="middle" class="tick">40</text>
-<line x1="592.9" y1="300.0" x2="592.9" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="592.9" y1="300.0" x2="592.9" y2="304.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="592.9" y="316.0" text-anchor="middle" class="tick">60</text>
-<line x1="653.9" y1="300.0" x2="653.9" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="653.9" y1="300.0" x2="653.9" y2="304.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="653.9" y="316.0" text-anchor="middle" class="tick">80</text>
-<line x1="406.0" y1="300.0" x2="410.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="406.0" y1="300.0" x2="410.0" y2="300.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="410.0" y1="300.0" x2="660.0" y2="300.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="402.0" y="304.0" text-anchor="end" class="tick">0</text>
-<line x1="406.0" y1="260.0" x2="410.0" y2="260.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="406.0" y1="260.0" x2="410.0" y2="260.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="410.0" y1="260.0" x2="660.0" y2="260.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="402.0" y="264.0" text-anchor="end" class="tick">20</text>
-<line x1="406.0" y1="220.0" x2="410.0" y2="220.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="406.0" y1="220.0" x2="410.0" y2="220.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="410.0" y1="220.0" x2="660.0" y2="220.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="402.0" y="224.0" text-anchor="end" class="tick">40</text>
-<line x1="406.0" y1="180.0" x2="410.0" y2="180.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="406.0" y1="180.0" x2="410.0" y2="180.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="410.0" y1="180.0" x2="660.0" y2="180.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="402.0" y="184.0" text-anchor="end" class="tick">60</text>
-<line x1="406.0" y1="140.0" x2="410.0" y2="140.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="406.0" y1="140.0" x2="410.0" y2="140.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="410.0" y1="140.0" x2="660.0" y2="140.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="402.0" y="144.0" text-anchor="end" class="tick">80</text>
-<line x1="406.0" y1="100.0" x2="410.0" y2="100.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="406.0" y1="100.0" x2="410.0" y2="100.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="410.0" y1="100.0" x2="660.0" y2="100.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="402.0" y="104.0" text-anchor="end" class="tick">100</text>
-<line x1="406.0" y1="60.0" x2="410.0" y2="60.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="406.0" y1="60.0" x2="410.0" y2="60.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="410.0" y1="60.0" x2="660.0" y2="60.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="402.0" y="64.0" text-anchor="end" class="tick">120</text>
 <text x="535.0" y="334.0" text-anchor="middle" class="axlab">z₁ — zysk</text>
 <text x="404.0" y="42.0" text-anchor="start" class="axlab">z₂ — udział</text>
-<polygon points="410.0,300.0 592.9,220.0 623.4,160.0 592.9,80.0 501.5,120.0" fill="#0E6E78" opacity="0.12" stroke="none" stroke-width="1"/>
-<g clip-path="url(#cF45b54)"><polyline points="592.9,80.0 623.4,160.0" fill="none" stroke="#5B4B8A" stroke-width="3.2" stroke-linejoin="round"/></g>
-<circle cx="410.0" cy="300.0" r="4" fill="#141C24" stroke="none" stroke-width="1"/>
-<text x="418.0" y="294.0" text-anchor="start" class="bx-t" style="fill:#141C24;font-size:10.5px">0</text>
-<circle cx="592.9" cy="80.0" r="4" fill="#5B4B8A" stroke="none" stroke-width="1"/>
-<text x="584.9" y="74.0" text-anchor="end" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">A(60, 110)</text>
-<circle cx="623.4" cy="160.0" r="4" fill="#5B4B8A" stroke="none" stroke-width="1"/>
-<text x="631.4" y="164.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">B(70, 70)</text>
-<circle cx="592.9" cy="220.0" r="4" fill="#141C24" stroke="none" stroke-width="1"/>
-<text x="600.9" y="232.0" text-anchor="start" class="bx-t" style="fill:#141C24;font-size:10.5px">C(60, 40)</text>
-<circle cx="501.5" cy="120.0" r="4" fill="#141C24" stroke="none" stroke-width="1"/>
-<text x="493.5" y="114.0" text-anchor="end" class="bx-t" style="fill:#141C24;font-size:10.5px">D(30, 90)</text>
-<circle cx="623.4" cy="80.0" r="6" fill="#FFFFFF" stroke="#B3641A" stroke-width="1.8"/>
-<text x="660.0" y="58.0" text-anchor="end" class="cap" style="fill:#B3641A;font-size:9.5px">punkt idealny (70, 110)</text>
-<text x="635.6" y="120.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">front</text>
+<polygon points="410.0,300.0 592.9,220.0 623.4,160.0 592.9,80.0 501.5,120.0" fill="#2457D6" opacity="0.12" stroke="none" stroke-width="1"/>
+<g clip-path="url(#cF45b54)"><polyline points="592.9,80.0 623.4,160.0" fill="none" stroke="#7A4FD0" stroke-width="3.2" stroke-linejoin="round"/></g>
+<circle cx="410.0" cy="300.0" r="4" fill="#0F1B2D" stroke="none" stroke-width="1"/>
+<text x="418.0" y="294.0" text-anchor="start" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">0</text>
+<circle cx="592.9" cy="80.0" r="4" fill="#7A4FD0" stroke="none" stroke-width="1"/>
+<text x="584.9" y="74.0" text-anchor="end" class="bx-t" style="fill:#7A4FD0;font-size:10.5px">A(60, 110)</text>
+<circle cx="623.4" cy="160.0" r="4" fill="#7A4FD0" stroke="none" stroke-width="1"/>
+<text x="631.4" y="164.0" text-anchor="start" class="bx-t" style="fill:#7A4FD0;font-size:10.5px">B(70, 70)</text>
+<circle cx="592.9" cy="220.0" r="4" fill="#0F1B2D" stroke="none" stroke-width="1"/>
+<text x="600.9" y="232.0" text-anchor="start" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">C(60, 40)</text>
+<circle cx="501.5" cy="120.0" r="4" fill="#0F1B2D" stroke="none" stroke-width="1"/>
+<text x="493.5" y="114.0" text-anchor="end" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">D(30, 90)</text>
+<circle cx="623.4" cy="80.0" r="6" fill="#FFFFFF" stroke="#E2711D" stroke-width="1.8"/>
+<text x="660.0" y="58.0" text-anchor="end" class="cap" style="fill:#E2711D;font-size:9.5px">punkt idealny (70, 110)</text>
+<text x="635.6" y="120.0" text-anchor="start" class="bx-t" style="fill:#7A4FD0;font-size:10.5px">front</text>
 <text x="530.0" y="346.0" text-anchor="middle" class="cap" style="font-size:9.5px">oba cele maksymalizujemy: lepiej = w prawo i w górę</text>
 </svg>
 <figcaption>Odwzorowanie <strong>z(x)</strong> przenosi wielokąt dopuszczalny z przestrzeni decyzji do przestrzeni celów. Zbiór Pareto to krawędź AB (na ograniczeniu surowca), a jego obraz — odcinek od (60, 110) do (70, 70). Gradienty obu celów wskazują różne kierunki, dlatego żaden wierzchołek nie jest najlepszy w obu celach. Punkt idealny (70, 110) jest nieosiągalny.</figcaption>
@@ -435,103 +435,103 @@ html{scroll-padding-top:var(--sbh,84px)}
 
 <figure>
 <svg viewBox="0 0 680 360" class="fig">
-<defs><marker id="arF45c0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#141C24"/></marker><marker id="arF45c1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5B4B8A"/></marker></defs>
+<defs><marker id="arF45c0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0F1B2D"/></marker><marker id="arF45c1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#7A4FD0"/></marker></defs>
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">METODA ε-OGRANICZEŃ: max z₁ PRZY z₂ ≥ 100</text>
 <clipPath id="cF45c1"><rect x="60" y="50" width="240" height="250"/></clipPath>
-<line x1="60.0" y1="300.0" x2="300.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
-<line x1="60.0" y1="50.0" x2="60.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
-<line x1="60.0" y1="300.0" x2="60.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="60.0" y1="300.0" x2="300.0" y2="300.0" stroke="#CDD5E2" stroke-width="1.2"/>
+<line x1="60.0" y1="50.0" x2="60.0" y2="300.0" stroke="#CDD5E2" stroke-width="1.2"/>
+<line x1="60.0" y1="300.0" x2="60.0" y2="304.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="60.0" y="316.0" text-anchor="middle" class="tick">0</text>
-<line x1="135.0" y1="300.0" x2="135.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="135.0" y1="300.0" x2="135.0" y2="304.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="135.0" y="316.0" text-anchor="middle" class="tick">10</text>
-<line x1="210.0" y1="300.0" x2="210.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="210.0" y1="300.0" x2="210.0" y2="304.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="210.0" y="316.0" text-anchor="middle" class="tick">20</text>
-<line x1="285.0" y1="300.0" x2="285.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="285.0" y1="300.0" x2="285.0" y2="304.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="285.0" y="316.0" text-anchor="middle" class="tick">30</text>
-<line x1="56.0" y1="300.0" x2="60.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="56.0" y1="300.0" x2="60.0" y2="300.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="60.0" y1="300.0" x2="300.0" y2="300.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="52.0" y="304.0" text-anchor="end" class="tick">0</text>
-<line x1="56.0" y1="254.5" x2="60.0" y2="254.5" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="56.0" y1="254.5" x2="60.0" y2="254.5" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="60.0" y1="254.5" x2="300.0" y2="254.5" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="52.0" y="258.5" text-anchor="end" class="tick">10</text>
-<line x1="56.0" y1="209.1" x2="60.0" y2="209.1" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="56.0" y1="209.1" x2="60.0" y2="209.1" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="60.0" y1="209.1" x2="300.0" y2="209.1" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="52.0" y="213.1" text-anchor="end" class="tick">20</text>
-<line x1="56.0" y1="163.6" x2="60.0" y2="163.6" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="56.0" y1="163.6" x2="60.0" y2="163.6" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="60.0" y1="163.6" x2="300.0" y2="163.6" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="52.0" y="167.6" text-anchor="end" class="tick">30</text>
-<line x1="56.0" y1="118.2" x2="60.0" y2="118.2" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="56.0" y1="118.2" x2="60.0" y2="118.2" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="60.0" y1="118.2" x2="300.0" y2="118.2" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="52.0" y="122.2" text-anchor="end" class="tick">40</text>
-<line x1="56.0" y1="72.7" x2="60.0" y2="72.7" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="56.0" y1="72.7" x2="60.0" y2="72.7" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="60.0" y1="72.7" x2="300.0" y2="72.7" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="52.0" y="76.7" text-anchor="end" class="tick">50</text>
 <text x="180.0" y="334.0" text-anchor="middle" class="axlab">x₁</text>
 <text x="54.0" y="42.0" text-anchor="end" class="axlab">x₂</text>
-<polygon points="60.0,300.0 210.0,300.0 210.0,254.5 135.0,163.6 60.0,163.6" fill="#0E6E78" opacity="0.12" stroke="none" stroke-width="1"/>
-<g clip-path="url(#cF45c1)"><polyline points="60.0,72.7 266.2,322.7" fill="none" stroke="#5C6B77" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
-<g clip-path="url(#cF45c1)"><polyline points="210.0,300.0 210.0,50.0" fill="none" stroke="#5C6B77" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
-<g clip-path="url(#cF45c1)"><polyline points="60.0,163.6 300.0,163.6" fill="none" stroke="#5C6B77" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
-<g clip-path="url(#cF45c1)"><polyline points="60.0,148.5 300.0,245.5" fill="none" stroke="#0E6E78" stroke-width="1.8" stroke-linejoin="round"/></g>
-<polygon points="97.5,163.6 135.0,163.6 153.8,186.4" fill="#0E6E78" opacity="0.45" stroke="#0E6E78" stroke-width="1.2"/>
-<g clip-path="url(#cF45c1)"><polyline points="105.0,97.7 185.2,243.6" fill="none" stroke="#5B4B8A" stroke-width="1.3" stroke-linejoin="round" stroke-dasharray="5 3"/></g>
-<circle cx="97.5" cy="163.6" r="4" fill="#0E6E78" stroke="none" stroke-width="1"/>
-<text x="91.5" y="155.6" text-anchor="end" class="bx-t" style="fill:#0E6E78;font-size:10.5px">E</text>
-<circle cx="135.0" cy="163.6" r="4" fill="#141C24" stroke="none" stroke-width="1"/>
-<text x="139.0" y="155.6" text-anchor="start" class="bx-t" style="fill:#141C24;font-size:10.5px">A</text>
-<circle cx="153.8" cy="186.4" r="8.5" fill="#FFFFFF" stroke="#5B4B8A" stroke-width="1.8"/>
-<circle cx="153.8" cy="186.4" r="4.5" fill="#5B4B8A" stroke="none" stroke-width="1"/>
-<text x="163.8" y="190.4" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">F</text>
-<text x="225.0" y="181.8" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">x* = (12,5; 25)</text>
-<text x="240.0" y="209.1" text-anchor="start" class="cap" style="fill:#0E6E78;font-size:9.5px">2x₁ + 3x₂ ≥ 100</text>
-<text x="183.8" y="240.9" text-anchor="start" class="cap" style="fill:#5B4B8A;font-size:9px">linia z₁ = 62,5</text>
-<path d="M 318.0 170.0 L 362.0 170.0" fill="none" stroke="#141C24" stroke-width="1.6" marker-end="url(#arF45c0)"/>
+<polygon points="60.0,300.0 210.0,300.0 210.0,254.5 135.0,163.6 60.0,163.6" fill="#2457D6" opacity="0.12" stroke="none" stroke-width="1"/>
+<g clip-path="url(#cF45c1)"><polyline points="60.0,72.7 266.2,322.7" fill="none" stroke="#5A667A" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
+<g clip-path="url(#cF45c1)"><polyline points="210.0,300.0 210.0,50.0" fill="none" stroke="#5A667A" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
+<g clip-path="url(#cF45c1)"><polyline points="60.0,163.6 300.0,163.6" fill="none" stroke="#5A667A" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
+<g clip-path="url(#cF45c1)"><polyline points="60.0,148.5 300.0,245.5" fill="none" stroke="#2457D6" stroke-width="1.8" stroke-linejoin="round"/></g>
+<polygon points="97.5,163.6 135.0,163.6 153.8,186.4" fill="#2457D6" opacity="0.45" stroke="#2457D6" stroke-width="1.2"/>
+<g clip-path="url(#cF45c1)"><polyline points="105.0,97.7 185.2,243.6" fill="none" stroke="#7A4FD0" stroke-width="1.3" stroke-linejoin="round" stroke-dasharray="5 3"/></g>
+<circle cx="97.5" cy="163.6" r="4" fill="#2457D6" stroke="none" stroke-width="1"/>
+<text x="91.5" y="155.6" text-anchor="end" class="bx-t" style="fill:#2457D6;font-size:10.5px">E</text>
+<circle cx="135.0" cy="163.6" r="4" fill="#0F1B2D" stroke="none" stroke-width="1"/>
+<text x="139.0" y="155.6" text-anchor="start" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">A</text>
+<circle cx="153.8" cy="186.4" r="8.5" fill="#FFFFFF" stroke="#7A4FD0" stroke-width="1.8"/>
+<circle cx="153.8" cy="186.4" r="4.5" fill="#7A4FD0" stroke="none" stroke-width="1"/>
+<text x="163.8" y="190.4" text-anchor="start" class="bx-t" style="fill:#7A4FD0;font-size:10.5px">F</text>
+<text x="225.0" y="181.8" text-anchor="start" class="bx-t" style="fill:#7A4FD0;font-size:10.5px">x* = (12,5; 25)</text>
+<text x="240.0" y="209.1" text-anchor="start" class="cap" style="fill:#2457D6;font-size:9.5px">2x₁ + 3x₂ ≥ 100</text>
+<text x="183.8" y="240.9" text-anchor="start" class="cap" style="fill:#7A4FD0;font-size:9px">linia z₁ = 62,5</text>
+<path d="M 318.0 170.0 L 362.0 170.0" fill="none" stroke="#0F1B2D" stroke-width="1.6" marker-end="url(#arF45c0)"/>
 <clipPath id="cF45c50"><rect x="410" y="50" width="250" height="250"/></clipPath>
-<line x1="410.0" y1="300.0" x2="660.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
-<line x1="410.0" y1="50.0" x2="410.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
-<line x1="410.0" y1="300.0" x2="410.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="410.0" y1="300.0" x2="660.0" y2="300.0" stroke="#CDD5E2" stroke-width="1.2"/>
+<line x1="410.0" y1="50.0" x2="410.0" y2="300.0" stroke="#CDD5E2" stroke-width="1.2"/>
+<line x1="410.0" y1="300.0" x2="410.0" y2="304.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="410.0" y="316.0" text-anchor="middle" class="tick">0</text>
-<line x1="471.0" y1="300.0" x2="471.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="471.0" y1="300.0" x2="471.0" y2="304.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="471.0" y="316.0" text-anchor="middle" class="tick">20</text>
-<line x1="532.0" y1="300.0" x2="532.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="532.0" y1="300.0" x2="532.0" y2="304.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="532.0" y="316.0" text-anchor="middle" class="tick">40</text>
-<line x1="592.9" y1="300.0" x2="592.9" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="592.9" y1="300.0" x2="592.9" y2="304.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="592.9" y="316.0" text-anchor="middle" class="tick">60</text>
-<line x1="653.9" y1="300.0" x2="653.9" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="653.9" y1="300.0" x2="653.9" y2="304.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="653.9" y="316.0" text-anchor="middle" class="tick">80</text>
-<line x1="406.0" y1="300.0" x2="410.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="406.0" y1="300.0" x2="410.0" y2="300.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="410.0" y1="300.0" x2="660.0" y2="300.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="402.0" y="304.0" text-anchor="end" class="tick">0</text>
-<line x1="406.0" y1="260.0" x2="410.0" y2="260.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="406.0" y1="260.0" x2="410.0" y2="260.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="410.0" y1="260.0" x2="660.0" y2="260.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="402.0" y="264.0" text-anchor="end" class="tick">20</text>
-<line x1="406.0" y1="220.0" x2="410.0" y2="220.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="406.0" y1="220.0" x2="410.0" y2="220.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="410.0" y1="220.0" x2="660.0" y2="220.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="402.0" y="224.0" text-anchor="end" class="tick">40</text>
-<line x1="406.0" y1="180.0" x2="410.0" y2="180.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="406.0" y1="180.0" x2="410.0" y2="180.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="410.0" y1="180.0" x2="660.0" y2="180.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="402.0" y="184.0" text-anchor="end" class="tick">60</text>
-<line x1="406.0" y1="140.0" x2="410.0" y2="140.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="406.0" y1="140.0" x2="410.0" y2="140.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="410.0" y1="140.0" x2="660.0" y2="140.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="402.0" y="144.0" text-anchor="end" class="tick">80</text>
-<line x1="406.0" y1="100.0" x2="410.0" y2="100.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="406.0" y1="100.0" x2="410.0" y2="100.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="410.0" y1="100.0" x2="660.0" y2="100.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="402.0" y="104.0" text-anchor="end" class="tick">100</text>
-<line x1="406.0" y1="60.0" x2="410.0" y2="60.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="406.0" y1="60.0" x2="410.0" y2="60.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="410.0" y1="60.0" x2="660.0" y2="60.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="402.0" y="64.0" text-anchor="end" class="tick">120</text>
 <text x="535.0" y="334.0" text-anchor="middle" class="axlab">z₁ — zysk</text>
 <text x="404.0" y="42.0" text-anchor="start" class="axlab">z₂ — udział</text>
-<polygon points="410.0,300.0 592.9,220.0 623.4,160.0 592.9,80.0 501.5,120.0" fill="#0E6E78" opacity="0.12" stroke="none" stroke-width="1"/>
-<g clip-path="url(#cF45c50)"><polyline points="592.9,80.0 623.4,160.0" fill="none" stroke="#5B4B8A" stroke-width="2.4" stroke-linejoin="round"/></g>
-<g clip-path="url(#cF45c50)"><polyline points="410.0,100.0 660.0,100.0" fill="none" stroke="#0E6E78" stroke-width="1.8" stroke-linejoin="round"/></g>
-<polygon points="547.2,100.0 592.9,80.0 600.5,100.0" fill="#0E6E78" opacity="0.45" stroke="#0E6E78" stroke-width="1.2"/>
-<path d="M 532.0 108.0 L 586.8 108.0" fill="none" stroke="#5B4B8A" stroke-width="1.4" marker-end="url(#arF45c1)"/>
-<text x="559.4" y="118.0" text-anchor="middle" class="cap" style="fill:#5B4B8A;font-size:9.5px">max z₁</text>
-<circle cx="600.5" cy="100.0" r="8.5" fill="#FFFFFF" stroke="#5B4B8A" stroke-width="1.8"/>
-<circle cx="600.5" cy="100.0" r="4.5" fill="#5B4B8A" stroke="none" stroke-width="1"/>
-<text x="610.5" y="114.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">(62,5; 100)</text>
-<text x="422.2" y="90.0" text-anchor="start" class="cap" style="fill:#0E6E78;font-size:9.5px">z₂ ≥ ε = 100</text>
+<polygon points="410.0,300.0 592.9,220.0 623.4,160.0 592.9,80.0 501.5,120.0" fill="#2457D6" opacity="0.12" stroke="none" stroke-width="1"/>
+<g clip-path="url(#cF45c50)"><polyline points="592.9,80.0 623.4,160.0" fill="none" stroke="#7A4FD0" stroke-width="2.4" stroke-linejoin="round"/></g>
+<g clip-path="url(#cF45c50)"><polyline points="410.0,100.0 660.0,100.0" fill="none" stroke="#2457D6" stroke-width="1.8" stroke-linejoin="round"/></g>
+<polygon points="547.2,100.0 592.9,80.0 600.5,100.0" fill="#2457D6" opacity="0.45" stroke="#2457D6" stroke-width="1.2"/>
+<path d="M 532.0 108.0 L 586.8 108.0" fill="none" stroke="#7A4FD0" stroke-width="1.4" marker-end="url(#arF45c1)"/>
+<text x="559.4" y="118.0" text-anchor="middle" class="cap" style="fill:#7A4FD0;font-size:9.5px">max z₁</text>
+<circle cx="600.5" cy="100.0" r="8.5" fill="#FFFFFF" stroke="#7A4FD0" stroke-width="1.8"/>
+<circle cx="600.5" cy="100.0" r="4.5" fill="#7A4FD0" stroke="none" stroke-width="1"/>
+<text x="610.5" y="114.0" text-anchor="start" class="bx-t" style="fill:#7A4FD0;font-size:10.5px">(62,5; 100)</text>
+<text x="422.2" y="90.0" text-anchor="start" class="cap" style="fill:#2457D6;font-size:9.5px">z₂ ≥ ε = 100</text>
 <text x="340.0" y="346.0" text-anchor="middle" class="cap" style="font-size:9.5px">drugi cel staje się ograniczeniem; ε = 120 &gt; 110 dałoby zadanie sprzeczne</text>
 </svg>
 <figcaption>Przykład z wykładu: zysk to cel, a udział w rynku zamieniamy w ograniczenie <span class="m" data-tex="2x_1 + 3x_2 \ge 100"><svg style="vertical-align: -0.339ex;" xmlns="http://www.w3.org/2000/svg" width="16.003ex" height="1.846ex" role="img" focusable="false" viewBox="0 -666 7073.1 816" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-21-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-21-TEX-I-1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path><path id="MJX-21-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-21-TEX-N-2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path><path id="MJX-21-TEX-N-33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path><path id="MJX-21-TEX-N-2265" d="M83 616Q83 624 89 630T99 636Q107 636 253 568T543 431T687 361Q694 356 694 346T687 331Q685 329 395 192L107 56H101Q83 58 83 76Q83 77 83 79Q82 86 98 95Q117 105 248 167Q326 204 378 228L626 346L360 472Q291 505 200 548Q112 589 98 597T83 616ZM84 -118Q84 -108 99 -98H678Q694 -104 694 -118Q694 -130 679 -138H98Q84 -131 84 -118Z"></path><path id="MJX-21-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mn"><use data-c="32" xlink:href="#MJX-21-TEX-N-32"></use></g><g data-mml-node="msub" transform="translate(500,0)"><g data-mml-node="mi"><use data-c="1D465" xlink:href="#MJX-21-TEX-I-1D465"></use></g><g data-mml-node="mn" transform="translate(605,-150) scale(0.707)"><use data-c="31" xlink:href="#MJX-21-TEX-N-31"></use></g></g><g data-mml-node="mo" transform="translate(1730.8,0)"><use data-c="2B" xlink:href="#MJX-21-TEX-N-2B"></use></g><g data-mml-node="mn" transform="translate(2731,0)"><use data-c="33" xlink:href="#MJX-21-TEX-N-33"></use></g><g data-mml-node="msub" transform="translate(3231,0)"><g data-mml-node="mi"><use data-c="1D465" xlink:href="#MJX-21-TEX-I-1D465"></use></g><g data-mml-node="mn" transform="translate(605,-150) scale(0.707)"><use data-c="32" xlink:href="#MJX-21-TEX-N-32"></use></g></g><g data-mml-node="mo" transform="translate(4517.3,0)"><use data-c="2265" xlink:href="#MJX-21-TEX-N-2265"></use></g><g data-mml-node="mn" transform="translate(5573.1,0)"><use data-c="31" xlink:href="#MJX-21-TEX-N-31"></use><use data-c="30" xlink:href="#MJX-21-TEX-N-30" transform="translate(500,0)"></use><use data-c="30" xlink:href="#MJX-21-TEX-N-30" transform="translate(1000,0)"></use></g></g></g></svg></span>. Zbiór dopuszczalny kurczy się do trójkąta E–A–F, a maksimum zysku leży w F = (12,5; 25): <span class="m" data-tex="z_1 = 62{,}5"><svg style="vertical-align: -0.439ex;" xmlns="http://www.w3.org/2000/svg" width="9.079ex" height="1.946ex" role="img" focusable="false" viewBox="0 -666 4013.1 860" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-22-TEX-I-1D467" d="M347 338Q337 338 294 349T231 360Q211 360 197 356T174 346T162 335T155 324L153 320Q150 317 138 317Q117 317 117 325Q117 330 120 339Q133 378 163 406T229 440Q241 442 246 442Q271 442 291 425T329 392T367 375Q389 375 411 408T434 441Q435 442 449 442H462Q468 436 468 434Q468 430 463 420T449 399T432 377T418 358L411 349Q368 298 275 214T160 106L148 94L163 93Q185 93 227 82T290 71Q328 71 360 90T402 140Q406 149 409 151T424 153Q443 153 443 143Q443 138 442 134Q425 72 376 31T278 -11Q252 -11 232 6T193 40T155 57Q111 57 76 -3Q70 -11 59 -11H54H41Q35 -5 35 -2Q35 13 93 84Q132 129 225 214T340 322Q352 338 347 338Z"></path><path id="MJX-22-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-22-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-22-TEX-N-36" d="M42 313Q42 476 123 571T303 666Q372 666 402 630T432 550Q432 525 418 510T379 495Q356 495 341 509T326 548Q326 592 373 601Q351 623 311 626Q240 626 194 566Q147 500 147 364L148 360Q153 366 156 373Q197 433 263 433H267Q313 433 348 414Q372 400 396 374T435 317Q456 268 456 210V192Q456 169 451 149Q440 90 387 34T253 -22Q225 -22 199 -14T143 16T92 75T56 172T42 313ZM257 397Q227 397 205 380T171 335T154 278T148 216Q148 133 160 97T198 39Q222 21 251 21Q302 21 329 59Q342 77 347 104T352 209Q352 289 347 316T329 361Q302 397 257 397Z"></path><path id="MJX-22-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-22-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-22-TEX-N-35" d="M164 157Q164 133 148 117T109 101H102Q148 22 224 22Q294 22 326 82Q345 115 345 210Q345 313 318 349Q292 382 260 382H254Q176 382 136 314Q132 307 129 306T114 304Q97 304 95 310Q93 314 93 485V614Q93 664 98 664Q100 666 102 666Q103 666 123 658T178 642T253 634Q324 634 389 662Q397 666 402 666Q410 666 410 648V635Q328 538 205 538Q174 538 149 544L139 546V374Q158 388 169 396T205 412T256 420Q337 420 393 355T449 201Q449 109 385 44T229 -22Q148 -22 99 32T50 154Q50 178 61 192T84 210T107 214Q132 214 148 197T164 157Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D467" xlink:href="#MJX-22-TEX-I-1D467"></use></g><g data-mml-node="mn" transform="translate(498,-150) scale(0.707)"><use data-c="31" xlink:href="#MJX-22-TEX-N-31"></use></g></g><g data-mml-node="mo" transform="translate(1179.3,0)"><use data-c="3D" xlink:href="#MJX-22-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(2235.1,0)"><use data-c="36" xlink:href="#MJX-22-TEX-N-36"></use><use data-c="32" xlink:href="#MJX-22-TEX-N-32" transform="translate(500,0)"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(3235.1,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-22-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(3513.1,0)"><use data-c="35" xlink:href="#MJX-22-TEX-N-35"></use></g></g></g></svg></span>, <span class="m" data-tex="z_2 = 100"><svg style="vertical-align: -0.339ex;" xmlns="http://www.w3.org/2000/svg" width="8.45ex" height="1.846ex" role="img" focusable="false" viewBox="0 -666 3735.1 816" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-23-TEX-I-1D467" d="M347 338Q337 338 294 349T231 360Q211 360 197 356T174 346T162 335T155 324L153 320Q150 317 138 317Q117 317 117 325Q117 330 120 339Q133 378 163 406T229 440Q241 442 246 442Q271 442 291 425T329 392T367 375Q389 375 411 408T434 441Q435 442 449 442H462Q468 436 468 434Q468 430 463 420T449 399T432 377T418 358L411 349Q368 298 275 214T160 106L148 94L163 93Q185 93 227 82T290 71Q328 71 360 90T402 140Q406 149 409 151T424 153Q443 153 443 143Q443 138 442 134Q425 72 376 31T278 -11Q252 -11 232 6T193 40T155 57Q111 57 76 -3Q70 -11 59 -11H54H41Q35 -5 35 -2Q35 13 93 84Q132 129 225 214T340 322Q352 338 347 338Z"></path><path id="MJX-23-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-23-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-23-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-23-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D467" xlink:href="#MJX-23-TEX-I-1D467"></use></g><g data-mml-node="mn" transform="translate(498,-150) scale(0.707)"><use data-c="32" xlink:href="#MJX-23-TEX-N-32"></use></g></g><g data-mml-node="mo" transform="translate(1179.3,0)"><use data-c="3D" xlink:href="#MJX-23-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(2235.1,0)"><use data-c="31" xlink:href="#MJX-23-TEX-N-31"></use><use data-c="30" xlink:href="#MJX-23-TEX-N-30" transform="translate(500,0)"></use><use data-c="30" xlink:href="#MJX-23-TEX-N-30" transform="translate(1000,0)"></use></g></g></g></svg></span>. To punkt frontu Pareto (prawy panel).</figcaption>
@@ -559,69 +559,69 @@ html{scroll-padding-top:var(--sbh,84px)}
 
 <figure>
 <svg viewBox="0 0 680 360" class="fig">
-<defs><marker id="arF45d0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B3641A"/></marker></defs>
+<defs><marker id="arF45d0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#E2711D"/></marker></defs>
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">METODA WAŻENIA: HIPERPŁASZCZYZNA w·z = c PRZESUWANA W STRONĘ WZROSTU</text>
 <clipPath id="cF45d1"><rect x="70" y="50" width="290" height="250"/></clipPath>
-<line x1="70.0" y1="300.0" x2="360.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
-<line x1="70.0" y1="50.0" x2="70.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
-<line x1="70.0" y1="300.0" x2="70.0" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="70.0" y1="300.0" x2="360.0" y2="300.0" stroke="#CDD5E2" stroke-width="1.2"/>
+<line x1="70.0" y1="50.0" x2="70.0" y2="300.0" stroke="#CDD5E2" stroke-width="1.2"/>
+<line x1="70.0" y1="300.0" x2="70.0" y2="304.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="70.0" y="316.0" text-anchor="middle" class="tick">0</text>
-<line x1="140.7" y1="300.0" x2="140.7" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="140.7" y1="300.0" x2="140.7" y2="304.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="140.7" y="316.0" text-anchor="middle" class="tick">20</text>
-<line x1="211.5" y1="300.0" x2="211.5" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="211.5" y1="300.0" x2="211.5" y2="304.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="211.5" y="316.0" text-anchor="middle" class="tick">40</text>
-<line x1="282.2" y1="300.0" x2="282.2" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="282.2" y1="300.0" x2="282.2" y2="304.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="282.2" y="316.0" text-anchor="middle" class="tick">60</text>
-<line x1="352.9" y1="300.0" x2="352.9" y2="304.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="352.9" y1="300.0" x2="352.9" y2="304.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="352.9" y="316.0" text-anchor="middle" class="tick">80</text>
-<line x1="66.0" y1="300.0" x2="70.0" y2="300.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="66.0" y1="300.0" x2="70.0" y2="300.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="70.0" y1="300.0" x2="360.0" y2="300.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="62.0" y="304.0" text-anchor="end" class="tick">0</text>
-<line x1="66.0" y1="260.0" x2="70.0" y2="260.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="66.0" y1="260.0" x2="70.0" y2="260.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="70.0" y1="260.0" x2="360.0" y2="260.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="62.0" y="264.0" text-anchor="end" class="tick">20</text>
-<line x1="66.0" y1="220.0" x2="70.0" y2="220.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="66.0" y1="220.0" x2="70.0" y2="220.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="70.0" y1="220.0" x2="360.0" y2="220.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="62.0" y="224.0" text-anchor="end" class="tick">40</text>
-<line x1="66.0" y1="180.0" x2="70.0" y2="180.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="66.0" y1="180.0" x2="70.0" y2="180.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="70.0" y1="180.0" x2="360.0" y2="180.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="62.0" y="184.0" text-anchor="end" class="tick">60</text>
-<line x1="66.0" y1="140.0" x2="70.0" y2="140.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="66.0" y1="140.0" x2="70.0" y2="140.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="70.0" y1="140.0" x2="360.0" y2="140.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="62.0" y="144.0" text-anchor="end" class="tick">80</text>
-<line x1="66.0" y1="100.0" x2="70.0" y2="100.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="66.0" y1="100.0" x2="70.0" y2="100.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="70.0" y1="100.0" x2="360.0" y2="100.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="62.0" y="104.0" text-anchor="end" class="tick">100</text>
-<line x1="66.0" y1="60.0" x2="70.0" y2="60.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="66.0" y1="60.0" x2="70.0" y2="60.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="70.0" y1="60.0" x2="360.0" y2="60.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="62.0" y="64.0" text-anchor="end" class="tick">120</text>
 <text x="215.0" y="334.0" text-anchor="middle" class="axlab">z₁ — zysk</text>
 <text x="64.0" y="42.0" text-anchor="start" class="axlab">z₂ — udział</text>
-<polygon points="70.0,300.0 282.2,220.0 317.6,160.0 282.2,80.0 176.1,120.0" fill="#0E6E78" opacity="0.12" stroke="none" stroke-width="1"/>
-<g clip-path="url(#cF45d1)"><polyline points="282.2,80.0 317.6,160.0" fill="none" stroke="#5B4B8A" stroke-width="3" stroke-linejoin="round"/></g>
-<circle cx="70.0" cy="300.0" r="4" fill="#141C24" stroke="none" stroke-width="1"/>
-<circle cx="282.2" cy="80.0" r="4" fill="#5B4B8A" stroke="none" stroke-width="1"/>
-<text x="290.2" y="74.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">A</text>
-<circle cx="317.6" cy="160.0" r="4" fill="#5B4B8A" stroke="none" stroke-width="1"/>
-<text x="325.6" y="154.0" text-anchor="start" class="bx-t" style="fill:#5B4B8A;font-size:10.5px">B</text>
-<circle cx="282.2" cy="220.0" r="4" fill="#141C24" stroke="none" stroke-width="1"/>
-<text x="290.2" y="214.0" text-anchor="start" class="bx-t" style="fill:#141C24;font-size:10.5px">C</text>
-<circle cx="176.1" cy="120.0" r="4" fill="#141C24" stroke="none" stroke-width="1"/>
-<text x="184.1" y="114.0" text-anchor="start" class="bx-t" style="fill:#141C24;font-size:10.5px">D</text>
-<g clip-path="url(#cF45d1)"><polyline points="176.1,-10.0 360.0,146.0" fill="none" stroke="#B3641A" stroke-width="1.6" stroke-linejoin="round" stroke-dasharray="6 4"/></g>
-<g clip-path="url(#cF45d1)"><polyline points="289.3,16.0 345.9,304.0" fill="none" stroke="#0E6E78" stroke-width="1.6" stroke-linejoin="round" stroke-dasharray="6 4"/></g>
-<path d="M 317.6 110.0 L 347.3 98.8" fill="none" stroke="#B3641A" stroke-width="1.6" marker-end="url(#arF45d0)"/>
-<text x="77.1" y="64.0" text-anchor="start" class="cap" style="fill:#B3641A;font-size:9.5px">w = (0,6; 0,4)</text>
-<text x="77.1" y="80.0" text-anchor="start" class="cap" style="fill:#B3641A;font-size:9.5px">→ A, z₃ = 80</text>
-<text x="338.8" y="220.0" text-anchor="start" class="cap" style="fill:#0E6E78;font-size:9.5px">w = (0,9; 0,1)</text>
-<text x="338.8" y="234.0" text-anchor="start" class="cap" style="fill:#0E6E78;font-size:9.5px">→ B</text>
+<polygon points="70.0,300.0 282.2,220.0 317.6,160.0 282.2,80.0 176.1,120.0" fill="#2457D6" opacity="0.12" stroke="none" stroke-width="1"/>
+<g clip-path="url(#cF45d1)"><polyline points="282.2,80.0 317.6,160.0" fill="none" stroke="#7A4FD0" stroke-width="3" stroke-linejoin="round"/></g>
+<circle cx="70.0" cy="300.0" r="4" fill="#0F1B2D" stroke="none" stroke-width="1"/>
+<circle cx="282.2" cy="80.0" r="4" fill="#7A4FD0" stroke="none" stroke-width="1"/>
+<text x="290.2" y="74.0" text-anchor="start" class="bx-t" style="fill:#7A4FD0;font-size:10.5px">A</text>
+<circle cx="317.6" cy="160.0" r="4" fill="#7A4FD0" stroke="none" stroke-width="1"/>
+<text x="325.6" y="154.0" text-anchor="start" class="bx-t" style="fill:#7A4FD0;font-size:10.5px">B</text>
+<circle cx="282.2" cy="220.0" r="4" fill="#0F1B2D" stroke="none" stroke-width="1"/>
+<text x="290.2" y="214.0" text-anchor="start" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">C</text>
+<circle cx="176.1" cy="120.0" r="4" fill="#0F1B2D" stroke="none" stroke-width="1"/>
+<text x="184.1" y="114.0" text-anchor="start" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">D</text>
+<g clip-path="url(#cF45d1)"><polyline points="176.1,-10.0 360.0,146.0" fill="none" stroke="#E2711D" stroke-width="1.6" stroke-linejoin="round" stroke-dasharray="6 4"/></g>
+<g clip-path="url(#cF45d1)"><polyline points="289.3,16.0 345.9,304.0" fill="none" stroke="#2457D6" stroke-width="1.6" stroke-linejoin="round" stroke-dasharray="6 4"/></g>
+<path d="M 317.6 110.0 L 347.3 98.8" fill="none" stroke="#E2711D" stroke-width="1.6" marker-end="url(#arF45d0)"/>
+<text x="77.1" y="64.0" text-anchor="start" class="cap" style="fill:#E2711D;font-size:9.5px">w = (0,6; 0,4)</text>
+<text x="77.1" y="80.0" text-anchor="start" class="cap" style="fill:#E2711D;font-size:9.5px">→ A, z₃ = 80</text>
+<text x="338.8" y="220.0" text-anchor="start" class="cap" style="fill:#2457D6;font-size:9.5px">w = (0,9; 0,1)</text>
+<text x="338.8" y="234.0" text-anchor="start" class="cap" style="fill:#2457D6;font-size:9.5px">→ B</text>
 <text x="530.0" y="70.0" text-anchor="middle" class="bx-t" style="font-size:11px">KTÓRY WIERZCHOŁEK WYGRYWA?</text>
-<text x="530.0" y="90.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:10px">w = (λ, 1 − λ)</text>
-<rect x="410.0" y="150.0" width="192.0" height="34.0" rx="3" fill="#B3641A" stroke="none" stroke-width="1" opacity="0.3"/>
-<rect x="602.0" y="150.0" width="48.0" height="34.0" rx="3" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.3"/>
-<text x="506.0" y="172.0" text-anchor="middle" class="bx-t" style="fill:#B3641A;font-size:11px">A (60, 110)</text>
-<text x="626.0" y="172.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:11px">B</text>
-<line x1="602.0" y1="140.0" x2="602.0" y2="194.0" stroke="#5B4B8A" stroke-width="2"/>
+<text x="530.0" y="90.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:10px">w = (λ, 1 − λ)</text>
+<rect x="410.0" y="150.0" width="192.0" height="34.0" rx="3" fill="#E2711D" stroke="none" stroke-width="1" opacity="0.3"/>
+<rect x="602.0" y="150.0" width="48.0" height="34.0" rx="3" fill="#2457D6" stroke="none" stroke-width="1" opacity="0.3"/>
+<text x="506.0" y="172.0" text-anchor="middle" class="bx-t" style="fill:#E2711D;font-size:11px">A (60, 110)</text>
+<text x="626.0" y="172.0" text-anchor="middle" class="bx-t" style="fill:#2457D6;font-size:11px">B</text>
+<line x1="602.0" y1="140.0" x2="602.0" y2="194.0" stroke="#7A4FD0" stroke-width="2"/>
 <text x="410.0" y="210.0" text-anchor="middle" class="tick">0,0</text>
 <text x="458.0" y="210.0" text-anchor="middle" class="tick">0,2</text>
 <text x="506.0" y="210.0" text-anchor="middle" class="tick">0,4</text>
@@ -629,10 +629,10 @@ html{scroll-padding-top:var(--sbh,84px)}
 <text x="602.0" y="210.0" text-anchor="middle" class="tick">0,8</text>
 <text x="650.0" y="210.0" text-anchor="middle" class="tick">1,0</text>
 <text x="530.0" y="230.0" text-anchor="middle" class="axlab">λ</text>
-<text x="602.0" y="134.0" text-anchor="end" class="cap" style="fill:#5B4B8A;font-size:9.5px">λ = 0,8: cały odcinek AB</text>
-<rect x="410.0" y="262.0" width="240.0" height="58.0" rx="4" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.08"/>
-<text x="530.0" y="284.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:10px">wnętrze frontu osiągalne tylko</text>
-<text x="530.0" y="302.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:10px">przy jednej wartości wag</text>
+<text x="602.0" y="134.0" text-anchor="end" class="cap" style="fill:#7A4FD0;font-size:9.5px">λ = 0,8: cały odcinek AB</text>
+<rect x="410.0" y="262.0" width="240.0" height="58.0" rx="4" fill="#D04C70" stroke="none" stroke-width="1" opacity="0.08"/>
+<text x="530.0" y="284.0" text-anchor="middle" class="cap" style="fill:#D04C70;font-size:10px">wnętrze frontu osiągalne tylko</text>
+<text x="530.0" y="302.0" text-anchor="middle" class="cap" style="fill:#D04C70;font-size:10px">przy jednej wartości wag</text>
 </svg>
 <figcaption>Przykład z wykładu: wagi 0,6 i 0,4 dają <span class="m" data-tex="z_3 = 2{,}6x_1 + 1{,}8x_2"><svg style="vertical-align: -0.439ex;" xmlns="http://www.w3.org/2000/svg" width="18.169ex" height="1.946ex" role="img" focusable="false" viewBox="0 -666 8030.7 860" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-28-TEX-I-1D467" d="M347 338Q337 338 294 349T231 360Q211 360 197 356T174 346T162 335T155 324L153 320Q150 317 138 317Q117 317 117 325Q117 330 120 339Q133 378 163 406T229 440Q241 442 246 442Q271 442 291 425T329 392T367 375Q389 375 411 408T434 441Q435 442 449 442H462Q468 436 468 434Q468 430 463 420T449 399T432 377T418 358L411 349Q368 298 275 214T160 106L148 94L163 93Q185 93 227 82T290 71Q328 71 360 90T402 140Q406 149 409 151T424 153Q443 153 443 143Q443 138 442 134Q425 72 376 31T278 -11Q252 -11 232 6T193 40T155 57Q111 57 76 -3Q70 -11 59 -11H54H41Q35 -5 35 -2Q35 13 93 84Q132 129 225 214T340 322Q352 338 347 338Z"></path><path id="MJX-28-TEX-N-33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path><path id="MJX-28-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-28-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-28-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-28-TEX-N-36" d="M42 313Q42 476 123 571T303 666Q372 666 402 630T432 550Q432 525 418 510T379 495Q356 495 341 509T326 548Q326 592 373 601Q351 623 311 626Q240 626 194 566Q147 500 147 364L148 360Q153 366 156 373Q197 433 263 433H267Q313 433 348 414Q372 400 396 374T435 317Q456 268 456 210V192Q456 169 451 149Q440 90 387 34T253 -22Q225 -22 199 -14T143 16T92 75T56 172T42 313ZM257 397Q227 397 205 380T171 335T154 278T148 216Q148 133 160 97T198 39Q222 21 251 21Q302 21 329 59Q342 77 347 104T352 209Q352 289 347 316T329 361Q302 397 257 397Z"></path><path id="MJX-28-TEX-I-1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path><path id="MJX-28-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-28-TEX-N-2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path><path id="MJX-28-TEX-N-38" d="M70 417T70 494T124 618T248 666Q319 666 374 624T429 515Q429 485 418 459T392 417T361 389T335 371T324 363L338 354Q352 344 366 334T382 323Q457 264 457 174Q457 95 399 37T249 -22Q159 -22 101 29T43 155Q43 263 172 335L154 348Q133 361 127 368Q70 417 70 494ZM286 386L292 390Q298 394 301 396T311 403T323 413T334 425T345 438T355 454T364 471T369 491T371 513Q371 556 342 586T275 624Q268 625 242 625Q201 625 165 599T128 534Q128 511 141 492T167 463T217 431Q224 426 228 424L286 386ZM250 21Q308 21 350 55T392 137Q392 154 387 169T375 194T353 216T330 234T301 253T274 270Q260 279 244 289T218 306L210 311Q204 311 181 294T133 239T107 157Q107 98 150 60T250 21Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D467" xlink:href="#MJX-28-TEX-I-1D467"></use></g><g data-mml-node="mn" transform="translate(498,-150) scale(0.707)"><use data-c="33" xlink:href="#MJX-28-TEX-N-33"></use></g></g><g data-mml-node="mo" transform="translate(1179.3,0)"><use data-c="3D" xlink:href="#MJX-28-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(2235.1,0)"><use data-c="32" xlink:href="#MJX-28-TEX-N-32"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(2735.1,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-28-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(3013.1,0)"><use data-c="36" xlink:href="#MJX-28-TEX-N-36"></use></g><g data-mml-node="msub" transform="translate(3513.1,0)"><g data-mml-node="mi"><use data-c="1D465" xlink:href="#MJX-28-TEX-I-1D465"></use></g><g data-mml-node="mn" transform="translate(605,-150) scale(0.707)"><use data-c="31" xlink:href="#MJX-28-TEX-N-31"></use></g></g><g data-mml-node="mo" transform="translate(4743.9,0)"><use data-c="2B" xlink:href="#MJX-28-TEX-N-2B"></use></g><g data-mml-node="mn" transform="translate(5744.1,0)"><use data-c="31" xlink:href="#MJX-28-TEX-N-31"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(6244.1,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-28-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(6522.1,0)"><use data-c="38" xlink:href="#MJX-28-TEX-N-38"></use></g><g data-mml-node="msub" transform="translate(7022.1,0)"><g data-mml-node="mi"><use data-c="1D465" xlink:href="#MJX-28-TEX-I-1D465"></use></g><g data-mml-node="mn" transform="translate(605,-150) scale(0.707)"><use data-c="32" xlink:href="#MJX-28-TEX-N-32"></use></g></g></g></g></svg></span> i optimum w A = (10, 30): <span class="m" data-tex="z_3 = 80"><svg style="vertical-align: -0.375ex;" xmlns="http://www.w3.org/2000/svg" width="7.319ex" height="1.881ex" role="img" focusable="false" viewBox="0 -666 3235.1 831.6" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-29-TEX-I-1D467" d="M347 338Q337 338 294 349T231 360Q211 360 197 356T174 346T162 335T155 324L153 320Q150 317 138 317Q117 317 117 325Q117 330 120 339Q133 378 163 406T229 440Q241 442 246 442Q271 442 291 425T329 392T367 375Q389 375 411 408T434 441Q435 442 449 442H462Q468 436 468 434Q468 430 463 420T449 399T432 377T418 358L411 349Q368 298 275 214T160 106L148 94L163 93Q185 93 227 82T290 71Q328 71 360 90T402 140Q406 149 409 151T424 153Q443 153 443 143Q443 138 442 134Q425 72 376 31T278 -11Q252 -11 232 6T193 40T155 57Q111 57 76 -3Q70 -11 59 -11H54H41Q35 -5 35 -2Q35 13 93 84Q132 129 225 214T340 322Q352 338 347 338Z"></path><path id="MJX-29-TEX-N-33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path><path id="MJX-29-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-29-TEX-N-38" d="M70 417T70 494T124 618T248 666Q319 666 374 624T429 515Q429 485 418 459T392 417T361 389T335 371T324 363L338 354Q352 344 366 334T382 323Q457 264 457 174Q457 95 399 37T249 -22Q159 -22 101 29T43 155Q43 263 172 335L154 348Q133 361 127 368Q70 417 70 494ZM286 386L292 390Q298 394 301 396T311 403T323 413T334 425T345 438T355 454T364 471T369 491T371 513Q371 556 342 586T275 624Q268 625 242 625Q201 625 165 599T128 534Q128 511 141 492T167 463T217 431Q224 426 228 424L286 386ZM250 21Q308 21 350 55T392 137Q392 154 387 169T375 194T353 216T330 234T301 253T274 270Q260 279 244 289T218 306L210 311Q204 311 181 294T133 239T107 157Q107 98 150 60T250 21Z"></path><path id="MJX-29-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D467" xlink:href="#MJX-29-TEX-I-1D467"></use></g><g data-mml-node="mn" transform="translate(498,-150) scale(0.707)"><use data-c="33" xlink:href="#MJX-29-TEX-N-33"></use></g></g><g data-mml-node="mo" transform="translate(1179.3,0)"><use data-c="3D" xlink:href="#MJX-29-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(2235.1,0)"><use data-c="38" xlink:href="#MJX-29-TEX-N-38"></use><use data-c="30" xlink:href="#MJX-29-TEX-N-30" transform="translate(500,0)"></use></g></g></g></svg></span>, <span class="m" data-tex="z_1 = 60"><svg style="vertical-align: -0.339ex;" xmlns="http://www.w3.org/2000/svg" width="7.319ex" height="1.846ex" role="img" focusable="false" viewBox="0 -666 3235.1 816" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-30-TEX-I-1D467" d="M347 338Q337 338 294 349T231 360Q211 360 197 356T174 346T162 335T155 324L153 320Q150 317 138 317Q117 317 117 325Q117 330 120 339Q133 378 163 406T229 440Q241 442 246 442Q271 442 291 425T329 392T367 375Q389 375 411 408T434 441Q435 442 449 442H462Q468 436 468 434Q468 430 463 420T449 399T432 377T418 358L411 349Q368 298 275 214T160 106L148 94L163 93Q185 93 227 82T290 71Q328 71 360 90T402 140Q406 149 409 151T424 153Q443 153 443 143Q443 138 442 134Q425 72 376 31T278 -11Q252 -11 232 6T193 40T155 57Q111 57 76 -3Q70 -11 59 -11H54H41Q35 -5 35 -2Q35 13 93 84Q132 129 225 214T340 322Q352 338 347 338Z"></path><path id="MJX-30-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-30-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-30-TEX-N-36" d="M42 313Q42 476 123 571T303 666Q372 666 402 630T432 550Q432 525 418 510T379 495Q356 495 341 509T326 548Q326 592 373 601Q351 623 311 626Q240 626 194 566Q147 500 147 364L148 360Q153 366 156 373Q197 433 263 433H267Q313 433 348 414Q372 400 396 374T435 317Q456 268 456 210V192Q456 169 451 149Q440 90 387 34T253 -22Q225 -22 199 -14T143 16T92 75T56 172T42 313ZM257 397Q227 397 205 380T171 335T154 278T148 216Q148 133 160 97T198 39Q222 21 251 21Q302 21 329 59Q342 77 347 104T352 209Q352 289 347 316T329 361Q302 397 257 397Z"></path><path id="MJX-30-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D467" xlink:href="#MJX-30-TEX-I-1D467"></use></g><g data-mml-node="mn" transform="translate(498,-150) scale(0.707)"><use data-c="31" xlink:href="#MJX-30-TEX-N-31"></use></g></g><g data-mml-node="mo" transform="translate(1179.3,0)"><use data-c="3D" xlink:href="#MJX-30-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(2235.1,0)"><use data-c="36" xlink:href="#MJX-30-TEX-N-36"></use><use data-c="30" xlink:href="#MJX-30-TEX-N-30" transform="translate(500,0)"></use></g></g></g></svg></span>, <span class="m" data-tex="z_2 = 110"><svg style="vertical-align: -0.339ex;" xmlns="http://www.w3.org/2000/svg" width="8.45ex" height="1.846ex" role="img" focusable="false" viewBox="0 -666 3735.1 816" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-31-TEX-I-1D467" d="M347 338Q337 338 294 349T231 360Q211 360 197 356T174 346T162 335T155 324L153 320Q150 317 138 317Q117 317 117 325Q117 330 120 339Q133 378 163 406T229 440Q241 442 246 442Q271 442 291 425T329 392T367 375Q389 375 411 408T434 441Q435 442 449 442H462Q468 436 468 434Q468 430 463 420T449 399T432 377T418 358L411 349Q368 298 275 214T160 106L148 94L163 93Q185 93 227 82T290 71Q328 71 360 90T402 140Q406 149 409 151T424 153Q443 153 443 143Q443 138 442 134Q425 72 376 31T278 -11Q252 -11 232 6T193 40T155 57Q111 57 76 -3Q70 -11 59 -11H54H41Q35 -5 35 -2Q35 13 93 84Q132 129 225 214T340 322Q352 338 347 338Z"></path><path id="MJX-31-TEX-N-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="MJX-31-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-31-TEX-N-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path id="MJX-31-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><use data-c="1D467" xlink:href="#MJX-31-TEX-I-1D467"></use></g><g data-mml-node="mn" transform="translate(498,-150) scale(0.707)"><use data-c="32" xlink:href="#MJX-31-TEX-N-32"></use></g></g><g data-mml-node="mo" transform="translate(1179.3,0)"><use data-c="3D" xlink:href="#MJX-31-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(2235.1,0)"><use data-c="31" xlink:href="#MJX-31-TEX-N-31"></use><use data-c="31" xlink:href="#MJX-31-TEX-N-31" transform="translate(500,0)"></use><use data-c="30" xlink:href="#MJX-31-TEX-N-30" transform="translate(1000,0)"></use></g></g></g></svg></span>. Po prawej rachunek własny: dla <span class="m" data-tex="\lambda &lt; 0{,}8"><svg style="vertical-align: -0.439ex;" xmlns="http://www.w3.org/2000/svg" width="7.228ex" height="2.009ex" role="img" focusable="false" viewBox="0 -694 3194.6 888" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-32-TEX-I-1D706" d="M166 673Q166 685 183 694H202Q292 691 316 644Q322 629 373 486T474 207T524 67Q531 47 537 34T546 15T551 6T555 2T556 -2T550 -11H482Q457 3 450 18T399 152L354 277L340 262Q327 246 293 207T236 141Q211 112 174 69Q123 9 111 -1T83 -12Q47 -12 47 20Q47 37 61 52T199 187Q229 216 266 252T321 306L338 322Q338 323 288 462T234 612Q214 657 183 657Q166 657 166 673Z"></path><path id="MJX-32-TEX-N-3C" d="M694 -11T694 -19T688 -33T678 -40Q671 -40 524 29T234 166L90 235Q83 240 83 250Q83 261 91 266Q664 540 678 540Q681 540 687 534T694 519T687 505Q686 504 417 376L151 250L417 124Q686 -4 687 -5Q694 -11 694 -19Z"></path><path id="MJX-32-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJX-32-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-32-TEX-N-38" d="M70 417T70 494T124 618T248 666Q319 666 374 624T429 515Q429 485 418 459T392 417T361 389T335 371T324 363L338 354Q352 344 366 334T382 323Q457 264 457 174Q457 95 399 37T249 -22Q159 -22 101 29T43 155Q43 263 172 335L154 348Q133 361 127 368Q70 417 70 494ZM286 386L292 390Q298 394 301 396T311 403T323 413T334 425T345 438T355 454T364 471T369 491T371 513Q371 556 342 586T275 624Q268 625 242 625Q201 625 165 599T128 534Q128 511 141 492T167 463T217 431Q224 426 228 424L286 386ZM250 21Q308 21 350 55T392 137Q392 154 387 169T375 194T353 216T330 234T301 253T274 270Q260 279 244 289T218 306L210 311Q204 311 181 294T133 239T107 157Q107 98 150 60T250 21Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D706" xlink:href="#MJX-32-TEX-I-1D706"></use></g><g data-mml-node="mo" transform="translate(860.8,0)"><use data-c="3C" xlink:href="#MJX-32-TEX-N-3C"></use></g><g data-mml-node="mn" transform="translate(1916.6,0)"><use data-c="30" xlink:href="#MJX-32-TEX-N-30"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(2416.6,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-32-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(2694.6,0)"><use data-c="38" xlink:href="#MJX-32-TEX-N-38"></use></g></g></g></svg></span> zawsze wygrywa A, dla <span class="m" data-tex="\lambda &gt; 0{,}8"><svg style="vertical-align: -0.439ex;" xmlns="http://www.w3.org/2000/svg" width="7.228ex" height="2.009ex" role="img" focusable="false" viewBox="0 -694 3194.6 888" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-33-TEX-I-1D706" d="M166 673Q166 685 183 694H202Q292 691 316 644Q322 629 373 486T474 207T524 67Q531 47 537 34T546 15T551 6T555 2T556 -2T550 -11H482Q457 3 450 18T399 152L354 277L340 262Q327 246 293 207T236 141Q211 112 174 69Q123 9 111 -1T83 -12Q47 -12 47 20Q47 37 61 52T199 187Q229 216 266 252T321 306L338 322Q338 323 288 462T234 612Q214 657 183 657Q166 657 166 673Z"></path><path id="MJX-33-TEX-N-3E" d="M84 520Q84 528 88 533T96 539L99 540Q106 540 253 471T544 334L687 265Q694 260 694 250T687 235Q685 233 395 96L107 -40H101Q83 -38 83 -20Q83 -19 83 -17Q82 -10 98 -1Q117 9 248 71Q326 108 378 132L626 250L378 368Q90 504 86 509Q84 513 84 520Z"></path><path id="MJX-33-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJX-33-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-33-TEX-N-38" d="M70 417T70 494T124 618T248 666Q319 666 374 624T429 515Q429 485 418 459T392 417T361 389T335 371T324 363L338 354Q352 344 366 334T382 323Q457 264 457 174Q457 95 399 37T249 -22Q159 -22 101 29T43 155Q43 263 172 335L154 348Q133 361 127 368Q70 417 70 494ZM286 386L292 390Q298 394 301 396T311 403T323 413T334 425T345 438T355 454T364 471T369 491T371 513Q371 556 342 586T275 624Q268 625 242 625Q201 625 165 599T128 534Q128 511 141 492T167 463T217 431Q224 426 228 424L286 386ZM250 21Q308 21 350 55T392 137Q392 154 387 169T375 194T353 216T330 234T301 253T274 270Q260 279 244 289T218 306L210 311Q204 311 181 294T133 239T107 157Q107 98 150 60T250 21Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D706" xlink:href="#MJX-33-TEX-I-1D706"></use></g><g data-mml-node="mo" transform="translate(860.8,0)"><use data-c="3E" xlink:href="#MJX-33-TEX-N-3E"></use></g><g data-mml-node="mn" transform="translate(1916.6,0)"><use data-c="30" xlink:href="#MJX-33-TEX-N-30"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(2416.6,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-33-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(2694.6,0)"><use data-c="38" xlink:href="#MJX-33-TEX-N-38"></use></g></g></g></svg></span> — B, a wnętrze krawędzi AB jest optymalne tylko przy <span class="m" data-tex="\lambda = 0{,}8"><svg style="vertical-align: -0.439ex;" xmlns="http://www.w3.org/2000/svg" width="7.228ex" height="2.009ex" role="img" focusable="false" viewBox="0 -694 3194.6 888" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="MJX-34-TEX-I-1D706" d="M166 673Q166 685 183 694H202Q292 691 316 644Q322 629 373 486T474 207T524 67Q531 47 537 34T546 15T551 6T555 2T556 -2T550 -11H482Q457 3 450 18T399 152L354 277L340 262Q327 246 293 207T236 141Q211 112 174 69Q123 9 111 -1T83 -12Q47 -12 47 20Q47 37 61 52T199 187Q229 216 266 252T321 306L338 322Q338 323 288 462T234 612Q214 657 183 657Q166 657 166 673Z"></path><path id="MJX-34-TEX-N-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="MJX-34-TEX-N-30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="MJX-34-TEX-N-2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path><path id="MJX-34-TEX-N-38" d="M70 417T70 494T124 618T248 666Q319 666 374 624T429 515Q429 485 418 459T392 417T361 389T335 371T324 363L338 354Q352 344 366 334T382 323Q457 264 457 174Q457 95 399 37T249 -22Q159 -22 101 29T43 155Q43 263 172 335L154 348Q133 361 127 368Q70 417 70 494ZM286 386L292 390Q298 394 301 396T311 403T323 413T334 425T345 438T355 454T364 471T369 491T371 513Q371 556 342 586T275 624Q268 625 242 625Q201 625 165 599T128 534Q128 511 141 492T167 463T217 431Q224 426 228 424L286 386ZM250 21Q308 21 350 55T392 137Q392 154 387 169T375 194T353 216T330 234T301 253T274 270Q260 279 244 289T218 306L210 311Q204 311 181 294T133 239T107 157Q107 98 150 60T250 21Z"></path></defs><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D706" xlink:href="#MJX-34-TEX-I-1D706"></use></g><g data-mml-node="mo" transform="translate(860.8,0)"><use data-c="3D" xlink:href="#MJX-34-TEX-N-3D"></use></g><g data-mml-node="mn" transform="translate(1916.6,0)"><use data-c="30" xlink:href="#MJX-34-TEX-N-30"></use></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(2416.6,0)"><g data-mml-node="mo"><use data-c="2C" xlink:href="#MJX-34-TEX-N-2C"></use></g></g><g data-mml-node="mn" transform="translate(2694.6,0)"><use data-c="38" xlink:href="#MJX-34-TEX-N-38"></use></g></g></g></svg></span>.</figcaption>
 </figure>
@@ -655,88 +655,88 @@ html{scroll-padding-top:var(--sbh,84px)}
 <svg viewBox="0 0 680 350" class="fig">
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">GENEROWANIE FRONTU: 5 ZADAŃ LP KAŻDĄ METODĄ</text>
 <clipPath id="cF45e1"><rect x="70" y="60" width="250" height="220"/></clipPath>
-<line x1="70.0" y1="280.0" x2="320.0" y2="280.0" stroke="#CCD2C7" stroke-width="1.2"/>
-<line x1="70.0" y1="60.0" x2="70.0" y2="280.0" stroke="#CCD2C7" stroke-width="1.2"/>
-<line x1="70.0" y1="280.0" x2="70.0" y2="284.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="70.0" y1="280.0" x2="320.0" y2="280.0" stroke="#CDD5E2" stroke-width="1.2"/>
+<line x1="70.0" y1="60.0" x2="70.0" y2="280.0" stroke="#CDD5E2" stroke-width="1.2"/>
+<line x1="70.0" y1="280.0" x2="70.0" y2="284.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="70.0" y="296.0" text-anchor="middle" class="tick">55</text>
-<line x1="132.5" y1="280.0" x2="132.5" y2="284.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="132.5" y1="280.0" x2="132.5" y2="284.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="132.5" y="296.0" text-anchor="middle" class="tick">60</text>
-<line x1="195.0" y1="280.0" x2="195.0" y2="284.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="195.0" y1="280.0" x2="195.0" y2="284.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="195.0" y="296.0" text-anchor="middle" class="tick">65</text>
-<line x1="257.5" y1="280.0" x2="257.5" y2="284.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="257.5" y1="280.0" x2="257.5" y2="284.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="257.5" y="296.0" text-anchor="middle" class="tick">70</text>
-<line x1="320.0" y1="280.0" x2="320.0" y2="284.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="320.0" y1="280.0" x2="320.0" y2="284.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="320.0" y="296.0" text-anchor="middle" class="tick">75</text>
-<line x1="66.0" y1="280.0" x2="70.0" y2="280.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="66.0" y1="280.0" x2="70.0" y2="280.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="70.0" y1="280.0" x2="320.0" y2="280.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="62.0" y="284.0" text-anchor="end" class="tick">60</text>
-<line x1="66.0" y1="242.1" x2="70.0" y2="242.1" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="66.0" y1="242.1" x2="70.0" y2="242.1" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="70.0" y1="242.1" x2="320.0" y2="242.1" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="62.0" y="246.1" text-anchor="end" class="tick">70</text>
-<line x1="66.0" y1="204.1" x2="70.0" y2="204.1" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="66.0" y1="204.1" x2="70.0" y2="204.1" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="70.0" y1="204.1" x2="320.0" y2="204.1" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="62.0" y="208.1" text-anchor="end" class="tick">80</text>
-<line x1="66.0" y1="166.2" x2="70.0" y2="166.2" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="66.0" y1="166.2" x2="70.0" y2="166.2" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="70.0" y1="166.2" x2="320.0" y2="166.2" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="62.0" y="170.2" text-anchor="end" class="tick">90</text>
-<line x1="66.0" y1="128.3" x2="70.0" y2="128.3" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="66.0" y1="128.3" x2="70.0" y2="128.3" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="70.0" y1="128.3" x2="320.0" y2="128.3" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="62.0" y="132.3" text-anchor="end" class="tick">100</text>
-<line x1="66.0" y1="90.3" x2="70.0" y2="90.3" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="66.0" y1="90.3" x2="70.0" y2="90.3" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="70.0" y1="90.3" x2="320.0" y2="90.3" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="62.0" y="94.3" text-anchor="end" class="tick">110</text>
 <text x="195.0" y="314.0" text-anchor="middle" class="axlab">z₁</text>
-<text x="195.0" y="44.0" text-anchor="middle" class="bx-t" style="fill:#0E6E78;font-size:10.5px">ε-ograniczenia: ε = 70, 80, 90, 100, 110</text>
-<g clip-path="url(#cF45e1)"><polyline points="132.5,90.3 257.5,242.1" fill="none" stroke="#5B4B8A" stroke-width="2.4" stroke-linejoin="round" opacity="0.5"/></g>
-<circle cx="257.5" cy="242.1" r="5" fill="#0E6E78" stroke="none" stroke-width="1"/>
-<text x="267.5" y="246.1" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:10.5px">(70,0; 70)</text>
-<circle cx="226.2" cy="204.1" r="5" fill="#0E6E78" stroke="none" stroke-width="1"/>
-<text x="236.2" y="208.1" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:10.5px">(67,5; 80)</text>
-<circle cx="195.0" cy="166.2" r="5" fill="#0E6E78" stroke="none" stroke-width="1"/>
-<text x="205.0" y="170.2" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:10.5px">(65,0; 90)</text>
-<circle cx="163.8" cy="128.3" r="5" fill="#0E6E78" stroke="none" stroke-width="1"/>
-<text x="173.8" y="132.3" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:10.5px">(62,5; 100)</text>
-<circle cx="132.5" cy="90.3" r="5" fill="#0E6E78" stroke="none" stroke-width="1"/>
-<text x="142.5" y="94.3" text-anchor="start" class="bx-t" style="fill:#0E6E78;font-size:10.5px">(60,0; 110)</text>
+<text x="195.0" y="44.0" text-anchor="middle" class="bx-t" style="fill:#2457D6;font-size:10.5px">ε-ograniczenia: ε = 70, 80, 90, 100, 110</text>
+<g clip-path="url(#cF45e1)"><polyline points="132.5,90.3 257.5,242.1" fill="none" stroke="#7A4FD0" stroke-width="2.4" stroke-linejoin="round" opacity="0.5"/></g>
+<circle cx="257.5" cy="242.1" r="5" fill="#2457D6" stroke="none" stroke-width="1"/>
+<text x="267.5" y="246.1" text-anchor="start" class="bx-t" style="fill:#2457D6;font-size:10.5px">(70,0; 70)</text>
+<circle cx="226.2" cy="204.1" r="5" fill="#2457D6" stroke="none" stroke-width="1"/>
+<text x="236.2" y="208.1" text-anchor="start" class="bx-t" style="fill:#2457D6;font-size:10.5px">(67,5; 80)</text>
+<circle cx="195.0" cy="166.2" r="5" fill="#2457D6" stroke="none" stroke-width="1"/>
+<text x="205.0" y="170.2" text-anchor="start" class="bx-t" style="fill:#2457D6;font-size:10.5px">(65,0; 90)</text>
+<circle cx="163.8" cy="128.3" r="5" fill="#2457D6" stroke="none" stroke-width="1"/>
+<text x="173.8" y="132.3" text-anchor="start" class="bx-t" style="fill:#2457D6;font-size:10.5px">(62,5; 100)</text>
+<circle cx="132.5" cy="90.3" r="5" fill="#2457D6" stroke="none" stroke-width="1"/>
+<text x="142.5" y="94.3" text-anchor="start" class="bx-t" style="fill:#2457D6;font-size:10.5px">(60,0; 110)</text>
 <clipPath id="cF45e45"><rect x="400" y="60" width="250" height="220"/></clipPath>
-<line x1="400.0" y1="280.0" x2="650.0" y2="280.0" stroke="#CCD2C7" stroke-width="1.2"/>
-<line x1="400.0" y1="60.0" x2="400.0" y2="280.0" stroke="#CCD2C7" stroke-width="1.2"/>
-<line x1="400.0" y1="280.0" x2="400.0" y2="284.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="400.0" y1="280.0" x2="650.0" y2="280.0" stroke="#CDD5E2" stroke-width="1.2"/>
+<line x1="400.0" y1="60.0" x2="400.0" y2="280.0" stroke="#CDD5E2" stroke-width="1.2"/>
+<line x1="400.0" y1="280.0" x2="400.0" y2="284.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="400.0" y="296.0" text-anchor="middle" class="tick">55</text>
-<line x1="462.5" y1="280.0" x2="462.5" y2="284.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="462.5" y1="280.0" x2="462.5" y2="284.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="462.5" y="296.0" text-anchor="middle" class="tick">60</text>
-<line x1="525.0" y1="280.0" x2="525.0" y2="284.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="525.0" y1="280.0" x2="525.0" y2="284.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="525.0" y="296.0" text-anchor="middle" class="tick">65</text>
-<line x1="587.5" y1="280.0" x2="587.5" y2="284.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="587.5" y1="280.0" x2="587.5" y2="284.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="587.5" y="296.0" text-anchor="middle" class="tick">70</text>
-<line x1="650.0" y1="280.0" x2="650.0" y2="284.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="650.0" y1="280.0" x2="650.0" y2="284.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <text x="650.0" y="296.0" text-anchor="middle" class="tick">75</text>
-<line x1="396.0" y1="280.0" x2="400.0" y2="280.0" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="396.0" y1="280.0" x2="400.0" y2="280.0" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="400.0" y1="280.0" x2="650.0" y2="280.0" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="392.0" y="284.0" text-anchor="end" class="tick">60</text>
-<line x1="396.0" y1="242.1" x2="400.0" y2="242.1" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="396.0" y1="242.1" x2="400.0" y2="242.1" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="400.0" y1="242.1" x2="650.0" y2="242.1" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="392.0" y="246.1" text-anchor="end" class="tick">70</text>
-<line x1="396.0" y1="204.1" x2="400.0" y2="204.1" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="396.0" y1="204.1" x2="400.0" y2="204.1" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="400.0" y1="204.1" x2="650.0" y2="204.1" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="392.0" y="208.1" text-anchor="end" class="tick">80</text>
-<line x1="396.0" y1="166.2" x2="400.0" y2="166.2" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="396.0" y1="166.2" x2="400.0" y2="166.2" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="400.0" y1="166.2" x2="650.0" y2="166.2" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="392.0" y="170.2" text-anchor="end" class="tick">90</text>
-<line x1="396.0" y1="128.3" x2="400.0" y2="128.3" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="396.0" y1="128.3" x2="400.0" y2="128.3" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="400.0" y1="128.3" x2="650.0" y2="128.3" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="392.0" y="132.3" text-anchor="end" class="tick">100</text>
-<line x1="396.0" y1="90.3" x2="400.0" y2="90.3" stroke="#CCD2C7" stroke-width="1.2"/>
+<line x1="396.0" y1="90.3" x2="400.0" y2="90.3" stroke="#CDD5E2" stroke-width="1.2"/>
 <line x1="400.0" y1="90.3" x2="650.0" y2="90.3" stroke="#E3E8EB" stroke-width="0.8"/>
 <text x="392.0" y="94.3" text-anchor="end" class="tick">110</text>
 <text x="525.0" y="314.0" text-anchor="middle" class="axlab">z₁</text>
-<text x="525.0" y="44.0" text-anchor="middle" class="bx-t" style="fill:#B3641A;font-size:10.5px">ważenie: λ = 0,1; 0,3; 0,5; 0,7; 0,9</text>
-<g clip-path="url(#cF45e45)"><polyline points="462.5,90.3 587.5,242.1" fill="none" stroke="#5B4B8A" stroke-width="2.4" stroke-linejoin="round" opacity="0.5"/></g>
-<circle cx="462.5" cy="90.3" r="5" fill="#B3641A" stroke="none" stroke-width="1"/>
-<text x="472.5" y="94.3" text-anchor="start" class="bx-t" style="fill:#B3641A;font-size:10.5px">A — dla λ = 0,1 … 0,7 (4 razy)</text>
-<circle cx="587.5" cy="242.1" r="5" fill="#B3641A" stroke="none" stroke-width="1"/>
-<text x="577.5" y="246.1" text-anchor="end" class="bx-t" style="fill:#B3641A;font-size:10.5px">B — dla λ = 0,9</text>
-<text x="340.0" y="338.0" text-anchor="middle" class="cap" style="fill:#141C24;font-size:10px">ε-ograniczenia: 5 różnych punktów frontu; ważenie: tylko 2 wierzchołki</text>
+<text x="525.0" y="44.0" text-anchor="middle" class="bx-t" style="fill:#E2711D;font-size:10.5px">ważenie: λ = 0,1; 0,3; 0,5; 0,7; 0,9</text>
+<g clip-path="url(#cF45e45)"><polyline points="462.5,90.3 587.5,242.1" fill="none" stroke="#7A4FD0" stroke-width="2.4" stroke-linejoin="round" opacity="0.5"/></g>
+<circle cx="462.5" cy="90.3" r="5" fill="#E2711D" stroke="none" stroke-width="1"/>
+<text x="472.5" y="94.3" text-anchor="start" class="bx-t" style="fill:#E2711D;font-size:10.5px">A — dla λ = 0,1 … 0,7 (4 razy)</text>
+<circle cx="587.5" cy="242.1" r="5" fill="#E2711D" stroke="none" stroke-width="1"/>
+<text x="577.5" y="246.1" text-anchor="end" class="bx-t" style="fill:#E2711D;font-size:10.5px">B — dla λ = 0,9</text>
+<text x="340.0" y="338.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:10px">ε-ograniczenia: 5 różnych punktów frontu; ważenie: tylko 2 wierzchołki</text>
 </svg>
 <figcaption>Ta sama liczba zadań LP, różny efekt: ε-ograniczenia rozkładają punkty wzdłuż frontu, a ważenie „przeskakuje” między wierzchołkami. Rachunek własny na przykładzie z wykładu.</figcaption>
 </figure>
@@ -771,81 +771,81 @@ html{scroll-padding-top:var(--sbh,84px)}
 <figure>
 <svg viewBox="0 0 680 470" class="fig">
 <text x="340.0" y="22.0" text-anchor="middle" class="bx-t">NARYSUJ NA TABLICY W 6 RUCHACH</text>
-<rect x="14.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
-<circle cx="32.0" cy="58.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<rect x="14.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<circle cx="32.0" cy="58.0" r="10" fill="#7A4FD0" stroke="none" stroke-width="1"/>
 <text x="32.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">1</text>
 <text x="48.0" y="56.0" text-anchor="start" class="bx-t">stożki</text>
 <text x="48.0" y="70.0" text-anchor="start" class="bx" style="font-size:9.5px">lepsze, gorsze, nieporówn.</text>
-<rect x="44.0" y="162.0" width="74.0" height="60.0" rx="0" fill="#0E6E78" stroke="none" stroke-width="1" opacity="0.18"/>
-<rect x="118.0" y="102.0" width="74.0" height="60.0" rx="0" fill="#9C3B52" stroke="none" stroke-width="1" opacity="0.18"/>
-<line x1="44.0" y1="162.0" x2="192.0" y2="162.0" stroke="#141C24" stroke-width="1" stroke-dasharray="3 3"/>
-<line x1="118.0" y1="102.0" x2="118.0" y2="222.0" stroke="#141C24" stroke-width="1" stroke-dasharray="3 3"/>
-<circle cx="118.0" cy="162.0" r="4" fill="#5B4B8A" stroke="none" stroke-width="1"/>
-<text x="81.0" y="196.0" text-anchor="middle" class="cap" style="fill:#0E6E78;font-size:9px">lepsze</text>
-<text x="155.0" y="136.0" text-anchor="middle" class="cap" style="fill:#9C3B52;font-size:9px">gorsze</text>
-<rect x="236.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
-<circle cx="254.0" cy="58.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<rect x="44.0" y="162.0" width="74.0" height="60.0" rx="0" fill="#2457D6" stroke="none" stroke-width="1" opacity="0.18"/>
+<rect x="118.0" y="102.0" width="74.0" height="60.0" rx="0" fill="#D04C70" stroke="none" stroke-width="1" opacity="0.18"/>
+<line x1="44.0" y1="162.0" x2="192.0" y2="162.0" stroke="#0F1B2D" stroke-width="1" stroke-dasharray="3 3"/>
+<line x1="118.0" y1="102.0" x2="118.0" y2="222.0" stroke="#0F1B2D" stroke-width="1" stroke-dasharray="3 3"/>
+<circle cx="118.0" cy="162.0" r="4" fill="#7A4FD0" stroke="none" stroke-width="1"/>
+<text x="81.0" y="196.0" text-anchor="middle" class="cap" style="fill:#2457D6;font-size:9px">lepsze</text>
+<text x="155.0" y="136.0" text-anchor="middle" class="cap" style="fill:#D04C70;font-size:9px">gorsze</text>
+<rect x="236.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<circle cx="254.0" cy="58.0" r="10" fill="#2457D6" stroke="none" stroke-width="1"/>
 <text x="254.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">2</text>
 <text x="270.0" y="56.0" text-anchor="start" class="bx-t">decyzje</text>
 <text x="270.0" y="70.0" text-anchor="start" class="bx" style="font-size:9.5px">wielokąt X, krawędź AB</text>
 <clipPath id="cF45f18"><rect x="266" y="90" width="160" height="136"/></clipPath>
-<line x1="266.0" y1="226.0" x2="430.0" y2="226.0" stroke="#CCD2C7" stroke-width="1"/>
-<line x1="266.0" y1="86.0" x2="266.0" y2="226.0" stroke="#CCD2C7" stroke-width="1"/>
-<polygon points="266.0,226.0 394.0,226.0 394.0,188.2 330.0,112.7 266.0,112.7" fill="#0E6E78" opacity="0.14" stroke="none" stroke-width="1"/>
-<g clip-path="url(#cF45f18)"><polyline points="330.0,112.7 394.0,188.2" fill="none" stroke="#5B4B8A" stroke-width="2.6" stroke-linejoin="round"/></g>
-<rect x="458.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
-<circle cx="476.0" cy="58.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<line x1="266.0" y1="226.0" x2="430.0" y2="226.0" stroke="#CDD5E2" stroke-width="1"/>
+<line x1="266.0" y1="86.0" x2="266.0" y2="226.0" stroke="#CDD5E2" stroke-width="1"/>
+<polygon points="266.0,226.0 394.0,226.0 394.0,188.2 330.0,112.7 266.0,112.7" fill="#2457D6" opacity="0.14" stroke="none" stroke-width="1"/>
+<g clip-path="url(#cF45f18)"><polyline points="330.0,112.7 394.0,188.2" fill="none" stroke="#7A4FD0" stroke-width="2.6" stroke-linejoin="round"/></g>
+<rect x="458.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<circle cx="476.0" cy="58.0" r="10" fill="#7A4FD0" stroke="none" stroke-width="1"/>
 <text x="476.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">3</text>
 <text x="492.0" y="56.0" text-anchor="start" class="bx-t">cele</text>
 <text x="492.0" y="70.0" text-anchor="start" class="bx" style="font-size:9.5px">obraz X, front, ideał</text>
 <clipPath id="cF45f28"><rect x="488" y="90" width="160" height="136"/></clipPath>
-<line x1="488.0" y1="226.0" x2="652.0" y2="226.0" stroke="#CCD2C7" stroke-width="1"/>
-<line x1="488.0" y1="86.0" x2="488.0" y2="226.0" stroke="#CCD2C7" stroke-width="1"/>
-<polygon points="488.0,226.0 608.0,180.7 628.0,146.7 608.0,101.3 548.0,124.0" fill="#0E6E78" opacity="0.14" stroke="none" stroke-width="1"/>
-<g clip-path="url(#cF45f28)"><polyline points="608.0,101.3 628.0,146.7" fill="none" stroke="#5B4B8A" stroke-width="2.6" stroke-linejoin="round"/></g>
-<circle cx="628.0" cy="101.3" r="5" fill="#FFFFFF" stroke="#B3641A" stroke-width="1.5"/>
-<rect x="14.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
-<circle cx="32.0" cy="272.0" r="10" fill="#0E6E78" stroke="none" stroke-width="1"/>
+<line x1="488.0" y1="226.0" x2="652.0" y2="226.0" stroke="#CDD5E2" stroke-width="1"/>
+<line x1="488.0" y1="86.0" x2="488.0" y2="226.0" stroke="#CDD5E2" stroke-width="1"/>
+<polygon points="488.0,226.0 608.0,180.7 628.0,146.7 608.0,101.3 548.0,124.0" fill="#2457D6" opacity="0.14" stroke="none" stroke-width="1"/>
+<g clip-path="url(#cF45f28)"><polyline points="608.0,101.3 628.0,146.7" fill="none" stroke="#7A4FD0" stroke-width="2.6" stroke-linejoin="round"/></g>
+<circle cx="628.0" cy="101.3" r="5" fill="#FFFFFF" stroke="#E2711D" stroke-width="1.5"/>
+<rect x="14.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<circle cx="32.0" cy="272.0" r="10" fill="#2457D6" stroke="none" stroke-width="1"/>
 <text x="32.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">4</text>
 <text x="48.0" y="270.0" text-anchor="start" class="bx-t">ε-ograniczenia</text>
 <text x="48.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">z₂ ≥ ε → max z₁</text>
 <clipPath id="cF45f39"><rect x="44" y="304" width="160" height="136"/></clipPath>
-<line x1="44.0" y1="440.0" x2="208.0" y2="440.0" stroke="#CCD2C7" stroke-width="1"/>
-<line x1="44.0" y1="300.0" x2="44.0" y2="440.0" stroke="#CCD2C7" stroke-width="1"/>
-<polygon points="44.0,440.0 172.0,440.0 172.0,402.2 108.0,326.7 44.0,326.7" fill="#0E6E78" opacity="0.14" stroke="none" stroke-width="1"/>
-<g clip-path="url(#cF45f39)"><polyline points="108.0,326.7 172.0,402.2" fill="none" stroke="#5B4B8A" stroke-width="2.6" stroke-linejoin="round"/></g>
-<g clip-path="url(#cF45f39)"><polyline points="44.0,314.1 204.0,377.0" fill="none" stroke="#0E6E78" stroke-width="1.4" stroke-linejoin="round"/></g>
-<polygon points="76.0,326.7 108.0,326.7 124.0,345.6" fill="#0E6E78" opacity="0.5" stroke="none" stroke-width="1"/>
-<polygon points="124.0,339.6 125.6,343.4 129.7,343.7 126.6,346.4 127.5,350.4 124.0,348.3 120.5,350.4 121.4,346.4 118.3,343.7 122.4,343.4" fill="#5B4B8A"/>
-<rect x="236.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
-<circle cx="254.0" cy="272.0" r="10" fill="#B3641A" stroke="none" stroke-width="1"/>
+<line x1="44.0" y1="440.0" x2="208.0" y2="440.0" stroke="#CDD5E2" stroke-width="1"/>
+<line x1="44.0" y1="300.0" x2="44.0" y2="440.0" stroke="#CDD5E2" stroke-width="1"/>
+<polygon points="44.0,440.0 172.0,440.0 172.0,402.2 108.0,326.7 44.0,326.7" fill="#2457D6" opacity="0.14" stroke="none" stroke-width="1"/>
+<g clip-path="url(#cF45f39)"><polyline points="108.0,326.7 172.0,402.2" fill="none" stroke="#7A4FD0" stroke-width="2.6" stroke-linejoin="round"/></g>
+<g clip-path="url(#cF45f39)"><polyline points="44.0,314.1 204.0,377.0" fill="none" stroke="#2457D6" stroke-width="1.4" stroke-linejoin="round"/></g>
+<polygon points="76.0,326.7 108.0,326.7 124.0,345.6" fill="#2457D6" opacity="0.5" stroke="none" stroke-width="1"/>
+<polygon points="124.0,339.6 125.6,343.4 129.7,343.7 126.6,346.4 127.5,350.4 124.0,348.3 120.5,350.4 121.4,346.4 118.3,343.7 122.4,343.4" fill="#7A4FD0"/>
+<rect x="236.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<circle cx="254.0" cy="272.0" r="10" fill="#E2711D" stroke="none" stroke-width="1"/>
 <text x="254.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">5</text>
 <text x="270.0" y="270.0" text-anchor="start" class="bx-t">ważenie</text>
 <text x="270.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">prosta w·z = c</text>
 <clipPath id="cF45f52"><rect x="266" y="304" width="160" height="136"/></clipPath>
-<line x1="266.0" y1="440.0" x2="430.0" y2="440.0" stroke="#CCD2C7" stroke-width="1"/>
-<line x1="266.0" y1="300.0" x2="266.0" y2="440.0" stroke="#CCD2C7" stroke-width="1"/>
-<polygon points="266.0,440.0 386.0,394.7 406.0,360.7 386.0,315.3 326.0,338.0" fill="#0E6E78" opacity="0.14" stroke="none" stroke-width="1"/>
-<g clip-path="url(#cF45f52)"><polyline points="386.0,315.3 406.0,360.7" fill="none" stroke="#5B4B8A" stroke-width="2.6" stroke-linejoin="round"/></g>
-<g clip-path="url(#cF45f52)"><polyline points="316.0,255.8 426.0,349.3" fill="none" stroke="#B3641A" stroke-width="1.3" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
-<polygon points="386.0,309.3 387.6,313.1 391.7,313.5 388.6,316.2 389.5,320.2 386.0,318.0 382.5,320.2 383.4,316.2 380.3,313.5 384.4,313.1" fill="#B3641A"/>
-<rect x="458.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FDFDFA" stroke="#CCD2C7" stroke-width="1"/>
-<circle cx="476.0" cy="272.0" r="10" fill="#5B4B8A" stroke="none" stroke-width="1"/>
+<line x1="266.0" y1="440.0" x2="430.0" y2="440.0" stroke="#CDD5E2" stroke-width="1"/>
+<line x1="266.0" y1="300.0" x2="266.0" y2="440.0" stroke="#CDD5E2" stroke-width="1"/>
+<polygon points="266.0,440.0 386.0,394.7 406.0,360.7 386.0,315.3 326.0,338.0" fill="#2457D6" opacity="0.14" stroke="none" stroke-width="1"/>
+<g clip-path="url(#cF45f52)"><polyline points="386.0,315.3 406.0,360.7" fill="none" stroke="#7A4FD0" stroke-width="2.6" stroke-linejoin="round"/></g>
+<g clip-path="url(#cF45f52)"><polyline points="316.0,255.8 426.0,349.3" fill="none" stroke="#E2711D" stroke-width="1.3" stroke-linejoin="round" stroke-dasharray="4 3"/></g>
+<polygon points="386.0,309.3 387.6,313.1 391.7,313.5 388.6,316.2 389.5,320.2 386.0,318.0 382.5,320.2 383.4,316.2 380.3,313.5 384.4,313.1" fill="#E2711D"/>
+<rect x="458.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<circle cx="476.0" cy="272.0" r="10" fill="#7A4FD0" stroke="none" stroke-width="1"/>
 <text x="476.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">6</text>
 <text x="492.0" y="270.0" text-anchor="start" class="bx-t">porównanie</text>
 <text x="492.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">równe ε vs skoki wag</text>
 <clipPath id="cF45f64"><rect x="488" y="304" width="160" height="136"/></clipPath>
-<line x1="488.0" y1="440.0" x2="652.0" y2="440.0" stroke="#CCD2C7" stroke-width="1"/>
-<line x1="488.0" y1="300.0" x2="488.0" y2="440.0" stroke="#CCD2C7" stroke-width="1"/>
-<polygon points="488.0,440.0 608.0,394.7 628.0,360.7 608.0,315.3 548.0,338.0" fill="#0E6E78" opacity="0.14" stroke="none" stroke-width="1"/>
-<g clip-path="url(#cF45f64)"><polyline points="608.0,315.3 628.0,360.7" fill="none" stroke="#5B4B8A" stroke-width="2.6" stroke-linejoin="round"/></g>
-<circle cx="628.0" cy="360.7" r="3.5" fill="#0E6E78" stroke="none" stroke-width="1"/>
-<circle cx="623.0" cy="349.3" r="3.5" fill="#0E6E78" stroke="none" stroke-width="1"/>
-<circle cx="618.0" cy="338.0" r="3.5" fill="#0E6E78" stroke="none" stroke-width="1"/>
-<circle cx="613.0" cy="326.7" r="3.5" fill="#0E6E78" stroke="none" stroke-width="1"/>
-<circle cx="608.0" cy="315.3" r="3.5" fill="#0E6E78" stroke="none" stroke-width="1"/>
-<circle cx="608.0" cy="315.3" r="7" fill="none" stroke="#B3641A" stroke-width="1.6"/>
-<circle cx="628.0" cy="360.7" r="7" fill="none" stroke="#B3641A" stroke-width="1.6"/>
+<line x1="488.0" y1="440.0" x2="652.0" y2="440.0" stroke="#CDD5E2" stroke-width="1"/>
+<line x1="488.0" y1="300.0" x2="488.0" y2="440.0" stroke="#CDD5E2" stroke-width="1"/>
+<polygon points="488.0,440.0 608.0,394.7 628.0,360.7 608.0,315.3 548.0,338.0" fill="#2457D6" opacity="0.14" stroke="none" stroke-width="1"/>
+<g clip-path="url(#cF45f64)"><polyline points="608.0,315.3 628.0,360.7" fill="none" stroke="#7A4FD0" stroke-width="2.6" stroke-linejoin="round"/></g>
+<circle cx="628.0" cy="360.7" r="3.5" fill="#2457D6" stroke="none" stroke-width="1"/>
+<circle cx="623.0" cy="349.3" r="3.5" fill="#2457D6" stroke="none" stroke-width="1"/>
+<circle cx="618.0" cy="338.0" r="3.5" fill="#2457D6" stroke="none" stroke-width="1"/>
+<circle cx="613.0" cy="326.7" r="3.5" fill="#2457D6" stroke="none" stroke-width="1"/>
+<circle cx="608.0" cy="315.3" r="3.5" fill="#2457D6" stroke="none" stroke-width="1"/>
+<circle cx="608.0" cy="315.3" r="7" fill="none" stroke="#E2711D" stroke-width="1.6"/>
+<circle cx="628.0" cy="360.7" r="7" fill="none" stroke="#E2711D" stroke-width="1.6"/>
 </svg>
 <figcaption>(1) Krzyż wokół z* z polami „lepsze” i „gorsze”. (2) Wielokąt X z pogrubioną krawędzią AB. (3) Obraz X w przestrzeni celów, front i kółko punktu idealnego. (4) Prosta z₂ = ε odcinająca trójkąt i gwiazdka w F. (5) Przerywana prosta w·z = c dotykająca wierzchołka A. (6) Front z pięcioma równymi kropkami ε i dwoma kółkami wag.</figcaption>
 </figure>
