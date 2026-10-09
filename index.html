@@ -14,7 +14,7 @@
 :root{
   --ink:#141C24; --mut:#5C6B77; --line:#CCD2C7;
   --paper:#EDEEE5; --card:#FDFDFA;
-  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52; --moss:#5E8C3A;
+  --teal:#0E6E78; --amber:#B3641A; --violet:#5B4B8A; --rose:#9C3B52; --sky:#3E63B8;
   --disp:"Space Grotesk",system-ui,sans-serif;
   --body:"STIX Two Text","Source Serif 4",Georgia,serif;
   --mono:"IBM Plex Mono",ui-monospace,monospace;
@@ -25,7 +25,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 .wrap{max-width:960px;margin:0 auto;padding:0 22px 100px}
 
 /* ---- nagłówek ---- */
-header{padding:40px 0 30px;border-bottom:1px solid var(--line)}
+header{padding:30px 0 30px;border-bottom:1px solid var(--line)}
 
 /* ---- masthead z meowlami ---- */
 .masthead{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,400px);gap:0 36px;align-items:end;
@@ -53,7 +53,7 @@ h1{font-family:var(--disp);font-weight:700;font-size:clamp(32px,5.4vw,50px);line
 .status b{font-weight:500;color:var(--ink)}
 .bar{flex:1 1 200px;min-width:160px;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
 .bar span{display:block;height:100%;border-radius:3px;
-          background:linear-gradient(90deg,var(--moss),var(--teal))}
+          background:linear-gradient(90deg,var(--sky),var(--teal))}
 
 /* ---- feed powtórkowy ---- */
 .feedlink{display:flex;align-items:baseline;gap:6px 16px;flex-wrap:wrap;margin:22px 0 0;
@@ -96,7 +96,7 @@ h1{font-family:var(--disp);font-weight:700;font-size:clamp(32px,5.4vw,50px);line
 .chips a .c{color:var(--violet)}
 
 /* ---- przedmioty ---- */
-section{margin-top:52px;scroll-margin-top:20px}
+section{margin-top:52px;scroll-margin-top:calc(var(--bar-h,56px) + 14px)}
 h2{font-family:var(--disp);font-weight:700;font-size:24px;letter-spacing:-.015em;
    margin:0 0 6px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
 h2 .num{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--violet);
@@ -108,7 +108,7 @@ h2 .cnt{font-family:var(--mono);font-size:12px;font-weight:400;color:var(--mut);
       display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
 .meta .who{color:var(--violet)}
 .meta .who.none{color:var(--amber)}
-.rail{height:5px;background:linear-gradient(90deg,var(--moss) 0%,var(--teal) 30%,var(--violet) 62%,var(--amber) 100%);
+.rail{height:5px;background:linear-gradient(90deg,var(--sky) 0%,var(--teal) 30%,var(--violet) 62%,var(--amber) 100%);
       opacity:.85;margin:0 0 18px;border-radius:2px}
 
 /* ---- pozycje ---- */
@@ -148,6 +148,74 @@ body.komisja section.dim h2,body.komisja section.dim .meta{opacity:.45}
          text-transform:uppercase;color:var(--violet)}
 body.komisja .q.hit .hitmark{display:block}
 
+/* ---- przyklejony pasek nawigacji ---- */
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+.topbar{position:sticky;top:0;z-index:30;background:rgba(237,238,229,.95);
+        -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.tb-in{max-width:960px;margin:0 auto;padding:8px 22px 7px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px}
+.tb-brand{display:flex;align-items:center;gap:9px;flex:none;text-decoration:none;color:var(--ink);
+          font-family:var(--disp);font-weight:700;font-size:16px;letter-spacing:-.01em}
+.tb-brand img{width:28px;height:28px;border-radius:50%;box-shadow:0 0 0 2px var(--card),0 0 0 3px var(--line)}
+.topbar .chips{order:3;flex:1 0 100%;min-width:0;margin:0;flex-wrap:nowrap;overflow-x:auto;position:relative;
+               scrollbar-width:none;gap:6px;padding:2px 0;
+               -webkit-mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 28px),transparent);
+               mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 28px),transparent)}
+.topbar .chips::-webkit-scrollbar{display:none}
+.topbar .chips a{white-space:nowrap;padding:5px 9px;font-size:11px}
+.topbar .chips a.active{color:var(--ink);border-color:var(--ink);background:#fff}
+.tb-jump{display:flex;align-items:center;gap:6px;flex:none;font-family:var(--mono);font-size:11px;
+         color:var(--mut);letter-spacing:.08em;text-transform:uppercase}
+.tb-jump input{width:64px;font:inherit;letter-spacing:0;text-transform:none;color:var(--ink);
+               background:var(--card);border:1px solid var(--line);border-radius:2px;padding:5px 7px}
+.tb-jump input:focus-visible{outline:2px solid var(--sky);outline-offset:1px}
+.tb-jump input.bad{border-color:var(--rose)}
+.tb-ctl{display:flex;align-items:center;gap:12px;flex:none;margin-left:auto}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:2px;overflow:hidden}
+.seg button{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);
+            background:var(--card);border:0;padding:6px 10px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.seg button:focus-visible{outline:2px solid var(--sky);outline-offset:-2px}
+.betatoggle{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;
+            letter-spacing:.04em;color:var(--mut);cursor:pointer;user-select:none;white-space:nowrap}
+.betatoggle input{appearance:none;-webkit-appearance:none;width:13px;height:13px;margin:0;display:grid;
+                  place-content:center;border:1px solid var(--mut);border-radius:2px;background:var(--card)}
+.betatoggle input:checked{background:var(--violet);border-color:var(--violet)}
+.betatoggle input:checked::after{content:"";width:7px;height:3.5px;border:solid #fff;border-width:0 0 1.5px 1.5px;
+                                 transform:rotate(-45deg) translate(1px,-1px)}
+.betatoggle input:focus-visible{outline:2px solid var(--sky);outline-offset:2px}
+.betatoggle input:checked + span{color:var(--ink)}
+.betatoggle i{font-style:normal;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);
+              border:1px solid var(--amber);border-radius:2px;padding:1px 4px}
+
+/* widok wg numeru */
+#cats[hidden],#flat[hidden]{display:none}
+#flat{margin-top:30px}
+#flat > .lead{margin:0 0 6px}
+body.by-num .topbar .chips{display:none}
+.q{scroll-margin-top:calc(var(--bar-h,56px) + 18px)}
+.q .etap{display:none}
+body.by-num .q .etap{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--mut);margin-top:2px}
+.q.flash{animation:qflash 1.7s ease}
+@keyframes qflash{0%,55%{box-shadow:0 0 0 3px rgba(62,99,184,.5)}100%{box-shadow:0 0 0 0 rgba(62,99,184,0)}}
+
+/* skład komisji = beta: domyślnie schowany */
+body:not(.show-beta) .panel,
+body:not(.show-beta) .beta-only,
+body:not(.show-beta) .hitmark,
+body:not(.show-beta) .meta .who,
+body:not(.show-beta) .q .side .who{display:none !important}
+
+@media (max-width:760px){
+  .tb-in{padding:7px 16px 6px}
+  .tb-ctl{gap:10px}
+  .tb-jump{display:none}
+}
+@media (max-width:520px){
+  .tb-brand span{display:none}
+}
+
 footer{margin-top:70px;padding-top:20px;border-top:1px solid var(--line);
        font-family:var(--mono);font-size:12px;color:var(--mut);line-height:1.7}
 
@@ -162,7 +230,25 @@ footer{margin-top:70px;padding-top:20px;border-top:1px solid var(--line);
 </style>
 </head>
 <body>
-<div class="wrap">
+<nav class="topbar" id="topbar" aria-label="Nawigacja po repetytorium">
+  <div class="tb-in">
+    <a class="tb-brand" href="#top" title="Na górę"><img src="assets/meowl-wide.png" width="28" height="28" alt=""><span>Repetytorium</span></a>
+    <ul class="chips" id="chips" aria-label="Etapy"></ul>
+    <form class="tb-jump" id="jump" role="search" aria-label="Przejdź do pytania o numerze">
+      <label for="jumpN">nr</label><input id="jumpN" type="number" min="1" max="99" inputmode="numeric" placeholder="1&ndash;50">
+    </form>
+    <div class="tb-ctl">
+      <div class="seg" role="group" aria-label="Sortowanie pytań">
+        <button type="button" data-sort="stage" aria-pressed="true" title="Kolejność nauki, pogrupowana w etapy">Etapy</button>
+        <button type="button" data-sort="num" aria-pressed="false" title="Wszystkie pytania wg numeru">Numer</button>
+      </div>
+      <label class="betatoggle" title="Funkcja eksperymentalna: filtrowanie pytań wg składu komisji">
+        <input type="checkbox" id="betaToggle"><span>komisja</span><i>beta</i>
+      </label>
+    </div>
+  </div>
+</nav>
+<div class="wrap" id="top">
 
 <header>
   <div class="masthead">
@@ -175,7 +261,7 @@ footer{margin-top:70px;padding-top:20px;border-top:1px solid var(--line);
            alt="Trzy meowle, czyli koty z ciałem sowy, siedzące na drewnianej belce: pręgowany z kwiatkiem, ten z wielkimi oczami i biały ze zmrużonymi oczami">
     </figure>
   </div>
-  <p class="quest">Zestaw 50 zagadnień egzaminacyjnych ułożony w <strong>kolejności nauki</strong>: każdy etap korzysta z tego, co odłożył poprzedni. Przy pytaniach jeszcze nieopracowanych widać numer w kolejce. Zaznacz członków komisji, żeby zobaczyć, które pytania są w ich zasięgu.</p>
+  <p class="quest">Zestaw 50 zagadnień egzaminacyjnych ułożony w <strong>kolejności nauki</strong>: każdy etap korzysta z tego, co odłożył poprzedni. Przy pytaniach jeszcze nieopracowanych widać numer w kolejce. <span class="beta-only">Zaznacz członków komisji, żeby zobaczyć, które pytania są w ich zasięgu.</span></p>
   <div class="status">
     <span>opracowane: <b id="done">0</b> / <b id="total">50</b></span>
     <div class="bar"><span id="fill" style="width:0%"></span></div>
@@ -197,15 +283,14 @@ footer{margin-top:70px;padding-top:20px;border-top:1px solid var(--line);
     <p class="todo" id="todo"></p>
   </div>
 
-  <ul class="chips" id="chips"></ul>
 </header>
 
 <main id="cats"></main>
+<div id="flat" class="list" hidden></div>
 
 <footer>
   Etapy nie są przedmiotami z planu studiów — to kolejność, w jakiej zagadnienia najlepiej się na siebie nakładają:
-  ten sam obiekt kolejnymi metodami, bliźniacze pytania obok siebie, synteza po składnikach. Przedmiot i obsada
-  wykładu są podane przy każdym pytaniu; komplet siedzi w tablicach <code>PEOPLE</code>, <code>PRZEDMIOTY</code>
+  ten sam obiekt kolejnymi metodami, bliźniacze pytania obok siebie, synteza po składnikach. Przedmiot jest podany przy każdym pytaniu<span class="beta-only"> wraz z obsadą wykładu</span>; komplet siedzi w tablicach <code>PEOPLE</code>, <code>PRZEDMIOTY</code>
   i <code>ETAPY</code> na dole tego pliku.<br>
   Pliki opracowań: <code>pytanie_NN_slug.html</code> w tym samym folderze.
 </footer>
@@ -398,6 +483,7 @@ ETAPY.forEach((et,si) => {
     keys.forEach(k => counts[k] = (counts[k]||0) + 1);
     const el = document.createElement(q.file ? "a" : "div");
     el.className = "q " + (q.file ? "ready" : "soon");
+    el.dataset.n = q.n;
     if (q.file) el.href = q.file;
     let tag;
     if (q.file) { tag = "opracowane"; }
@@ -408,12 +494,12 @@ ETAPY.forEach((et,si) => {
     }
     el.innerHTML =
       `<span class="n">${pad(q.n)}</span>` +
-      `<span class="t"><span class="tt">${q.t}</span><span class="przed">${P.short}</span></span>` +
+      `<span class="t"><span class="tt">${q.t}</span><span class="przed">${P.short}</span><span class="etap">etap ${pad(si+1)} &middot; ${et.name}</span></span>` +
       `<span class="side"><span class="tag">${tag}</span>` +
       `<span class="hitmark">komisja</span>` +
       `<span class="who">${keys.map(k=>`<span data-k="${k}">${PEOPLE[k].short}</span>`).join("")}</span></span>`;
     list.appendChild(el);
-    rows.push({el, who:keys, sec});
+    rows.push({el, who:keys, sec, n:q.n, list});
   });
 
   cats.appendChild(sec);
@@ -423,6 +509,8 @@ document.getElementById("done").textContent  = done;
 document.getElementById("total").textContent = total;
 document.getElementById("fill").style.width  = (100*done/total).toFixed(1) + "%";
 document.getElementById("left").textContent  = "pozostało " + (total-done);
+
+let betaOn = false;   // skład komisji: funkcja beta, domyślnie wyłączona
 
 /* ---- panel komisji ---- */
 const peopleBox = document.getElementById("people");
@@ -438,7 +526,7 @@ Object.keys(PEOPLE).forEach(k => {
 });
 
 function apply(){
-  document.body.classList.toggle("komisja", selected.size > 0);
+  document.body.classList.toggle("komisja", betaOn && selected.size > 0);
   let hits = 0, hitsReady = 0;
   const perSection = new Map();
   rows.forEach(r => {
@@ -449,7 +537,7 @@ function apply(){
     if (hit){ hits++; if (r.el.classList.contains("ready")) hitsReady++; }
     perSection.set(r.sec, (perSection.get(r.sec)||0) + (hit?1:0));
   });
-  perSection.forEach((n, sec) => sec.classList.toggle("dim", selected.size>0 && n===0));
+  perSection.forEach((n, sec) => sec.classList.toggle("dim", betaOn && selected.size>0 && n===0));
   peopleBox.querySelectorAll("input").forEach(i =>
     i.parentElement.classList.toggle("on", selected.has(i.dataset.k)));
 
@@ -484,6 +572,82 @@ if (missing.length){
   document.getElementById("todo").textContent =
     "Do uzupełnienia obsada wykładów: " + missing.join(" · ");
 }
+/* ---- pasek nawigacji: wysokość, sortowanie, beta, skok do numeru, scroll-spy ---- */
+const bar  = document.getElementById("topbar");
+const flat = document.getElementById("flat");
+const setBarH = () => document.documentElement.style.setProperty("--bar-h", bar.offsetHeight + "px");
+setBarH(); addEventListener("resize", setBarH);
+
+const pref = {
+  get(k, d){ try{ const v = localStorage.getItem(k); return v === null ? d : v; }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem(k, v); }catch(e){} }
+};
+
+/* sortowanie: etapy (kolejność nauki) albo numer pytania */
+flat.innerHTML = '<p class="lead">Wszystkie zagadnienia w kolejności numerów z listy egzaminacyjnej.</p>';
+const segBtns = [...document.querySelectorAll(".seg button")];
+function setSort(mode, scroll){
+  const num = mode === "num";
+  document.body.classList.toggle("by-num", num);
+  cats.hidden = num; flat.hidden = !num;
+  if (num) rows.slice().sort((a, b) => a.n - b.n).forEach(r => flat.appendChild(r.el));
+  else     rows.forEach(r => r.list.appendChild(r.el));
+  segBtns.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.sort === mode)));
+  pref.set("sort", mode);
+  if (scroll){
+    const top = (num ? flat : cats).getBoundingClientRect().top + scrollY - bar.offsetHeight - 14;
+    if (scrollY > top) window.scrollTo({top});
+  }
+  spy(true);
+}
+segBtns.forEach(b => b.addEventListener("click", () => setSort(b.dataset.sort, true)));
+
+/* skład komisji = beta */
+const betaBox = document.getElementById("betaToggle");
+function setBeta(on){
+  betaOn = on; betaBox.checked = on;
+  document.body.classList.toggle("show-beta", on);
+  pref.set("beta", on ? "1" : "0");
+  apply(); setBarH();
+}
+betaBox.addEventListener("change", () => setBeta(betaBox.checked));
+
+/* skok do numeru */
+const jumpN = document.getElementById("jumpN");
+document.getElementById("jump").addEventListener("submit", e => {
+  e.preventDefault();
+  const r = rows.find(r => r.n === parseInt(jumpN.value, 10));
+  if (!r){ jumpN.classList.add("bad"); setTimeout(() => jumpN.classList.remove("bad"), 900); return; }
+  r.el.scrollIntoView({block:"center"});
+  r.el.classList.remove("flash"); void r.el.offsetWidth; r.el.classList.add("flash");
+  setTimeout(() => r.el.classList.remove("flash"), 1800);
+  jumpN.select();
+});
+
+/* podświetlenie bieżącego etapu na pasku */
+const secs  = [...cats.querySelectorAll("section")];
+const links = [...chips.querySelectorAll("a")];
+let active = -2, tick = false;
+function spy(force){
+  if (document.body.classList.contains("by-num")) return;
+  const line = bar.offsetHeight + 40;
+  let idx = -1;
+  secs.forEach((s, i) => { if (s.getBoundingClientRect().top <= line) idx = i; });
+  if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) idx = secs.length - 1;
+  if (idx === active && !force) return;
+  active = idx;
+  links.forEach((a, i) => { a.classList.toggle("active", i === idx); i === idx ? a.setAttribute("aria-current", "true") : a.removeAttribute("aria-current"); });
+  const a = links[idx];
+  if (a) chips.scrollTo({left: a.offsetLeft - (chips.clientWidth - a.offsetWidth) / 2});
+}
+addEventListener("scroll", () => {
+  if (tick) return; tick = true;
+  requestAnimationFrame(() => { tick = false; spy(); });
+}, {passive:true});
+
+setBeta(pref.get("beta", "0") === "1");
+setSort(pref.get("sort", "stage") === "num" ? "num" : "stage", false);
 </script>
+<script src="assets/meowl-egg.js" defer></script>
 </body>
 </html>

@@ -147,6 +147,10 @@ p{margin:0 0 12px;max-width:62ch}
 .mascot.pop{animation:mpop .45s ease}
 @keyframes mpop{40%{transform:scale(1.22) rotate(-6deg)}100%{transform:none}}
 .intro-meowls{display:block;width:100%;max-height:30vh;object-fit:cover;object-position:50% 40%;border-radius:16px;margin:0 0 20px}
+.feed-egg{position:absolute;left:50%;bottom:0;width:104px;height:66px;margin-left:-52px;overflow:hidden;pointer-events:none;z-index:0}
+.feed-egg img{display:block;width:104px;height:auto;transform:translateY(100%);animation:eggup .8s .5s cubic-bezier(.2,.9,.3,1.25) forwards}
+@keyframes eggup{to{transform:none}}
+@media (max-height:700px){.feed-egg{display:none}}
 .mile-meowl{display:block;width:76px;height:76px;border-radius:50%;margin:0 0 14px}
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -304,7 +308,8 @@ function milestoneCard(){
    <div class="stat"><div><b>${S.ses.ok}</b><span>umiałeś</span></div><div><b>${S.best}</b><span>najdłuższa seria</span></div></div>
    ${weak?`<p>Najwięcej do powtórki: <b>${weak.q}. ${esc(TOPICS[weak.q].t)}</b> (${weak.pct}% opanowane).</p>`:''}
    <p class="hint" style="text-align:left">Przewiń dalej, feed się nie kończy.</p>`;
-  w.appendChild(b); sec.appendChild(w); return sec;
+  w.appendChild(b); sec.appendChild(w);
+  sec.appendChild(el('div','feed-egg','<img src="assets/meowl-peek.png" alt="">')); return sec;
 }
 function mastery(q){const cs=CARDS.filter(c=>c.q===q); const m=cs.filter(c=>S.c[c.id]&&S.c[c.id].b>=3).length; return Math.round(100*m/cs.length);}
 function weakest(){let best=null; S.on.forEach(q=>{const p=mastery(q); if(!best||p<best.pct) best={q,pct:p};}); return best;}
