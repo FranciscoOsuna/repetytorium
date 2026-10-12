@@ -1,0 +1,47 @@
+{
+  "1": {
+    "t": "Technologie modelowania: wiedza i dane",
+    "h": 60,
+    "page": "pytanie_01_technologie_modelowania.html"
+  },
+  "2": {
+    "t": "Metoda najmniejszych kwadratów",
+    "h": 90,
+    "page": "pytanie_02_metoda_najmniejszych_kwadratow.html"
+  },
+  "20": {
+    "t": "EKF a filtr Kalmana",
+    "h": 0,
+    "page": "pytanie_20_ekf.html"
+  },
+  "21": {
+    "t": "Komunikacja w systemach rozproszonych",
+    "h": 195,
+    "page": "pytanie_21_komunikacja.html"
+  },
+  "27": {
+    "t": "PCA w diagnostyce",
+    "h": 325,
+    "page": "pytanie_27_model_pca_diagnostyka.html"
+  },
+  "31": {
+    "t": "Kernel PCA",
+    "h": 150,
+    "page": "pytanie_31_kernel_pca.html"
+  },
+  "40": {
+    "t": "Filtr Kalmana w sterowaniu",
+    "h": 235,
+    "page": "pytanie_40_filtr_kalmana.html"
+  },
+  "44": {
+    "t": "Analiza wrażliwości w LP",
+    "h": 45,
+    "page": "pytanie_44_wrazliwosc.html"
+  },
+  "47": {
+    "t": "Predykat, reguła, klauzula",
+    "h": 275,
+    "page": "pytanie_47_predykat_reguly_klauzule.html"
+  }
+}
