@@ -81,7 +81,7 @@ const KATEGORIE = [
  {name:"Inżynieria wiedzy", items:[
    {n:47, p:"siw", t:"Wyjaśnij pojęcia i podaj przykłady zastosowania predykatu, reguły produkcji, reguły decyzyjnej oraz klauzuli.", file:"pytanie_47_predykat_reguly_klauzule.html"},
    {n:48, p:"siw", t:"Wymień i opisz podstawowe metody wnioskowania dedukcyjnego na podstawie faktów oraz na podstawie celów.", file:"pytanie_48_wnioskowanie.html"},
-   {n:49, p:"siw", t:"Przedstaw i opisz podstawową strukturę systemu ekspertowego."},
+   {n:49, p:"siw", t:"Przedstaw i opisz podstawową strukturę systemu ekspertowego.", file:"pytanie_49_system_ekspertowy.html"},
    {n:50, p:"siw", t:"Opisz działanie i przedstaw cechy algorytmu A*."},
  ]},
 

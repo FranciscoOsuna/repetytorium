@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pytanie 49 — Struktura systemu ekspertowego</title>
+<link rel="icon" type="image/png" sizes="144x144" href="favicon-144.png?v=2">
+<link rel="icon" href="favicon.ico?v=2" sizes="any">
+<link rel="apple-touch-icon" href="favicon-144.png?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0F1B2D; --mut:#5A667A; --line:#CDD5E2;
+  --paper:#EEF1F6; --card:#FBFCFE;
+  --teal:#2457D6; --amber:#E2711D; --violet:#7A4FD0; --rose:#D04C70; --sky:#4C7DF0;
+  --disp:"Space Grotesk",system-ui,sans-serif;
+  --body:"STIX Two Text","Source Serif 4",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+     font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:860px;margin:0 auto;padding:0 22px 100px}
+
+/* ---- nagłówek ---- */
+header{padding:64px 0 30px;border-bottom:2px solid var(--ink)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+         color:var(--mut);margin:0 0 14px}
+h1{font-family:var(--disp);font-weight:700;font-size:clamp(30px,5vw,46px);line-height:1.08;
+   letter-spacing:-.02em;margin:0 0 18px}
+.quest{font-style:italic;font-size:19px;color:var(--ink);margin:0;padding-left:16px;
+       border-left:3px solid var(--violet)}
+.src{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:18px}
+
+/* ---- sekcje ---- */
+section{margin-top:56px}
+h2{font-family:var(--disp);font-weight:700;font-size:25px;letter-spacing:-.015em;
+   margin:0 0 6px;display:flex;align-items:baseline;gap:12px}
+h2 .num{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--violet);
+        letter-spacing:.08em;flex:none}
+h3{font-family:var(--disp);font-weight:500;font-size:18.5px;margin:34px 0 8px;letter-spacing:-.01em}
+p{margin:0 0 14px}
+.rail{height:5px;background:linear-gradient(90deg,var(--sky) 0%,var(--teal) 30%,var(--violet) 62%,var(--amber) 100%);
+      opacity:.85;margin:0 0 22px;border-radius:2px}
+
+/* ---- figury ---- */
+figure{margin:26px 0;background:var(--card);border:1px solid var(--line);border-radius:3px;
+       padding:20px 18px 14px}
+.fig{width:100%;height:auto;display:block}
+figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:12px;
+           padding-top:10px;border-top:1px solid var(--line);line-height:1.5}
+.tick{font-family:var(--mono);font-size:10.5px;fill:#7C8A94}
+.axlab{font-family:var(--mono);font-size:11px;fill:var(--mut)}
+.cap{font-family:var(--mono);font-size:10.5px;fill:var(--mut)}
+.bx{font-family:var(--mono);font-size:10.5px;fill:var(--mut)}
+.bx-t{font-family:var(--disp);font-size:11.5px;font-weight:500;fill:var(--ink)}
+
+/* ---- bloki ---- */
+.box{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--violet);
+     padding:16px 18px;margin:22px 0;border-radius:2px}
+.box.key{border-left-color:var(--rose)}
+.box.warn{border-left-color:var(--amber)}
+.box .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+          color:var(--mut);display:block;margin-bottom:8px}
+.box p:last-child{margin-bottom:0}
+
+/* ---- wzory (TeX składany do SVG skryptem mathbuild.js) ---- */
+.eq{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--violet);
+    padding:18px 18px;margin:22px 0;border-radius:2px;overflow-x:auto;text-align:center;
+    font-size:18.5px;line-height:1.3}
+.eq svg{max-width:100%;height:auto}
+.eq.txt{font-family:var(--mono);font-size:14px;line-height:1.7;color:var(--ink);text-align:center}
+.eq b{color:var(--violet);font-weight:500}
+.eqnote{font-family:var(--mono);font-size:12.5px;color:var(--mut);text-align:center;
+        margin:-14px 0 20px;line-height:1.6}
+.m{white-space:nowrap}
+.m svg{vertical-align:-0.25ex;max-width:100%;height:auto}
+@media (max-width:640px){
+  table{display:block;overflow-x:auto;width:auto;min-width:100%;-webkit-overflow-scrolling:touch}
+  table .m svg{max-width:none}
+  .eq{padding:14px 12px;font-size:16px}
+}
+
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15px;background:var(--card)}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--disp);font-weight:500;font-size:13px;letter-spacing:.02em;
+   background:#F4F2EA;border-bottom:1.5px solid var(--line)}
+td.n{font-family:var(--mono);font-size:13.5px;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+
+ol,ul{margin:0 0 14px;padding-left:22px}
+li{margin-bottom:7px}
+ol.steps{list-style:none;padding-left:0;counter-reset:st}
+ol.steps>li{counter-increment:st;position:relative;padding-left:44px;margin-bottom:18px}
+ol.steps>li::before{content:counter(st);position:absolute;left:0;top:1px;
+  font-family:var(--mono);font-size:12px;width:28px;height:28px;border-radius:50%;
+  background:var(--violet);color:#fff;display:flex;align-items:center;justify-content:center}
+strong{font-weight:600}
+.tag{font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:2px;
+     background:rgba(36,87,214,.12);color:var(--teal);white-space:nowrap}
+.tag.a{background:rgba(226,113,29,.13);color:var(--amber)}
+.tag.v{background:rgba(122,79,208,.13);color:var(--violet)}
+footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
+       font-family:var(--mono);font-size:12px;color:var(--mut)}
+@media print{body{background:#fff}figure,.box,.eq,table{break-inside:avoid}.topnav,.backfoot{display:none}}
+@media (max-width:600px){body{font-size:16px}header{padding-top:40px}}
+
+/* ---- pasek nawigacji ---- */
+.topnav{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:22px 0 0}
+.topnav a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+          color:var(--mut);text-decoration:none;border:1px solid var(--line);background:var(--card);
+          border-radius:2px;padding:6px 11px;transition:color .12s ease,border-color .12s ease}
+.topnav a:hover,.topnav a:focus-visible{color:var(--ink);border-color:var(--ink);outline:none}
+.topnav .here{font-family:var(--mono);font-size:12px;color:var(--mut);letter-spacing:.08em}
+.backfoot{margin:18px 0 0}
+.backfoot a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+            color:var(--teal);text-decoration:none;border-bottom:1px solid var(--line)}
+.backfoot a:hover,.backfoot a:focus-visible{border-bottom-color:var(--teal);outline:none}
+
+/* ---- meowl przy tytule ---- */
+.avatar{float:right;width:64px;height:64px;border-radius:50%;margin:2px 0 10px 18px;
+        box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--line)}
+header::after{content:"";display:block;clear:both}
+</style>
+<link rel="stylesheet" href="assets/chat.css">
+</head>
+<body>
+<div class="wrap">
+
+<nav class="jm" id="jm" aria-label="Nawigacja"><a class="jc" href="index.html">&larr; Lista</a></nav>
+
+<header>
+  <img class="avatar" src="assets/meowl-tabby.png" width="64" height="64" alt="" decoding="async">
+  <h1>Struktura systemu ekspertowego</h1>
+  <p class="quest">Przedstaw i opisz podstawową strukturę systemu ekspertowego.</p>
+</header>
+
+<style>
+.karty{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:22px 0}
+.karta{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--violet);border-radius:3px;padding:12px 14px}
+.karta.k .kw{color:var(--violet)} .karta.b{border-top-color:var(--teal)} .karta.s{border-top-color:var(--rose)} .karta.a{border-top-color:var(--amber)}
+.karta .kw{font-family:var(--disp);font-weight:700;font-size:17px;line-height:1.25;display:block;margin-bottom:6px;color:var(--violet)}
+.karta.b .kw{color:var(--teal)} .karta.s .kw{color:var(--rose)} .karta.a .kw{color:var(--amber)}
+.karta p{font-size:15px;margin:0;line-height:1.5}
+@media (max-width:600px){.karty{grid-template-columns:1fr}}
+.fiszka{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--violet);border-radius:2px;margin:10px 0;padding:0}
+.fiszka summary{cursor:pointer;list-style:none;padding:12px 16px;font-family:var(--disp);font-weight:500;font-size:16.5px}
+.fiszka summary::-webkit-details-marker{display:none}
+.fiszka summary::before{content:"?";display:inline-flex;width:22px;height:22px;border-radius:50%;background:var(--violet);color:#fff;
+  font-family:var(--mono);font-size:12px;align-items:center;justify-content:center;margin-right:10px;vertical-align:1px}
+.fiszka[open] summary::before{content:"✓";background:var(--teal)}
+.fiszka p,.fiszka ol,.fiszka ul{padding:0 16px 14px 48px;margin:0}
+.fiszka.op{border-left-color:var(--teal)}
+.fiszka.op summary::before{content:"▶";background:var(--teal)}
+ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{color:var(--teal)}
+.cyt{font-style:italic;color:var(--ink)}
+.check{list-style:none;padding-left:0}
+.check li{padding-left:30px;position:relative}
+.check li::before{content:"☐";position:absolute;left:4px;top:-1px;font-family:var(--mono);color:var(--teal);font-size:17px}
+.luka{display:inline-block;min-width:70px;border-bottom:1.5px solid var(--violet);text-align:center;font-family:var(--mono);font-size:14px;color:var(--violet)}
+.eq.txt{overflow-wrap:anywhere}
+.inter{background:var(--card);border:1px solid var(--line);border-radius:3px;
+       padding:20px 18px 16px;margin:26px 0}
+.inter .fig{width:100%;height:auto;display:block}
+.inter .ster{display:flex;align-items:center;gap:14px;margin:14px 0 0;flex-wrap:wrap}
+.inter .ster label{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;
+       text-transform:uppercase;color:var(--mut);flex:none}
+.inter input[type=range]{flex:1 1 200px;min-width:160px;accent-color:var(--violet);height:22px}
+.inter .ster output{font-family:var(--mono);font-size:14px;color:var(--violet);
+       min-width:36px;text-align:right;flex:none}
+.inter .odczyt{font-family:var(--mono);font-size:12.5px;color:var(--mut);
+       margin:12px 0 0;padding-top:11px;border-top:1px solid var(--line);line-height:1.65}
+.inter .odczyt b{color:var(--ink);font-weight:500}
+.inter .odczyt.staly2{min-height:80px}
+</style>
+
+<section>
+<h2><span class="num">01</span> Rama odpowiedzi</h2>
+<div class="rail"></div>
+
+<p>Pytanie dotyczy budowy systemu ekspertowego: z jakich części się składa i co robi każda z nich. Strona opiera się na wykładzie T. Rutkowskiego (<em>Systemy inżynierii wiedzy</em>, wykład 03 „System ekspertowy”), który rysuje strukturę według W. Traczyka i J. Mulawki. Pojęcia reguły i faktu pochodzą z zagadnienia 47, a wnioskowanie w przód i wstecz z zagadnienia 48. Tutaj pokazujemy, gdzie te mechanizmy „mieszkają”.</p>
+
+<div class="box key">
+<span class="lbl">Zdanie, od którego warto zacząć</span>
+<p><strong>System ekspertowy to program, który rozwiązuje problemy wymagające wiedzy specjalisty. Składa się z dwóch części: bazy wiedzy, w której zapisana jest wiedza dziedzinowa eksperta, i systemu wnioskującego, który z tej wiedzy korzysta. Rdzeniem systemu wnioskującego jest maszyna wnioskująca; wokół niej są baza danych z faktami bieżącej sprawy, interfejs użytkownika, generator wyjaśnień, edytor bazy wiedzy, kontrola poprawności, moduł obliczeń, sterowanie i interfejs do świata zewnętrznego.</strong></p>
+</div>
+
+<table>
+<thead><tr><th>człon odpowiedzi</th><th>co trzeba powiedzieć</th></tr></thead>
+<tbody>
+<tr><td>czym jest</td><td>definicja; ekspert = wiedza dziedzinowa + umiejętność wnioskowania; fakty wchodzą, wnioski wychodzą; zastosowania</td></tr>
+<tr><td>struktura</td><td>SE = system wnioskujący + baza wiedzy; dziesięć modułów i rola każdego</td></tr>
+<tr><td>działanie</td><td>jedna konsultacja: kto pyta, gdzie lądują fakty, kto odpala reguły, kto wyjaśnia</td></tr>
+<tr><td>baza wiedzy i maszyna</td><td>fakty i heurystyki; części bazy wiedzy; reguły IF–THEN; wnioskowanie w przód i wstecz</td></tr>
+<tr><td>ludzie i narzędzia</td><td>ekspert, inżynier wiedzy, użytkownik; akwizycja wiedzy; systemy szkieletowe</td></tr>
+<tr><td>ocena</td><td>etapy budowy, zalety i wady, przykład MYCIN</td></tr>
+</tbody>
+</table>
+</section>
+
+<section>
+<h2><span class="num">02</span> Czym jest system ekspertowy</h2>
+<div class="rail"></div>
+
+<p>Najpierw kogo system naśladuje. <strong>Ekspert</strong> to według wykładu człowiek, który ma <span class="cyt">„specjalistyczną wiedzę […] w pewnej dziedzinie (wiedzę dziedzinową) oraz umiejętność jej stosowania dla potrzeb podejmowania decyzji”</span>, czyli umiejętność wnioskowania. Te dwie rzeczy wprost przechodzą na dwie części systemu: wiedzę przechowuje baza wiedzy, a wnioskuje system wnioskujący.</p>
+
+<div class="box">
+<span class="lbl">Definicja z wykładu</span>
+<p><strong>System ekspertowy</strong> (doradczy, ekspercki) to <span class="cyt">„program komputerowy wykorzystujący wiedzę i procedury wnioskowania do rozwiązywania problemów, które są na tyle trudne, że wymagają znaczącej ekspertyzy specjalistów”</span>. W trakcie pracy zadaje pytania, wyjaśnia wątpliwości i sugeruje rozwiązania. Na wejściu dostaje <strong>fakty i sądy</strong>, a na wyjściu daje <strong>wnioski</strong>.</p>
+</div>
+
+<p>Co jest „faktem”, a co „wnioskiem”, zależy od zastosowania (tabela wg W. Traczyka ze slajdu 12):</p>
+<table>
+<thead><tr><th>zastosowanie</th><th>fakty (wejście)</th><th>wnioski (wyjście)</th></tr></thead>
+<tbody>
+<tr><td>wspomaganie decyzji</td><td>warunki</td><td>decyzje</td></tr>
+<tr><td>diagnostyka</td><td>objawy</td><td>diagnoza</td></tr>
+<tr><td>klasyfikacja</td><td>cechy</td><td>kategoria</td></tr>
+<tr><td>konfigurowanie</td><td>wymagania</td><td>struktura</td></tr>
+<tr><td>prognozowanie</td><td>stan</td><td>prognoza</td></tr>
+</tbody>
+</table>
+
+<p><strong>Po co go budować?</strong> Wykład podaje powody: ekspertów brakuje, są drodzy i męczą się, a system pracuje szybko, zawsze jest dostępny, jest konsekwentny i radzi sobie z dużą ilością danych. Porównanie obu rodzajów ekspertyzy:</p>
+<table>
+<thead><tr><th></th><th>ekspertyza naturalna (człowiek)</th><th>ekspertyza sztuczna (system)</th></tr></thead>
+<tbody>
+<tr><td>zalety</td><td>twórcza, adaptacyjna, szeroki zakres, zdrowy rozsądek, korzysta ze zmysłów</td><td>stała, łatwa do przeniesienia i udokumentowania, zgodna z bazą wiedzy, dostępna</td></tr>
+<tr><td>wady</td><td>z czasem traci na wartości, trudna do przeniesienia i udokumentowania, nieprzewidywalna, kosztowna</td><td>nie inspiruje, wymaga wprowadzenia wiedzy, wąski zakres, przetwarza wiedzę mechanicznie</td></tr>
+</tbody>
+</table>
+</section>
+
+<section>
+<h2><span class="num">03</span> Struktura: system wnioskujący i baza wiedzy</h2>
+<div class="rail"></div>
+
+<p>Wykład zaczyna od podziału na dwie części: <strong>bazę wiedzy</strong>, <span class="cyt">„zawierającą wiedzę dziedzinową, istotną dla podejmowanych decyzji”</span>, i <strong>system wnioskujący</strong>, <span class="cyt">„korzystający z bazy wiedzy dla wypracowania tych decyzji”</span>. Pełny schemat W. Traczyka rozkłada system wnioskujący na dziewięć modułów:</p>
+
+<figure>
+<svg viewBox="0 0 680 486" class="fig">
+<defs><marker id="arF49a0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#2457D6"/></marker><marker id="arF49a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#E2711D"/></marker><marker id="arF49a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0F1B2D"/></marker><marker id="arF49a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5A667A"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">STRUKTURA SYSTEMU EKSPERTOWEGO — DZIESIĘĆ MODUŁÓW</text>
+<text x="340" y="48" text-anchor="middle" class="bx-t" style="font-size:12.5px"><tspan style="fill:#0F1B2D">SYSTEM EKSPERTOWY</tspan> = <tspan style="fill:#7A4FD0">SYSTEM WNIOSKUJĄCY</tspan> + <tspan style="fill:#E2711D">BAZA WIEDZY</tspan></text>
+<rect class="b" x="128.0" y="70.0" width="172.0" height="72.0" rx="3" fill="#FBFCFE" stroke="#7A4FD0" stroke-width="1.3"/>
+<rect x="128.0" y="70.0" width="172.0" height="3" fill="#7A4FD0"/>
+<text x="214.0" y="97.0" text-anchor="middle" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">INTERFEJS UŻYTKOWNIKA</text>
+<text x="214.0" y="112.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">użytkownik wprowadza fakty i</text>
+<text x="214.0" y="124.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">odbiera wyniki</text>
+<rect class="b" x="312.0" y="70.0" width="172.0" height="72.0" rx="3" fill="#E9EFFC" stroke="#2457D6" stroke-width="1.3"/>
+<rect x="312.0" y="70.0" width="172.0" height="3" fill="#2457D6"/>
+<text x="398.0" y="97.0" text-anchor="middle" class="bx-t" style="fill:#2457D6;font-size:10.5px">BAZA DANYCH</text>
+<text x="398.0" y="112.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">fakty konsultacji i wyniki</text>
+<text x="398.0" y="124.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">pośrednie wnioskowania</text>
+<rect class="b" x="496.0" y="70.0" width="172.0" height="72.0" rx="3" fill="#FBFCFE" stroke="#7A4FD0" stroke-width="1.3"/>
+<rect x="496.0" y="70.0" width="172.0" height="3" fill="#7A4FD0"/>
+<text x="582.0" y="97.0" text-anchor="middle" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">KONTROLA POPRAWNOŚCI</text>
+<text x="582.0" y="112.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">szuka informacji sprzecznych</text>
+<text x="582.0" y="124.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">lub nadmiarowych</text>
+<rect class="b" x="128.0" y="168.0" width="172.0" height="72.0" rx="3" fill="#FBFCFE" stroke="#7A4FD0" stroke-width="1.3"/>
+<rect x="128.0" y="168.0" width="172.0" height="3" fill="#7A4FD0"/>
+<text x="214.0" y="195.0" text-anchor="middle" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">GENERATOR WYJAŚNIEŃ</text>
+<text x="214.0" y="210.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">odpowiada: po co to pytanie?</text>
+<text x="214.0" y="222.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">skąd ten wniosek?</text>
+<rect class="b" x="312.0" y="168.0" width="172.0" height="72.0" rx="3" fill="#FBFCFE" stroke="#7A4FD0" stroke-width="1.3"/>
+<rect x="312.0" y="168.0" width="172.0" height="3" fill="#7A4FD0"/>
+<text x="398.0" y="195.0" text-anchor="middle" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">MASZYNA WNIOSKUJĄCA</text>
+<text x="398.0" y="210.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">uzgadnia warunki reguł z</text>
+<text x="398.0" y="222.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">faktami, dopisuje konkluzje</text>
+<rect class="b" x="496.0" y="168.0" width="172.0" height="72.0" rx="3" fill="#FBFCFE" stroke="#7A4FD0" stroke-width="1.3"/>
+<rect x="496.0" y="168.0" width="172.0" height="3" fill="#7A4FD0"/>
+<text x="582.0" y="195.0" text-anchor="middle" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">OBLICZENIA</text>
+<text x="582.0" y="210.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">proste obliczenia w trakcie</text>
+<text x="582.0" y="222.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">wnioskowania</text>
+<rect class="b" x="128.0" y="266.0" width="172.0" height="72.0" rx="3" fill="#FBFCFE" stroke="#7A4FD0" stroke-width="1.3"/>
+<rect x="128.0" y="266.0" width="172.0" height="3" fill="#7A4FD0"/>
+<text x="214.0" y="293.0" text-anchor="middle" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">EDYTOR</text>
+<text x="214.0" y="308.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">inżynier wiedzy wpisuje i</text>
+<text x="214.0" y="320.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">poprawia reguły</text>
+<rect class="b" x="312.0" y="266.0" width="172.0" height="72.0" rx="3" fill="#FDF0E4" stroke="#E2711D" stroke-width="1.3"/>
+<rect x="312.0" y="266.0" width="172.0" height="3" fill="#E2711D"/>
+<text x="398.0" y="293.0" text-anchor="middle" class="bx-t" style="fill:#E2711D;font-size:10.5px">BAZA WIEDZY</text>
+<text x="398.0" y="308.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">reguły i fakty dziedzinowe —</text>
+<text x="398.0" y="320.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">wiedza eksperta</text>
+<rect class="b" x="496.0" y="266.0" width="172.0" height="72.0" rx="3" fill="#FBFCFE" stroke="#7A4FD0" stroke-width="1.3"/>
+<rect x="496.0" y="266.0" width="172.0" height="3" fill="#7A4FD0"/>
+<text x="582.0" y="293.0" text-anchor="middle" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">STEROWANIE</text>
+<text x="582.0" y="308.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">zarządza systemem, uruchamia</text>
+<text x="582.0" y="320.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">procedury wnioskowania</text>
+<line x1="398.0" y1="145.0" x2="398.0" y2="165.0" stroke="#2457D6" stroke-width="1.3" marker-start="url(#arF49a0)" marker-end="url(#arF49a0)"/>
+<text x="406.0" y="159.0" text-anchor="start" class="cap" style="fill:#2457D6;font-size:8.5px;paint-order:stroke;stroke:#FBFCFE;stroke-width:4px;stroke-linejoin:round">fakty ↔ konkluzje</text>
+<line x1="398.0" y1="243.0" x2="398.0" y2="263.0" stroke="#E2711D" stroke-width="1.3" marker-start="url(#arF49a1)" marker-end="url(#arF49a1)"/>
+<text x="406.0" y="257.0" text-anchor="start" class="cap" style="fill:#E2711D;font-size:8.5px;paint-order:stroke;stroke:#FBFCFE;stroke-width:4px;stroke-linejoin:round">reguły</text>
+<text x="56.0" y="100.0" text-anchor="middle" class="bx-t" style="font-size:10.5px">UŻYTKOWNIK</text>
+<text x="56.0" y="114.0" text-anchor="middle" class="cap" style="font-size:8.5px">pyta, odpowiada</text>
+<line x1="92.0" y1="126.0" x2="125.0" y2="126.0" stroke="#0F1B2D" stroke-width="1.3" marker-start="url(#arF49a2)" marker-end="url(#arF49a2)"/>
+<text x="56.0" y="290.0" text-anchor="middle" class="bx-t" style="font-size:10.5px">INŻYNIER</text>
+<text x="56.0" y="304.0" text-anchor="middle" class="bx-t" style="font-size:10.5px">WIEDZY</text>
+<line x1="92.0" y1="322.0" x2="125.0" y2="322.0" stroke="#0F1B2D" stroke-width="1.3" marker-start="url(#arF49a2)" marker-end="url(#arF49a2)"/>
+<rect class="b" x="282.0" y="364.0" width="232.0" height="46.0" rx="3" fill="#FBFCFE" stroke="#7A4FD0" stroke-width="1.3"/>
+<rect x="282.0" y="364.0" width="232.0" height="3" fill="#7A4FD0"/>
+<text x="398.0" y="384.0" text-anchor="middle" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">INTERFEJS</text>
+<text x="398.0" y="399.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">połączenie ze światem zewnętrznym</text>
+<path d="M 356.0 412.0 L 286.0 436.0" fill="none" stroke="#5A667A" stroke-width="1.1" marker-end="url(#arF49a3)"/>
+<text x="286.0" y="450.0" text-anchor="middle" class="cap" style="font-size:9px">bazy danych</text>
+<path d="M 398.0 412.0 L 398.0 436.0" fill="none" stroke="#5A667A" stroke-width="1.1" marker-end="url(#arF49a3)"/>
+<text x="398.0" y="450.0" text-anchor="middle" class="cap" style="font-size:9px">procesy, czujniki</text>
+<path d="M 440.0 412.0 L 510.0 436.0" fill="none" stroke="#5A667A" stroke-width="1.1" marker-end="url(#arF49a3)"/>
+<text x="510.0" y="450.0" text-anchor="middle" class="cap" style="font-size:9px">sieć, programy</text>
+<rect x="30.0" y="467.0" width="12.0" height="12.0" rx="2" fill="#FDF0E4" stroke="#E2711D" stroke-width="1.3"/>
+<text x="48.0" y="477.0" text-anchor="start" class="cap" style="fill:#E2711D;font-size:9px">wiedza dziedzinowa — wymienna</text>
+<rect x="245.0" y="467.0" width="12.0" height="12.0" rx="2" fill="#E9EFFC" stroke="#2457D6" stroke-width="1.3"/>
+<text x="263.0" y="477.0" text-anchor="start" class="cap" style="fill:#2457D6;font-size:9px">fakty tej konsultacji</text>
+<rect x="460.0" y="467.0" width="12.0" height="12.0" rx="2" fill="#FBFCFE" stroke="#7A4FD0" stroke-width="1.3"/>
+<text x="478.0" y="477.0" text-anchor="start" class="cap" style="fill:#7A4FD0;font-size:9px">reszta: system wnioskujący</text>
+</svg>
+<figcaption>Schemat ze slajdu 19 (W. Traczyk, <em>Inżynieria wiedzy</em>) z opisem roli każdego modułu wg slajdów 21–23. Kolory i strzałki w środkowej kolumnie dodane: maszyna wnioskująca bierze reguły z bazy wiedzy, a fakty i konkluzje wymienia z bazą danych.</figcaption>
+</figure>
+
+<p>Moduły łatwo zapamiętać, gdy pogrupuje się je według tego, komu służą:</p>
+<ul>
+<li><strong>Rdzeń:</strong> <em>maszyna wnioskująca</em> <span class="cyt">„uzgadnia warunki reguł (z bazy wiedzy) z faktami (z bazy danych) i wprowadza konkluzje do bazy danych”</span>. Brakujących danych szuka w bazie danych, w źródłach zewnętrznych albo pyta o nie użytkownika. Pracą całości zarządza <em>moduł sterowania</em>: uruchamia ustawione na stałe lub doraźnie procedury wnioskowania.</li>
+<li><strong>Dwie bazy, które łatwo pomylić:</strong> <em>baza wiedzy</em> trzyma reguły — wiedzę ogólną, ważną dla każdej sprawy. <em>Baza danych</em> trzyma fakty bieżącej sprawy podane przez użytkownika oraz <span class="cyt">„pośrednie wyniki wnioskowania”</span>. Po konsultacji baza wiedzy jest taka sama jak przed nią, a baza danych jest inna.</li>
+<li><strong>Dla użytkownika:</strong> <em>interfejs użytkownika</em> (wprowadza fakty, odbiera wyniki) i <em>generator wyjaśnień</em>, który odpowiada na wątpliwości <span class="cyt">„dotyczące zadawanych pytań i generowanych wniosków”</span>, czyli na pytania „dlaczego o to pytasz?” i „skąd ten wniosek?”.</li>
+<li><strong>Dla inżyniera wiedzy:</strong> <em>edytor</em> (wprowadzanie reguł) i <em>kontrola poprawności</em>, która wyrywkowo lub systematycznie sprawdza, czy w bazach nie ma informacji sprzecznych albo nadmiarowych.</li>
+<li><strong>Dla świata zewnętrznego:</strong> <em>moduł obliczeń</em> (proste obliczenia w trakcie wnioskowania) i <em>interfejs</em> do zewnętrznych baz danych, procesów, sieci i programów obliczeniowych.</li>
+</ul>
+</section>
+
+<section>
+<h2><span class="num">04</span> Jedna konsultacja krok po kroku</h2>
+<div class="rail"></div>
+
+<p>Struktura staje się zrozumiała, gdy prześledzi się jedną sprawę. Baza wiedzy to reguły „wykład nudny” z zagadnienia 48, dla których system ustala wstecz, co robić. Do przykładu dopisaliśmy jeden model liczbowy (m1) i opaskę sportową jako źródło zewnętrzne, żeby zadziałały też moduł obliczeń i interfejs. Przechodź kroki i obserwuj, które moduły pracują:</p>
+
+<style>
+.se .se-fig{width:100%;height:auto;display:block}
+.se .mod{transition:opacity .18s}
+.se.run .mod{opacity:.22}
+.se.run .mod.hi{opacity:1}
+.se .mod.hi rect.b{stroke-width:2.6}
+.se .se-act{font-family:var(--mono);font-size:12px;color:var(--mut);margin:8px 0 0;min-height:24px}
+.se .se-act span{display:inline-block;padding:2px 7px;margin:2px 4px 2px 0;border-radius:3px;border:1px solid var(--violet);background:#F1ECFA;color:var(--ink)}
+.se .se-act span.k{border-color:var(--amber);background:#FDF0E4}.se .se-act span.d{border-color:var(--teal);background:#E9EFFC}.se .se-act span.p{border-color:var(--mut);background:#fff}
+.se .se-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin-top:12px}
+.se .se-panel{border:1px solid var(--line);border-radius:3px;padding:10px 12px;background:#F6F8FC}
+.se .se-kb{grid-column:1 / -1}
+.se .se-lbl{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-bottom:6px}
+.se .se-kb .se-lbl{color:var(--amber)} .se .se-db .se-lbl{color:var(--teal)}
+.se .rr{font-family:var(--mono);font-size:12.5px;line-height:1.45;padding:2px 6px 2px 24px;position:relative;border-radius:3px;margin:1px 0;color:var(--mut)}
+.se .rr::before{position:absolute;left:6px;top:2px;font-size:12px}
+.se .rr.act{background:#FDF0E4;color:var(--ink);box-shadow:inset 0 0 0 1px #F2C9A4}
+.se .rr.act::before{content:"▶";color:var(--amber)}
+.se .rr.cand{color:var(--ink)}
+.se .rr.cand::before{content:"▷";color:var(--amber)}
+.se .rr b{font-weight:700;color:var(--violet)}
+.se .chip{display:inline-block;font-family:var(--mono);font-size:12.5px;padding:3px 8px;margin:2px 4px 2px 0;border-radius:3px;border:1px solid #AFC2EE;background:#E9EFFC;color:var(--ink)}
+.se .chip.cel{border-color:var(--violet);background:#F1ECFA}
+.se .chip.ok{border-color:var(--teal);background:var(--teal);color:#fff}
+.se .chip small{font-size:10.5px;opacity:.75;margin-left:6px}
+.se .dl{font-size:14.5px;line-height:1.4;margin:0 0 6px;padding:5px 9px;border-radius:9px;max-width:92%}
+.se .dl.ty{background:#E9EFFC;margin-left:auto;text-align:right}
+.se .dl.se{background:#F1ECFA}
+.se .dl span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
+.se .se-dlg{display:flex;flex-direction:column}
+.se .se-db,.se .se-dl{min-height:292px}
+.se .se-msg{font-family:var(--body);font-size:15.5px;line-height:1.55;margin:12px 0 0;padding:10px 14px;border-left:3px solid var(--violet);background:#F4F2FA;min-height:104px}
+.se .se-nav{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
+.se .se-nav button{font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;padding:7px 14px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:3px;cursor:pointer}
+.se .se-nav button:disabled{opacity:.4;cursor:default}
+.se .se-nav input[type=range]{flex:1 1 160px;accent-color:var(--violet)}
+.se .se-nav output{font-family:var(--mono);font-size:12.5px;color:var(--mut);min-width:80px;text-align:right}
+@media (max-width:600px){.se .se-act{min-height:90px}.se .se-grid{grid-template-columns:1fr}.se .se-db{min-height:252px}.se .se-dl{min-height:312px}.se .se-msg{min-height:170px}.se .rr{font-size:11.5px}}
+</style>
+<div class="inter se" id="se49">
+<div class="se-figw"><svg viewBox="0 0 680 300" class="fig">
+<defs><marker id="arF49i0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5A667A"/></marker><marker id="arF49i1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0F1B2D"/></marker></defs>
+<g class="mod" id="m_iu">
+<rect class="b" x="128" y="20" width="172" height="44" rx="3" fill="#F1ECFA" stroke="#7A4FD0" stroke-width="1.3"/>
+<text x="214.0" y="46.0" text-anchor="middle" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">INTERFEJS UŻYTKOWNIKA</text>
+</g>
+<g class="mod" id="m_bd">
+<rect class="b" x="312" y="20" width="172" height="44" rx="3" fill="#E9EFFC" stroke="#2457D6" stroke-width="1.3"/>
+<text x="398.0" y="46.0" text-anchor="middle" class="bx-t" style="fill:#2457D6;font-size:10.5px">BAZA DANYCH</text>
+</g>
+<g class="mod" id="m_kp">
+<rect class="b" x="496" y="20" width="172" height="44" rx="3" fill="#F1ECFA" stroke="#7A4FD0" stroke-width="1.3"/>
+<text x="582.0" y="46.0" text-anchor="middle" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">KONTROLA POPRAWNOŚCI</text>
+</g>
+<g class="mod" id="m_gw">
+<rect class="b" x="128" y="78" width="172" height="44" rx="3" fill="#F1ECFA" stroke="#7A4FD0" stroke-width="1.3"/>
+<text x="214.0" y="104.0" text-anchor="middle" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">GENERATOR WYJAŚNIEŃ</text>
+</g>
+<g class="mod" id="m_mw">
+<rect class="b" x="312" y="78" width="172" height="44" rx="3" fill="#F1ECFA" stroke="#7A4FD0" stroke-width="1.3"/>
+<text x="398.0" y="104.0" text-anchor="middle" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">MASZYNA WNIOSKUJĄCA</text>
+</g>
+<g class="mod" id="m_obl">
+<rect class="b" x="496" y="78" width="172" height="44" rx="3" fill="#F1ECFA" stroke="#7A4FD0" stroke-width="1.3"/>
+<text x="582.0" y="104.0" text-anchor="middle" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">OBLICZENIA</text>
+</g>
+<g class="mod" id="m_ed">
+<rect class="b" x="128" y="136" width="172" height="44" rx="3" fill="#F1ECFA" stroke="#7A4FD0" stroke-width="1.3"/>
+<text x="214.0" y="162.0" text-anchor="middle" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">EDYTOR</text>
+</g>
+<g class="mod" id="m_bw">
+<rect class="b" x="312" y="136" width="172" height="44" rx="3" fill="#FDF0E4" stroke="#E2711D" stroke-width="1.3"/>
+<text x="398.0" y="162.0" text-anchor="middle" class="bx-t" style="fill:#E2711D;font-size:10.5px">BAZA WIEDZY</text>
+</g>
+<g class="mod" id="m_st">
+<rect class="b" x="496" y="136" width="172" height="44" rx="3" fill="#F1ECFA" stroke="#7A4FD0" stroke-width="1.3"/>
+<text x="582.0" y="162.0" text-anchor="middle" class="bx-t" style="fill:#0F1B2D;font-size:10.5px">STEROWANIE</text>
+</g>
+<g class="mod" id="m_int">
+<rect class="b" x="312" y="196" width="172" height="34" rx="3" fill="#F1ECFA" stroke="#7A4FD0" stroke-width="1.3"/>
+<text x="398.0" y="217.0" text-anchor="middle" class="bx-t" style="font-size:10.5px">INTERFEJS</text>
+</g>
+<g class="mod" id="m_ext">
+<path d="M 398.0 258.0 L 398.0 233.0" fill="none" stroke="#5A667A" stroke-width="1.2" marker-end="url(#arF49i0)"/>
+<rect class="b" x="330" y="260" width="136" height="30" rx="3" fill="#FBFCFE" stroke="#5A667A" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="398.0" y="279.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9.5px">opaska: sen = 5 h</text>
+</g>
+<g class="mod" id="m_user">
+<text x="52.0" y="46.0" text-anchor="middle" class="bx-t" style="font-size:10.5px">UŻYTKOWNIK</text>
+<line x1="96.0" y1="42.0" x2="125.0" y2="42.0" stroke="#0F1B2D" stroke-width="1.3" marker-start="url(#arF49i1)" marker-end="url(#arF49i1)"/>
+</g>
+<g class="mod" id="m_inz">
+<text x="52.0" y="155.0" text-anchor="middle" class="bx-t" style="font-size:10.5px">INŻYNIER</text>
+<text x="52.0" y="169.0" text-anchor="middle" class="bx-t" style="font-size:10.5px">WIEDZY</text>
+<line x1="96.0" y1="158.0" x2="125.0" y2="158.0" stroke="#0F1B2D" stroke-width="1.3" marker-start="url(#arF49i1)" marker-end="url(#arF49i1)"/>
+</g>
+</svg></div>
+<p class="se-act" id="seAct"></p>
+<div class="se-grid">
+  <div class="se-panel se-kb"><span class="se-lbl">Baza wiedzy (stała)</span><div id="seKb"></div></div>
+  <div class="se-panel se-db"><span class="se-lbl">Baza danych (ta konsultacja)</span><div id="seDb"></div></div>
+  <div class="se-panel se-dl"><span class="se-lbl">Dialog przez interfejs</span><div class="se-dlg" id="seDl"></div></div>
+</div>
+<p class="se-msg" id="seMsg"></p>
+<div class="se-nav">
+  <button id="sePrev">← krok</button>
+  <input type="range" id="seStep" min="0" max="9" value="0" step="1" aria-label="numer kroku">
+  <button id="seNext">krok →</button>
+  <output id="seNo"></output>
+</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  var E=function(i){return document.getElementById(i);};
+  var R={"r1": "r1: <b>if</b> przedmiot = nudny <b>then</b> wykład = nudny", "r2": "r2: <b>if</b> wykładowca = nudny <b>then</b> wykład = nudny", "r3": "r3: <b>if</b> wykład = nudny <b>and</b> zmęczenie = tak <b>then</b> co_robić = iść_do_domu", "r4": "r4: <b>if</b> wykład = nudny <b>and</b> zmęczenie = nie <b>then</b> co_robić = iść_na_piwo", "m1": "m1 (model): zmęczenie = tak, <b>gdy</b> sen &lt; 6 h"}, S=[{"m": ["inz", "ed", "bw", "kp"], "r": {"r1": "cand", "r2": "cand", "r3": "cand", "r4": "cand", "m1": "cand"}, "bd": [], "d": [], "t": "Przed konsultacją. Inżynier wiedzy wpisuje edytorem reguły r1–r4 i model m1 do bazy wiedzy. Kontrola poprawności szuka sprzeczności i nadmiaru: r3 i r4 różnią się warunkiem zmęczenia, więc się nie wykluczają."}, {"m": ["user", "iu", "st", "mw"], "r": {}, "bd": [["co_robić = ?", "cel", "cel"]], "d": [["ty", "Co mam dziś zrobić?"]], "t": "Użytkownik zaczyna konsultację przez interfejs użytkownika. Moduł sterowania uruchamia maszynę wnioskującą w trybie wstecz (zagadnienie 48) z celem co_robić. Cel trafia do bazy danych."}, {"m": ["mw", "bw", "bd"], "r": {"r3": "act", "r4": "act"}, "bd": [["co_robić = ?", "cel", "cel"], ["wykład = nudny ?", "cel", "hipoteza pośrednia"]], "d": [["ty", "Co mam dziś zrobić?"]], "t": "Maszyna wnioskująca szuka w bazie wiedzy reguł z konkluzją co_robić: r3 i r4. Obie wymagają faktu wykład = nudny, którego nie ma w bazie danych. Wynika on z r1 albo r2, więc staje się hipotezą pośrednią."}, {"m": ["mw", "iu", "user"], "r": {"r1": "act", "r3": "cand", "r4": "cand"}, "bd": [["co_robić = ?", "cel", "cel"], ["wykład = nudny ?", "cel", "hipoteza pośrednia"]], "d": [["ty", "Co mam dziś zrobić?"], ["se", "Czy przedmiot jest nudny?"]], "t": "Maszyna wybiera r1. Jej warunku przedmiot = nudny nie wyprowadza żadna reguła — to warunek dopytywalny. Maszyna pyta więc o niego użytkownika przez interfejs."}, {"m": ["user", "iu", "gw", "bw"], "r": {"r1": "cand", "r3": "cand", "r4": "cand"}, "bd": [["co_robić = ?", "cel", "cel"], ["wykład = nudny ?", "cel", "hipoteza pośrednia"]], "d": [["ty", "Co mam dziś zrobić?"], ["se", "Czy przedmiot jest nudny?"], ["ty", "Dlaczego o to pytasz?"], ["se", "Z r1: nudny przedmiot → nudny wykład, a to warunek r3 i r4, które mówią, co robić."]], "t": "Zamiast odpowiedzi użytkownik pyta „dlaczego?”. Generator wyjaśnień odczytuje z bazy wiedzy, po co jest ten warunek, i pokazuje łańcuch reguł, który prowadzi do celu."}, {"m": ["user", "iu", "bd", "mw"], "r": {"r1": "act"}, "bd": [["co_robić = ?", "cel", "cel"], ["przedmiot = nudny", "", "od użytkownika"], ["wykład = nudny", "", "r1 — wynik pośredni"]], "d": [["se", "Czy przedmiot jest nudny?"], ["ty", "Dlaczego o to pytasz?"], ["se", "Z r1: nudny przedmiot → nudny wykład, a to warunek r3 i r4, które mówią, co robić."], ["ty", "Tak."]], "t": "Odpowiedź trafia do bazy danych jako fakt. r1 odpala i dopisuje wynik pośredni wykład = nudny. Reguły r2 nie trzeba było sprawdzać, więc system nie zapyta o wykładowcę."}, {"m": ["mw", "int", "ext", "bd"], "r": {"r3": "act"}, "bd": [["co_robić = ?", "cel", "cel"], ["przedmiot = nudny", "", "od użytkownika"], ["wykład = nudny", "", "r1 — wynik pośredni"], ["sen = 5 h", "", "z opaski"]], "d": [["se", "Czy przedmiot jest nudny?"], ["ty", "Dlaczego o to pytasz?"], ["se", "Z r1: nudny przedmiot → nudny wykład, a to warunek r3 i r4, które mówią, co robić."], ["ty", "Tak."]], "t": "Do r3 brakuje jeszcze zmęczenia. Tym razem system nie pyta: moduł interfejsu pobiera dane z zewnętrznego źródła, tu z opaski sportowej — sen = 5 h."}, {"m": ["obl", "bd", "bw"], "r": {"m1": "act"}, "bd": [["co_robić = ?", "cel", "cel"], ["przedmiot = nudny", "", "od użytkownika"], ["wykład = nudny", "", "r1 — wynik pośredni"], ["sen = 5 h", "", "z opaski"], ["zmęczenie = tak", "", "obliczenia, m1"]], "d": [["se", "Czy przedmiot jest nudny?"], ["ty", "Dlaczego o to pytasz?"], ["se", "Z r1: nudny przedmiot → nudny wykład, a to warunek r3 i r4, które mówią, co robić."], ["ty", "Tak."]], "t": "Moduł obliczeń zamienia liczbę na fakt według modelu m1 z bazy wiedzy: 5 h < 6 h, więc zmęczenie = tak. Reguły wspomagane obliczeniami to system regułowo-modelowy."}, {"m": ["mw", "bw", "bd", "iu", "user"], "r": {"r3": "act"}, "bd": [["przedmiot = nudny", "", "od użytkownika"], ["wykład = nudny", "", "r1 — wynik pośredni"], ["sen = 5 h", "", "z opaski"], ["zmęczenie = tak", "", "obliczenia, m1"], ["co_robić = iść_do_domu", "ok", "r3 — wniosek"]], "d": [["ty", "Dlaczego o to pytasz?"], ["se", "Z r1: nudny przedmiot → nudny wykład, a to warunek r3 i r4, które mówią, co robić."], ["ty", "Tak."], ["se", "Zalecenie: iść do domu."]], "t": "Oba warunki r3 są w bazie danych. r3 odpala, wniosek trafia do bazy danych, a przez interfejs do użytkownika. Reguły r2 i r4 nie zostały użyte."}, {"m": ["user", "iu", "gw", "bd"], "r": {"r1": "act", "m1": "act", "r3": "act"}, "bd": [["przedmiot = nudny", "", "od użytkownika"], ["wykład = nudny", "", "r1 — wynik pośredni"], ["sen = 5 h", "", "z opaski"], ["zmęczenie = tak", "", "obliczenia, m1"], ["co_robić = iść_do_domu", "ok", "r3 — wniosek"]], "d": [["ty", "Tak."], ["se", "Zalecenie: iść do domu."], ["ty", "Jak do tego doszedłeś?"], ["se", "Przedmiot nudny (od Ciebie) → r1 → wykład nudny; sen 5 h (opaska) → m1 → zmęczenie; r3 → iść do domu."]], "t": "Generator wyjaśnień odtwarza drogę wnioskowania z zapisów w bazie danych. Przez całą konsultację baza wiedzy się nie zmieniła, zmieniała się tylko baza danych. Następny użytkownik zacznie od pustej."}], k=0, root=E('se49'), st=E('seStep');
+  var svg=root.querySelector('svg'); svg.setAttribute('class','se-fig');
+  var MODS=['iu','bd','kp','gw','mw','obl','ed','bw','st','int','ext','user','inz'];
+  var NM={iu:'interfejs użytkownika',bd:'baza danych',kp:'kontrola poprawności',gw:'generator wyjaśnień',mw:'maszyna wnioskująca',obl:'obliczenia',ed:'edytor',bw:'baza wiedzy',st:'sterowanie',int:'interfejs',ext:'opaska',user:'użytkownik',inz:'inżynier wiedzy'};
+  var CL={bw:'k',bd:'d',user:'p',inz:'p',ext:'p'};
+  function chip(c){return '<span class="chip '+c[1]+'">'+c[0]+(c[2]?'<small>'+c[2]+'</small>':'')+'</span>';}
+  function draw(){
+    var s=S[k]; root.classList.add('run');
+    MODS.forEach(function(m){var g=E('m_'+m); if(g) g.classList.toggle('hi',s.m.indexOf(m)>=0);});
+    E('seKb').innerHTML=['r1','r2','r3','r4','m1'].map(function(r){return '<div class="rr '+(s.r[r]||'')+'">'+R[r]+'</div>';}).join('');
+    E('seDb').innerHTML=s.bd.length?s.bd.map(chip).join(''):'<span style="color:var(--mut);font-family:var(--mono);font-size:12px">— pusta</span>';
+    E('seDl').innerHTML=s.d.length?s.d.map(function(d){return '<p class="dl '+d[0]+'"><span>'+(d[0]==='ty'?'użytkownik':'system')+'</span>'+d[1]+'</p>';}).join(''):'<span style="color:var(--mut);font-family:var(--mono);font-size:12px">— konsultacja jeszcze się nie zaczęła</span>';
+    E('seAct').innerHTML='pracują teraz: '+s.m.map(function(m){return '<span class="'+(CL[m]||'')+'">'+NM[m]+'</span>';}).join('');
+    E('seMsg').textContent=s.t;
+    st.value=k; E('seNo').textContent='krok '+k+' z '+(S.length-1);
+    E('sePrev').disabled=(k===0); E('seNext').disabled=(k===S.length-1);
+  }
+  E('sePrev').addEventListener('click',function(){if(k>0){k--;draw();}});
+  E('seNext').addEventListener('click',function(){if(k<S.length-1){k++;draw();}});
+  st.addEventListener('input',function(){k=+st.value;draw();});
+  draw();
+});
+</script>
+
+<p>Wniosek z przykładu: <strong>każdy moduł ma jedno zadanie</strong>, a o kolejności ich pracy decyduje maszyna wnioskująca. Użytkownik nie widzi reguł — widzi tylko pytania, odpowiedź i wyjaśnienia.</p>
+</section>
+
+<section>
+<h2><span class="num">05</span> Baza wiedzy i maszyna wnioskująca od środka</h2>
+<div class="rail"></div>
+
+<h3>Co jest w bazie wiedzy</h3>
+<p>Wiedza systemu ekspertowego to <strong>fakty</strong> — <span class="cyt">„informacje powszechnie akceptowane przez specjalistów”</span> — i <strong>heurystyki</strong>, czyli wiedza subiektywna: <span class="cyt">„intuicyjne domysły, przypuszczenia, zdroworozsądkowe zasady postępowania”</span> konkretnego specjalisty. Heurystyka to reguła kciuka, np. „jeśli pompa grzeje się i głośno pracuje, najpierw sprawdź łożysko”. Wykład podkreśla, że <span class="cyt">„poziom/jakość ekspertyzy zależy od rozmiaru i jakości bazy wiedzy”</span>. Bez bazy wiedzy system ekspertowy nie istnieje: zostaje <span class="cyt">„jedynie uniwersalna platforma”</span>.</p>
+
+<figure>
+<svg viewBox="0 0 680 352" class="fig">
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">CO MOŻE ZAWIERAĆ BAZA WIEDZY</text>
+<rect x="110.0" y="40.0" width="256.0" height="58.0" rx="3" fill="#FDF0E4" stroke="#E2711D" stroke-width="1.3"/>
+<text x="238.0" y="60.0" text-anchor="middle" class="bx-t" style="fill:#E2711D;font-size:11px">Fakty</text>
+<text x="238.0" y="76.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">przedmiot = nudny</text>
+<rect x="20.0" y="106.0" width="214.0" height="72.0" rx="3" fill="#FDF0E4" stroke="#E2711D" stroke-width="1.3"/>
+<text x="127.0" y="126.0" text-anchor="middle" class="bx-t" style="fill:#E2711D;font-size:11px">Baza reguł</text>
+<text x="127.0" y="142.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">r3: wykład = nudny ∧</text>
+<text x="127.0" y="154.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">zmęczenie = tak → iść_do_domu</text>
+<rect x="242.0" y="106.0" width="214.0" height="72.0" rx="3" fill="#FDF0E4" stroke="#E2711D" stroke-width="1.3"/>
+<text x="349.0" y="126.0" text-anchor="middle" class="bx-t" style="fill:#E2711D;font-size:11px">Baza ograniczeń</text>
+<text x="349.0" y="142.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">zmęczenie = tak i</text>
+<text x="349.0" y="154.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">zmęczenie = nie wykluczają się</text>
+<rect x="20.0" y="186.0" width="214.0" height="72.0" rx="3" fill="#FDF0E4" stroke="#E2711D" stroke-width="1.3"/>
+<text x="127.0" y="206.0" text-anchor="middle" class="bx-t" style="fill:#E2711D;font-size:11px">Baza rad</text>
+<text x="127.0" y="222.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">porady dołączane do wniosków:</text>
+<text x="127.0" y="234.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">„iść_do_domu: wyśpij się”</text>
+<rect x="242.0" y="186.0" width="214.0" height="72.0" rx="3" fill="#FDF0E4" stroke="#E2711D" stroke-width="1.3"/>
+<text x="349.0" y="206.0" text-anchor="middle" class="bx-t" style="fill:#E2711D;font-size:11px">Pliki rad</text>
+<text x="349.0" y="222.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">dłuższe porady w osobnych</text>
+<text x="349.0" y="234.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">plikach: tekst, rysunki</text>
+<rect x="110.0" y="266.0" width="256.0" height="72.0" rx="3" fill="#FDF0E4" stroke="#E2711D" stroke-width="1.3"/>
+<text x="238.0" y="286.0" text-anchor="middle" class="bx-t" style="fill:#E2711D;font-size:11px">Baza modeli</text>
+<text x="238.0" y="302.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">równania i relacje, np.</text>
+<text x="238.0" y="314.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">zmęczenie = tak, gdy sen &lt; 6 h</text>
+<text x="570.0" y="50.0" text-anchor="middle" class="cap" style="font-size:9px">poza bazą wiedzy, ale dostępne:</text>
+<rect x="482.0" y="64.0" width="176.0" height="50.0" rx="3" fill="#FBFCFE" stroke="#5A667A" stroke-width="1.1" stroke-dasharray="4 3"/>
+<text x="570.0" y="84.0" text-anchor="middle" class="bx-t" style="font-size:10.5px">Baza tekstów</text>
+<text x="570.0" y="98.0" text-anchor="middle" class="cap" style="font-size:8.5px">dokumentacja, normy</text>
+<rect x="482.0" y="126.0" width="176.0" height="50.0" rx="3" fill="#FBFCFE" stroke="#5A667A" stroke-width="1.1" stroke-dasharray="4 3"/>
+<text x="570.0" y="146.0" text-anchor="middle" class="bx-t" style="font-size:10.5px">Baza danych</text>
+<text x="570.0" y="160.0" text-anchor="middle" class="cap" style="font-size:8.5px">rekordy, pomiary</text>
+<rect x="482.0" y="188.0" width="176.0" height="50.0" rx="3" fill="#FBFCFE" stroke="#5A667A" stroke-width="1.1" stroke-dasharray="4 3"/>
+<text x="570.0" y="208.0" text-anchor="middle" class="bx-t" style="font-size:10.5px">Wiedza zdroworozsądkowa</text>
+<text x="570.0" y="222.0" text-anchor="middle" class="cap" style="font-size:8.5px">oczywistości, których nikt nie</text>
+<text x="570.0" y="233.0" text-anchor="middle" class="cap" style="font-size:8.5px">zapisał</text>
+<text x="570.0" y="270.0" text-anchor="middle" class="cap" style="fill:#E2711D;font-size:9px">reguły + fakty = minimum;</text>
+<text x="570.0" y="284.0" text-anchor="middle" class="cap" style="fill:#E2711D;font-size:9px">baza modeli → system</text>
+<text x="570.0" y="298.0" text-anchor="middle" class="cap" style="fill:#E2711D;font-size:9px">regułowo-modelowy</text>
+</svg>
+<figcaption>Struktura bazy wiedzy wg J. Mulawki (slajd 20). Slajd podaje tylko nazwy bloków; przykłady w blokach są kontynuacją przykładu „wykład nudny”. Rady to porady i objaśnienia dołączane do wniosków. Baza modeli (równania, relacje) pojawia się w systemach regułowo-modelowych.</figcaption>
+</figure>
+
+<p>Wiedza bywa niepewna i wykład wymienia źródła tej niepewności: nadmiar nieistotnych danych, brak precyzji w obserwacjach i opisie, błędy aparatury, sprzeczne informacje, nieznane czynniki, starzenie się wiedzy i koszt pozyskania nowych informacji. Jak liczyć z niepewną wiedzą (współczynniki pewności CF, reguła Bayesa), pokazuje zagadnienie 48.</p>
+
+<h3>Jak pracuje maszyna wnioskująca</h3>
+<p>Większość systemów ekspertowych zapisuje wiedzę jako reguły produkcji (decyzyjne) postaci:</p>
+<div class="eq txt">IF warunek THEN wniosek AND/OR akcja</div>
+<p class="eqnote">wniosek — nowy fakt dopisywany do bazy danych; akcja — np. komunikat dla operatora albo polecenie dla urządzenia</p>
+<p><strong>Wnioskowanie</strong> to <span class="cyt">„proces wyszukania konkluzji przy wykorzystaniu zbioru reguł i faktów w konkretnej sytuacji”</span>. Maszyna stosuje dwie podstawowe strategie (szczegóły w zagadnieniu 48):</p>
+<table>
+<thead><tr><th>strategia</th><th>start</th><th>sterowane</th></tr></thead>
+<tbody>
+<tr><td><strong>w przód</strong> (rozumowanie progresywne, <em>forward chaining</em>)</td><td>ze znanych warunków, zmierza do celu</td><td>danymi</td></tr>
+<tr><td><strong>wstecz</strong> (rozumowanie regresywne, <em>backward chaining</em>)</td><td>z celu, działa wstecz i ustala potrzebne warunki</td><td>celami</td></tr>
+</tbody>
+</table>
+</section>
+
+<section>
+<h2><span class="num">06</span> Skąd się bierze wiedza: ludzie wokół systemu</h2>
+<div class="rail"></div>
+
+<p>Baza wiedzy nie powstaje sama. Wiedzę od <strong>eksperta dziedziny</strong> wydobywa <strong>inżynier wiedzy</strong> — specjalista od reprezentacji wiedzy, który zadaje pytania, porządkuje odpowiedzi i zapisuje je jako reguły. Ten proces to <strong>akwizycja (pozyskiwanie) wiedzy</strong>:</p>
+
+<figure>
+<svg viewBox="0 0 680 366" class="fig">
+<defs><marker id="arF49c0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5A667A"/></marker><marker id="arF49c1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#7A4FD0"/></marker><marker id="arF49c2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#D04C70"/></marker><marker id="arF49c3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#2457D6"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">KTO BUDUJE SYSTEM EKSPERTOWY I SKĄD BIERZE SIĘ WIEDZA</text>
+<rect x="20.0" y="52.0" width="120.0" height="40.0" rx="4" fill="#FBFCFE" stroke="#0F1B2D" stroke-width="1.5"/>
+<text x="80.0" y="76.0" text-anchor="middle" class="bx-t" style="fill:#0F1B2D;font-size:11px">Twórca narzędzi</text>
+<rect x="20.0" y="150.0" width="120.0" height="52.0" rx="4" fill="#FBFCFE" stroke="#0F1B2D" stroke-width="1.5"/>
+<text x="80.0" y="174.0" text-anchor="middle" class="bx-t" style="fill:#0F1B2D;font-size:11px">Narzędzia</text>
+<text x="80.0" y="188.0" text-anchor="middle" class="bx-t" style="fill:#0F1B2D;font-size:11px">do budowy SE</text>
+<rect x="210.0" y="52.0" width="130.0" height="40.0" rx="4" fill="#FBEAF0" stroke="#D04C70" stroke-width="1.5"/>
+<text x="275.0" y="76.0" text-anchor="middle" class="bx-t" style="fill:#D04C70;font-size:11px">Ekspert dziedziny</text>
+<rect x="210.0" y="150.0" width="130.0" height="52.0" rx="4" fill="#F1ECFA" stroke="#7A4FD0" stroke-width="1.5"/>
+<text x="275.0" y="180.0" text-anchor="middle" class="bx-t" style="fill:#7A4FD0;font-size:11px">Inżynier wiedzy</text>
+<rect x="430.0" y="140.0" width="120.0" height="72.0" rx="4" fill="#FBFCFE" stroke="#7A4FD0" stroke-width="1.8"/>
+<text x="490.0" y="160.0" text-anchor="middle" class="bx-t" style="fill:#7A4FD0;font-size:11px">System ekspertowy</text>
+<rect x="446.0" y="172.0" width="88.0" height="28.0" rx="3" fill="#FDF0E4" stroke="#E2711D" stroke-width="1.3"/>
+<text x="490.0" y="190.0" text-anchor="middle" class="cap" style="fill:#E2711D;font-size:9.5px">baza wiedzy</text>
+<rect x="596.0" y="150.0" width="78.0" height="52.0" rx="4" fill="#E9EFFC" stroke="#2457D6" stroke-width="1.5"/>
+<text x="635.0" y="180.0" text-anchor="middle" class="bx-t" style="fill:#2457D6;font-size:11px">Użytkownik</text>
+<rect x="430.0" y="270.0" width="120.0" height="40.0" rx="4" fill="#FBFCFE" stroke="#2457D6" stroke-width="1.5"/>
+<text x="490.0" y="294.0" text-anchor="middle" class="bx-t" style="fill:#2457D6;font-size:11px">Baza danych</text>
+<path d="M 80.0 92.0 L 80.0 148.0" fill="none" stroke="#5A667A" stroke-width="1.4" marker-end="url(#arF49c0)"/>
+<text x="88.0" y="124.0" text-anchor="start" class="cap" style="fill:#5A667A;font-size:9px;paint-order:stroke;stroke:#FBFCFE;stroke-width:4px;stroke-linejoin:round">buduje</text>
+<path d="M 140.0 176.0 L 208.0 176.0" fill="none" stroke="#5A667A" stroke-width="1.4" marker-end="url(#arF49c0)"/>
+<text x="174.0" y="168.0" text-anchor="middle" class="cap" style="fill:#5A667A;font-size:9px;paint-order:stroke;stroke:#FBFCFE;stroke-width:4px;stroke-linejoin:round">używa</text>
+<path d="M 258.0 148.0 L 258.0 94.0" fill="none" stroke="#7A4FD0" stroke-width="1.4" marker-end="url(#arF49c1)"/>
+<text x="251.0" y="112.0" text-anchor="end" class="cap" style="fill:#7A4FD0;font-size:9px;paint-order:stroke;stroke:#FBFCFE;stroke-width:4px;stroke-linejoin:round">dane, problemy,</text>
+<text x="251.0" y="124.0" text-anchor="end" class="cap" style="fill:#7A4FD0;font-size:9px;paint-order:stroke;stroke:#FBFCFE;stroke-width:4px;stroke-linejoin:round">pytania</text>
+<path d="M 292.0 94.0 L 292.0 148.0" fill="none" stroke="#D04C70" stroke-width="1.4" marker-end="url(#arF49c2)"/>
+<text x="300.0" y="112.0" text-anchor="start" class="cap" style="fill:#D04C70;font-size:9px;paint-order:stroke;stroke:#FBFCFE;stroke-width:4px;stroke-linejoin:round">wiedza, koncepcje,</text>
+<text x="300.0" y="124.0" text-anchor="start" class="cap" style="fill:#D04C70;font-size:9px;paint-order:stroke;stroke:#FBFCFE;stroke-width:4px;stroke-linejoin:round">rozwiązania</text>
+<path d="M 340.0 176.0 L 444.0 186.0" fill="none" stroke="#7A4FD0" stroke-width="1.6" marker-end="url(#arF49c1)"/>
+<text x="384.0" y="152.0" text-anchor="middle" class="cap" style="fill:#E2711D;font-size:9px;paint-order:stroke;stroke:#FBFCFE;stroke-width:4px;stroke-linejoin:round">wiedza</text>
+<text x="384.0" y="164.0" text-anchor="middle" class="cap" style="fill:#E2711D;font-size:9px;paint-order:stroke;stroke:#FBFCFE;stroke-width:4px;stroke-linejoin:round">sformalizowana</text>
+<text x="384.0" y="208.0" text-anchor="middle" class="cap" style="fill:#7A4FD0;font-size:9px;paint-order:stroke;stroke:#FBFCFE;stroke-width:4px;stroke-linejoin:round">buduje,</text>
+<text x="384.0" y="220.0" text-anchor="middle" class="cap" style="fill:#7A4FD0;font-size:9px;paint-order:stroke;stroke:#FBFCFE;stroke-width:4px;stroke-linejoin:round">poprawia,</text>
+<text x="384.0" y="232.0" text-anchor="middle" class="cap" style="fill:#7A4FD0;font-size:9px;paint-order:stroke;stroke:#FBFCFE;stroke-width:4px;stroke-linejoin:round">testuje</text>
+<path d="M 340.0 72.0 L 490.0 72.0 L 490.0 138.0" fill="none" stroke="#D04C70" stroke-width="1.3" marker-end="url(#arF49c2)"/>
+<text x="420.0" y="66.0" text-anchor="middle" class="cap" style="fill:#D04C70;font-size:9px;paint-order:stroke;stroke:#FBFCFE;stroke-width:4px;stroke-linejoin:round">rozszerza i testuje</text>
+<path d="M 594.0 176.0 L 552.0 176.0" fill="none" stroke="#2457D6" stroke-width="1.4" marker-end="url(#arF49c3)"/>
+<text x="573.0" y="168.0" text-anchor="middle" class="cap" style="fill:#2457D6;font-size:9px;paint-order:stroke;stroke:#FBFCFE;stroke-width:4px;stroke-linejoin:round">stosuje</text>
+<line x1="490.0" y1="214.0" x2="490.0" y2="268.0" stroke="#2457D6" stroke-width="1.3" marker-start="url(#arF49c3)" marker-end="url(#arF49c3)"/>
+<text x="498.0" y="244.0" text-anchor="start" class="cap" style="fill:#2457D6;font-size:9px;paint-order:stroke;stroke:#FBFCFE;stroke-width:4px;stroke-linejoin:round">dane</text>
+<path d="M 635.0 204.0 L 635.0 290.0 L 552.0 290.0" fill="none" stroke="#2457D6" stroke-width="1.3" marker-end="url(#arF49c3)"/>
+<text x="598.0" y="306.0" text-anchor="middle" class="cap" style="fill:#2457D6;font-size:9px;paint-order:stroke;stroke:#FBFCFE;stroke-width:4px;stroke-linejoin:round">wykorzystuje</text>
+<text x="598.0" y="318.0" text-anchor="middle" class="cap" style="fill:#2457D6;font-size:9px;paint-order:stroke;stroke:#FBFCFE;stroke-width:4px;stroke-linejoin:round">i aktualizuje</text>
+<text x="20.0" y="350.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9.5px">Inżynier wiedzy — osoba, która pozyskuje wiedzę od eksperta i zapisuje ją w postaci, którą rozumie maszyna.</text>
+</svg>
+<figcaption>Role twórców systemu ekspertowego wg J. Mulawki (slajd 9) połączone z pętlą akwizycji wiedzy (slajd 8): inżynier pyta, ekspert odpowiada, a do bazy wiedzy trafia wiedza ustrukturalizowana i sformalizowana.</figcaption>
+</figure>
+
+<p>Metody akwizycji z wykładu: wywiady z ekspertami, kwestionariusze, raporty pisane przez ekspertów, komentarze ekspertów w trakcie pracy, obserwacja ekspertów przy pracy i analiza własnych działań. Akwizycja jest zwykle najtrudniejszym etapem budowy. Eksperci często nie umieją powiedzieć, <em>jak</em> podejmują decyzje, a wykład wymienia wprost jako wadę, że <span class="cyt">„trudno jest pozyskiwać wiedzę automatycznie”</span>.</p>
+</section>
+
+<section>
+<h2><span class="num">07</span> System szkieletowy i klasyfikacja</h2>
+<div class="rail"></div>
+
+<p>Najważniejsza cecha konstrukcyjna to <strong>rozdzielenie bazy wiedzy i systemu wnioskującego</strong>. Baza wiedzy jest plikiem tekstowym, który można czytać i zmieniać edytorem <span class="cyt">„bez naruszania integralności systemu wnioskującego”</span>. Wynikają z tego dwie korzyści: użytkownik może szybko zrozumieć i zmienić wiedzę, a system wnioskujący bez bazy wiedzy da się sprzedać jako gotową <strong>skorupę</strong>. To jest też różnica między programem zwykłym a systemem ekspertowym:</p>
+
+<figure>
+<svg viewBox="0 0 680 386" class="fig">
+<defs><marker id="arF49d0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#CDD5E2"/></marker><marker id="arF49d1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#E2711D"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">PROGRAM PROCEDURALNY A SYSTEM EKSPERTOWY; SYSTEM SZKIELETOWY</text>
+<rect x="20.0" y="40.0" width="310.0" height="92.0" rx="4" fill="#FBFCFE" stroke="#5A667A" stroke-width="1.3"/>
+<text x="175.0" y="60.0" text-anchor="middle" class="cap" style="fill:#5A667A;font-size:9.5px">programowanie proceduralne</text>
+<text x="175.0" y="82.0" text-anchor="middle" class="bx-t" style="fill:#0F1B2D;font-size:11px">PROCEDURA = ALGORYTM + DANE</text>
+<text x="175.0" y="104.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">mówisz programowi, co ma zrobić</text>
+<text x="175.0" y="117.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">i jak ma to zrobić krok po kroku</text>
+<rect x="350.0" y="40.0" width="310.0" height="92.0" rx="4" fill="#F1ECFA" stroke="#7A4FD0" stroke-width="1.3"/>
+<text x="505.0" y="60.0" text-anchor="middle" class="cap" style="fill:#7A4FD0;font-size:9.5px">programowanie deklaratywne</text>
+<text x="505.0" y="82.0" text-anchor="middle" class="bx-t" style="fill:#7A4FD0;font-size:11px">SE = SYSTEM WNIOSKUJĄCY + BAZA WIEDZY</text>
+<text x="505.0" y="104.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">podajesz wiedzę i wskazujesz cel;</text>
+<text x="505.0" y="117.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">mechanizm wnioskowania jest „w pakiecie”</text>
+<rect x="20.0" y="158.0" width="330.0" height="196.0" rx="8" fill="#FBFCFE" stroke="#7A4FD0" stroke-width="1.6"/>
+<text x="185.0" y="178.0" text-anchor="middle" class="bx-t" style="fill:#7A4FD0;font-size:11px">SYSTEM SZKIELETOWY (SKORUPOWY)</text>
+<rect x="40.0" y="194.0" width="140.0" height="20.0" rx="3" fill="#F1ECFA" stroke="#7A4FD0" stroke-width="1"/>
+<text x="110.0" y="208.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">maszyna wnioskująca</text>
+<rect x="190.0" y="194.0" width="140.0" height="20.0" rx="3" fill="#F1ECFA" stroke="#7A4FD0" stroke-width="1"/>
+<text x="260.0" y="208.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">sterowanie</text>
+<rect x="40.0" y="220.0" width="140.0" height="20.0" rx="3" fill="#F1ECFA" stroke="#7A4FD0" stroke-width="1"/>
+<text x="110.0" y="234.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">interfejsy</text>
+<rect x="190.0" y="220.0" width="140.0" height="20.0" rx="3" fill="#F1ECFA" stroke="#7A4FD0" stroke-width="1"/>
+<text x="260.0" y="234.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">generator wyjaśnień</text>
+<rect x="40.0" y="246.0" width="140.0" height="20.0" rx="3" fill="#F1ECFA" stroke="#7A4FD0" stroke-width="1"/>
+<text x="110.0" y="260.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">edytor bazy wiedzy</text>
+<rect x="190.0" y="246.0" width="140.0" height="20.0" rx="3" fill="#F1ECFA" stroke="#7A4FD0" stroke-width="1"/>
+<text x="260.0" y="260.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">kontrola poprawności</text>
+<rect x="80.0" y="280.0" width="210.0" height="40.0" rx="4" fill="#FBFCFE" stroke="#E2711D" stroke-width="1.6" stroke-dasharray="6 4"/>
+<text x="185.0" y="304.0" text-anchor="middle" class="cap" style="fill:#E2711D;font-size:9.5px">miejsce na bazę wiedzy</text>
+<text x="185.0" y="342.0" text-anchor="middle" class="cap" style="fill:#5A667A;font-size:9px">np. PC-Shell, CLIPS, rmse</text>
+<rect x="450.0" y="164.0" width="210.0" height="54.0" rx="4" fill="#FDF0E4" stroke="#E2711D" stroke-width="1.3"/>
+<text x="555.0" y="186.0" text-anchor="middle" class="bx-t" style="fill:#E2711D;font-size:10.5px">baza wiedzy: medycyna</text>
+<text x="555.0" y="202.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">objawy → infekcja → terapia</text>
+<path d="M 448.0 191.0 L 292.0 300.0" fill="none" stroke="#CDD5E2" stroke-width="1.1" stroke-dasharray="4 3" marker-end="url(#arF49d0)"/>
+<rect x="450.0" y="230.0" width="210.0" height="54.0" rx="4" fill="#FDF0E4" stroke="#E2711D" stroke-width="1.3"/>
+<text x="555.0" y="252.0" text-anchor="middle" class="bx-t" style="fill:#E2711D;font-size:10.5px">baza wiedzy: diagnostyka pompy</text>
+<text x="555.0" y="268.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">drgania, prąd → usterka</text>
+<path d="M 448.0 257.0 L 292.0 300.0" fill="none" stroke="#CDD5E2" stroke-width="1.1" stroke-dasharray="4 3" marker-end="url(#arF49d0)"/>
+<rect x="450.0" y="296.0" width="210.0" height="54.0" rx="4" fill="#FDF0E4" stroke="#E2711D" stroke-width="1.3"/>
+<text x="555.0" y="318.0" text-anchor="middle" class="bx-t" style="fill:#E2711D;font-size:10.5px">baza wiedzy: „wykład nudny”</text>
+<text x="555.0" y="334.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">reguły r1–r4 z zagadnienia 48</text>
+<path d="M 448.0 323.0 L 292.0 300.0" fill="none" stroke="#E2711D" stroke-width="1.6" marker-end="url(#arF49d1)"/>
+<text x="340.0" y="376.0" text-anchor="middle" class="cap" style="fill:#E2711D;font-size:9px">ta sama skorupa + inna baza = inny system dziedzinowy</text>
+</svg>
+<figcaption>Górny wiersz — dwa paradygmaty ze slajdu 26. Dolny — system szkieletowy (PC-Shell, CLIPS, rmse): ten sam system wnioskujący z inną bazą wiedzy daje inny system dziedzinowy. Dziedziny wymiennych baz to przykłady własne.</figcaption>
+</figure>
+
+<table>
+<thead><tr><th>kryterium podziału</th><th>rodzaje systemów ekspertowych</th></tr></thead>
+<tbody>
+<tr><td>związek z bazą wiedzy</td><td><strong>specjalizowane</strong> — system wnioskujący działa z jedną, ściśle określoną bazą wiedzy; <strong>szkieletowe (skorupowe)</strong> — współpracuje z dowolną bazą spełniającą wymagania składniowe</td></tr>
+<tr><td>postać wiedzy</td><td><strong>regułowe</strong> — wiedza deklaratywna (reguły i fakty), wnioskowanie logiczne; <strong>regułowo-modelowe (hybrydowe)</strong> — dodatkowo wiedza proceduralna (równania, relacje), wnioskowanie wspomagane obliczeniami numerycznymi</td></tr>
+</tbody>
+</table>
+
+<p><strong>Narzędzia</strong> do budowy: języki ogólne (C++, C#, Java), języki sztucznej inteligencji (Prolog, Lisp, CLIPS) i specjalistyczne platformy (Jess, Drools, ECLiPSe).</p>
+</section>
+
+<section>
+<h2><span class="num">08</span> Budowa, zalety i wady, przykład</h2>
+<div class="rail"></div>
+
+<h3>Etapy tworzenia</h3>
+<ol class="steps">
+<li><strong>Analiza problemu</strong> — czy system ekspertowy ma tu w ogóle sens.</li>
+<li><strong>Specyfikacja</strong> — szczegółowe funkcje i oczekiwania wobec systemu.</li>
+<li><strong>Akwizycja wiedzy</strong> — zebranie wiedzy od ekspertów lub z organizacji.</li>
+<li><strong>Wybór reprezentacji wiedzy i narzędzi</strong> — np. reguły i system szkieletowy.</li>
+<li><strong>Konstrukcja</strong> — baza wiedzy, reguły wnioskowania, system wyjaśnień i dialog z użytkownikiem.</li>
+<li><strong>Weryfikacja i testowanie.</strong></li>
+</ol>
+
+<h3>Zalety i wady</h3>
+<table>
+<thead><tr><th>zalety</th><th>wady</th></tr></thead>
+<tbody>
+<tr><td>radzi sobie ze złożonymi problemami</td><td>trudno przewidzieć, jak nowa wiedza zmieni przebieg wnioskowania</td></tr>
+<tr><td>wnioski przedstawia zrozumiale, bez udziału programisty</td><td>trudno pozyskiwać wiedzę automatycznie</td></tr>
+<tr><td>jednolita reprezentacja wiedzy, np. reguły</td><td>rzadko ujmuje niepewność faktów i reguł</td></tr>
+<tr><td>wiedzę w regułach łatwo zmieniać</td><td></td></tr>
+</tbody>
+</table>
+<p>Pożądane <strong>właściwości</strong> wg wykładu: poprawność, uniwersalność, złożoność, autoanaliza (umiejętność objaśnienia własnego rozumowania) i zdolność udoskonalania bazy wiedzy.</p>
+
+<h3>Przykład: MYCIN</h3>
+<p>MYCIN to regułowy system do diagnostyki i terapii chorób zakaźnych, budowany na Uniwersytecie Stanforda w latach 1972–1980. Działa jak w przykładzie z sekcji 04: zadaje kolejne pytania (rodzaj infekcji, skąd próbka, kształt i odczyn bakterii), a na końcu podaje prawdopodobne bakterie i zalecenia. W porównaniu z pięcioma specjalistami ze Stanforda MYCIN dostał <strong>52 punkty</strong>, specjaliści <strong>34–50</strong>, a student medycyny 24. Inne przykłady z wykładu: DENDRAL (chemia) i SCHOLAR (system dydaktyczny prowadzący dialog o geografii).</p>
+</section>
+
+<section>
+<h2><span class="num">09</span> Narysuj na tablicy</h2>
+<div class="rail"></div>
+<figure>
+<svg viewBox="0 0 680 470" class="fig">
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">NARYSUJ NA TABLICY W 6 RUCHACH</text>
+<rect x="14.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<circle cx="32.0" cy="58.0" r="10" fill="#7A4FD0" stroke="none" stroke-width="1"/>
+<text x="32.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">1</text>
+<text x="48.0" y="56.0" text-anchor="start" class="bx-t">rdzeń</text>
+<text x="48.0" y="70.0" text-anchor="start" class="bx" style="font-size:9.5px">maszyna + baza wiedzy</text>
+<rect x="90.0" y="124.0" width="56.0" height="24.0" rx="2" fill="#F1ECFA" stroke="#7A4FD0" stroke-width="1.4"/>
+<text x="118.0" y="139.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8px">maszyna</text>
+<rect x="90.0" y="154.0" width="56.0" height="24.0" rx="2" fill="#FDF0E4" stroke="#E2711D" stroke-width="1.4"/>
+<text x="118.0" y="169.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8px">baza wied.</text>
+<text x="118.0" y="216.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">SE = system wnioskujący</text>
+<text x="118.0" y="228.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">+ baza wiedzy</text>
+<rect x="236.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<circle cx="254.0" cy="58.0" r="10" fill="#2457D6" stroke="none" stroke-width="1"/>
+<text x="254.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">2</text>
+<text x="270.0" y="56.0" text-anchor="start" class="bx-t">baza danych</text>
+<text x="270.0" y="70.0" text-anchor="start" class="bx" style="font-size:9.5px">fakty konsultacji</text>
+<rect x="312.0" y="94.0" width="56.0" height="24.0" rx="2" fill="#E9EFFC" stroke="#2457D6" stroke-width="1.4"/>
+<text x="340.0" y="109.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8px">baza dan.</text>
+<rect x="312.0" y="124.0" width="56.0" height="24.0" rx="2" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<text x="340.0" y="139.0" text-anchor="middle" class="cap" style="fill:#5A667A;font-size:8px">maszyna</text>
+<rect x="312.0" y="154.0" width="56.0" height="24.0" rx="2" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<text x="340.0" y="169.0" text-anchor="middle" class="cap" style="fill:#5A667A;font-size:8px">baza wied.</text>
+<text x="340.0" y="216.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">tu lądują fakty</text>
+<text x="340.0" y="228.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">i wyniki pośrednie</text>
+<rect x="458.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<circle cx="476.0" cy="58.0" r="10" fill="#7A4FD0" stroke="none" stroke-width="1"/>
+<text x="476.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">3</text>
+<text x="492.0" y="56.0" text-anchor="start" class="bx-t">użytkownik</text>
+<text x="492.0" y="70.0" text-anchor="start" class="bx" style="font-size:9.5px">interfejs użytkownika</text>
+<rect x="476.0" y="94.0" width="56.0" height="24.0" rx="2" fill="#F1ECFA" stroke="#7A4FD0" stroke-width="1.4"/>
+<text x="504.0" y="109.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8px">interf.</text>
+<rect x="534.0" y="94.0" width="56.0" height="24.0" rx="2" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<text x="562.0" y="109.0" text-anchor="middle" class="cap" style="fill:#5A667A;font-size:8px">baza dan.</text>
+<rect x="534.0" y="124.0" width="56.0" height="24.0" rx="2" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<text x="562.0" y="139.0" text-anchor="middle" class="cap" style="fill:#5A667A;font-size:8px">maszyna</text>
+<rect x="534.0" y="154.0" width="56.0" height="24.0" rx="2" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<text x="562.0" y="169.0" text-anchor="middle" class="cap" style="fill:#5A667A;font-size:8px">baza wied.</text>
+<text x="468.0" y="86.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8px">użytk.</text>
+<path d="M 468.0 106.0 L 475.0 106.0" fill="none" stroke="#0F1B2D" stroke-width="1.2"/>
+<text x="562.0" y="216.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">fakty do systemu,</text>
+<text x="562.0" y="228.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">wyniki do człowieka</text>
+<rect x="14.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<circle cx="32.0" cy="272.0" r="10" fill="#E2711D" stroke="none" stroke-width="1"/>
+<text x="32.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">4</text>
+<text x="48.0" y="270.0" text-anchor="start" class="bx-t">inżynier wiedzy</text>
+<text x="48.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">edytor bazy wiedzy</text>
+<rect x="32.0" y="308.0" width="56.0" height="24.0" rx="2" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<text x="60.0" y="323.0" text-anchor="middle" class="cap" style="fill:#5A667A;font-size:8px">interf.</text>
+<rect x="90.0" y="308.0" width="56.0" height="24.0" rx="2" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<text x="118.0" y="323.0" text-anchor="middle" class="cap" style="fill:#5A667A;font-size:8px">baza dan.</text>
+<rect x="90.0" y="338.0" width="56.0" height="24.0" rx="2" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<text x="118.0" y="353.0" text-anchor="middle" class="cap" style="fill:#5A667A;font-size:8px">maszyna</text>
+<rect x="32.0" y="368.0" width="56.0" height="24.0" rx="2" fill="#F1ECFA" stroke="#7A4FD0" stroke-width="1.4"/>
+<text x="60.0" y="383.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8px">edytor</text>
+<rect x="90.0" y="368.0" width="56.0" height="24.0" rx="2" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<text x="118.0" y="383.0" text-anchor="middle" class="cap" style="fill:#5A667A;font-size:8px">baza wied.</text>
+<text x="24.0" y="300.0" text-anchor="start" class="cap" style="fill:#CDD5E2;font-size:8px">użytk.</text>
+<path d="M 24.0 320.0 L 31.0 320.0" fill="none" stroke="#CDD5E2" stroke-width="1.2"/>
+<text x="24.0" y="404.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8px">inżynier</text>
+<path d="M 24.0 380.0 L 31.0 380.0" fill="none" stroke="#0F1B2D" stroke-width="1.2"/>
+<text x="118.0" y="430.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">reguły wpisuje inżynier,</text>
+<text x="118.0" y="442.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">nie użytkownik</text>
+<rect x="236.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<circle cx="254.0" cy="272.0" r="10" fill="#7A4FD0" stroke="none" stroke-width="1"/>
+<text x="254.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">5</text>
+<text x="270.0" y="270.0" text-anchor="start" class="bx-t">moduły pomocnicze</text>
+<text x="270.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">wyjaśnienia, kontrola, …</text>
+<rect x="254.0" y="308.0" width="56.0" height="24.0" rx="2" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<text x="282.0" y="323.0" text-anchor="middle" class="cap" style="fill:#5A667A;font-size:8px">interf.</text>
+<rect x="312.0" y="308.0" width="56.0" height="24.0" rx="2" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<text x="340.0" y="323.0" text-anchor="middle" class="cap" style="fill:#5A667A;font-size:8px">baza dan.</text>
+<rect x="370.0" y="308.0" width="56.0" height="24.0" rx="2" fill="#F1ECFA" stroke="#7A4FD0" stroke-width="1.4"/>
+<text x="398.0" y="323.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8px">kontrola</text>
+<rect x="254.0" y="338.0" width="56.0" height="24.0" rx="2" fill="#F1ECFA" stroke="#7A4FD0" stroke-width="1.4"/>
+<text x="282.0" y="353.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8px">wyjaśn.</text>
+<rect x="312.0" y="338.0" width="56.0" height="24.0" rx="2" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<text x="340.0" y="353.0" text-anchor="middle" class="cap" style="fill:#5A667A;font-size:8px">maszyna</text>
+<rect x="370.0" y="338.0" width="56.0" height="24.0" rx="2" fill="#F1ECFA" stroke="#7A4FD0" stroke-width="1.4"/>
+<text x="398.0" y="353.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8px">oblicz.</text>
+<rect x="254.0" y="368.0" width="56.0" height="24.0" rx="2" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<text x="282.0" y="383.0" text-anchor="middle" class="cap" style="fill:#5A667A;font-size:8px">edytor</text>
+<rect x="312.0" y="368.0" width="56.0" height="24.0" rx="2" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<text x="340.0" y="383.0" text-anchor="middle" class="cap" style="fill:#5A667A;font-size:8px">baza wied.</text>
+<rect x="370.0" y="368.0" width="56.0" height="24.0" rx="2" fill="#F1ECFA" stroke="#7A4FD0" stroke-width="1.4"/>
+<text x="398.0" y="383.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8px">sterow.</text>
+<text x="246.0" y="300.0" text-anchor="start" class="cap" style="fill:#CDD5E2;font-size:8px">użytk.</text>
+<path d="M 246.0 320.0 L 253.0 320.0" fill="none" stroke="#CDD5E2" stroke-width="1.2"/>
+<text x="246.0" y="404.0" text-anchor="start" class="cap" style="fill:#CDD5E2;font-size:8px">inżynier</text>
+<path d="M 246.0 380.0 L 253.0 380.0" fill="none" stroke="#CDD5E2" stroke-width="1.2"/>
+<text x="340.0" y="430.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">wyjaśnienia, obliczenia,</text>
+<text x="340.0" y="442.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">kontrola, sterowanie</text>
+<rect x="458.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<circle cx="476.0" cy="272.0" r="10" fill="#5A667A" stroke="none" stroke-width="1"/>
+<text x="476.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">6</text>
+<text x="492.0" y="270.0" text-anchor="start" class="bx-t">świat zewnętrzny</text>
+<text x="492.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">interfejs: bazy, procesy</text>
+<rect x="476.0" y="308.0" width="56.0" height="24.0" rx="2" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<text x="504.0" y="323.0" text-anchor="middle" class="cap" style="fill:#5A667A;font-size:8px">interf.</text>
+<rect x="534.0" y="308.0" width="56.0" height="24.0" rx="2" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<text x="562.0" y="323.0" text-anchor="middle" class="cap" style="fill:#5A667A;font-size:8px">baza dan.</text>
+<rect x="592.0" y="308.0" width="56.0" height="24.0" rx="2" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<text x="620.0" y="323.0" text-anchor="middle" class="cap" style="fill:#5A667A;font-size:8px">kontrola</text>
+<rect x="476.0" y="338.0" width="56.0" height="24.0" rx="2" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<text x="504.0" y="353.0" text-anchor="middle" class="cap" style="fill:#5A667A;font-size:8px">wyjaśn.</text>
+<rect x="534.0" y="338.0" width="56.0" height="24.0" rx="2" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<text x="562.0" y="353.0" text-anchor="middle" class="cap" style="fill:#5A667A;font-size:8px">maszyna</text>
+<rect x="592.0" y="338.0" width="56.0" height="24.0" rx="2" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<text x="620.0" y="353.0" text-anchor="middle" class="cap" style="fill:#5A667A;font-size:8px">oblicz.</text>
+<rect x="476.0" y="368.0" width="56.0" height="24.0" rx="2" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<text x="504.0" y="383.0" text-anchor="middle" class="cap" style="fill:#5A667A;font-size:8px">edytor</text>
+<rect x="534.0" y="368.0" width="56.0" height="24.0" rx="2" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<text x="562.0" y="383.0" text-anchor="middle" class="cap" style="fill:#5A667A;font-size:8px">baza wied.</text>
+<rect x="592.0" y="368.0" width="56.0" height="24.0" rx="2" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<text x="620.0" y="383.0" text-anchor="middle" class="cap" style="fill:#5A667A;font-size:8px">sterow.</text>
+<rect x="534.0" y="402.0" width="56.0" height="18.0" rx="2" fill="#F1ECFA" stroke="#7A4FD0" stroke-width="1.2"/>
+<text x="562.0" y="414.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8px">interfejs</text>
+<text x="468.0" y="300.0" text-anchor="start" class="cap" style="fill:#CDD5E2;font-size:8px">użytk.</text>
+<path d="M 468.0 320.0 L 475.0 320.0" fill="none" stroke="#CDD5E2" stroke-width="1.2"/>
+<text x="468.0" y="404.0" text-anchor="start" class="cap" style="fill:#CDD5E2;font-size:8px">inżynier</text>
+<path d="M 468.0 380.0 L 475.0 380.0" fill="none" stroke="#CDD5E2" stroke-width="1.2"/>
+<text x="562.0" y="430.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">dane z czujników,</text>
+<text x="562.0" y="442.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">sieci, innych programów</text>
+</svg>
+<figcaption>Schemat buduje się od rdzenia na zewnątrz: maszyna i baza wiedzy, baza danych, użytkownik, inżynier wiedzy, moduły pomocnicze, świat zewnętrzny. W każdym ruchu nowe elementy są kolorowe.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2><span class="num">10</span> Opowiedz własnymi słowami</h2>
+<div class="rail"></div>
+
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-a-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-a-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 30 sekund</span><span class="sub">dla kogoś spoza automatyki</span></summary>
+<div class="tx"><p>„System ekspertowy to program, który zastępuje specjalistę. Ma dwie części: zeszyt z wiedzą eksperta, zapisaną jako reguły ‘jeśli…, to…’, i silnik, który te reguły stosuje do konkretnej sprawy. Użytkownik odpowiada na pytania, silnik dopisuje wnioski, aż dojdzie do odpowiedzi, i potrafi wyjaśnić, skąd ją wziął. Zeszyt wpisuje inżynier wiedzy, który wcześniej wypytał eksperta. A jeśli wymienić zeszyt na inny, ten sam silnik doradza w zupełnie innej dziedzinie.”</p></div></details>
+</div>
+
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-a-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-a-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 2 minuty</span><span class="sub">egzaminacyjna</span></summary>
+<div class="tx"><ol>
+<li><strong>Definicja:</strong> „System ekspertowy to program wykorzystujący wiedzę i procedury wnioskowania do problemów, które wymagają ekspertyzy specjalisty. Fakty wchodzą, wnioski wychodzą — np. objawy i diagnoza.”</li>
+<li><strong>Dwie części:</strong> „System ekspertowy to system wnioskujący plus baza wiedzy. Baza wiedzy zawiera fakty i heurystyki eksperta zapisane zwykle jako reguły IF–THEN.”</li>
+<li><strong>Rdzeń:</strong> „Maszyna wnioskująca uzgadnia warunki reguł z faktami z bazy danych i dopisuje konkluzje — w przód albo wstecz. Baza danych trzyma fakty bieżącej sprawy i wyniki pośrednie, a moduł sterowania zarządza całością.”</li>
+<li><strong>Moduły wokół:</strong> „Użytkownik pracuje przez interfejs i pyta generator wyjaśnień ‘dlaczego?’ i ‘jak?’. Inżynier wiedzy wprowadza reguły edytorem, a kontrola poprawności szuka sprzeczności. Moduł obliczeń liczy, a interfejs łączy z bazami danych, procesami i siecią.”</li>
+<li><strong>Ludzie:</strong> „Wiedzę od eksperta pozyskuje inżynier wiedzy przez wywiady, kwestionariusze i obserwację — to najtrudniejszy etap budowy.”</li>
+<li><strong>Szkielet:</strong> „Baza wiedzy jest oddzielona od systemu wnioskującego, więc ten sam system szkieletowy, np. PC-Shell albo CLIPS, z inną bazą daje inny system dziedzinowy. Przykład udanego systemu to MYCIN, który w testach dorównał specjalistom.”</li>
+</ol></div></details>
+</div>
+
+<h3>Lista kontrolna przed egzaminem</h3>
+<ul class="check">
+<li>Podaję definicję i tabelę: zastosowanie → fakty → wnioski.</li>
+<li>Rysuję strukturę z dziesięcioma modułami i mówię, co robi każdy.</li>
+<li>Odróżniam bazę wiedzy (reguły, stała) od bazy danych (fakty sprawy, zmienna).</li>
+<li>Opowiadam jedną konsultację: pytanie, odpowiedź, odpalenie reguły, wyjaśnienie.</li>
+<li>Wymieniam części bazy wiedzy wg Mulawki i wyjaśniam fakty kontra heurystyki.</li>
+<li>Opisuję role eksperta, inżyniera wiedzy i użytkownika oraz metody akwizycji.</li>
+<li>Wyjaśniam system szkieletowy i obie klasyfikacje.</li>
+</ul>
+</section>
+
+<section>
+<h2><span class="num">11</span> Ściąga</h2>
+<div class="rail"></div>
+<div class="karty">
+<div class="karta"><span class="kw">Definicja</span><p>Program: wiedza + wnioskowanie, problemy wymagające ekspertyzy. Fakty → wnioski.</p></div>
+<div class="karta"><span class="kw">Równanie</span><p>SE = system wnioskujący + baza wiedzy.</p></div>
+<div class="karta a"><span class="kw">Baza wiedzy</span><p>Fakty i heurystyki eksperta; reguły IF–THEN; bez niej SE nie istnieje.</p></div>
+<div class="karta b"><span class="kw">Baza danych</span><p>Fakty bieżącej sprawy i wyniki pośrednie; zmienia się w trakcie konsultacji.</p></div>
+<div class="karta"><span class="kw">Maszyna wnioskująca</span><p>Uzgadnia warunki reguł z faktami, dopisuje konkluzje, pyta o brakujące dane; w przód lub wstecz.</p></div>
+<div class="karta"><span class="kw">Moduły pomocnicze</span><p>Interfejs użytkownika, generator wyjaśnień, edytor, kontrola poprawności, obliczenia, sterowanie, interfejs.</p></div>
+<div class="karta s"><span class="kw">Ludzie</span><p>Ekspert ↔ inżynier wiedzy → baza wiedzy; użytkownik stosuje SE.</p></div>
+<div class="karta s"><span class="kw">Akwizycja</span><p>Wywiady, kwestionariusze, raporty, obserwacja przy pracy — najtrudniejszy etap.</p></div>
+<div class="karta a"><span class="kw">Szkielet</span><p>Rozdzielenie wiedzy i wnioskowania → skorupa (PC-Shell, CLIPS, rmse) + dowolna baza.</p></div>
+<div class="karta a"><span class="kw">Klasyfikacja</span><p>Specjalizowane / szkieletowe; regułowe / regułowo-modelowe.</p></div>
+</div>
+</section>
+
+<section>
+<h2><span class="num">12</span> Pytania dodatkowe — fiszki</h2>
+<div class="rail"></div>
+
+<details class="fiszka"><summary>Czym system ekspertowy różni się od zwykłego programu?</summary>
+<p>Zwykły program to algorytm i dane: programista mówi, co zrobić i jak, krok po kroku. W systemie ekspertowym wiedza jest zapisana deklaratywnie, osobno od mechanizmu wnioskowania. Podaje się wiedzę i cel, a kolejność kroków ustala maszyna wnioskująca. Dlatego wiedzę zmienia się bez przepisywania programu.</p></details>
+
+<details class="fiszka"><summary>Co znaczy hasło „more knowledge, less search”?</summary>
+<p>Im więcej i lepszej wiedzy dziedzinowej ma system, tym mniej musi przeszukiwać na ślepo. Dobra reguła eksperta od razu wskazuje właściwą ścieżkę, zamiast sprawdzać wszystkie możliwości. To argument za systemami opartymi na wiedzy przy problemach NP-trudnych, od których wykład się zaczyna.</p></details>
+
+<details class="fiszka"><summary>Czym system ekspertowy różni się od sieci neuronowej?</summary>
+<p>System ekspertowy ma wiedzę jawną: reguły da się przeczytać, poprawić i użyć do wyjaśnienia wniosku. Sieć neuronowa uczy się z danych, ale jej wiedza jest ukryta w wagach i nie umie sama wyjaśnić decyzji. W systemie ekspertowym wąskim gardłem jest akwizycja wiedzy od eksperta, a w sieci — dane uczące. (Porównanie spoza wykładu.)</p></details>
+
+<details class="fiszka"><summary>Gdzie spotkać system ekspertowy w automatyce?</summary>
+<p>W diagnostyce uszkodzeń (objawy z pomiarów → usterka; residua z zagadnienia 29 mogą być faktami), jako doradca operatora w sterowni i jako moduł systemu wspomagania decyzji (zagadnienie 42). Tam system ekspertowy dostaje fakty przez interfejs z procesu, a nie tylko od człowieka.</p></details>
+
+<details class="fiszka"><summary>Dlaczego dodanie nowej reguły bywa ryzykowne?</summary>
+<p>Reguły łączą się w łańcuchy: wniosek jednej jest warunkiem następnej. Nowa reguła może więc zmienić wnioski w miejscach, których autor nie miał na myśli, albo wprowadzić sprzeczność. Wykład wymienia to jako pierwszą wadę. Częściowo chroni przed tym moduł kontroli poprawności.</p></details>
+</section>
+
+
+
+<footer>
+  <p><strong style="color:var(--ink)">Źródła</strong></p>
+  <ol class="zr">
+<li>T. Rutkowski, <em>Systemy Inżynierii Wiedzy — Wykład 03: System ekspertowy</em>, PG WEiA, KISSiWD, 2025 (plik <code>49_systemy_ekspertowe.pdf</code>, 44 slajdy): ekspert, definicja, zastosowania, główne elementy, struktura (slajdy 19–23), struktura bazy wiedzy, akwizycja i role, narzędzia, klasyfikacja, etapy, zalety i wady, MYCIN, SCHOLAR.</li>
+<li>W. Traczyk, <em>Inżynieria wiedzy</em>, EXIT, 2010 — źródło schematu struktury i tabeli zastosowań (przez slajdy 12 i 19).</li>
+<li>J. Mulawka, <em>Systemy ekspertowe</em>, WNT, 1996 — źródło schematów akwizycji wiedzy, ról twórców i struktury bazy wiedzy (przez slajdy 8, 9 i 20).</li>
+<li>Uzupełnienia własne, oznaczone w podpisach: przykłady w blokach bazy wiedzy, model m1 i opaska w elemencie krokowym (reguły r1–r4 z materiału do zagadnienia 48), dziedziny wymiennych baz wiedzy, fiszki o sieci neuronowej i automatyce.</li>
+</ol>
+
+  <p class="backfoot"><a href="index.html">&larr; Wróć do listy zagadnień</a></p>
+</footer>
+
+</div>
+<script src="assets/pytania.js"></script>
+<script src="assets/nav.js" defer></script>
+<script src="assets/meowl-egg.js" defer></script>
+</body>
+</html>
