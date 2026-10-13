@@ -123,7 +123,7 @@
       lastOn=on;
       links.forEach(function(a,i){a.classList.toggle('on',i===on);});
       inl.forEach(function(a,i){a.classList.toggle('on',i===on);});
-      var a=links[on]; if(a){var s=a.parentNode; s.scrollLeft=a.offsetLeft-s.clientWidth/2+a.clientWidth/2;}
+      var a=links[on]; if(a){var s=a.parentNode,ar=a.getBoundingClientRect(),sr=s.getBoundingClientRect(); s.scrollLeft+= (ar.left-sr.left)-(s.clientWidth-ar.width)/2;}
     }
   }
   function req(){ if(!tick){tick=true;requestAnimationFrame(upd);} }
