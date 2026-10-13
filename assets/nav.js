@@ -37,6 +37,8 @@
   '#jbar .r1{display:flex;align-items:center;gap:8px}'+
   '#jbar .jc{padding:4px 9px}'+
   '#jbar .pc{margin-left:auto;color:var(--teal);font-weight:500;font-variant-numeric:tabular-nums}'+
+  '#jbar .qt{margin:5px 0 0;font-family:var(--body);font-size:15px;line-height:1.3;font-style:italic;color:var(--ink)}'+
+  '@media (max-width:600px){#jbar .qt{font-size:14px}}'+
   '#jbar .secs{margin-top:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}'+
   '#jbar .secs::-webkit-scrollbar{display:none}'+
   '#jbar .trk{position:absolute;left:0;right:0;bottom:-1px;height:3px}'+
@@ -81,10 +83,15 @@
   jm.className='jm'; jm.id='jm'; jm.setAttribute('aria-label','Nawigacja po zagadnieniach');
   jm.innerHTML='<a class="jc" href="index.html">&larr; Lista</a>'+arrows()+jumpForm()+arrowN()+select()+secsHtml;
 
+  // pełna treść pytania w pasku
+  var qEl=document.querySelector('.quest')||document.querySelector('h1');
+  var qText=(qEl?qEl.textContent:me.t).replace(/\s+/g,' ').trim();
+  var qtHtml='<p class="qt">'+esc(qText)+'</p>';
+
   // wysuwany pasek
   var bar=document.createElement('div'); bar.id='jbar'; bar.setAttribute('role','navigation'); bar.setAttribute('aria-label','Nawigacja (pasek)');
   bar.innerHTML='<div class="in"><div class="r1"><a class="jc" href="index.html">&larr; Lista</a>'+arrows()+jumpForm()+arrowN()+
-    '<span class="pc">0%</span></div>'+secsHtml+'</div><div class="trk"><i></i></div>';
+    '<span class="pc">0%</span></div>'+qtHtml+secsHtml+'</div><div class="trk"><i></i></div>';
   document.body.appendChild(bar);
 
   // skok po numerze (oba formularze)
