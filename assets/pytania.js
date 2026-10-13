@@ -86,8 +86,8 @@ const KATEGORIE = [
  ]},
 
  {name:"Zarządzanie projektem i jakością", items:[
-   {n:25, p:"app", t:"Przedstaw typowe procesy w zarządzaniu projektem."},
-   {n:26, p:"app", t:"Struktura i zawartość dokumentów w typowym systemie zarządzania jakością w zakładzie produkcyjnym."},
+   {n:25, p:"app", t:"Przedstaw typowe procesy w zarządzaniu projektem.", file:"pytanie_25_zarzadzanie_projektem.html"},
+   {n:26, p:"app", t:"Struktura i zawartość dokumentów w typowym systemie zarządzania jakością w zakładzie produkcyjnym.", file:"pytanie_26_dokumenty_szj.html"},
  ]},
 
 ];

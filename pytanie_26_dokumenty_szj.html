@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pytanie 26 — Dokumenty systemu zarządzania jakością</title>
+<link rel="icon" type="image/png" sizes="144x144" href="favicon-144.png?v=2">
+<link rel="icon" href="favicon.ico?v=2" sizes="any">
+<link rel="apple-touch-icon" href="favicon-144.png?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0F1B2D; --mut:#5A667A; --line:#CDD5E2;
+  --paper:#EEF1F6; --card:#FBFCFE;
+  --teal:#2457D6; --amber:#E2711D; --violet:#7A4FD0; --rose:#D04C70; --sky:#4C7DF0;
+  --disp:"Space Grotesk",system-ui,sans-serif;
+  --body:"STIX Two Text","Source Serif 4",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+     font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:860px;margin:0 auto;padding:0 22px 100px}
+
+/* ---- nagłówek ---- */
+header{padding:64px 0 30px;border-bottom:2px solid var(--ink)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+         color:var(--mut);margin:0 0 14px}
+h1{font-family:var(--disp);font-weight:700;font-size:clamp(30px,5vw,46px);line-height:1.08;
+   letter-spacing:-.02em;margin:0 0 18px}
+.quest{font-style:italic;font-size:19px;color:var(--ink);margin:0;padding-left:16px;
+       border-left:3px solid var(--violet)}
+.src{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:18px}
+
+/* ---- sekcje ---- */
+section{margin-top:56px}
+h2{font-family:var(--disp);font-weight:700;font-size:25px;letter-spacing:-.015em;
+   margin:0 0 6px;display:flex;align-items:baseline;gap:12px}
+h2 .num{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--violet);
+        letter-spacing:.08em;flex:none}
+h3{font-family:var(--disp);font-weight:500;font-size:18.5px;margin:34px 0 8px;letter-spacing:-.01em}
+p{margin:0 0 14px}
+.rail{height:5px;background:linear-gradient(90deg,var(--sky) 0%,var(--teal) 30%,var(--violet) 62%,var(--amber) 100%);
+      opacity:.85;margin:0 0 22px;border-radius:2px}
+
+/* ---- figury ---- */
+figure{margin:26px 0;background:var(--card);border:1px solid var(--line);border-radius:3px;
+       padding:20px 18px 14px}
+.fig{width:100%;height:auto;display:block}
+figcaption{font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-top:12px;
+           padding-top:10px;border-top:1px solid var(--line);line-height:1.5}
+.tick{font-family:var(--mono);font-size:10.5px;fill:#7C8A94}
+.axlab{font-family:var(--mono);font-size:11px;fill:var(--mut)}
+.cap{font-family:var(--mono);font-size:10.5px;fill:var(--mut)}
+.bx{font-family:var(--mono);font-size:10.5px;fill:var(--mut)}
+.bx-t{font-family:var(--disp);font-size:11.5px;font-weight:500;fill:var(--ink)}
+
+/* ---- bloki ---- */
+.box{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--violet);
+     padding:16px 18px;margin:22px 0;border-radius:2px}
+.box.key{border-left-color:var(--rose)}
+.box.warn{border-left-color:var(--amber)}
+.box .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+          color:var(--mut);display:block;margin-bottom:8px}
+.box p:last-child{margin-bottom:0}
+
+/* ---- wzory (TeX składany do SVG skryptem mathbuild.js) ---- */
+.eq{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--violet);
+    padding:18px 18px;margin:22px 0;border-radius:2px;overflow-x:auto;text-align:center;
+    font-size:18.5px;line-height:1.3}
+.eq svg{max-width:100%;height:auto}
+.eq.txt{font-family:var(--mono);font-size:14px;line-height:1.7;color:var(--ink);text-align:center}
+.eq b{color:var(--violet);font-weight:500}
+.eqnote{font-family:var(--mono);font-size:12.5px;color:var(--mut);text-align:center;
+        margin:-14px 0 20px;line-height:1.6}
+.m{white-space:nowrap}
+.m svg{vertical-align:-0.25ex;max-width:100%;height:auto}
+@media (max-width:640px){
+  table{display:block;overflow-x:auto;width:auto;min-width:100%;-webkit-overflow-scrolling:touch}
+  table .m svg{max-width:none}
+  .eq{padding:14px 12px;font-size:16px}
+}
+
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15px;background:var(--card)}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--disp);font-weight:500;font-size:13px;letter-spacing:.02em;
+   background:#F4F2EA;border-bottom:1.5px solid var(--line)}
+td.n{font-family:var(--mono);font-size:13.5px;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+
+ol,ul{margin:0 0 14px;padding-left:22px}
+li{margin-bottom:7px}
+ol.steps{list-style:none;padding-left:0;counter-reset:st}
+ol.steps>li{counter-increment:st;position:relative;padding-left:44px;margin-bottom:18px}
+ol.steps>li::before{content:counter(st);position:absolute;left:0;top:1px;
+  font-family:var(--mono);font-size:12px;width:28px;height:28px;border-radius:50%;
+  background:var(--violet);color:#fff;display:flex;align-items:center;justify-content:center}
+strong{font-weight:600}
+.tag{font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:2px;
+     background:rgba(36,87,214,.12);color:var(--teal);white-space:nowrap}
+.tag.a{background:rgba(226,113,29,.13);color:var(--amber)}
+.tag.v{background:rgba(122,79,208,.13);color:var(--violet)}
+footer{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);
+       font-family:var(--mono);font-size:12px;color:var(--mut)}
+@media print{body{background:#fff}figure,.box,.eq,table{break-inside:avoid}.topnav,.backfoot{display:none}}
+@media (max-width:600px){body{font-size:16px}header{padding-top:40px}}
+
+/* ---- pasek nawigacji ---- */
+.topnav{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:22px 0 0}
+.topnav a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+          color:var(--mut);text-decoration:none;border:1px solid var(--line);background:var(--card);
+          border-radius:2px;padding:6px 11px;transition:color .12s ease,border-color .12s ease}
+.topnav a:hover,.topnav a:focus-visible{color:var(--ink);border-color:var(--ink);outline:none}
+.topnav .here{font-family:var(--mono);font-size:12px;color:var(--mut);letter-spacing:.08em}
+.backfoot{margin:18px 0 0}
+.backfoot a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+            color:var(--teal);text-decoration:none;border-bottom:1px solid var(--line)}
+.backfoot a:hover,.backfoot a:focus-visible{border-bottom-color:var(--teal);outline:none}
+
+/* ---- meowl przy tytule ---- */
+.avatar{float:right;width:64px;height:64px;border-radius:50%;margin:2px 0 10px 18px;
+        box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--line)}
+header::after{content:"";display:block;clear:both}
+</style>
+<link rel="stylesheet" href="assets/chat.css">
+</head>
+<body>
+<div class="wrap">
+
+<nav class="jm" id="jm" aria-label="Nawigacja"><a class="jc" href="index.html">&larr; Lista</a></nav>
+
+<header>
+  <img class="avatar" src="assets/meowl-tabby.png" width="64" height="64" alt="" decoding="async">
+  <h1>Dokumenty systemu zarządzania jakością</h1>
+  <p class="quest">Struktura i zawartość dokumentów w typowym systemie zarządzania jakością w zakładzie produkcyjnym.</p>
+</header>
+
+<style>
+.karty{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:22px 0}
+.karta{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--violet);border-radius:3px;padding:12px 14px}
+.karta.k .kw{color:var(--violet)} .karta.b{border-top-color:var(--teal)} .karta.s{border-top-color:var(--rose)} .karta.a{border-top-color:var(--amber)}
+.karta .kw{font-family:var(--disp);font-weight:700;font-size:17px;line-height:1.25;display:block;margin-bottom:6px;color:var(--violet)}
+.karta.b .kw{color:var(--teal)} .karta.s .kw{color:var(--rose)} .karta.a .kw{color:var(--amber)}
+.karta p{font-size:15px;margin:0;line-height:1.5}
+@media (max-width:600px){.karty{grid-template-columns:1fr}}
+.fiszka{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--violet);border-radius:2px;margin:10px 0;padding:0}
+.fiszka summary{cursor:pointer;list-style:none;padding:12px 16px;font-family:var(--disp);font-weight:500;font-size:16.5px}
+.fiszka summary::-webkit-details-marker{display:none}
+.fiszka summary::before{content:"?";display:inline-flex;width:22px;height:22px;border-radius:50%;background:var(--violet);color:#fff;
+  font-family:var(--mono);font-size:12px;align-items:center;justify-content:center;margin-right:10px;vertical-align:1px}
+.fiszka[open] summary::before{content:"✓";background:var(--teal)}
+.fiszka p,.fiszka ol,.fiszka ul{padding:0 16px 14px 48px;margin:0}
+.fiszka.op{border-left-color:var(--teal)}
+.fiszka.op summary::before{content:"▶";background:var(--teal)}
+ol.zr{font-size:14.5px;line-height:1.5} ol.zr li{margin-bottom:6px} ol.zr a{color:var(--teal)}
+.cyt{font-style:italic;color:var(--ink)}
+.check{list-style:none;padding-left:0}
+.check li{padding-left:30px;position:relative}
+.check li::before{content:"☐";position:absolute;left:4px;top:-1px;font-family:var(--mono);color:var(--teal);font-size:17px}
+.luka{display:inline-block;min-width:70px;border-bottom:1.5px solid var(--violet);text-align:center;font-family:var(--mono);font-size:14px;color:var(--violet)}
+.eq.txt{overflow-wrap:anywhere}
+.inter{background:var(--card);border:1px solid var(--line);border-radius:3px;
+       padding:20px 18px 16px;margin:26px 0}
+.inter .fig{width:100%;height:auto;display:block}
+.inter .ster{display:flex;align-items:center;gap:14px;margin:14px 0 0;flex-wrap:wrap}
+.inter .ster label{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;
+       text-transform:uppercase;color:var(--mut);flex:none}
+.inter input[type=range]{flex:1 1 200px;min-width:160px;accent-color:var(--violet);height:22px}
+.inter .ster output{font-family:var(--mono);font-size:14px;color:var(--violet);
+       min-width:36px;text-align:right;flex:none}
+.inter .odczyt{font-family:var(--mono);font-size:12.5px;color:var(--mut);
+       margin:12px 0 0;padding-top:11px;border-top:1px solid var(--line);line-height:1.65}
+.inter .odczyt b{color:var(--ink);font-weight:500}
+.inter .odczyt.staly2{min-height:80px}
+</style>
+
+<section>
+<h2><span class="num">01</span> Rama odpowiedzi</h2>
+<div class="rail"></div>
+
+<p>Pytanie ma dwie części: <strong>strukturę</strong> dokumentacji systemu zarządzania jakością (SZJ) i jej <strong>zawartość</strong> w zakładzie produkcyjnym. Materiał do zagadnienia w folderze to 2-stronicowa notatka studencka:
+</p>
+<ul>
+<li>czteropoziomowa piramida dokumentacji;</li>
+<li>pięć typowych dokumentów w produkcji;</li>
+<li>nadzór nad dokumentami.</li>
+</ul>
+<p>Strona trzyma się jej układu i uzupełnia go wymaganiami normy ISO 9001 o „udokumentowanej informacji”. Wszystkie przykłady dotyczą jednego wyrobu — stalowej tulei toczonej w zakładzie — żeby było widać, jak jeden wymóg schodzi przez kolejne poziomy.</p>
+
+<div class="box key">
+<span class="lbl">Zdanie, od którego warto zacząć</span>
+<p><strong>Dokumentacja SZJ, zwykle oparta na ISO 9001, ma strukturę piramidy. Na górze jest polityka jakości i księga jakości, czyli dlaczego i w jakim zakresie. Pod nią procedury: kto, co, kiedy i gdzie. Dalej instrukcje i specyfikacje: jak dokładnie wykonać zadanie. Na dole zapisy: dowód, że zrobiono to zgodnie z wymaganiami. Norma rozróżnia dokumenty, które się utrzymuje i aktualizuje, od zapisów, które się zachowuje bez zmian. Wszystkie podlegają nadzorowi: numer rewizji, zatwierdzenie i wycofanie nieaktualnych wersji.</strong></p>
+</div>
+
+<table>
+<thead><tr><th>człon odpowiedzi</th><th>co trzeba powiedzieć</th></tr></thead>
+<tbody>
+<tr><td>podstawa</td><td>ISO 9001; „udokumentowana informacja”; dokument a zapis</td></tr>
+<tr><td>struktura</td><td>piramida: polityka i księga → procedury → instrukcje i specyfikacje → zapisy</td></tr>
+<tr><td>zawartość</td><td>co jest na każdym poziomie; co norma wymaga obowiązkowo</td></tr>
+<tr><td>przykłady z produkcji</td><td>nadzór nad sprzętem pomiarowym, wyrób niezgodny, plan kontroli, instrukcje stanowiskowe, raporty 8D</td></tr>
+<tr><td>nadzór</td><td>rewizja, zatwierdzenie, dystrybucja, wycofanie starych wersji</td></tr>
+</tbody>
+</table>
+</section>
+
+<section>
+<h2><span class="num">02</span> System zarządzania jakością i udokumentowana informacja</h2>
+<div class="rail"></div>
+
+<p><strong>System zarządzania jakością</strong> to sposób, w jaki zakład planuje, wykonuje, sprawdza i poprawia swoją pracę, żeby wyroby spełniały wymagania klienta. Najczęściej buduje się go według normy <strong>ISO 9001</strong> i potwierdza certyfikatem jednostki zewnętrznej. Dokumentacja jest jego „kręgosłupem”: zapisuje ustalone sposoby działania i dostarcza dowodów, że się ich trzymano.</p>
+
+<p>Norma od wydania z 2015 roku nie mówi już o „dokumentach i zapisach”, tylko o <strong>udokumentowanej informacji</strong> w dowolnej postaci, także cyfrowej (system MES, ERP, tablet przy maszynie). Rozróżnia jednak dwa jej rodzaje, i to rozróżnienie warto znać:</p>
+
+<figure>
+<svg viewBox="0 0 680 290" class="fig">
+<defs><marker id="arF26b0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5A667A"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">DOKUMENT MÓWI, JAK MA BYĆ; ZAPIS — JAK BYŁO</text>
+<rect x="40.0" y="46.0" width="250.0" height="210.0" rx="4" fill="#FBFCFE" stroke="#2457D6" stroke-width="1.5"/>
+<rect x="40.0" y="46.0" width="250.0" height="30.0" rx="4" fill="#E9EFFC" stroke="#2457D6" stroke-width="1.5"/>
+<text x="52.0" y="65.0" text-anchor="start" class="bx-t" style="fill:#2457D6;font-size:10.5px">IS-07 Kontrola średnicy tulei</text>
+<text x="52.0" y="94.0" text-anchor="start" class="cap" style="font-size:8.8px">rewizja</text>
+<text x="150.0" y="94.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">03</text>
+<text x="52.0" y="108.0" text-anchor="start" class="cap" style="font-size:8.8px">data</text>
+<text x="150.0" y="108.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">2026-05-12</text>
+<text x="52.0" y="122.0" text-anchor="start" class="cap" style="font-size:8.8px">autor</text>
+<text x="150.0" y="122.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">J. Nowak</text>
+<text x="52.0" y="136.0" text-anchor="start" class="cap" style="font-size:8.8px">zatwierdził</text>
+<text x="150.0" y="136.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">kier. jakości</text>
+<line x1="50.0" y1="152.0" x2="280.0" y2="152.0" stroke="#CDD5E2" stroke-width="1"/>
+<text x="52.0" y="170.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">1. Mierz średnicę suwmiarką S-12 co 50 szt.</text>
+<text x="52.0" y="185.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">2. Wymiar 20,00 ± 0,05 mm</text>
+<text x="52.0" y="200.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">3. Wynik wpisz do karty KK-07</text>
+<text x="52.0" y="215.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">4. Poza tolerancją → zatrzymaj, czerwony</text>
+<text x="52.0" y="230.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">    pojemnik, powiadom brygadzistę</text>
+<text x="165.0" y="278.0" text-anchor="middle" class="cap" style="fill:#2457D6;font-size:9px">utrzymywana: zmienia się kolejną rewizją</text>
+<path d="M 300.0 150.0 L 376.0 150.0" fill="none" stroke="#5A667A" stroke-width="1.6" marker-end="url(#arF26b0)"/>
+<text x="338.0" y="140.0" text-anchor="middle" class="cap" style="font-size:8.8px">wykonanie</text>
+<rect x="390.0" y="46.0" width="250.0" height="210.0" rx="4" fill="#FBFCFE" stroke="#D04C70" stroke-width="1.5"/>
+<rect x="390.0" y="46.0" width="250.0" height="30.0" rx="4" fill="#FBEAF0" stroke="#D04C70" stroke-width="1.5"/>
+<text x="402.0" y="65.0" text-anchor="start" class="bx-t" style="fill:#D04C70;font-size:10.5px">KK-07 Karta kontroli — zmiana II, 13.10</text>
+<text x="404.0" y="96.0" text-anchor="start" class="cap" style="font-size:8.5px">godz.</text>
+<text x="454.0" y="96.0" text-anchor="start" class="cap" style="font-size:8.5px">szt.</text>
+<text x="498.0" y="96.0" text-anchor="start" class="cap" style="font-size:8.5px">Ø [mm]</text>
+<text x="558.0" y="96.0" text-anchor="start" class="cap" style="font-size:8.5px">OK</text>
+<text x="590.0" y="96.0" text-anchor="start" class="cap" style="font-size:8.5px">podpis</text>
+<line x1="400.0" y1="103.0" x2="630.0" y2="103.0" stroke="#CDD5E2" stroke-width="0.6"/>
+<text x="404.0" y="116.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">14:00</text>
+<text x="454.0" y="116.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">50</text>
+<text x="498.0" y="116.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">20,02</text>
+<text x="558.0" y="116.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">✓</text>
+<text x="590.0" y="116.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">AK</text>
+<line x1="400.0" y1="123.0" x2="630.0" y2="123.0" stroke="#CDD5E2" stroke-width="0.6"/>
+<text x="404.0" y="136.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">14:40</text>
+<text x="454.0" y="136.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">100</text>
+<text x="498.0" y="136.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">20,04</text>
+<text x="558.0" y="136.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">✓</text>
+<text x="590.0" y="136.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">AK</text>
+<line x1="400.0" y1="143.0" x2="630.0" y2="143.0" stroke="#CDD5E2" stroke-width="0.6"/>
+<text x="404.0" y="156.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">15:20</text>
+<text x="454.0" y="156.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">150</text>
+<text x="498.0" y="156.0" text-anchor="start" class="cap" style="fill:#D04C70;font-size:8.8px">20,07</text>
+<text x="558.0" y="156.0" text-anchor="start" class="cap" style="fill:#D04C70;font-size:8.8px">✗</text>
+<text x="590.0" y="156.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">AK</text>
+<line x1="400.0" y1="163.0" x2="630.0" y2="163.0" stroke="#CDD5E2" stroke-width="0.6"/>
+<text x="404.0" y="176.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">15:35</text>
+<text x="454.0" y="176.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">—</text>
+<text x="498.0" y="176.0" text-anchor="start" class="cap" style="fill:#D04C70;font-size:8.8px">stop, NC-112</text>
+<text x="558.0" y="176.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px"></text>
+<text x="590.0" y="176.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">BK</text>
+<text x="515.0" y="226.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">po wpisaniu nie wolno zmieniać</text>
+<text x="515.0" y="278.0" text-anchor="middle" class="cap" style="fill:#D04C70;font-size:9px">zachowywana: dowód, przechowuje się</text>
+</svg>
+<figcaption>Ta sama czynność — kontrola średnicy tulei — w dwóch rodzajach udokumentowanej informacji. Instrukcja mówi, jak ma być, i zmienia się przez kolejne rewizje. Karta kontroli mówi, jak było, i po wypełnieniu się jej nie zmienia. Przykład własny.</figcaption>
+</figure>
+
+<table>
+<thead><tr><th></th><th>dokument</th><th>zapis</th></tr></thead>
+<tbody>
+<tr><td>sformułowanie w ISO 9001</td><td>„utrzymywać udokumentowaną informację”</td><td>„zachowywać udokumentowaną informację”</td></tr>
+<tr><td>odpowiada na pytanie</td><td>jak ma być?</td><td>jak było?</td></tr>
+<tr><td>zmiany</td><td>aktualizuje się go kolejnymi rewizjami</td><td>nie zmienia się po wypełnieniu</td></tr>
+<tr><td>przykład</td><td>polityka, procedura, instrukcja, rysunek</td><td>karta kontroli, świadectwo wzorcowania, raport z auditu</td></tr>
+</tbody>
+</table>
+
+<div class="box">
+<span class="lbl">Co się zmieniło w normie</span>
+<p>ISO 9001:2008 wymagała księgi jakości i sześciu udokumentowanych procedur: nadzoru nad dokumentami, nadzoru nad zapisami, auditów wewnętrznych, nadzoru nad wyrobem niezgodnym, działań korygujących i zapobiegawczych. <strong>Wydanie 2015 zniosło oba obowiązki.</strong> Organizacja sama decyduje, ile dokumentacji potrzebuje, a większość zakładów i tak je zachowuje. Najnowsze wydanie, <strong>ISO 9001:2026</strong> (opublikowane 16 września 2026), utrzymuje te zasady i strukturę rozdziałów. Dokłada nacisk na kulturę jakości, szanse i ryzyka oraz zarządzanie zmianą. Firmy certyfikowane mają trzy lata na przejście.</p>
+</div>
+</section>
+
+<section>
+<h2><span class="num">03</span> Piramida dokumentacji</h2>
+<div class="rail"></div>
+
+<p>Dokumentacja jest ułożona hierarchicznie, od ogólnej wizji zarządu po konkretny formularz wypełniany przez operatora na nocnej zmianie. Każdy poziom odpowiada na inne pytanie, ma innego czytelnika i jest wyprowadzony z poziomu nad nim. Im niżej, tym więcej szczegółów i dokumentów.</p>
+
+<figure>
+<svg viewBox="0 0 680 380" class="fig">
+<defs><marker id="arF26a0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5A667A"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">PIRAMIDA DOKUMENTACJI SYSTEMU ZARZĄDZANIA JAKOŚCIĄ</text>
+<polygon points="200.0,46.0 200.0,46.0 245.0,121.0 155.0,121.0" fill="#F1ECFA" stroke="#7A4FD0" stroke-width="1.5"/>
+<text x="200.0" y="99.5" text-anchor="middle" class="bx-t" style="fill:#7A4FD0;font-size:13px">1</text>
+<polygon points="155.0,121.0 245.0,121.0 290.0,196.0 110.0,196.0" fill="#E9EFFC" stroke="#2457D6" stroke-width="1.5"/>
+<text x="200.0" y="160.5" text-anchor="middle" class="bx-t" style="fill:#2457D6;font-size:10.5px">2. procedury</text>
+<text x="200.0" y="174.5" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">KTO, CO, KIEDY, GDZIE?</text>
+<polygon points="110.0,196.0 290.0,196.0 335.0,271.0 65.0,271.0" fill="#FDF0E4" stroke="#E2711D" stroke-width="1.5"/>
+<text x="200.0" y="235.5" text-anchor="middle" class="bx-t" style="fill:#E2711D;font-size:10.5px">3. instrukcje, specyfikacje</text>
+<text x="200.0" y="249.5" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">JAK DOKŁADNIE?</text>
+<polygon points="65.0,271.0 335.0,271.0 380.0,346.0 20.0,346.0" fill="#FBEAF0" stroke="#D04C70" stroke-width="1.5"/>
+<text x="200.0" y="310.5" text-anchor="middle" class="bx-t" style="fill:#D04C70;font-size:10.5px">4. zapisy, formularze</text>
+<text x="200.0" y="324.5" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.8px">CO ZROBIONO? dowód</text>
+<text x="200.0" y="40.0" text-anchor="middle" class="cap"></text>
+<path d="M 230.5 84.0 L 394.0 84.0" fill="none" stroke="#CDD5E2" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="400.0" y="56.0" width="266.0" height="64.0" rx="4" fill="#FBFCFE" stroke="#7A4FD0" stroke-width="1.2"/>
+<text x="410.0" y="72.0" text-anchor="start" class="bx-t" style="fill:#7A4FD0;font-size:10px">polityka i księga jakości</text>
+<text x="410.0" y="86.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">deklaracja zarządu, zakres, mapa procesów</text>
+<text x="410.0" y="113.0" text-anchor="start" class="cap" style="font-size:8.5px">czyta: zarząd, klienci, audytorzy</text>
+<text x="656.0" y="72.0" text-anchor="end" class="cap" style="fill:#5A667A;font-size:8.5px">1–2</text>
+<path d="M 275.5 159.0 L 394.0 159.0" fill="none" stroke="#CDD5E2" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="400.0" y="131.0" width="266.0" height="64.0" rx="4" fill="#FBFCFE" stroke="#2457D6" stroke-width="1.2"/>
+<text x="410.0" y="147.0" text-anchor="start" class="bx-t" style="fill:#2457D6;font-size:10px">procedury systemowe</text>
+<text x="410.0" y="161.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">przebieg procesu między działami: kto, co,</text>
+<text x="410.0" y="172.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">kiedy, gdzie</text>
+<text x="410.0" y="188.0" text-anchor="start" class="cap" style="font-size:8.5px">czyta: kierownicy działów</text>
+<text x="656.0" y="147.0" text-anchor="end" class="cap" style="fill:#5A667A;font-size:8.5px">kilkanaście</text>
+<path d="M 320.5 234.0 L 394.0 234.0" fill="none" stroke="#CDD5E2" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="400.0" y="206.0" width="266.0" height="64.0" rx="4" fill="#FBFCFE" stroke="#E2711D" stroke-width="1.2"/>
+<text x="410.0" y="222.0" text-anchor="start" class="bx-t" style="fill:#E2711D;font-size:10px">instrukcje stanowiskowe, specyfikacje</text>
+<text x="410.0" y="236.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">jak wykonać jedno zadanie na jednym stanowisku</text>
+<text x="410.0" y="263.0" text-anchor="start" class="cap" style="font-size:8.5px">czyta: operatorzy, kontrolerzy</text>
+<text x="656.0" y="222.0" text-anchor="end" class="cap" style="fill:#5A667A;font-size:8.5px">setki</text>
+<path d="M 365.5 309.0 L 394.0 309.0" fill="none" stroke="#CDD5E2" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="400.0" y="281.0" width="266.0" height="64.0" rx="4" fill="#FBFCFE" stroke="#D04C70" stroke-width="1.2"/>
+<text x="410.0" y="297.0" text-anchor="start" class="bx-t" style="fill:#D04C70;font-size:10px">zapisy (wypełnione formularze)</text>
+<text x="410.0" y="311.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:8.8px">dowód, że zrobiono zgodnie z wymaganiami</text>
+<text x="410.0" y="338.0" text-anchor="start" class="cap" style="font-size:8.5px">czyta: audytor, klient, reklamacje</text>
+<text x="656.0" y="297.0" text-anchor="end" class="cap" style="fill:#5A667A;font-size:8.5px">tysiące</text>
+<path d="M 14.0 70.0 L 14.0 330.0" fill="none" stroke="#5A667A" stroke-width="1.3" marker-end="url(#arF26a0)"/>
+<text x="26" y="200" class="cap" style="fill:#5A667A;font-size:9px" transform="rotate(90 26 200)" text-anchor="middle">coraz więcej szczegółów i dokumentów</text>
+</svg>
+<figcaption>Cztery poziomy wg notatki. Liczebności po prawej są orientacyjne dla średniego zakładu. Księga jakości jest od 2015 r. nieobowiązkowa, ale w piramidzie zajmuje to samo miejsce co polityka.</figcaption>
+</figure>
+
+<table>
+<thead><tr><th>poziom</th><th>typ dokumentu</th><th>zawartość</th></tr></thead>
+<tbody>
+<tr><td>1 · strategia</td><td>polityka jakości, księga jakości</td><td>polityka — deklaracja zarządu o celach jakościowych; księga — mapa systemu: zakres SZJ, mapa głównych procesów, ewentualne wyłączenia z normy</td></tr>
+<tr><td>2 · organizacja</td><td>procedury systemowe</td><td>kto, co, kiedy i gdzie ma zrobić; współpraca między działami, np. przepływ informacji między magazynem a produkcją</td></tr>
+<tr><td>3 · działanie</td><td>instrukcje i specyfikacje</td><td>jak dokładnie wykonać konkretne zadanie; dla operatorów maszyn i kontrolerów jakości</td></tr>
+<tr><td>4 · dowody</td><td>zapisy i formularze</td><td>obiektywny dowód, że pracę wykonano zgodnie z procedurą; po wypełnieniu (np. wynik pomiaru z datą) nie wolno ich zmieniać</td></tr>
+</tbody>
+</table>
+<p class="eqnote">treść tabeli wg notatki do zagadnienia</p>
+</section>
+
+<section>
+<h2><span class="num">04</span> Co ISO 9001 wymaga obowiązkowo</h2>
+<div class="rail"></div>
+
+<p>Norma nie podaje listy dokumentów. Rozsiewa po rozdziałach wymagania „utrzymywać” albo „zachowywać” udokumentowaną informację. Najważniejsze z nich, przypisane do poziomów piramidy (numeracja wg ISO 9001:2015, wydanie 2026 zachowuje strukturę rozdziałów):</p>
+
+<table>
+<thead><tr><th>poziom</th><th>wymaganie</th><th>punkt normy</th></tr></thead>
+<tbody>
+<tr><td rowspan="2">1</td><td>zakres systemu zarządzania jakością (z uzasadnieniem wyłączeń)</td><td>4.3</td></tr>
+<tr><td>polityka jakości i cele jakości</td><td>5.2, 6.2</td></tr>
+<tr><td>2–3</td><td>informacja potrzebna do prowadzenia procesów — w zakresie, który organizacja uzna za konieczny</td><td>4.4, 8.1</td></tr>
+<tr><td rowspan="6">4</td><td>dowody wzorcowania i sprawdzania przyrządów pomiarowych</td><td>7.1.5</td></tr>
+<tr><td>dowody kompetencji pracowników</td><td>7.2</td></tr>
+<tr><td>wyniki przeglądu wymagań klienta, ocena dostawców</td><td>8.2.3, 8.4</td></tr>
+<tr><td>dowody zgodności wyrobu i osoba zwalniająca go do wysyłki</td><td>8.6</td></tr>
+<tr><td>opis niezgodności, podjęte działania, decyzje</td><td>8.7, 10.2</td></tr>
+<tr><td>wyniki monitorowania, auditów wewnętrznych i przeglądu zarządzania</td><td>9.1, 9.2, 9.3</td></tr>
+</tbody>
+</table>
+<p>Widać z tego, że norma jest oszczędna w <em>dokumentach</em>, a wymagająca w <em>zapisach</em>. Audytor nie pyta, czy jest procedura, tylko prosi o dowód, że proces działa.</p>
+</section>
+
+<section>
+<h2><span class="num">05</span> Typowe dokumenty w zakładzie produkcyjnym</h2>
+<div class="rail"></div>
+
+<p>Komisja zwykle oczekuje konkretnych przykładów z hali. Notatka wymienia pięć najważniejszych:</p>
+<table>
+<thead><tr><th>dokument</th><th>poziom</th><th>po co i co zawiera</th></tr></thead>
+<tbody>
+<tr><td><strong>procedura nadzoru nad sprzętem kontrolno-pomiarowym</strong></td><td>2 (+ zapisy)</td><td>gwarantuje, że przyrządy podają prawdziwe wartości: harmonogram kalibracji, świadectwa wzorcowania dla każdej suwmiarki czy wagi</td></tr>
+<tr><td><strong>procedura nadzoru nad wyrobem niezgodnym</strong></td><td>2</td><td>jak fizycznie i systemowo odizolować wadliwe detale (np. czerwone pojemniki z kłódką), żeby nie trafiły do klienta; kto decyduje o naprawie, złomowaniu albo odstępstwie</td></tr>
+<tr><td><strong>plan kontroli</strong> (<em>Control Plan</em>)</td><td>3</td><td>jakie cechy wyrobu, jakim przyrządem, jak często i z jaką tolerancją sprawdzać na poszczególnych etapach; wymagany m.in. w motoryzacji (IATF 16949)</td></tr>
+<tr><td><strong>instrukcje stanowiskowe</strong></td><td>3</td><td>parametry nastawcze, BHP, sposób mocowania detalu, zdjęcia wad dopuszczalnych i niedopuszczalnych</td></tr>
+<tr><td><strong>raporty 8D / A3</strong></td><td>4</td><td>ustandaryzowane formularze do rozwiązywania problemów jakościowych i szukania przyczyny źródłowej reklamacji</td></tr>
+</tbody>
+</table>
+
+<p>Najlepiej pokazać, jak te dokumenty łączą się w pionie. Jeden wymóg z polityki schodzi przez wszystkie cztery poziomy:</p>
+
+<figure>
+<svg viewBox="0 0 680 368" class="fig">
+<defs><marker id="arF26c0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#2457D6"/></marker><marker id="arF26c1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#E2711D"/></marker><marker id="arF26c2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#D04C70"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">JEDEN WYMÓG PRZEZ CZTERY POZIOMY: WYRÓB NIEZGODNY NIE TRAFIA DO KLIENTA</text>
+<rect x="30.0" y="42.0" width="620.0" height="62.0" rx="4" fill="#F1ECFA" stroke="#7A4FD0" stroke-width="1.4"/>
+<text x="42.0" y="60.0" text-anchor="start" class="bx-t" style="fill:#7A4FD0;font-size:10.5px">POLITYKA</text>
+<text x="42.0" y="78.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9.2px">Dostarczamy klientom wyroby zgodne z wymaganiami; dążymy do zera reklamacji.</text>
+<text x="640.0" y="60.0" text-anchor="end" class="cap" style="font-size:8.5px">cel jakości: reklamacje &lt; 50 ppm</text>
+<path d="M 48.0 106.0 L 60.0 120.0" fill="none" stroke="#2457D6" stroke-width="1.4" marker-end="url(#arF26c0)"/>
+<rect x="56.0" y="122.0" width="594.0" height="62.0" rx="4" fill="#E9EFFC" stroke="#2457D6" stroke-width="1.4"/>
+<text x="68.0" y="140.0" text-anchor="start" class="bx-t" style="fill:#2457D6;font-size:10.5px">PROCEDURA P-08</text>
+<text x="68.0" y="158.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9.2px">Nadzór nad wyrobem niezgodnym: kto wstrzymuje partię, kto oznacza, kto decyduje (naprawa, złom,</text>
+<text x="68.0" y="170.5" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9.2px">odstępstwo), kto zawiadamia klienta.</text>
+<text x="640.0" y="140.0" text-anchor="end" class="cap" style="font-size:8.5px">dotyczy produkcji, kontroli jakości, magazynu, sprzedaży</text>
+<path d="M 74.0 186.0 L 86.0 200.0" fill="none" stroke="#E2711D" stroke-width="1.4" marker-end="url(#arF26c1)"/>
+<rect x="82.0" y="202.0" width="568.0" height="62.0" rx="4" fill="#FDF0E4" stroke="#E2711D" stroke-width="1.4"/>
+<text x="94.0" y="220.0" text-anchor="start" class="bx-t" style="fill:#E2711D;font-size:10.5px">INSTRUKCJA IS-07</text>
+<text x="94.0" y="238.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9.2px">Na stanowisku prasy: pomiar co 50 szt.; poza tolerancją — zatrzymaj, odłóż do czerwonego</text>
+<text x="94.0" y="250.5" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9.2px">pojemnika z kłódką, powiadom brygadzistę.</text>
+<text x="640.0" y="220.0" text-anchor="end" class="cap" style="font-size:8.5px">dla operatora jednej maszyny</text>
+<path d="M 100.0 266.0 L 112.0 280.0" fill="none" stroke="#D04C70" stroke-width="1.4" marker-end="url(#arF26c2)"/>
+<rect x="108.0" y="282.0" width="542.0" height="62.0" rx="4" fill="#FBEAF0" stroke="#D04C70" stroke-width="1.4"/>
+<text x="120.0" y="300.0" text-anchor="start" class="bx-t" style="fill:#D04C70;font-size:10.5px">ZAPISY</text>
+<text x="120.0" y="318.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9.2px">Karta kontroli KK-07 z wynikiem 20,07 mm; raport niezgodności NC-112 z decyzją „złom 38</text>
+<text x="120.0" y="330.5" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9.2px">szt.”; podpisy, daty.</text>
+<text x="640.0" y="300.0" text-anchor="end" class="cap" style="font-size:8.5px">dowód dla audytora i klienta</text>
+</svg>
+<figcaption>Wyrób niezgodny w czterech poziomach dokumentacji. Polityka stawia cel, procedura dzieli odpowiedzialność między działy, instrukcja mówi operatorowi, co zrobić przy maszynie, a zapisy dowodzą, że tak się stało. Numery dokumentów i liczby są przykładowe.</figcaption>
+</figure>
+
+<h3>Jak wygląda plan kontroli</h3>
+<table>
+<thead><tr><th>cecha tulei</th><th>wymaganie</th><th>przyrząd</th><th>częstość</th><th>reakcja na niezgodność</th></tr></thead>
+<tbody>
+<tr><td>średnica zewnętrzna</td><td>20,00 ± 0,05 mm</td><td>suwmiarka S-12</td><td>co 50 szt.</td><td>stop maszyny, wyrób niezgodny wg P-08</td></tr>
+<tr><td>długość</td><td>40,0 ± 0,1 mm</td><td>sprawdzian</td><td>co 50 szt.</td><td>jw.</td></tr>
+<tr><td>twardość</td><td>45–50 HRC</td><td>twardościomierz</td><td>1 szt. na partię</td><td>wstrzymanie partii, decyzja kontroli jakości</td></tr>
+<tr><td>zadziory, rysy</td><td>brak (wzorzec wad)</td><td>wzrokowo</td><td>100%</td><td>odłożenie do czerwonego pojemnika</td></tr>
+</tbody>
+</table>
+<p class="eqnote">przykład własny; każdy wiersz planu kontroli „produkuje” zapisy na karcie kontroli</p>
+
+<h3>Raport 8D — osiem kroków rozwiązania problemu</h3>
+<ol class="steps">
+<li><strong>D1 zespół</strong> i <strong>D2 opis problemu</strong> — kto się zajmuje; co, gdzie, kiedy, ile sztuk.</li>
+<li><strong>D3 działania natychmiastowe</strong> — odcięcie klienta od wady: wstrzymanie wysyłek, sortowanie zapasów.</li>
+<li><strong>D4 przyczyna źródłowa</strong> — np. metodą „5 × dlaczego” lub diagramem Ishikawy.</li>
+<li><strong>D5–D6 działania korygujące</strong> — wybór, wdrożenie i sprawdzenie skuteczności.</li>
+<li><strong>D7 zapobieganie</strong> — zmiana dokumentów (instrukcji, planu kontroli), żeby problem nie wrócił; <strong>D8 zamknięcie</strong> i podziękowanie zespołowi.</li>
+</ol>
+<p>Krok D7 zamyka pętlę: zapis (raport 8D) powoduje zmianę dokumentu (nowa rewizja instrukcji). Tak dokumentacja się doskonali — zgodnie z cyklem PDCA, na którym opiera się ISO 9001.</p>
+</section>
+
+<section>
+<h2><span class="num">06</span> Nadzór nad dokumentami</h2>
+<div class="rail"></div>
+
+<p>Notatka podkreśla, że kluczowe jest nie samo stworzenie dokumentów, tylko <strong>nadzór nad nimi</strong>. Cel jest jeden: operator nie może pracować według starej, nieaktualnej instrukcji lub rysunku. ISO 9001 (7.5.2–7.5.3) wymaga, żeby dokument był właściwie oznaczony, przejrzany i zatwierdzony, dostępny tam, gdzie jest potrzebny, chroniony przed niezamierzoną zmianą, a jego zmiany — nadzorowane.</p>
+
+<figure>
+<svg viewBox="0 0 680 320" class="fig">
+<defs><marker id="arF26d0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#2457D6"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">NADZÓR NAD DOKUMENTEM: CYKL ŻYCIA JEDNEJ INSTRUKCJI</text>
+<path d="M 226.0 83.0 L 262.4 104.0" fill="none" stroke="#2457D6" stroke-width="1.6" marker-end="url(#arF26d0)"/>
+<path d="M 290.1 150.0 L 290.1 192.0" fill="none" stroke="#2457D6" stroke-width="1.6" marker-end="url(#arF26d0)"/>
+<path d="M 264.1 239.0 L 227.7 260.0" fill="none" stroke="#2457D6" stroke-width="1.6" marker-end="url(#arF26d0)"/>
+<path d="M 174.0 261.0 L 137.6 240.0" fill="none" stroke="#2457D6" stroke-width="1.6" marker-end="url(#arF26d0)"/>
+<path d="M 109.9 194.0 L 109.9 152.0" fill="none" stroke="#2457D6" stroke-width="1.6" marker-end="url(#arF26d0)"/>
+<path d="M 135.9 105.0 L 172.3 84.0" fill="none" stroke="#2457D6" stroke-width="1.6" marker-end="url(#arF26d0)"/>
+<rect x="148.0" y="53.0" width="104.0" height="30.0" rx="15" fill="#E9EFFC" stroke="#2457D6" stroke-width="1.3"/>
+<text x="200.0" y="72.0" text-anchor="middle" class="bx-t" style="fill:#2457D6;font-size:10px">opracowanie</text>
+<rect x="238.1" y="105.0" width="104.0" height="30.0" rx="15" fill="#E9EFFC" stroke="#2457D6" stroke-width="1.3"/>
+<text x="290.1" y="124.0" text-anchor="middle" class="bx-t" style="fill:#2457D6;font-size:10px">przegląd</text>
+<rect x="238.1" y="209.0" width="104.0" height="30.0" rx="15" fill="#E9EFFC" stroke="#2457D6" stroke-width="1.3"/>
+<text x="290.1" y="228.0" text-anchor="middle" class="bx-t" style="fill:#2457D6;font-size:10px">zatwierdzenie</text>
+<rect x="148.0" y="261.0" width="104.0" height="30.0" rx="15" fill="#E9EFFC" stroke="#2457D6" stroke-width="1.3"/>
+<text x="200.0" y="280.0" text-anchor="middle" class="bx-t" style="fill:#2457D6;font-size:10px">udostępnienie</text>
+<rect x="57.9" y="209.0" width="104.0" height="30.0" rx="15" fill="#E9EFFC" stroke="#2457D6" stroke-width="1.3"/>
+<text x="109.9" y="228.0" text-anchor="middle" class="bx-t" style="fill:#2457D6;font-size:10px">stosowanie</text>
+<rect x="57.9" y="105.0" width="104.0" height="30.0" rx="15" fill="#E9EFFC" stroke="#2457D6" stroke-width="1.3"/>
+<text x="109.9" y="124.0" text-anchor="middle" class="bx-t" style="fill:#2457D6;font-size:10px">zmiana</text>
+<text x="200.0" y="168.0" text-anchor="middle" class="bx-t" style="fill:#0F1B2D;font-size:11px">rewizja n</text>
+<text x="200.0" y="184.0" text-anchor="middle" class="cap" style="font-size:9px">→ rewizja n + 1</text>
+<rect x="366.0" y="62.0" width="290.0" height="90.0" rx="4" fill="#FBEAF0" stroke="#D04C70" stroke-width="1.3"/>
+<text x="378.0" y="82.0" text-anchor="start" class="bx-t" style="fill:#D04C70;font-size:10.5px">wycofanie starej rewizji</text>
+<text x="378.0" y="100.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9px">zebrać kopie ze stanowisk albo zablokować w systemie;</text>
+<text x="378.0" y="115.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9px">egzemplarz archiwalny oznaczyć „NIEAKTUALNE”;</text>
+<text x="378.0" y="130.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9px">cel: operator nie może pracować wg starej wersji</text>
+<rect x="366.0" y="172.0" width="290.0" height="104.0" rx="4" fill="#FBFCFE" stroke="#5A667A" stroke-width="1.2"/>
+<text x="378.0" y="192.0" text-anchor="start" class="bx-t" style="font-size:10.5px">metryczka każdego dokumentu</text>
+<text x="378.0" y="210.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9px">• numer i tytuł (IS-07)</text>
+<text x="378.0" y="224.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9px">• numer rewizji i data obowiązywania</text>
+<text x="378.0" y="238.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9px">• autor i osoba zatwierdzająca</text>
+<text x="378.0" y="252.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9px">• lista rozdzielcza / miejsce udostępnienia</text>
+<text x="378.0" y="266.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9px">• historia zmian</text>
+</svg>
+<figcaption>Cykl życia jednej instrukcji. Każda zmiana zaczyna nowy obieg z kolejnym numerem rewizji. Najsłabszym ogniwem w praktyce jest wycofanie starej wersji ze stanowiska.</figcaption>
+</figure>
+
+<p>Zapisy nadzoruje się inaczej: określa się, gdzie i jak długo są przechowywane (w motoryzacji wg IATF 16949: przez czas produkcji wyrobu i serwisu plus rok, o ile klient nie wymaga dłużej), kto ma do nich dostęp i jak chroni się je przed zmianą lub zniszczeniem. Pomyłkę w zapisie papierowym przekreśla się jedną kreską z podpisem i datą, tak żeby pierwotny wpis był czytelny.</p>
+</section>
+
+<section>
+<h2><span class="num">07</span> Sprawdź się: gdzie to leży?</h2>
+<div class="rail"></div>
+
+<p>Czternaście dokumentów z typowego zakładu. Przypisz każdy do poziomu piramidy. Po odpowiedzi zobaczysz krótkie uzasadnienie.</p>
+
+<style>
+.qz .qz-top{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:12px;color:var(--mut);margin-bottom:10px}
+.qz .qz-card{border:1.5px solid var(--ink);border-radius:6px;background:var(--card);padding:16px 18px;font-size:17px;line-height:1.5;min-height:110px;display:flex;align-items:center}
+.qz .qz-btns{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:12px}
+.qz .qz-btns button{font-family:var(--mono);font-size:12.5px;line-height:1.3;padding:9px 8px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:4px;cursor:pointer;text-align:left}
+.qz .qz-btns button[data-l="1"]{border-left:5px solid var(--violet)}
+.qz .qz-btns button[data-l="2"]{border-left:5px solid var(--teal)}
+.qz .qz-btns button[data-l="3"]{border-left:5px solid var(--amber)}
+.qz .qz-btns button[data-l="4"]{border-left:5px solid var(--rose)}
+.qz .qz-btns button:disabled{cursor:default;opacity:.45}
+.qz .qz-btns button.ok{opacity:1;background:#E9EFFC;border-color:var(--teal);font-weight:600}
+.qz .qz-btns button.bad{opacity:1;background:#FBEAF0;border-color:var(--rose);text-decoration:line-through}
+.qz .qz-fb{margin:12px 0 0;padding:10px 14px;border-left:3px solid var(--line);background:#F6F8FC;font-size:15.5px;line-height:1.5;min-height:96px}
+.qz .qz-fb.ok{border-left-color:var(--teal)} .qz .qz-fb.bad{border-left-color:var(--rose)}
+.qz .qz-nav{display:flex;gap:10px;margin-top:12px;align-items:center}
+.qz .qz-nav button{font-family:var(--mono);font-size:12.5px;padding:7px 14px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:3px;cursor:pointer}
+.qz .qz-nav button:disabled{opacity:.4;cursor:default}
+@media (max-width:600px){.qz .qz-btns{grid-template-columns:1fr 1fr}.qz .qz-card{min-height:150px;font-size:16px}.qz .qz-fb{min-height:176px}}
+</style>
+<div class="inter qz" id="qz26">
+<div class="qz-top"><span>Na którym poziomie piramidy leży…</span><span id="qzNo"></span></div>
+<div class="qz-card" id="qzCard"></div>
+<div class="qz-btns"><button data-l="1">1 · polityka i księga</button><button data-l="2">2 · procedury</button><button data-l="3">3 · instrukcje, specyfikacje</button><button data-l="4">4 · zapisy, formularze</button></div>
+<p class="qz-fb" id="qzFb"></p>
+<div class="qz-nav"><button id="qzNext">następny →</button><button id="qzReset">od nowa</button><span id="qzScore" style="font-family:var(--mono);font-size:12.5px;color:var(--mut);margin-left:auto"></span></div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  var Q=[["„Zobowiązujemy się dostarczać wyroby zgodne z wymaganiami klientów i stale doskonalić nasz system.” — podpis prezesa", 1, "Polityka jakości: deklaracja zarządu, ogólna, bez szczegółów wykonania. Dokument utrzymywany (ISO 9001, 5.2)."], ["Opis zakresu systemu zarządzania jakością i mapa procesów zakładu", 1, "Księga jakości / dokument zakresu: mapa całego systemu. Od 2015 r. księga nie jest obowiązkowa, ale zakres SZJ musi być udokumentowany (4.3)."], ["Procedura nadzoru nad wyrobem niezgodnym", 2, "Procedura systemowa: kto wstrzymuje partię, kto decyduje, kto zawiadamia klienta — współpraca kilku działów."], ["Procedura auditów wewnętrznych", 2, "Procedura systemowa: kto planuje audity, kto je prowadzi, jak raportuje się wyniki."], ["Instrukcja przezbrojenia prasy P-3 ze zdjęciami ustawienia narzędzia", 3, "Instrukcja stanowiskowa: jak dokładnie wykonać jedno zadanie na jednej maszynie."], ["Plan kontroli tulei: cechy, przyrządy, częstość pomiaru, tolerancje", 3, "Specyfikacja kontroli (Control Plan): mówi, co i jak mierzyć na każdym etapie. Dokument utrzymywany."], ["Rysunek techniczny tulei, rewizja C, z tolerancjami wymiarów", 3, "Specyfikacja wyrobu — poziom instrukcji i specyfikacji. Musi być aktualną rewizją na stanowisku."], ["Procedura nadzoru nad sprzętem kontrolno-pomiarowym", 2, "Procedura systemowa: harmonogram wzorcowań, kto je zleca, co zrobić z przyrządem poza tolerancją."], ["Świadectwo wzorcowania suwmiarki S-12 z lutego 2026", 4, "Zapis: dowód, że przyrząd był sprawdzony. Zachowywany (ISO 9001, 7.1.5)."], ["Wypełniona karta kontroli KK-07 z wynikami pomiarów ze zmiany II", 4, "Zapis: dowód wykonania kontroli. Po wypełnieniu nie wolno go zmieniać."], ["Pusty formularz karty kontroli KK-07, rewizja 02", 4, "Poziom formularzy. Uwaga: pusty wzór nadzoruje się jak dokument (ma numer i rewizję). Zapisem staje się dopiero po wypełnieniu."], ["Raport 8D z reklamacji klienta na pękniętą tuleję", 4, "Zapis: przebieg rozwiązania problemu i przyczyna źródłowa. Dowód działań korygujących (10.2)."], ["Protokół z przeglądu zarządzania za rok 2026", 4, "Zapis: wynik przeglądu zarządzania jest zachowywaną udokumentowaną informacją (9.3)."], ["Matryca kompetencji operatorów z podpisami po szkoleniach", 4, "Zapis: dowód kompetencji pracowników (7.2)."]], L=["1 · polityka i księga", "2 · procedury", "3 · instrukcje, specyfikacje", "4 · zapisy, formularze"], i=0, good=0, done=false;
+  function E(x){return document.getElementById(x);}
+  var B=[].slice.call(document.querySelectorAll('#qz26 .qz-btns button'));
+  function show(){
+    done=false; var q=Q[i];
+    E('qzCard').textContent=q[0]; E('qzNo').textContent=(i+1)+' / '+Q.length;
+    B.forEach(function(b){b.disabled=false;b.className='';});
+    E('qzFb').className='qz-fb'; E('qzFb').textContent='Wybierz poziom.';
+    E('qzNext').disabled=true; E('qzScore').textContent='poprawnie: '+good;
+  }
+  B.forEach(function(b){b.addEventListener('click',function(){
+    if(done)return; done=true; var q=Q[i], l=+b.getAttribute('data-l'), ok=(l===q[1]);
+    if(ok)good++;
+    B.forEach(function(x){x.disabled=true; if(+x.getAttribute('data-l')===q[1])x.className='ok';});
+    if(!ok) b.className='bad';
+    E('qzFb').className='qz-fb '+(ok?'ok':'bad');
+    E('qzFb').innerHTML='<b>'+(ok?'Dobrze.':'Nie — poziom '+L[q[1]-1]+'.')+'</b> '+q[2];
+    E('qzScore').textContent='poprawnie: '+good;
+    if(i<Q.length-1) E('qzNext').disabled=false;
+    else E('qzFb').innerHTML+='<br><b>Koniec: '+good+' z '+Q.length+'.</b>';
+  });});
+  E('qzNext').addEventListener('click',function(){if(i<Q.length-1){i++;show();}});
+  E('qzReset').addEventListener('click',function(){i=0;good=0;show();});
+  show();
+});
+</script>
+</section>
+
+<section>
+<h2><span class="num">08</span> Narysuj na tablicy</h2>
+<div class="rail"></div>
+<figure>
+<svg viewBox="0 0 680 470" class="fig">
+<defs><marker id="arF26f0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5A667A"/></marker></defs>
+<text x="340.0" y="22.0" text-anchor="middle" class="bx-t">NARYSUJ NA TABLICY W 6 RUCHACH</text>
+<rect x="14.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<circle cx="32.0" cy="58.0" r="10" fill="#7A4FD0" stroke="none" stroke-width="1"/>
+<text x="32.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">1</text>
+<text x="48.0" y="56.0" text-anchor="start" class="bx-t">trójkąt</text>
+<text x="48.0" y="70.0" text-anchor="start" class="bx" style="font-size:9.5px">piramida, 4 poziomy</text>
+<polygon points="118.0,92.0 118.0,92.0 133.0,122.0 103.0,122.0" fill="#F1ECFA" stroke="#7A4FD0" stroke-width="1.2"/>
+<polygon points="103.0,122.0 133.0,122.0 148.0,152.0 88.0,152.0" fill="#E9EFFC" stroke="#2457D6" stroke-width="1.2"/>
+<polygon points="88.0,152.0 148.0,152.0 163.0,182.0 73.0,182.0" fill="#FDF0E4" stroke="#E2711D" stroke-width="1.2"/>
+<polygon points="73.0,182.0 163.0,182.0 178.0,212.0 58.0,212.0" fill="#FBEAF0" stroke="#D04C70" stroke-width="1.2"/>
+<rect x="236.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<circle cx="254.0" cy="58.0" r="10" fill="#2457D6" stroke="none" stroke-width="1"/>
+<text x="254.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">2</text>
+<text x="270.0" y="56.0" text-anchor="start" class="bx-t">pytania</text>
+<text x="270.0" y="70.0" text-anchor="start" class="bx" style="font-size:9.5px">cztery pytania</text>
+<polygon points="306.0,92.0 306.0,92.0 321.0,122.0 291.0,122.0" fill="#FBFCFE" stroke="#7A4FD0" stroke-width="1.2"/>
+<text x="376.0" y="111.0" text-anchor="start" class="cap" style="fill:#7A4FD0;font-size:9px">dlaczego?</text>
+<polygon points="291.0,122.0 321.0,122.0 336.0,152.0 276.0,152.0" fill="#FBFCFE" stroke="#2457D6" stroke-width="1.2"/>
+<text x="376.0" y="141.0" text-anchor="start" class="cap" style="fill:#2457D6;font-size:9px">kto, co?</text>
+<polygon points="276.0,152.0 336.0,152.0 351.0,182.0 261.0,182.0" fill="#FBFCFE" stroke="#E2711D" stroke-width="1.2"/>
+<text x="376.0" y="171.0" text-anchor="start" class="cap" style="fill:#E2711D;font-size:9px">jak?</text>
+<polygon points="261.0,182.0 351.0,182.0 366.0,212.0 246.0,212.0" fill="#FBFCFE" stroke="#D04C70" stroke-width="1.2"/>
+<text x="376.0" y="201.0" text-anchor="start" class="cap" style="fill:#D04C70;font-size:9px">dowód</text>
+<rect x="458.0" y="40.0" width="208.0" height="204.0" rx="4" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<circle cx="476.0" cy="58.0" r="10" fill="#D04C70" stroke="none" stroke-width="1"/>
+<text x="476.0" y="62.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">3</text>
+<text x="492.0" y="56.0" text-anchor="start" class="bx-t">dokument a zapis</text>
+<text x="492.0" y="70.0" text-anchor="start" class="bx" style="font-size:9.5px">utrzymywać / zachowywać</text>
+<rect x="478.0" y="96.0" width="74.0" height="92.0" rx="3" fill="#E9EFFC" stroke="#2457D6" stroke-width="1.3"/>
+<text x="515.0" y="116.0" text-anchor="middle" class="bx-t" style="fill:#2457D6;font-size:10px">dokument</text>
+<line x1="488.0" y1="132.0" x2="542.0" y2="132.0" stroke="#2457D6" stroke-width="1"/>
+<line x1="488.0" y1="144.0" x2="542.0" y2="144.0" stroke="#2457D6" stroke-width="1"/>
+<line x1="488.0" y1="156.0" x2="542.0" y2="156.0" stroke="#2457D6" stroke-width="1"/>
+<line x1="488.0" y1="168.0" x2="542.0" y2="168.0" stroke="#2457D6" stroke-width="1"/>
+<path d="M 556.0 142.0 L 570.0 142.0" fill="none" stroke="#5A667A" stroke-width="1.2" marker-end="url(#arF26f0)"/>
+<rect x="574.0" y="96.0" width="74.0" height="92.0" rx="3" fill="#FBEAF0" stroke="#D04C70" stroke-width="1.3"/>
+<text x="611.0" y="116.0" text-anchor="middle" class="bx-t" style="fill:#D04C70;font-size:10px">zapis</text>
+<text x="611.0" y="136.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.5px">✓  20,00</text>
+<text x="611.0" y="148.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.5px">✓  20,01</text>
+<text x="611.0" y="160.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.5px">✓  20,02</text>
+<text x="611.0" y="172.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:8.5px">✓  20,03</text>
+<text x="562.0" y="216.0" text-anchor="middle" class="cap" style="font-size:9.5px">jak ma być → jak było</text>
+<rect x="14.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<circle cx="32.0" cy="272.0" r="10" fill="#E2711D" stroke="none" stroke-width="1"/>
+<text x="32.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">4</text>
+<text x="48.0" y="270.0" text-anchor="start" class="bx-t">przykłady</text>
+<text x="48.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">po jednym na poziom</text>
+<polygon points="84.0,306.0 84.0,306.0 99.0,336.0 69.0,336.0" fill="#FBFCFE" stroke="#7A4FD0" stroke-width="1.2"/>
+<text x="154.0" y="325.0" text-anchor="start" class="cap" style="fill:#7A4FD0;font-size:9px">polityka</text>
+<polygon points="69.0,336.0 99.0,336.0 114.0,366.0 54.0,366.0" fill="#FBFCFE" stroke="#2457D6" stroke-width="1.2"/>
+<text x="154.0" y="355.0" text-anchor="start" class="cap" style="fill:#2457D6;font-size:9px">P-08 niezg.</text>
+<polygon points="54.0,366.0 114.0,366.0 129.0,396.0 39.0,396.0" fill="#FBFCFE" stroke="#E2711D" stroke-width="1.2"/>
+<text x="154.0" y="385.0" text-anchor="start" class="cap" style="fill:#E2711D;font-size:9px">IS-07</text>
+<polygon points="39.0,396.0 129.0,396.0 144.0,426.0 24.0,426.0" fill="#FBFCFE" stroke="#D04C70" stroke-width="1.2"/>
+<text x="154.0" y="415.0" text-anchor="start" class="cap" style="fill:#D04C70;font-size:9px">KK-07</text>
+<rect x="236.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<circle cx="254.0" cy="272.0" r="10" fill="#2457D6" stroke="none" stroke-width="1"/>
+<text x="254.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">5</text>
+<text x="270.0" y="270.0" text-anchor="start" class="bx-t">nadzór</text>
+<text x="270.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">rewizje i wycofanie</text>
+<rect x="276.0" y="314.0" width="128.0" height="76.0" rx="3" fill="#FBFCFE" stroke="#2457D6" stroke-width="1.3"/>
+<text x="340.0" y="334.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">IS-07  rew. 03</text>
+<text x="340.0" y="350.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">data 2026-05-12</text>
+<text x="340.0" y="366.0" text-anchor="middle" class="cap" style="fill:#0F1B2D;font-size:9px">zatw.: kier. jakości</text>
+<text x="340.0" y="414.0" text-anchor="middle" class="cap" style="fill:#D04C70;font-size:9.5px">rew. 02 → NIEAKTUALNE</text>
+<rect x="458.0" y="254.0" width="208.0" height="204.0" rx="4" fill="#FBFCFE" stroke="#CDD5E2" stroke-width="1"/>
+<circle cx="476.0" cy="272.0" r="10" fill="#5A667A" stroke="none" stroke-width="1"/>
+<text x="476.0" y="276.0" text-anchor="middle" class="bx-t" style="fill:#FFFFFF;font-size:11.5px">6</text>
+<text x="492.0" y="270.0" text-anchor="start" class="bx-t">ISO 9001</text>
+<text x="492.0" y="284.0" text-anchor="start" class="bx" style="font-size:9.5px">co jest obowiązkowe</text>
+<text x="482.0" y="314.0" text-anchor="start" class="cap" style="fill:#2457D6;font-size:9.3px">utrzymywać:</text>
+<text x="482.0" y="331.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9.3px">zakres SZJ, polityka, cele</text>
+<text x="482.0" y="348.0" text-anchor="start" class="cap" style="fill:#D04C70;font-size:9.3px">zachowywać:</text>
+<text x="482.0" y="365.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9.3px">kalibracje, kompetencje,</text>
+<text x="482.0" y="382.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9.3px">niezgodności, audyty,</text>
+<text x="482.0" y="399.0" text-anchor="start" class="cap" style="fill:#0F1B2D;font-size:9.3px">przeglądy zarządzania</text>
+<text x="482.0" y="416.0" text-anchor="start" class="cap" style="fill:#5A667A;font-size:9.3px">księga — nieobowiązkowa</text>
+</svg>
+<figcaption>Kolejność: piramida, pytania przy poziomach, dokument kontra zapis, przykład na każdym poziomie, metryczka i rewizje, obowiązkowe wymagania normy.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2><span class="num">09</span> Opowiedz własnymi słowami</h2>
+<div class="rail"></div>
+
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-c-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-c-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 30 sekund</span><span class="sub">dla kogoś spoza automatyki</span></summary>
+<div class="tx"><p>„W fabryce, która dba o jakość, dokumenty układają się w piramidę. Na górze zarząd pisze, do czego dąży: na przykład zero reklamacji. Niżej procedury ustalają, kto za co odpowiada. Jeszcze niżej instrukcje mówią pracownikowi przy maszynie, co dokładnie robić. A na samym dole są wypełnione karty z pomiarami — dowód, że tak naprawdę było. Pilnuje się przy tym, żeby przy maszynie leżała zawsze najnowsza wersja instrukcji.”</p></div></details>
+</div>
+
+<div class="chat">
+<div class="mw"><img class="m0" src="assets/meowl-c-idle.svg" alt="" width="76" height="84"><img class="m1" src="assets/meowl-c-say.svg" alt="" width="76" height="84"></div>
+<details class="bub"><summary><span class="tg">Wersja 2 minuty</span><span class="sub">egzaminacyjna</span></summary>
+<div class="tx"><ol>
+<li><strong>Podstawa:</strong> „Dokumentacja SZJ opiera się zwykle na ISO 9001, która mówi o udokumentowanej informacji: dokumenty się utrzymuje, czyli aktualizuje, a zapisy się zachowuje jako dowód.”</li>
+<li><strong>Piramida:</strong> „Poziom 1 to polityka jakości i księga jakości — cele i zakres systemu. Poziom 2 to procedury: kto, co, kiedy, gdzie. Poziom 3 to instrukcje i specyfikacje: jak dokładnie. Poziom 4 to zapisy i formularze: dowód wykonania.”</li>
+<li><strong>Norma:</strong> „Od 2015 roku księga i procedury nie są obowiązkowe. Obowiązkowo udokumentowany musi być zakres systemu, polityka i cele, a do tego szereg zapisów: wzorcowania, kompetencje, niezgodności, audity, przegląd zarządzania. Wydanie 2026 tego nie zmienia.”</li>
+<li><strong>Przykłady:</strong> „W produkcji kluczowe są: procedura nadzoru nad sprzętem pomiarowym, procedura nadzoru nad wyrobem niezgodnym, plan kontroli, instrukcje stanowiskowe i raporty 8D z reklamacji.”</li>
+<li><strong>Nadzór:</strong> „Każdy dokument ma numer, rewizję, datę, autora i zatwierdzającego. Stare wersje się wycofuje, żeby nikt nie pracował według nieaktualnej instrukcji. Zapisów po wypełnieniu się nie zmienia.”</li>
+<li><strong>Pętla:</strong> „Zapisy, np. raport 8D, prowadzą do zmian dokumentów, czyli nowych rewizji instrukcji. Tak system się doskonali w cyklu PDCA.”</li>
+</ol></div></details>
+</div>
+
+<h3>Lista kontrolna przed egzaminem</h3>
+<ul class="check">
+<li>Rysuję piramidę i mówię, na jakie pytanie odpowiada każdy poziom.</li>
+<li>Odróżniam dokument (utrzymywany) od zapisu (zachowywanego).</li>
+<li>Wiem, co zmieniło się w 2015 r. i że od 2026 obowiązuje nowe wydanie.</li>
+<li>Podaję co najmniej pięć dokumentów z produkcji i ich poziom.</li>
+<li>Opowiadam przykład jednego wymogu przez cztery poziomy.</li>
+<li>Opisuję nadzór: metryczka, zatwierdzenie, dystrybucja, wycofanie.</li>
+</ul>
+</section>
+
+<section>
+<h2><span class="num">10</span> Ściąga</h2>
+<div class="rail"></div>
+<div class="karty">
+<div class="karta"><span class="kw">Podstawa</span><p>ISO 9001: udokumentowana informacja, w dowolnej postaci, także cyfrowej.</p></div>
+<div class="karta s"><span class="kw">Dokument a zapis</span><p>Utrzymywać (jak ma być, rewizje) / zachowywać (jak było, bez zmian).</p></div>
+<div class="karta k"><span class="kw">1 · polityka i księga</span><p>Dlaczego: cele, zakres SZJ, mapa procesów.</p></div>
+<div class="karta b"><span class="kw">2 · procedury</span><p>Kto, co, kiedy, gdzie — między działami.</p></div>
+<div class="karta a"><span class="kw">3 · instrukcje</span><p>Jak dokładnie — stanowisko, parametry, plan kontroli, rysunki.</p></div>
+<div class="karta s"><span class="kw">4 · zapisy</span><p>Dowód — karty kontroli, wzorcowania, raporty 8D, audity.</p></div>
+<div class="karta"><span class="kw">Obowiązkowe</span><p>Zakres, polityka, cele + zapisy (7.1.5, 7.2, 8.6, 8.7, 9.2, 9.3, 10.2). Księga — nie.</p></div>
+<div class="karta a"><span class="kw">Produkcja</span><p>Sprzęt pomiarowy, wyrób niezgodny, plan kontroli, instrukcje, 8D/A3.</p></div>
+<div class="karta b"><span class="kw">Nadzór</span><p>Numer, rewizja, data, autor, zatwierdzający; wycofać stare wersje.</p></div>
+<div class="karta k"><span class="kw">Normy</span><p>2008: księga + 6 procedur; 2015: bez obowiązku; 2026: ciągłość, 3 lata przejścia.</p></div>
+</div>
+</section>
+
+<section>
+<h2><span class="num">11</span> Pytania dodatkowe — fiszki</h2>
+<div class="rail"></div>
+
+<details class="fiszka"><summary>Czym różni się procedura od instrukcji?</summary>
+<p>Procedura opisuje przebieg procesu, często przez kilka działów: kto, co, kiedy i gdzie robi, np. nadzór nad wyrobem niezgodnym od wykrycia do decyzji. Instrukcja opisuje jedną czynność na jednym stanowisku, krok po kroku, np. jak zmierzyć średnicę i co zrobić, gdy jest poza tolerancją. Procedura odwołuje się do instrukcji, nie odwrotnie.</p></details>
+
+<details class="fiszka"><summary>Czym jest polityka jakości, a czym cele jakości?</summary>
+<p>Polityka to krótka deklaracja zarządu o kierunku, np. „zgodność z wymaganiami klienta i ciągłe doskonalenie”. Cele są mierzalne i mają termin, np. „reklamacje poniżej 50 ppm w 2027 r.”. ISO 9001 wymaga, żeby cele były spójne z polityką, monitorowane i udokumentowane.</p></details>
+
+<details class="fiszka"><summary>Co to jest przegląd zarządzania?</summary>
+<p>Okresowe (zwykle raz w roku) spotkanie najwyższego kierownictwa, które ocenia system jakości: wyniki auditów, reklamacje, realizację celów, działania korygujące, ryzyka i potrzebne zasoby. Jego wynikiem są decyzje, np. zmiana celów lub inwestycje. Protokół z przeglądu jest obowiązkowym zapisem (9.3).</p></details>
+
+<details class="fiszka"><summary>Jak dokumentacja jakości łączy się z automatyką?</summary>
+<p>W nowoczesnym zakładzie wiele zapisów powstaje automatycznie: pomiary z czujników na linii trafiają do systemu MES lub SCADA, a karty kontroli są elektroniczne (zagadnienia 22 i 32). Taki system musi spełniać te same wymagania: identyfikowalność, ochronę przed zmianą danych, kopie zapasowe i nadzór nad wersjami oprogramowania i receptur.</p></details>
+
+<details class="fiszka"><summary>Co to jest działanie korygujące, a co korekcja?</summary>
+<p>Korekcja usuwa skutek: posortować partię, wyrzucić wadliwe sztuki. Działanie korygujące usuwa przyczynę, żeby niezgodność się nie powtórzyła: zmiana instrukcji, nowe narzędzie, szkolenie. Raport 8D wymaga obu: D3 to korekcja, D4–D7 to działania korygujące.</p></details>
+</section>
+
+
+
+<footer>
+  <p><strong style="color:var(--ink)">Źródła</strong></p>
+  <ol class="zr">
+<li>M. Kędzia, <em>26. Dokumenty w systemie zarządzania jakością</em> — 2-stronicowa notatka studencka (plik <code style="word-break:break-all">26_dokumenty_system_zarządzania_jakością.pdf</code>, skan bez warstwy tekstu): piramida dokumentacji, typowe dokumenty w produkcji, nadzór nad udokumentowaną informacją. Na niej opiera się układ strony.</li>
+<li>ISO 9001:2015 <em>Systemy zarządzania jakością — Wymagania</em> — udokumentowana informacja (7.5), wymagania „utrzymywać” i „zachowywać”; zestawienie: <a href="https://www.glocertinternational.com/resources/articles/iso-9001-required-documented-information/">GLOCERT, ISO 9001 required documented information</a>.</li>
+<li>ISO 9001:2026 — status i data publikacji: <a href="https://www.iso.org/standard/9001">ISO, ISO 9001:2026</a>; zmiany i okres przejściowy: <a href="https://www.iso.org/quality-management/iso-9001-2026">ISO, ISO 9001:2026 — What businesses need to know</a>; <a href="https://www.edms-consultants.com/iso-90012026-is-published-what-the-sixth-edition-changes-for-document-control/">EDMS Consultants, What the sixth edition changes for document control</a>.</li>
+<li>Uzupełnienia z literatury, oznaczone w tekście: wymagania ISO 9001:2008 (księga i 6 procedur), IATF 16949 (plan kontroli, przechowywanie zapisów), metoda 8D, korekcja a działanie korygujące.</li>
+<li>Przykład tulei (instrukcja IS-07, karta KK-07, procedura P-08, raport NC-112, plan kontroli) jest własny.</li>
+</ol>
+
+  <p class="backfoot"><a href="index.html">&larr; Wróć do listy zagadnień</a></p>
+</footer>
+
+</div>
+<script src="assets/pytania.js"></script>
+<script src="assets/nav.js" defer></script>
+<script src="assets/meowl-egg.js" defer></script>
+</body>
+</html>

@@ -9,6 +9,36 @@
     "h": 90,
     "page": "pytanie_02_metoda_najmniejszych_kwadratow.html"
   },
+  "3": {
+    "t": "Modele rozmyte lingwistyczne",
+    "h": 20,
+    "page": "pytanie_03_modele_rozmyte_lingwistyczne.html"
+  },
+  "4": {
+    "t": "Modele neuronowe",
+    "h": 120,
+    "page": "pytanie_04_modele_neuronowe.html"
+  },
+  "5": {
+    "t": "Sterowalność i obserwowalność",
+    "h": 170,
+    "page": "pytanie_05_sterowalnosc_obserwowalnosc.html"
+  },
+  "6": {
+    "t": "Sprzężenie od stanu, alokacja biegunów",
+    "h": 215,
+    "page": "pytanie_06_sprzezenie_od_stanu.html"
+  },
+  "7": {
+    "t": "Sprzężenie od stanu z całkowaniem",
+    "h": 255,
+    "page": "pytanie_07_dzialanie_calkujace.html"
+  },
+  "8": {
+    "t": "Obserwatory stanu",
+    "h": 300,
+    "page": "pytanie_08_obserwatory.html"
+  },
   "20": {
     "t": "EKF a filtr Kalmana",
     "h": 0,
