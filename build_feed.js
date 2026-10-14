@@ -9,9 +9,9 @@ const FIELDS = {
   fakt: ['tytul', 'tresc'], fiszka: ['pytanie', 'odpowiedz'], dopytka: ['pytanie', 'odpowiedz'],
   pf: ['twierdzenie', 'prawda', 'wyjasnienie'], luka: ['zdanie', 'opcje', 'poprawna', 'wyjasnienie'],
   porownanie: ['tytul', 'kolumny', 'wiersze'], kroki: ['tytul', 'kroki', 'wyjasnienie'],
-  zapamietaj: ['haslo', 'rozwiniecie']
+  zapamietaj: ['haslo', 'rozwiniecie'], schemat: ['svg']
 };
-const SOFT = { tresc: 420, analogia: 200, odpowiedz: 520, wyjasnienie: 360, rozwiniecie: 260, haslo: 110, zdanie: 220, twierdzenie: 200, pytanie: 160 };
+const SOFT = { tresc: 420, analogia: 200, odpowiedz: 520, wyjasnienie: 360, rozwiniecie: 260, haslo: 110, zdanie: 220, twierdzenie: 200, pytanie: 160, podpis: 190, opis: 320 };
 const errs = [], warns = [], ids = new Set(), cards = [];
 
 const files = fs.readdirSync(cdir).filter(f => /^q\d+\.json$/.test(f)).sort();
@@ -27,6 +27,14 @@ for (const f of files) {
     if (!FIELDS[c.typ]) { errs.push(`${w}: nieznany typ ${c.typ}`); continue; }
     if (![1, 2, 3].includes(c.poziom)) errs.push(`${w}: poziom 1–3`);
     if (!c.zrodlo) errs.push(`${w}: brak zrodlo`);
+    if (c.typ === 'schemat' && !(c.tytul || c.pytanie)) errs.push(`${w}: schemat wymaga tytul albo pytanie`);
+    if (c.svg !== undefined) {
+      if (!/^<svg[^>]*viewBox="[^"]+"/.test(c.svg) || !/<\/svg>$/.test(c.svg)) errs.push(`${w}: svg musi zaczynać się od <svg viewBox=…> i kończyć </svg>`);
+      if (/<script|\son\w+\s*=|href\s*=|<image|<foreignObject/i.test(c.svg)) errs.push(`${w}: svg zawiera zabronione elementy`);
+    }
+    const czN = meta[q] && meta[q].cz ? meta[q].cz.length : 0;
+    if (czN && !(Number.isInteger(c.cz) && c.cz >= 1 && c.cz <= czN)) errs.push(`${w}: cz musi być 1–${czN}`);
+    if (!czN && c.cz !== undefined) errs.push(`${w}: cz bez definicji części w _meta`);
     for (const k of FIELDS[c.typ]) if (c[k] === undefined || c[k] === '') errs.push(`${w}: brak pola ${k}`);
     if (c.typ === 'pf' && typeof c.prawda !== 'boolean') errs.push(`${w}: prawda musi być boolean`);
     if (c.typ === 'luka' && !(Array.isArray(c.opcje) && c.opcje.length >= 2 && Number.isInteger(c.poprawna) && c.poprawna >= 0 && c.poprawna < c.opcje.length)) errs.push(`${w}: opcje/poprawna`);
@@ -42,7 +50,7 @@ warns.forEach(w => console.log('uwaga:', w));
 if (errs.length) { errs.forEach(e => console.log('BŁĄD:', e)); process.exit(1); }
 
 const qs = Object.keys(meta).map(Number).sort((a, b) => a - b);
-const topics = qs.map(q => `  ${q}:{t:${JSON.stringify(meta[q].t)},h:${meta[q].h}}`).join(',\n');
+const topics = qs.map(q => `  ${q}:{t:${JSON.stringify(meta[q].t)},h:${meta[q].h}${meta[q].cz ? ',cz:' + JSON.stringify(meta[q].cz) : ''}}`).join(',\n');
 const pages = '{' + qs.map(q => `${q}:${JSON.stringify(meta[q].page)}`).join(',') + '}';
 const block = `/*CARDS:BEGIN*/\nconst CARDS = [\n${cards.map(c => JSON.stringify(c)).join(',\n')}\n];\nconst TOPICS = {\n${topics}\n};\nconst PAGES = ${pages};\n/*CARDS:END*/`;
 

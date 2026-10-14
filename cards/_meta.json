@@ -2,27 +2,54 @@
  "1": {
   "t": "Technologie modelowania: wiedza i dane",
   "h": 60,
-  "page": "pytanie_01_technologie_modelowania.html"
+  "page": "pytanie_01_technologie_modelowania.html",
+  "cz": [
+   "Charakterystyka obu technologii",
+   "Związki między nimi",
+   "Kroki budowy modeli"
+  ]
  },
  "2": {
   "t": "Metoda najmniejszych kwadratów",
   "h": 90,
-  "page": "pytanie_02_metoda_najmniejszych_kwadratow.html"
+  "page": "pytanie_02_metoda_najmniejszych_kwadratow.html",
+  "cz": [
+   "MNK w identyfikacji parametrów",
+   "Odmiany MNK",
+   "Algorytmy znajdowania estymat"
+  ]
  },
  "3": {
   "t": "Modele rozmyte lingwistyczne",
   "h": 20,
-  "page": "pytanie_03_modele_rozmyte_lingwistyczne.html"
+  "page": "pytanie_03_modele_rozmyte_lingwistyczne.html",
+  "cz": [
+   "Struktury",
+   "Uproszczone wnioskowanie Mamdaniego",
+   "Rozmywanie",
+   "Wyostrzanie"
+  ]
  },
  "4": {
   "t": "Modele neuronowe",
   "h": 120,
-  "page": "pytanie_04_modele_neuronowe.html"
+  "page": "pytanie_04_modele_neuronowe.html",
+  "cz": [
+   "Struktury jednokierunkowe",
+   "Struktury rekurencyjne",
+   "Uczenie relacji wejście–wyjście"
+  ]
  },
  "5": {
   "t": "Sterowalność i obserwowalność",
   "h": 170,
-  "page": "pytanie_05_sterowalnosc_obserwowalnosc.html"
+  "page": "pytanie_05_sterowalnosc_obserwowalnosc.html",
+  "cz": [
+   "Sterowalność, obserwowalność",
+   "Badanie",
+   "Znaczenie w alokacji biegunów",
+   "Znaczenie w konstrukcji obserwatorów"
+  ]
  },
  "6": {
   "t": "Sprzężenie od stanu, alokacja biegunów",
