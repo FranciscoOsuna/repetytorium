@@ -1,0 +1,37 @@
+const { build, F, S, sv, fa, fi, dp, pf, lu, za, kr, po } = require('./lib');
+build(25, 4, [
+  [1, [
+    fa(1, 1, 'sekcja 02', 'Projekt i proces', 'Projekt to przedsięwzięcie tymczasowe (ma początek i koniec), które daje unikalny rezultat. Proces w zarządzaniu projektem to powtarzalna czynność z wejściami, narzędziami i wyjściami, np. opracuj harmonogram: wejście to lista zadań i czasy, narzędzie metoda ścieżki krytycznej, wyjście harmonogram.'),
+    S(2, 1, 'sekcja 02', { tytul: 'Trójkąt ograniczeń', svg: F('fig25.trojkat'), opis: 'Zakres, czas i koszt ograniczają się nawzajem, a pośrodku jest jakość. Nie da się zmienić jednego boku bez wpływu na pozostałe.' }),
+    S(3, 1, 'sekcja 03', { pytanie: 'Wymień pięć grup procesów zarządzania projektem.', svg: F('fig25.grupy'), odpowiedz: 'Inicjowanie, planowanie, realizacja, monitorowanie i kontrola oraz zamykanie.' }),
+    po(4, 2, 'sekcja 03', 'Grupy procesów: cel i rezultat', ['Cel', 'Typowe rezultaty'], [['Inicjowanie', 'zdefiniować, uzasadnić i zatwierdzić projekt', 'karta projektu, lista interesariuszy'], ['Planowanie', 'zakres, harmonogram, budżet, ryzyka, jakość', 'plan, WBS, Gantt, rejestr ryzyk'], ['Realizacja', 'przydzielić zasoby i wykonać prace', 'produkty cząstkowe, raporty'], ['Monitorowanie i kontrola', 'śledzić odchylenia od planu bazowego', 'wnioski o zmianę, aktualizacje'], ['Zamykanie', 'zakończyć formalnie i przekazać produkt', 'protokół odbioru, lessons learned']]),
+    dp(5, 2, 'sekcja 01', 'Dlaczego monitorowanie i kontrola nie jest osobnym etapem?', 'To pętla sprzężenia zwrotnego, która przez cały projekt porównuje wykonanie z planem i wprowadza korekty. Obejmuje planowanie i realizację.'),
+    dp(6, 3, 'sekcja 02', 'Czym grupa procesów różni się od fazy projektu?', 'Projekt ma fazy (np. projekt techniczny, dostawa, uruchomienie), a w każdej fazie działają wszystkie pięć grup: fazę się inicjuje, planuje, realizuje, kontroluje i zamyka.'),
+    pf(7, 1, 'sekcja 03', 'Planowanie ma najwięcej procesów, bo każdy obszar trzeba osobno zaplanować.', true, 'Dlatego planowanie dotyczy wszystkich obszarów wiedzy.'),
+    lu(8, 1, 'sekcja 03', 'Zatwierdzona wersja planu, z którą porównuje się wykonanie, to plan ___.', ['bazowy', 'ramowy', 'wstępny'], 0, 'Odchylenia mierzy się względem planu bazowego.')]],
+  [2, [
+    fi(9, 1, 'sekcja 04', 'Wymień obszary wiedzy w zarządzaniu projektem.', 'Zakres, harmonogram, koszty, ryzyko, jakość oraz pozostałe z dziesięciu: integracja, zasoby, komunikacja, zamówienia, interesariusze.'),
+    po(10, 2, 'sekcja 04', 'Obszary i narzędzia', ['O co chodzi', 'Narzędzie'], [['Zakres', 'wymagania, pilnowanie scope creep', 'WBS'], ['Harmonogram', 'kolejność, czasy, termin końcowy', 'CPM, Gantt'], ['Koszty', 'budżet i kontrola wydatków', 'EVM'], ['Ryzyko', 'zagrożenia, prawdopodobieństwo i skutek', 'rejestr, macierz P × wpływ'], ['Jakość', 'spełnienie norm i wymagań', 'plan jakości, testy FAT, SAT']]),
+    fa(11, 2, 'sekcja 04', 'Scope creep', 'Rozrastanie się projektu drobnymi dodatkami przy okazji. Chroni przed nim WBS i zarządzanie zmianą.'),
+    fa(12, 2, 'sekcja 04', 'Liczby PMBOK 6', 'Pięć grup × dziesięć obszarów wiedzy daje 49 procesów, a każdy proces należy do dokładnie jednej grupy i jednego obszaru.'),
+    S(13, 1, 'sekcja 04', { pytanie: 'Wymień cztery reakcje na ryzyko i podaj przykład dla spóźnionego dostawcy.', svg: F('fig25.ryzyko'), odpowiedz: 'Unikanie: zamówić sprzęt od razu po analizie. Przeniesienie: kara umowna dla dostawcy. Ograniczenie: drugi dostawca w zapasie. Akceptacja: świadomie, z rezerwą czasu albo budżetu.' }),
+    pf(14, 2, 'sekcja 04', 'Przeniesienie ryzyka oznacza, że ryzyko znika.', false, 'Skutki przenosi się na kogoś innego, np. karą umowną. Ryzyko zniknąć może tylko przy unikaniu.')]],
+  [3, [
+    fa(15, 1, 'sekcja 05', 'Ścieżka krytyczna', 'Łańcuch zadań z zapasem 0. Opóźnienie dowolnego z nich o tydzień opóźnia cały projekt o tydzień. W przykładzie: A–B–D–F–G–H.'),
+    S(16, 1, 'sekcja 05', { tytul: 'Sieć zadań i ścieżka krytyczna', svg: F('fig25.siec'), opis: 'Osiem zadań WBS z czasami w tygodniach. Zadania C i E mają po tygodniu zapasu, reszta leży na ścieżce krytycznej.' }),
+    kr(17, 2, 'sekcja 05', 'Wyznaczanie ścieżki krytycznej', ['Rozpisać zadania i zależności (WBS, poprzedniki)', 'Przejście w przód: ES i EF, zadanie startuje po wszystkich poprzednikach', 'Przejście wstecz: LF i LS od końca projektu', 'Zapas = LS − ES', 'Ścieżka krytyczna: zadania z zapasem 0'], 'W przykładzie projekt kończy się w 17. tygodniu.'),
+    dp(18, 3, 'sekcja 05', 'Policz zapas zadania C z przykładu.', 'Dostawa: czas 6, ES = 3 (po A), EF = 9. Następniki: E (LS = 10) i F (LS = 12), więc LF = 10, LS = 4. Zapas = 4 − 3 = 1 tydzień.'),
+    dp(19, 3, 'sekcja 05', 'Dlaczego F startuje w 12. tygodniu, choć sprzęt jest od 9.?', 'Zadanie startuje dopiero po wszystkich poprzednikach. F czeka na program PLC (D), który kończy się w 12. tygodniu.'),
+    fi(20, 3, 'sekcja 06', 'Co się stanie, gdy dostawa sprzętu wydłuży się do 7 tygodni, a co powyżej?', 'Do 7 tygodni nic, bo C ma tydzień zapasu. Przy 7 obie gałęzie są krytyczne naraz. Każdy kolejny tydzień przesuwa koniec projektu, a ścieżka krytyczna przechodzi na A–C–E–G–H. Skrócenie programu PLC wtedy nie pomaga.'),
+    fa(21, 2, 'sekcja 05', 'Narzędzia planowania', 'WBS dzieli zakres na coraz mniejsze pakiety prac. CPM wyznacza ścieżkę krytyczną. Wykres Gantta pokazuje harmonogram w czasie.'),
+    lu(22, 1, 'sekcja 05', 'Zadanie o zapasie równym ___ leży na ścieżce krytycznej.', ['zero', 'jeden', 'dwa'], 0, 'Każde jego opóźnienie przesuwa koniec projektu.')]],
+  [4, [
+    S(23, 1, 'sekcja 07', { tytul: 'Wartość wypracowana: PV, EV, AC', svg: F('fig25.evm'), opis: 'W 10. tygodniu: PV 123, EV 106, AC 118 tys. zł, BAC 180 tys. zł. Samo porównanie wydatków z planem nic nie mówi, trzeba zestawić trzy liczby.' }),
+    po(24, 2, 'sekcja 07', 'Symbole EVM', ['Znaczenie', 'Przykład'], [['PV', 'wartość planowana', '123 tys. zł'], ['EV', 'wartość wypracowana (po cenach planu)', '106 tys. zł'], ['AC', 'koszt rzeczywisty', '118 tys. zł'], ['BAC', 'budżet całkowity', '180 tys. zł']]),
+    dp(25, 3, 'sekcja 07', 'Policz SPI, CPI i EAC z przykładu.', 'SPI = EV/PV = 106/123 ≈ 0,86: opóźnienie. CPI = EV/AC = 106/118 ≈ 0,90: drożej niż planowano. EAC = BAC/CPI ≈ 180/0,90 ≈ 200 tys. zł.'),
+    fa(26, 2, 'sekcja 07', 'Jak czytać wskaźniki', 'Wskaźnik poniżej 1 albo odchylenie ujemne jest złe. SPI 0,86 znaczy 86% planowanej pracy. CPI 0,90 znaczy 90 groszy pracy za złotówkę.'),
+    fa(27, 2, 'sekcja 07', 'Wniosek o zmianę', 'Plan nie zmienia się po cichu. Ocenia się wpływ zmiany na zakres, czas, koszt i ryzyko, decyduje sponsor albo komitet sterujący, a dopiero zatwierdzona zmiana trafia do planu bazowego.'),
+    fi(28, 2, 'sekcja 08', 'Wymień inne ujęcia zarządzania projektem.', 'PMBOK 6: 5 grup × 10 obszarów = 49 procesów. PMBOK 7 (2021): 12 zasad i 8 domen, bez procesów. PMBOK 8 (XI 2025): 6 zasad, 7 domen, około 40 procesów. PRINCE2: 7 procesów. Scrum: sprinty.'),
+    dp(29, 2, 'sekcja 08', 'Czym podejście zwinne różni się od kaskady?', 'W kaskadzie wynik widać dopiero na końcu. W Scrumie planowanie, realizacja i kontrola powtarzają się w krótkich sprintach, każdy kończy się działającym przyrostem, a backlog można zmieniać między sprintami.'),
+    fa(30, 3, 'sekcja 08', 'Związek z modelem V', 'Lewe ramię (wymagania, projekt, implementacja) to procesy planowania i realizacji zakresu, prawe (testy jednostkowe, integracyjne, odbiorcze FAT i SAT) to kontrola jakości.')]]
+]);

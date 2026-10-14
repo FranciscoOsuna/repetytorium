@@ -84,52 +84,118 @@
  "13": {
   "t": "Schemat i parametry AG",
   "h": 10,
-  "page": "pytanie_13_ag_schemat_parametry.html"
+  "page": "pytanie_13_ag_schemat_parametry.html",
+  "cz": [
+   "Schemat i pojęcia",
+   "Eksploracja–eksploatacja",
+   "Parametry",
+   "Zbieżność i dobór"
+  ]
  },
  "20": {
   "t": "EKF a filtr Kalmana",
   "h": 0,
-  "page": "pytanie_20_ekf.html"
+  "page": "pytanie_20_ekf.html",
+  "cz": [
+   "Podobieństwa",
+   "Różnice",
+   "Zastosowania"
+  ]
  },
  "21": {
   "t": "Komunikacja w systemach rozproszonych",
   "h": 195,
-  "page": "pytanie_21_komunikacja.html"
+  "page": "pytanie_21_komunikacja.html",
+  "cz": [
+   "Wymagania",
+   "Poziomy i model OSI",
+   "Metody dostępu",
+   "Topologie i sieci",
+   "Wpływ na regulację"
+  ]
  },
  "27": {
   "t": "PCA w diagnostyce",
   "h": 325,
-  "page": "pytanie_27_model_pca_diagnostyka.html"
+  "page": "pytanie_27_model_pca_diagnostyka.html",
+  "cz": [
+   "Po co i idea PCA",
+   "Algorytm budowy (11 kroków)",
+   "Przykład: dwa termometry",
+   "Diagnostyka: T² i SPE",
+   "Izolacja i ograniczenia"
+  ]
  },
  "30": {
   "t": "Samoorganizacja sieci",
   "h": 75,
-  "page": "pytanie_30_samoorganizacja.html"
+  "page": "pytanie_30_samoorganizacja.html",
+  "cz": [
+   "Podstawy i lista mechanizmów",
+   "Konkurencja i adaptacja",
+   "Sąsiedztwo i malejące parametry",
+   "Martwe neurony",
+   "Skutki i zastosowania"
+  ]
  },
  "31": {
   "t": "Kernel PCA",
   "h": 150,
-  "page": "pytanie_31_kernel_pca.html"
+  "page": "pytanie_31_kernel_pca.html",
+  "cz": [
+   "Idea i sztuczka jądra",
+   "Algorytm budowy modelu",
+   "Przykład liczbowy",
+   "Porównanie z PCA",
+   "Monitoring i dobór σ, L"
+  ]
  },
  "40": {
   "t": "Filtr Kalmana w sterowaniu",
   "h": 235,
-  "page": "pytanie_40_filtr_kalmana.html"
+  "page": "pytanie_40_filtr_kalmana.html",
+  "cz": [
+   "Filtr Kalmana",
+   "Strojenie Q i R",
+   "Struktura sprzężenia i LQG",
+   "Pozostałe zastosowania"
+  ]
  },
  "44": {
   "t": "Analiza wrażliwości w LP",
   "h": 45,
-  "page": "pytanie_44_wrazliwosc.html"
+  "page": "pytanie_44_wrazliwosc.html",
+  "cz": [
+   "Istota i cele",
+   "Zadanie bazowe",
+   "Zmiana cⱼ i bᵢ",
+   "Nowa zmienna i technologia",
+   "Raport wrażliwości"
+  ]
  },
  "47": {
   "t": "Predykat, reguła, klauzula",
   "h": 275,
-  "page": "pytanie_47_predykat_reguly_klauzule.html"
+  "page": "pytanie_47_predykat_reguly_klauzule.html",
+  "cz": [
+   "Predykat",
+   "Reguła produkcji",
+   "Reguła decyzyjna",
+   "Klauzula",
+   "Porównanie pojęć"
+  ]
  },
  "48": {
   "t": "Wnioskowanie w przód i wstecz",
   "h": 340,
-  "page": "pytanie_48_wnioskowanie.html"
+  "page": "pytanie_48_wnioskowanie.html",
+  "cz": [
+   "Podstawy i modus ponens",
+   "Wnioskowanie w przód",
+   "Wnioskowanie wstecz",
+   "Porównanie kierunków",
+   "Odmiany baz i wiedza niepewna"
+  ]
  },
  "9": {
   "t": "Algorytmy optymalizacji nieliniowej",
@@ -151,6 +217,346 @@
    "Rodzaje funkcji kary",
    "Algorytm metody",
    "Przykład, zastosowania i ograniczenia"
+  ]
+ },
+ "11": {
+  "t": "Algorytm genetyczny z ograniczeniami",
+  "h": 30,
+  "page": "pytanie_11_ag_ograniczenia.html",
+  "cz": [
+   "Po co AG do zadań z ograniczeniami i na czym polega kłopot",
+   "Sposoby obsługi ograniczeń",
+   "Pułapki: współczynnik kary i kara śmierci",
+   "Zalety, wady, praktyka"
+  ]
+ },
+ "12": {
+  "t": "Optymalizacja wielokryterialna",
+  "h": 165,
+  "page": "pytanie_12_wielokryterialna.html",
+  "cz": [
+   "Sformułowanie zadania",
+   "Metody poszukiwania zbioru Pareto",
+   "Front niewypukły i metody ewolucyjne",
+   "Wybór rozwiązania"
+  ]
+ },
+ "14": {
+  "t": "Kodowanie i operatory genetyczne",
+  "h": 185,
+  "page": "pytanie_14_kodowanie_operatory.html",
+  "cz": [
+   "Kodowanie",
+   "Operatory krzyżowania",
+   "Operatory mutacji",
+   "Zgodność kodowania i operatorów"
+  ]
+ },
+ "15": {
+  "t": "Struktury i mechanizmy wnioskowania systemów rozmytych",
+  "h": 205,
+  "page": "pytanie_15_systemy_rozmyte.html",
+  "cz": [
+   "Struktury systemów rozmytych",
+   "Mechanizm wnioskowania",
+   "Wybory projektanta i Takagi–Sugeno"
+  ]
+ },
+ "16": {
+  "t": "Struktury i metody uczenia sieci neuronowych",
+  "h": 225,
+  "page": "pytanie_16_sieci_neuronowe.html",
+  "cz": [
+   "Neuron i struktury sieci",
+   "Rodzaje uczenia",
+   "Uczenie z nauczycielem",
+   "Organizacja uczenia, dane i przeuczenie"
+  ]
+ },
+ "17": {
+  "t": "Filtry cyfrowe: opis, właściwości, zastosowania",
+  "h": 245,
+  "page": "pytanie_17_filtry_cyfrowe.html",
+  "cz": [
+   "Opis filtrów",
+   "Właściwości i projektowanie",
+   "Zastosowania i filtr w sterowaniu"
+  ]
+ },
+ "18": {
+  "t": "Sterowanie obiektami z opóźnieniem",
+  "h": 265,
+  "page": "pytanie_18_opoznienia.html",
+  "cz": [
+   "Problem opóźnienia",
+   "Metody sterowania",
+   "Porównanie i odporność"
+  ]
+ },
+ "19": {
+  "t": "Zalety cyfrowego przetwarzania sygnałów",
+  "h": 285,
+  "page": "pytanie_19_zalety_cyfrowego.html",
+  "cz": [
+   "Czym jest CPS i jak działa",
+   "Zalety",
+   "Ograniczenia i zastosowania"
+  ]
+ },
+ "22": {
+  "t": "Struktura funkcjonalna i sprzętowa systemów automatyki",
+  "h": 310,
+  "page": "pytanie_22_struktura_automatyki.html",
+  "cz": [
+   "Struktura funkcjonalna",
+   "Struktura sprzętowa",
+   "Sterownik PLC i przykład",
+   "Architektury sprzętowe"
+  ]
+ },
+ "23": {
+  "t": "Elementy technologii sterowania predykcyjnego",
+  "h": 350,
+  "page": "pytanie_23_sterowanie_predykcyjne.html",
+  "cz": [
+   "Idea i definicja",
+   "Model i funkcja celu",
+   "Ograniczenia i optymalizacja",
+   "Estymator i przesuwany horyzont"
+  ]
+ },
+ "24": {
+  "t": "Rozproszone i wieloagentowe struktury sterowania",
+  "h": 37,
+  "page": "pytanie_24_wieloagentowe.html",
+  "cz": [
+   "Struktury rozproszone",
+   "Przykład: co daje wymiana danych",
+   "Systemy wieloagentowe",
+   "Współpraca i zastosowania"
+  ]
+ },
+ "25": {
+  "t": "Procesy w zarządzaniu projektem",
+  "h": 67,
+  "page": "pytanie_25_zarzadzanie_projektem.html",
+  "cz": [
+   "Pojęcia i grupy procesów",
+   "Obszary wiedzy i ryzyko",
+   "Harmonogram i ścieżka krytyczna",
+   "Kontrola, EVM i inne ujęcia"
+  ]
+ },
+ "26": {
+  "t": "Dokumenty systemu zarządzania jakością",
+  "h": 97,
+  "page": "pytanie_26_dokumenty_szj.html",
+  "cz": [
+   "SZJ i udokumentowana informacja",
+   "Piramida i wymagania normy",
+   "Typowe dokumenty w zakładzie",
+   "Nadzór nad dokumentami"
+  ]
+ },
+ "28": {
+  "t": "SVM i klasyfikacja",
+  "h": 127,
+  "page": "pytanie_28_svm.html",
+  "cz": [
+   "Idea: najszersza ulica",
+   "Matematyka metody",
+   "Miękki margines i jądro",
+   "Dobór parametrów",
+   "Zastosowanie do klasyfikacji"
+  ]
+ },
+ "29": {
+  "t": "Sterowanie tolerujące uszkodzenia (FTC)",
+  "h": 157,
+  "page": "pytanie_29_ftc.html",
+  "cz": [
+   "Po co i definicja",
+   "Struktura i droga pasywna/aktywna",
+   "Etapy i redundancja",
+   "Akomodacja, rekonfiguracja, zmiana celu",
+   "Przykład: dwa zbiorniki"
+  ]
+ },
+ "32": {
+  "t": "Hierarchiczny warstwowy model systemu sterowania",
+  "h": 182,
+  "page": "pytanie_32_model_warstwowy.html",
+  "cz": [
+   "Idea i model",
+   "Warstwy",
+   "Skale czasu i przykład",
+   "Realizacja i niezawodność"
+  ]
+ },
+ "33": {
+  "t": "Budowa zdecentralizowanego rozproszonego systemu sterowania",
+  "h": 212,
+  "page": "pytanie_33_budowa_systemu.html",
+  "cz": [
+   "Proces budowy i wymagania",
+   "Dekompozycja i RGA",
+   "Struktura i realizacja",
+   "Testy i uruchomienie"
+  ]
+ },
+ "34": {
+  "t": "Realizacja regulatora predykcyjnego w systemie sterowania",
+  "h": 237,
+  "page": "pytanie_34_realizacja_mpc.html",
+  "cz": [
+   "Gdzie umieścić algorytm",
+   "Architektura i kaskada",
+   "Cykl jednej próbki",
+   "Niezawodność i tryby"
+  ]
+ },
+ "35": {
+  "t": "Zadania SWD i współpraca z KSS",
+  "h": 257,
+  "page": "pytanie_35_swd_i_kss.html",
+  "cz": [
+   "Zadania SWD i obiekt",
+   "Model współpracy",
+   "Przebieg decyzji i tryby",
+   "Optymalizacja w SWD"
+  ]
+ },
+ "36": {
+  "t": "Algorytm Dantziga–Wolfe’a w hierarchicznym SWD",
+  "h": 277,
+  "page": "pytanie_36_dantzig_wolfe.html",
+  "cz": [
+   "Zadanie blokowe i idea",
+   "Realizacja i algorytm",
+   "Przykład i zbieżność",
+   "Warianty i ocena"
+  ]
+ },
+ "37": {
+  "t": "Sterowanie ślizgowe",
+  "h": 297,
+  "page": "pytanie_37_sterowanie_slizgowe.html",
+  "cz": [
+   "Idea i powierzchnia ślizgu",
+   "Prawo sterowania i niezmienniczość",
+   "Chattering i warstwa graniczna",
+   "Realizacja cyfrowa i rozwinięcia",
+   "Obszary zastosowania"
+  ]
+ },
+ "38": {
+  "t": "Pośrednie sterowanie adaptacyjne",
+  "h": 317,
+  "page": "pytanie_38_posrednie_sterowanie_adaptacyjne.html",
+  "cz": [
+   "Po co adaptacja i struktura",
+   "Identyfikator i synteza",
+   "Zabezpieczenia",
+   "Rodzina i zastosowania"
+  ]
+ },
+ "39": {
+  "t": "Linearyzacja przez sprzężenie zwrotne",
+  "h": 5,
+  "page": "pytanie_39_linearyzacja.html",
+  "cz": [
+   "Idea i warunki",
+   "Obiekt deterministyczny",
+   "Obiekt z niepewnością",
+   "Obszary zastosowania"
+  ]
+ },
+ "41": {
+  "t": "Sterowanie inteligentne: sieci dynamiczne i Takagi–Sugeno",
+  "h": 15,
+  "page": "pytanie_41_sterowanie_inteligentne.html",
+  "cz": [
+   "Idea",
+   "Dynamiczne sieci neuronowe",
+   "Struktury z siecią",
+   "Model Takagi–Sugeno",
+   "Sterowanie z TS",
+   "ANFIS"
+  ]
+ },
+ "42": {
+  "t": "Proces decyzyjny i system wspomagania decyzji",
+  "h": 25,
+  "page": "pytanie_42_proces_decyzyjny.html",
+  "cz": [
+   "Proces decyzyjny",
+   "Elementy niezbędne",
+   "Warunki i model",
+   "SWD: funkcje",
+   "SWD: idea i architektura"
+  ]
+ },
+ "43": {
+  "t": "Wieloatrybutowe zagadnienia decyzyjne",
+  "h": 52,
+  "page": "pytanie_43_wieloatrybutowe.html",
+  "cz": [
+   "Charakterystyka",
+   "Podział metod",
+   "AHP: hierarchia i porównania",
+   "AHP: wagi i spójność",
+   "AHP: synteza",
+   "ELECTRE I"
+  ]
+ },
+ "45": {
+  "t": "Wielocelowe zagadnienia decyzyjne: porządek Pareto",
+  "h": 82,
+  "page": "pytanie_45_pareto.html",
+  "cz": [
+   "Porządek Pareto",
+   "Przykład i front",
+   "ε-ograniczeń",
+   "Ważenia",
+   "Porównanie"
+  ]
+ },
+ "46": {
+  "t": "Wielocelowe zagadnienia: porządek leksykograficzny",
+  "h": 112,
+  "page": "pytanie_46_leksykograficzny.html",
+  "cz": [
+   "Porządek leksykograficzny",
+   "Optymalizacja sekwencyjna",
+   "Leksykograficzne PZ",
+   "Przykład: trzy zadania LP",
+   "Archimedesowe PZ",
+   "Porównanie"
+  ]
+ },
+ "49": {
+  "t": "Struktura systemu ekspertowego",
+  "h": 142,
+  "page": "pytanie_49_system_ekspertowy.html",
+  "cz": [
+   "Czym jest SE",
+   "Struktura i moduły",
+   "Konsultacja",
+   "Baza wiedzy i maszyna",
+   "Ludzie i narzędzia",
+   "Budowa i ocena"
+  ]
+ },
+ "50": {
+  "t": "Algorytm A*",
+  "h": 172,
+  "page": "pytanie_50_algorytm_astar.html",
+  "cz": [
+   "Tło: przeszukiwanie",
+   "Działanie",
+   "Przykład",
+   "Cechy",
+   "Heurystyki"
   ]
  }
 }

@@ -1,0 +1,24 @@
+const { build, F, S, sv, fa, fi, dp, pf, lu, za, kr, po } = require('./lib');
+build(34, 4, [
+  [1, [
+    fa(1, 1, 'sekcja 01', 'Jeden wybrany wariant, opowiedziany do końca', 'Regulator predykcyjny jako aplikacja w warstwie nadrzędnej: co kilka sekund wystawia wartości zadane dla pętli PID w sterowniku. Sterownik odpowiada za szybką regulację, tryby i bezpieczeństwo, MPC za to, dokąd pętle mają prowadzić obiekt.'),
+    po(2, 2, 'sekcja 02', 'Gdzie umieścić algorytm', ['Kiedy ma sens', 'Ograniczenia'], [['blok w PLC/DCS', 'mały obiekt, krótki horyzont, bez sieci', 'moc, pamięć, ciasny cykl'], ['stacja nadrzędna', 'wiele zmiennych, ograniczenia, wolne dynamiki', 'zależność od komunikacji i serwera'], ['explicit MPC', 'obiekty szybkie (napędy)', 'tablica rośnie wykładniczo']]),
+    fi(3, 2, 'sekcja 02', 'Dlaczego wybrano stację nadrzędną?', 'Jest najczęstsza w przemyśle procesowym i najlepiej pokazuje realizację w systemie komputerowym: algorytm to jeden element, reszta to komunikacja, tryby pracy i zachowanie przy awarii. Łatwe utrzymanie, logowanie i strojenie bez ingerencji w sterownik.'),
+    dp(4, 3, 'sekcja 02', 'Kiedy explicit MPC w sterowniku?', 'Dla obiektów szybkich (napędy, energoelektronika): prawo sterowania policzone z góry, w sterowniku zostaje wyszukiwanie w tablicy. Rozmiar tablicy rośnie wykładniczo z liczbą stanów i ograniczeń, więc tylko małe zadania.')]],
+  [2, [
+    S(5, 1, 'sekcja 03', { tytul: 'Kaskada MPC → PID', svg: F('fig34.kaskada'), opis: 'Sterownik pracuje co 0,1 s, stacja MPC liczy co 1 s i zapisuje wartości zadane pętlom podrzędnym, warstwa technologiczna podaje cele co kilka minut. Blokady bezpieczeństwa są niezależne.' }),
+    fa(6, 2, 'sekcja 03', 'Trzy interfejsy', 'Sterownik → MPC: pomiary i stany pętli, każda wartość ze znacznikiem czasu i jakością. MPC → sterownik: wartości zadane i heartbeat, zapis spójny (wszystkie naraz albo żadna). Operator → obie strony: tryb, limity, wartości w trybie ręcznym, limity operatora mają pierwszeństwo.'),
+    dp(7, 2, 'sekcja 04', 'Dlaczego MPC nie steruje zaworem wprost?', 'MPC pracuje co 1 s, a między decyzjami zmienia się ciśnienie zasilania, charakterystyka zaworu, przepływ. Pętla przepływu co 0,1 s likwiduje to, zanim dotrze do poziomu. Druga przyczyna: kaskada oddziela awarię od obiektu.'),
+    S(8, 2, 'sekcja 04', { tytul: 'Skutek zakłócenia ciśnienia', svg: F('fig34.zaklocenie'), opis: 'Spadek ciśnienia o 0,18: w kaskadzie odchyłka poziomu 0,018, gdy MPC steruje zaworem bezpośrednio, 0,127, siedem razy więcej.' }),
+    dp(9, 3, 'sekcja 04', 'Co się dzieje, gdy stacja MPC przestanie działać?', 'Pętle PID zostają z ostatnią wartością zadaną i obiekt nadal jest regulowany, tylko nieoptymalizowany. Gdyby MPC pisał wprost na zawór, awaria zamrażałaby jego położenie. Wartości zadane pętli mają własne limity i ograniczenie szybkości zmian.')]],
+  [3, [
+    S(10, 1, 'sekcja 05', { pytanie: 'Wymień etapy jednej próbki MPC w systemie.', svg: F('fig34.probka'), odpowiedz: 'Odczyt i walidacja danych, estymacja stanu i zakłócenia, rozwiązanie QP, zapis pierwszego kroku, rejestracja planu. Wszystko w budżecie jednej próbki, z zapasem czasu.' }),
+    fa(11, 2, 'sekcja 05', 'Walidacja danych', 'Sprawdza znacznik czasu i jakość każdej wartości, zakres fizyczny i czy pomiar nie jest zamrożony (identyczna wartość przez wiele próbek to objaw uszkodzonego przetwornika). Pomiar odrzucony nie wchodzi do korekcji estymatora, filtr pracuje samą predykcją, ale tylko przez ograniczony czas.'),
+    fa(12, 2, 'sekcja 05', 'Rejestracja', 'Zapisuje się nie tylko wartości, ale też co regulator zamierzał: cały plan, aktywne ograniczenia i czas rozwiązania. Inaczej nie da się odpowiedzieć na pytanie operatora, dlaczego wtedy tak zrobił.'),
+    dp(13, 2, 'sekcja 05', 'Po co zapas czasu na końcu próbki?', 'Cykl musi się zmieścić zawsze, a nie średnio. Rozwiązanie QP to tylko jeden z etapów i zwykle nie najdłuższy: reszta to komunikacja, sprawdzanie danych i rejestracja.')]],
+  [4, [
+    dp(14, 3, 'sekcja 06', 'Co robi sterownik, gdy nowego planu nie ma?', 'Wykonuje kolejny krok poprzedniego planu. MPC w każdej próbce liczy cały plan na wiele kroków, a wykonuje tylko pierwszy, więc reszta leży w pamięci jako gotowe zachowanie awaryjne. Jakość degraduje się łagodnie.'),
+    fa(15, 2, 'sekcja 06', 'Watchdog i tryb bezpieczny', 'Stacja wysyła sygnał życia (heartbeat), a po jego zaniku sterownik przechodzi w tryb lokalny albo bezpieczny. Blokady bezpieczeństwa są całkowicie poza MPC i żadne wyjście regulatora nie może ich obejść.'),
+    fa(16, 2, 'sekcja 01', 'Tryby i przejęcia', 'Ręczny, automatyczny, nadrzędny i tryb doradczy. Śledzenie położenia urządzenia wykonawczego i przełączanie bezuderzeniowe przy zmianie trybu.'),
+    pf(17, 2, 'sekcja 01', 'MPC zastępuje pętle PID i blokady bezpieczeństwa.', false, 'Nie zastępuje. PID zostają w sterowniku, a blokady bezpieczeństwa są niezależne od MPC.')]]
+]);

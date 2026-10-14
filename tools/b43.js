@@ -1,0 +1,39 @@
+const { build, F, S, sv, fa, fi, dp, pf, lu, za, kr, po } = require('./lib');
+build(43, 6, [
+  [1, [
+    fa(1, 1, 'sekcja 01', 'Problem wieloatrybutowy', 'Wybór opcji ze skończonego, niewielkiego zbioru opcji znanych z góry, z których każda jest opisana kilkoma atrybutami. Atrybuty są zwykle w konflikcie i nie muszą być mierzalne. Cel: opcja, która jak najlepiej spełnia wszystkie kryteria (atrybuty).'),
+    S(2, 1, 'sekcja 02', { tytul: 'Wieloatrybutowe (MADP) i wielocelowe (MODP)', svg: F('fig43.madp'), opis: 'MADP: opcje znane z góry, oceny to poziomy atrybutów (niekoniecznie liczbowe), zadanie to wybrać lub uporządkować. MODP (45, 46): opcje wynikają z ograniczeń, cele są mierzalne, zadanie to rozwiązania niezdominowane lub kompromisowe.' }),
+    fa(3, 2, 'sekcja 02', 'Przygotowanie danych do obliczeń', 'Trzeba sprowadzić atrybuty do wspólnej postaci: ustalić kierunek (w ELECTRE zmienia się znak atrybutów, dla których mniej znaczy lepiej, np. cena, spalanie), znormalizować skale do przedziału 0–1 oraz ustalić i znormować wagi (suma równa 1).'),
+    fi(4, 1, 'sekcja 01', 'Jaka jest różnica między MADP a MODP?', 'MADP: skończony niewielki zbiór opcji znanych z góry, atrybuty. MODP: opcje nie są wyliczone, wynikają z ograniczeń na zmienne decyzyjne, mierzalne funkcje celu.'),
+    pf(5, 1, 'sekcja 02', 'W problemie wieloatrybutowym atrybuty muszą być mierzalne liczbowo.', false, 'Nie muszą, np. „ładna okolica”. To mierzalne funkcje celu są cechą problemów wielocelowych.')]],
+  [2, [
+    S(6, 1, 'sekcja 03', { pytanie: 'Wymień trzy grupy metod wieloatrybutowych i po jednym przykładzie.', svg: F('fig43.grupy'), odpowiedz: 'Pełna agregacja (AHP, SAW, SMW): wszystko sprowadzone do jednej liczby. Relacje przewyższania (ELECTRE): porównania parami, możliwa nieporównywalność. Metody aspiracji (TOPSIS, VIKOR): odległość od punktu idealnego.' }),
+    dp(7, 2, 'sekcja 03', 'Czym grupy różnią się co do wyrównywania ocen?', 'Pełna agregacja pozwala, by dobra ocena w jednym atrybucie wyrównała złą w innym. Przewyższanie dopuszcza nieporównywalność, a bardzo zła wartość jednego atrybutu może zablokować przewyższanie (niezgodność, weto).'),
+    fa(8, 2, 'sekcja 03', 'TOPSIS i VIKOR', 'TOPSIS: odległość euklidesowa od wzorca i antywzorca. VIKOR: także rozwiązania kompromisowe. SMAA to stochastyczna analiza wielokryterialnej akceptowalności.')]],
+  [3, [
+    fa(9, 1, 'sekcja 04', 'AHP: idea', 'Decydent zwykle nie umie podać wag wprost, ale umie porównać dwie rzeczy naraz („co ważniejsze i ile razy?”). AHP (Analytic Hierarchy Process, Saaty 1973) to dekompozycja problemu na proste elementy i przetwarzanie ocen opartych na porównaniach parami.'),
+    S(10, 1, 'sekcja 04', { tytul: 'Hierarchia AHP', svg: F('fig43.hierarchia'), opis: 'Cel u góry, kryteria (atrybuty) pośrodku, opcje na dole. Kryteria porównuje się parami względem celu, opcje parami względem każdego kryterium.' }),
+    S(11, 1, 'sekcja 04', { pytanie: 'Wymień pięć kroków metody AHP.', svg: F('fig43.kroki'), odpowiedz: 'Hierarchia (cel, kryteria, opcje), porównania parami w skali Saaty’ego, wagi (średnie geometryczne wierszy), kontrola spójności (CR < 0,1), synteza priorytetów globalnych.' }),
+    S(12, 1, 'sekcja 06', { tytul: 'Skala Saaty’ego', svg: F('fig43.saaty'), opis: 'Wartość 1: równie ważne. 3, 5, 7, 9: słabo, istotnie, wyraźnie, bezwzględnie ważniejsze. 2, 4, 6, 8 pośrednie. Odwrotności, gdy ważniejsze jest j.' }),
+    fa(13, 2, 'sekcja 05', 'Macierz porównań', 'Odpowiedź „cena 3 razy ważniejsza od rozmiaru” wpisuje się jako 3 w wiersz ceny, kolumnę rozmiaru. W odwrotnym miejscu automatycznie stoi 1/3, a na przekątnej 1.'),
+    lu(14, 1, 'sekcja 05', 'Jeśli cena jest 3 razy ważniejsza od rozmiaru, to w macierzy porównań rozmiar wobec ceny ma wartość ___.', ['1/3', '3', '−3'], 0, 'Odwrotność, o którą nie trzeba pytać.')]],
+  [4, [
+    fa(15, 2, 'sekcja 06', 'Wagi: średnia geometryczna wiersza', 'Dla każdego wiersza i: pomnóż liczby, weź pierwiastek stopnia n (średnia geometryczna). Wagę wᵢ dostajesz, dzieląc przez sumę tych średnich ze wszystkich wierszy, więc wagi sumują się do 1. Przy ocenach idealnie spójnych (aᵢⱼ = wᵢ/wⱼ) wzór odtwarza wagi dokładnie.'),
+    dp(16, 3, 'sekcja 06', 'Dlaczego średnia geometryczna, a nie zwykła?', 'Pracujemy na ilorazach: „2 razy” i „pół raza” mają dać razem 1, a iloczyn 2 · 1/2 = 1 to zapewnia.'),
+    fa(17, 2, 'sekcja 06', 'Spójność: λmax, CI, CR', 'λmax to największa wartość własna (średnia ilorazów „wynik wiersza / waga”), przy ocenach spójnych równa n. CI = (λmax − n)/(n − 1), 0 oznacza idealną spójność. CR = CI/RI, RI to indeks losowy z tablicy (RI(3) = 0,58). CR < 0,1: oceny przyjmujemy, CR ≥ 0,1: poprawić.'),
+    pf(18, 2, 'sekcja 06', 'Stosunek zgodności CR = 0,15 oznacza, że oceny można przyjąć bez poprawek.', false, 'Próg to 0,1. CR ≥ 0,1 wymaga poprawienia ocen.'),
+    fa(19, 3, 'sekcja 07', 'Przykład niespójnej macierzy', 'Rozmiar domów: A 6 razy lepszy od B, A 8 razy od C, B 4 razy od C. Wagi 0,754 / 0,181 / 0,065, λmax = 3,136, CR nieco powyżej 0,1. Niespójność: 6 · 4 = 24, a wpisano 8, bo skala kończy się na 9. Gdyby wpisano 24, wagi 0,774 / 0,129 / 0,097, λmax = 3, CR = 0.'),
+    za(20, 2, 'sekcja 06', 'CR < 0,1: przyjmij oceny; w przeciwnym razie popraw.', 'CR = CI/RI, CI = (λmax − n)/(n − 1).')]],
+  [5, [
+    fa(21, 1, 'sekcja 05', 'Miniatura AHP: 2 kryteria, 2 domy', 'Cena 3 razy ważniejsza od rozmiaru: wagi 0,75 i 0,25. Cena: B 2 razy lepszy (A 1/3, B 2/3). Rozmiar: A 4 razy lepszy (A 0,8, B 0,2). Synteza: A = 0,75·1/3 + 0,25·0,8 = 0,45, B = 0,75·2/3 + 0,25·0,2 = 0,55. Wybór: B.'),
+    fa(22, 2, 'sekcja 08', 'Krok 5: synteza, priorytet globalny', 'Dla każdej opcji: suma po kryteriach (waga kryterium × priorytet lokalny opcji w tym kryterium), czyli suma wszystkich gałęzi drzewa prowadzących do opcji.'),
+    S(23, 1, 'sekcja 08', { tytul: 'Wynik z wykładu: kupno domu', svg: F('fig43.wyniki'), opis: 'Priorytety globalne: A 0,396, B 0,341, C 0,263, rodzina powinna kupić dom A.' }),
+    dp(24, 3, 'sekcja 08', 'Czy najważniejszy atrybut przesądza o wyniku?', 'Nie. Finanse mają wagę 0,333 i wskazują dom B, ale A zbiera dużo punktów w trzech innych ważnych atrybutach. AHP pokazuje też, skąd bierze się ranking.'),
+    lu(25, 1, 'sekcja 08', 'W AHP priorytet globalny opcji to suma wag kryteriów razy ___ opcji w tych kryteriach.', ['priorytety lokalne', 'ceny', 'odległości'], 0, 'Waga kryterium × priorytet lokalny, sumowane po gałęziach.')]],
+  [6, [
+    fa(26, 1, 'sekcja 09', 'ELECTRE I', 'Metoda relacji przewyższania. Wskazuje opcje najlepsze bez tworzenia pełnego rankingu. Dane z wykładu: wagi 0,4 / 0,4 / 0,2, po zmianie znaku ceny i spalania i normowaniu.'),
+    S(27, 1, 'sekcja 09', { pytanie: 'Wymień kroki ELECTRE I.', svg: F('fig43.electre'), odpowiedz: 'Normowanie i zmiana znaku atrybutów. Zgodność: suma wag atrybutów, w których opcja jest nie gorsza. Niezgodność: największa różnica po atrybutach, w których przegrywa. Progi zgodności i niezgodności. Relacja przewyższania i graf.' }),
+    dp(28, 2, 'sekcja 09', 'Co oznaczają zgodność i niezgodność?', 'Zgodność C(i,k): suma wag atrybutów, w których opcja i jest nie gorsza od k. Niezgodność D(i,k): różnica po atrybutach, w których i przegrywa. Para przewyższa, gdy zgodność przekracza próg, a niezgodność jest poniżej progu (weto).'),
+    fa(29, 2, 'sekcja 09', 'Wynik z wykładu', 'Relacja przewyższania: (O4,O2), (O4,O3), (O5,O1), (O5,O3), (O5,O4). Najlepsza jest O5: najtańsza po O1 i najoszczędniejsza, z przeciętnym bagażnikiem o niskiej wadze.'),
+    dp(30, 3, 'sekcja 09', 'Jaka jest wada ELECTRE I i jak ją naprawić?', 'Opcja może przewyższać inne mimo nieakceptowalnej różnicy w jednym atrybucie. Rozwiązanie: próg weta. Kolejne wersje: II (ranking), III (silna i słaba preferencja), IV (bez wag), TRI (sortowanie do klas).')]]
+]);
