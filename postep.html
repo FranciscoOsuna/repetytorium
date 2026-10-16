@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Postęp nauki — repetytorium</title>
+<link rel="icon" type="image/png" sizes="144x144" href="favicon-144.png?v=2">
+<link rel="icon" href="favicon.ico?v=2" sizes="any">
+<link rel="apple-touch-icon" href="favicon-144.png?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0F1B2D; --mut:#5A667A; --line:#CDD5E2; --paper:#EEF1F6; --card:#FBFCFE;
+  --teal:#2457D6; --violet:#7A4FD0;
+  /* skala umiejętności: 1 = nie umiem … 5 = świetnie */
+  --l0:#B8C1D1; --l1:#D6453D; --l2:#E98A2B; --l3:#E3C02E; --l4:#7DB84A; --l5:#2E9A57;
+  --disp:"Space Grotesk",system-ui,sans-serif;
+  --body:"STIX Two Text","Source Serif 4",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:960px;margin:0 auto;padding:0 22px 90px}
+a{color:inherit}
+
+.topnav{position:sticky;top:0;z-index:20;background:rgba(238,241,246,.95);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.topnav .in{max-width:960px;margin:0 auto;padding:10px 22px}
+.topnav a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);text-decoration:none}
+.topnav a:hover{color:var(--ink)}
+
+header{padding:34px 0 8px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--mut);margin:0 0 12px}
+h1{font-family:var(--disp);font-weight:700;font-size:clamp(30px,5vw,44px);line-height:1.06;letter-spacing:-.025em;margin:0 0 10px}
+.sub{color:var(--mut);font-size:16px;margin:0;max-width:640px}
+
+/* podsumowanie */
+.sum{margin:26px 0 0;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--violet);border-radius:2px;padding:16px 18px}
+.sum-top{display:flex;flex-wrap:wrap;gap:6px 22px;align-items:baseline;font-family:var(--mono);font-size:12.5px;color:var(--mut)}
+.sum-top b{font-weight:500;color:var(--ink)}
+.stack{display:flex;height:14px;border-radius:3px;overflow:hidden;background:var(--l0);margin:12px 0 14px}
+.stack span{display:block;height:100%;transition:width .25s ease}
+.legend{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;color:var(--ink);
+      background:var(--paper);border:1px solid var(--line);border-radius:2px;padding:5px 10px;cursor:pointer;user-select:none}
+.chip:hover{border-color:var(--mut)}
+.chip i{width:11px;height:11px;border-radius:2px;display:block}
+.chip .c{color:var(--mut)}
+.chip[aria-pressed="true"]{background:#fff;border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+
+/* pasek narzędzi */
+.tools{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin:22px 0 4px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:2px;overflow:hidden}
+.seg button{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);background:var(--card);border:0;padding:7px 11px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ghost{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);background:none;border:1px solid var(--line);border-radius:2px;padding:7px 11px;cursor:pointer}
+.ghost:hover{color:var(--ink);border-color:var(--ink)}
+.tools .push{margin-left:auto;display:flex;gap:8px}
+button:focus-visible,.chip:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+#msg{font-family:var(--mono);font-size:12px;color:var(--mut);min-height:18px;margin:6px 0 0}
+
+/* grupy i wiersze */
+section{margin-top:34px}
+h2{font-family:var(--disp);font-weight:700;font-size:20px;letter-spacing:-.01em;margin:0 0 4px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+h2 .cnt{font-family:var(--mono);font-size:12px;font-weight:400;color:var(--mut);margin-left:auto}
+.mini{display:flex;height:5px;border-radius:2px;overflow:hidden;background:var(--l0);margin:0 0 12px}
+.mini span{display:block;height:100%}
+.list{display:flex;flex-direction:column;gap:8px}
+.row{--c:var(--l0);display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:6px 14px;align-items:center;
+     background:color-mix(in srgb,var(--c) 11%,var(--card));border:1px solid var(--line);border-left:6px solid var(--c);
+     border-radius:2px;padding:11px 14px;transition:background .15s ease,border-color .15s ease}
+.row[data-l="1"]{--c:var(--l1)} .row[data-l="2"]{--c:var(--l2)} .row[data-l="3"]{--c:var(--l3)}
+.row[data-l="4"]{--c:var(--l4)} .row[data-l="5"]{--c:var(--l5)}
+.row[data-l="0"]{background:var(--card)}
+.row .n{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--mut);text-align:right}
+.row .t{font-size:16px;line-height:1.45;min-width:0}
+.row .t a{text-decoration:none;border-bottom:1px solid transparent}
+.row .t a:hover{border-bottom-color:var(--mut)}
+.row .meta{display:block;font-family:var(--mono);font-size:11px;color:var(--mut);margin-top:3px}
+.row .meta .when{margin-left:10px}
+.rate{display:flex;gap:5px;align-items:center}
+.rate button{width:34px;height:34px;border-radius:3px;border:1px solid color-mix(in srgb,var(--b) 55%,var(--line));background:color-mix(in srgb,var(--b) 14%,#fff);
+             color:color-mix(in srgb,var(--b) 70%,#000);font-family:var(--mono);font-size:13px;font-weight:500;cursor:pointer;padding:0;transition:transform .08s ease,background .12s ease}
+.rate button:nth-child(1){--b:var(--l1)} .rate button:nth-child(2){--b:var(--l2)} .rate button:nth-child(3){--b:var(--l3)}
+.rate button:nth-child(4){--b:var(--l4)} .rate button:nth-child(5){--b:var(--l5)}
+.rate button:hover{transform:translateY(-1px);background:color-mix(in srgb,var(--b) 30%,#fff)}
+.rate button[aria-pressed="true"]{background:var(--b);color:#fff;border-color:var(--b);box-shadow:0 0 0 2px var(--card),0 0 0 3px var(--b)}
+.rate .x{width:26px;color:var(--mut);background:none;border:1px solid var(--line);--b:var(--line)}
+.rate .x:hover{background:#fff;color:var(--ink);border-color:var(--ink)}
+.empty{font-family:var(--mono);font-size:13px;color:var(--mut);padding:24px 0}
+
+@media (max-width:640px){
+  body{font-size:16px}
+  .wrap{padding:0 16px 80px}
+  .topnav .in{padding:10px 16px}
+  .row{grid-template-columns:26px minmax(0,1fr);padding:11px 12px}
+  .rate{grid-column:1 / -1;justify-content:flex-start}
+  .rate button{flex:1;max-width:56px;height:38px}
+  .tools .push{margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none !important}}
+</style>
+</head>
+<body>
+<nav class="topnav"><div class="in"><a href="index.html">← Repetytorium</a></div></nav>
+<div class="wrap">
+<header>
+  <p class="eyebrow">Samoocena</p>
+  <h1>Postęp nauki</h1>
+  <p class="sub">Oceń każde zagadnienie od 1 (nie umiem) do 5 (świetnie). Kliknij ocenę ponownie, żeby ją zdjąć. Zapisuje się samo, w tej przeglądarce.</p>
+</header>
+
+<div class="sum">
+  <div class="sum-top" id="sumTop"></div>
+  <div class="stack" id="stack" aria-hidden="true"></div>
+  <div class="legend" id="legend" role="group" aria-label="Filtr wg oceny"></div>
+</div>
+
+<div class="tools">
+  <div class="seg" role="group" aria-label="Układ listy">
+    <button type="button" data-v="kat" aria-pressed="true">Kategorie</button>
+    <button type="button" data-v="num" aria-pressed="false">Numer</button>
+    <button type="button" data-v="weak" aria-pressed="false">Najsłabsze najpierw</button>
+  </div>
+  <div class="push">
+    <button type="button" class="ghost" id="exp">Eksport</button>
+    <button type="button" class="ghost" id="imp">Import</button>
+    <button type="button" class="ghost" id="rst">Zeruj</button>
+  </div>
+</div>
+<div id="msg" role="status" aria-live="polite"></div>
+
+<main id="out"></main>
+</div>
+
+<script src="assets/pytania.js"></script>
+<script>
+const KEY = "postep_nauki_v1";
+const LV = [
+  {l:0, name:"nieocenione", col:"var(--l0)"},
+  {l:1, name:"nie umiem",   col:"var(--l1)"},
+  {l:2, name:"słabo",       col:"var(--l2)"},
+  {l:3, name:"średnio",     col:"var(--l3)"},
+  {l:4, name:"dobrze",      col:"var(--l4)"},
+  {l:5, name:"świetnie",    col:"var(--l5)"},
+];
+const pad = n => String(n).padStart(2,"0");
+
+/* płaska lista pytań z nazwą kategorii */
+const Q = [];
+KATEGORIE.forEach(k => k.items.forEach(i => Q.push({n:i.n, t:i.t, file:i.file, kat:k.name})));
+Q.sort((a,b) => a.n - b.n);
+
+/* zapis: { "12": {l:4, t:1760000000000}, ... } */
+let S = {};
+try{ S = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; }catch(e){ S = {}; }
+const save = () => { try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){ flash("Przeglądarka nie pozwala na zapis — oceny przepadną po zamknięciu strony."); } };
+const lvl = n => (S[n] && S[n].l) || 0;
+
+let view = "kat", filter = null;
+try{ const v = localStorage.getItem(KEY + "_view"); if (["kat","num","weak"].includes(v)) view = v; }catch(e){}
+
+const $ = id => document.getElementById(id);
+let msgT;
+function flash(s){ $("msg").textContent = s; clearTimeout(msgT); msgT = setTimeout(() => $("msg").textContent = "", 5000); }
+
+function ago(t){
+  if (!t) return "";
+  const d = Math.floor((Date.now() - t) / 864e5);
+  return d <= 0 ? "dzisiaj" : d === 1 ? "wczoraj" : d + " dni temu";
+}
+
+function counts(list){
+  const c = [0,0,0,0,0,0];
+  list.forEach(q => c[lvl(q.n)]++);
+  return c;
+}
+function bar(c, total, cls){
+  return `<div class="${cls}" ${cls==="stack"?'id="stack" aria-hidden="true"':""}>` +
+    LV.map(v => c[v.l] ? `<span style="width:${c[v.l]/total*100}%;background:${v.col}"></span>` : "").join("") + `</div>`;
+}
+
+function renderSummary(){
+  const c = counts(Q), rated = Q.length - c[0];
+  const avg = rated ? (Q.reduce((s,q) => s + lvl(q.n), 0) / rated) : 0;
+  const ready = Q.filter(q => lvl(q.n) >= 4).length;
+  $("sumTop").innerHTML =
+    `<span>ocenione <b>${rated}/${Q.length}</b></span>` +
+    `<span>średnia <b>${rated ? avg.toFixed(1).replace(".",",") : "—"}</b></span>` +
+    `<span>na 4–5 <b>${ready}</b></span>`;
+  $("stack").innerHTML = LV.map(v => c[v.l] ? `<span style="width:${c[v.l]/Q.length*100}%;background:${v.col}"></span>` : "").join("");
+  $("legend").innerHTML = LV.map(v =>
+    `<button type="button" class="chip" data-l="${v.l}" aria-pressed="${filter===v.l}"><i style="background:${v.col}"></i>${v.l ? v.l + " · " : ""}${v.name} <span class="c">${c[v.l]}</span></button>`).join("");
+}
+
+function rowHTML(q){
+  const l = lvl(q.n), t = S[q.n] && S[q.n].t;
+  const title = q.file ? `<a href="${q.file}">${q.t}</a>` : q.t;
+  const btns = [1,2,3,4,5].map(i =>
+    `<button type="button" data-n="${q.n}" data-l="${i}" aria-pressed="${l===i}" aria-label="Zagadnienie ${q.n}: ocena ${i} — ${LV[i].name}" title="${i} · ${LV[i].name}">${i}</button>`).join("");
+  return `<div class="row" data-l="${l}" id="q${q.n}">` +
+    `<span class="n">${pad(q.n)}</span>` +
+    `<div class="t">${title}<span class="meta">${q.kat}${l ? `<span class="when">${LV[l].name} · ${ago(t)}</span>` : ""}</span></div>` +
+    `<div class="rate" role="group" aria-label="Ocena zagadnienia ${q.n}">${btns}</div></div>`;
+}
+
+function render(){
+  renderSummary();
+  const keep = Q.filter(q => filter === null || lvl(q.n) === filter);
+  let html = "";
+  if (!keep.length){
+    html = `<p class="empty">Brak zagadnień z tą oceną.</p>`;
+  } else if (view === "kat"){
+    KATEGORIE.forEach(k => {
+      const items = k.items.filter(i => keep.some(q => q.n === i.n)).map(i => Q.find(q => q.n === i.n));
+      if (!items.length) return;
+      const all = k.items.map(i => Q.find(q => q.n === i.n)), c = counts(all);
+      html += `<section><h2>${k.name}<span class="cnt">${all.length - c[0]}/${all.length} ocenionych</span></h2>` +
+              bar(c, all.length, "mini") + `<div class="list">${items.map(rowHTML).join("")}</div></section>`;
+    });
+  } else {
+    const arr = keep.slice();
+    if (view === "weak") arr.sort((a,b) => lvl(a.n) - lvl(b.n) || ((S[a.n]&&S[a.n].t)||0) - ((S[b.n]&&S[b.n].t)||0) || a.n - b.n);
+    html = `<section><div class="list">${arr.map(rowHTML).join("")}</div></section>`;
+  }
+  $("out").innerHTML = html;
+  document.querySelectorAll(".seg button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === view)));
+}
+
+/* zmiana jednej oceny bez przebudowy całej listy (nie gubi pozycji przewijania) */
+function setLevel(n, l){
+  if (lvl(n) === l){ delete S[n]; l = 0; } else S[n] = {l, t: Date.now()};
+  save();
+  if (filter !== null || view === "weak") { const y = scrollY; render(); scrollTo(0, y); return; }
+  const q = Q.find(x => x.n === n), row = $("q" + n);
+  row.outerHTML = rowHTML(q);
+  renderSummary();
+  if (view === "kat") {
+    const sec = $("q" + n).closest("section"), k = KATEGORIE.find(k => k.items.some(i => i.n === n));
+    const all = k.items.map(i => Q.find(q => q.n === i.n)), c = counts(all);
+    sec.querySelector(".cnt").textContent = `${all.length - c[0]}/${all.length} ocenionych`;
+    sec.querySelector(".mini").outerHTML = bar(c, all.length, "mini");
+  }
+}
+
+$("out").addEventListener("click", e => {
+  const b = e.target.closest(".rate button");
+  if (!b) return;
+  const f = document.activeElement === b;
+  setLevel(+b.dataset.n, +b.dataset.l);
+  if (f) { const nb = document.querySelector(`#q${b.dataset.n} .rate button[data-l="${b.dataset.l}"]`); if (nb) nb.focus(); }
+});
+$("legend").addEventListener("click", e => {
+  const b = e.target.closest(".chip"); if (!b) return;
+  const l = +b.dataset.l; filter = filter === l ? null : l; render();
+});
+document.querySelector(".seg").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  view = b.dataset.v; try{ localStorage.setItem(KEY + "_view", view); }catch(_){}
+  render();
+});
+
+/* eksport / import / zerowanie */
+$("exp").addEventListener("click", async () => {
+  const txt = JSON.stringify(S);
+  try{ await navigator.clipboard.writeText(txt); flash("Skopiowano oceny do schowka (" + Object.keys(S).length + " zagadnień). Wklej je w „Import” na innym urządzeniu."); }
+  catch(e){ prompt("Skopiuj ten tekst:", txt); }
+});
+$("imp").addEventListener("click", () => {
+  const txt = prompt("Wklej wyeksportowane oceny (nadpiszą obecne):");
+  if (!txt) return;
+  try{
+    const o = JSON.parse(txt), clean = {};
+    Object.keys(o).forEach(k => { const l = o[k] && +o[k].l; if (Q.some(q => q.n === +k) && l >= 1 && l <= 5) clean[k] = {l, t: +o[k].t || Date.now()}; });
+    S = clean; save(); render(); flash("Zaimportowano " + Object.keys(clean).length + " ocen.");
+  }catch(e){ flash("To nie wygląda na poprawny eksport."); }
+});
+$("rst").addEventListener("click", () => {
+  if (!Object.keys(S).length) return;
+  if (confirm("Usunąć wszystkie oceny?")) { S = {}; save(); filter = null; render(); }
+});
+
+render();
+</script>
+</body>
+</html>

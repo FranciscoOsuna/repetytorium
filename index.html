@@ -64,6 +64,9 @@ h1{font-family:var(--disp);font-weight:700;font-size:clamp(32px,5.4vw,50px);line
 .feedlink .fl-t::after{content:" →";font-weight:500}
 .feedlink .fl-d{font-size:15px;line-height:1.5;color:var(--mut);flex:1 1 320px}
 .feedlink:hover,.feedlink:focus-visible{background:#fff;border-color:var(--teal);outline:none;transform:translateX(2px)}
+.feedlink.postep{border-left-color:var(--violet);margin-top:10px}
+.feedlink.postep .fl-t{color:var(--violet)}
+.feedlink.postep:hover,.feedlink.postep:focus-visible{border-color:var(--violet)}
 
 /* ---- panel komisji ---- */
 .panel{margin:30px 0 0;background:var(--card);border:1px solid var(--line);
@@ -263,6 +266,10 @@ footer{margin-top:70px;padding-top:20px;border-top:1px solid var(--line);
 
   <a class="feedlink" href="feed_powtorki.html">
     <span class="fl-t">Feed powtórkowy</span>
+  </a>
+
+  <a class="feedlink postep" href="postep.html">
+    <span class="fl-t">Postęp nauki</span>
   </a>
 
   <div class="panel">
