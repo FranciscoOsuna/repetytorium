@@ -77,11 +77,23 @@
     }).join('')+'</select>';
   }
 
+  // powrót: do postępu nauki, jeśli stąd wszedłeś; w przeciwnym razie do listy
+  var fromP=false;
+  try{
+    var rf=document.referrer||'';
+    if(/postep\.html/.test(rf)) sessionStorage.setItem('backTo','postep.html');
+    else if(/(^|\/)index\.html/.test(rf)||/\/$/.test(rf.split(/[?#]/)[0])) sessionStorage.removeItem('backTo');
+    fromP=sessionStorage.getItem('backTo')==='postep.html';
+  }catch(e){}
+  var backHref=fromP?'postep.html':'index.html', backTxt=fromP?'Postęp nauki':'Lista';
+  var backA='<a class="jc" href="'+backHref+'">&larr; '+backTxt+'</a>';
+  var bf=document.querySelector('.backfoot a'); if(bf){bf.href=backHref; bf.innerHTML=fromP?'&larr; Wróć do postępu nauki':'&larr; Wróć do listy zagadnień';}
+
   // menu skokowe (w miejscu starego .topnav)
   var jm=document.getElementById('jm')||document.querySelector('.topnav');
   if(!jm){jm=document.createElement('nav');(document.querySelector('.wrap')||document.body).insertBefore(jm,(document.querySelector('.wrap')||document.body).firstChild);}
   jm.className='jm'; jm.id='jm'; jm.setAttribute('aria-label','Nawigacja po zagadnieniach');
-  jm.innerHTML='<a class="jc" href="index.html">&larr; Lista</a>'+arrows()+jumpForm()+arrowN()+select()+secsHtml;
+  jm.innerHTML=''+backA+''+arrows()+jumpForm()+arrowN()+select()+secsHtml;
 
   // pełna treść pytania w pasku
   var qEl=document.querySelector('.quest')||document.querySelector('h1');
@@ -90,7 +102,7 @@
 
   // wysuwany pasek
   var bar=document.createElement('div'); bar.id='jbar'; bar.setAttribute('role','navigation'); bar.setAttribute('aria-label','Nawigacja (pasek)');
-  bar.innerHTML='<div class="in"><div class="r1"><a class="jc" href="index.html">&larr; Lista</a>'+arrows()+jumpForm()+arrowN()+
+  bar.innerHTML='<div class="in"><div class="r1">'+backA+''+arrows()+jumpForm()+arrowN()+
     '<span class="pc">0%</span></div>'+qtHtml+secsHtml+'</div><div class="trk"><i></i></div>';
   document.body.appendChild(bar);
 
